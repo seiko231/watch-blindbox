@@ -63,7 +63,7 @@
             padding: 0; 
         }
         
-        /* 當遊戲結束時，沒被點開的格子會變暗，代表不能再點了 */
+        /* 當遊戲結束時，沒被點開的格子會變暗 */
         .box.disabled {
             opacity: 0.3;
             cursor: not-allowed;
@@ -132,6 +132,11 @@
         .modal-content button:hover {
             background-color: #f1c40f;
         }
+        .modal-content button:disabled {
+            background-color: #555;
+            color: #999;
+            cursor: not-allowed;
+        }
         .close-btn {
             position: absolute;
             top: 10px;
@@ -180,8 +185,18 @@
         const form = document.getElementById('shippingForm');
         const resultImgContainer = document.getElementById('resultImageContainer');
 
-        // ⚠️⚠️⚠️ 請在這裡填寫你的 Email 信箱 ⚠️⚠️⚠️
-        const yourEmail = 'your_email@gmail.com'; 
+        // ✅ 已填入你的接收信箱
+        const yourEmail = 'c17872822528@163.com'; 
+
+        // 手錶名稱對照表 (如果信件裡想顯示特定名稱，可以改這裡)
+        const watchNames = {
+            1: "1號手錶", 2: "2號手錶", 3: "3號手錶", 4: "4號手錶", 5: "5號手錶", 6: "6號手錶",
+            7: "7號手錶", 8: "8號手錶", 9: "9號手錶", 10: "10號手錶", 11: "11號手錶", 12: "12號手錶",
+            13: "13號手錶", 14: "14號手錶", 15: "15號手錶", 16: "16號手錶", 17: "17號手錶", 18: "18號手錶",
+            19: "19號手錶", 20: "20號手錶", 21: "21號手錶", 22: "22號手錶", 23: "23號手錶", 24: "24號手錶",
+            25: "25號手錶", 26: "26號手錶", 27: "27號手錶", 28: "28號手錶", 29: "29號手錶", 30: "30號手錶",
+            31: "31號手錶", 32: "32號手錶", 33: "33號手錶", 34: "34號手錶", 35: "35號手錶", 36: "36號手錶"
+        };
 
         // 洗牌圖片池
         let imagePool = Array.from({length: 36}, (_, i) => i + 1); 
@@ -191,7 +206,7 @@
         }
 
         let currentSelectedImage = ''; 
-        let hasDrawn = false; // 🌟 新增：紀錄是否已經抽過獎了
+        let hasDrawn = false; 
 
         // 渲染格子
         for (let index = 0; index < 36; index++) {
@@ -203,21 +218,18 @@
             const randomImageNumber = imagePool[index];
             
             box.addEventListener('click', function() {
-                // 🌟 檢查：如果已經抽過了，就跳出提示並中止
                 if (hasDrawn) {
                     alert("您已經抽過盲盒囉！每人限抽一次。");
                     return;
                 }
 
                 if (!this.classList.contains('opened')) {
-                    hasDrawn = true; // 🌟 標記為已抽獎
+                    hasDrawn = true; 
                     this.classList.add('opened');
                     currentSelectedImage = randomImageNumber;
                     
-                    // 顯示圖片
                     this.innerHTML = `<img src="images/${randomImageNumber}.webp" style="width: 100%; height: 100%; object-fit: cover;">`;
                     
-                    // 🌟 將其他還沒打開的格子變成半透明且不可點擊
                     const allBoxes = document.querySelectorAll('.box');
                     allBoxes.forEach(b => {
                         if (!b.classList.contains('opened')) {
@@ -225,7 +237,6 @@
                         }
                     });
 
-                    // 延遲 0.5 秒後彈出表單
                     setTimeout(() => {
                         openModal(randomImageNumber, displayNumber);
                     }, 500);
@@ -235,14 +246,12 @@
             grid.appendChild(box);
         }
 
-        // 打開彈出視窗
         function openModal(imgNum, boxNum) {
             resultImgContainer.innerHTML = `<img src="images/${imgNum}.webp">`;
             modal.style.display = 'flex';
             form.dataset.boxNum = boxNum; 
         }
 
-        // 關閉視窗
         closeBtn.onclick = function() {
             modal.style.display = 'none';
         }
@@ -260,22 +269,43 @@
             const phone = document.getElementById('custPhone').value;
             const address = document.getElementById('custAddress').value;
             const boxNum = this.dataset.boxNum;
+            const submitBtn = this.querySelector('button[type="submit"]');
             
-            const subject = encodeURIComponent(`【盲盒中獎通知】客戶：${name}`);
-            const body = encodeURIComponent(
-                `老闆您好，有客戶抽中了盲盒並填寫了資料：\n\n` +
-                `抽中盲盒編號：第 ${boxNum} 格\n` +
-                `對應手錶圖片：${currentSelectedImage}.webp\n\n` +
-                `姓名：${name}\n` +
-                `電話：${phone}\n` +
-                `地址：${address}\n\n` +
-                `請盡快安排寄送！`
-            );
+            const watchName = watchNames[currentSelectedImage] || `${currentSelectedImage}號手錶`;
+            
+            submitBtn.innerText = '傳送中...';
+            submitBtn.disabled = true;
 
-            window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
-            alert("資料已準備送出！請在跳出的郵件視窗中按下『傳送』。");
-            modal.style.display = 'none';
-            form.reset();
+            // 呼叫 FormSubmit API
+            fetch(`https://formsubmit.co/ajax/${yourEmail}`, {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    客戶姓名: name,
+                    客戶電話: phone,
+                    收件地址: address,
+                    "抽中的格子": `第 ${boxNum} 格`,
+                    "抽中的手錶款式": watchName,
+                    "手錶圖片檔名": `${currentSelectedImage}.webp`,
+                    _subject: `【盲盒中獎通知】客戶 ${name} 抽中了 ${watchName}！`
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`✅ 送出成功！\n${name} 您好，我們已收到您的資訊，將盡快為您安排寄送！`);
+                modal.style.display = 'none';
+                form.reset();
+                submitBtn.innerText = '確認送出';
+                submitBtn.disabled = false;
+            })
+            .catch(error => {
+                alert("⚠️ 網路連線錯誤，請稍後再試一次。");
+                submitBtn.innerText = '確認送出';
+                submitBtn.disabled = false;
+            });
         });
     </script>
 
