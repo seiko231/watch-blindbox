@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尊享腕錶盲盒</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Microsoft JhengHei', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #d4af37;
+            font-size: 28px;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        p {
+            color: #aaaaaa;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            width: 100%;
+        }
+        .box {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 1px solid #333;
+            border-radius: 10px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #d4af37;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+            overflow: hidden; 
+        }
+        .box:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        .box.opened {
+            background-color: #1a1a1a;
+            border-color: #222;
+            cursor: default;
+            transform: none;
+            box-shadow: none;
+            padding: 0; 
+        }
+        
+        /* 當遊戲結束時，沒被點開的格子會變暗，代表不能再點了 */
+        .box.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* --- 彈出視窗表單樣式 --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-content {
+            background: #222;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #d4af37;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .modal-content h2 {
+            color: #d4af37;
+            margin-top: 0;
+            font-size: 22px;
+        }
+        .modal-content img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .modal-content input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        .modal-content button {
+            width: 100%;
+            padding: 12px;
+            background-color: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-content button:hover {
+            background-color: #f1c40f;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+            .box { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>✨ 尊享腕錶盲盒 ✨</h1>
+    <p>請點擊下方任一數字，開啟您的專屬幸運<br><span style="color: #e74c3c;">(每人限抽一次，選定後不可更改)</span></p>
+
+    <div class="grid-container" id="blindbox-grid"></div>
+
+    <!-- 彈出視窗與表單 -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <h2>🎉 恭喜中獎！</h2>
+            <div id="resultImageContainer"></div>
+            <p style="margin-bottom: 20px; font-size: 14px; color: #ccc;">請填寫您的聯絡資訊，以便為您寄出獎品。</p>
+            <form id="shippingForm">
+                <input type="text" id="custName" placeholder="請輸入姓名" required>
+                <input type="tel" id="custPhone" placeholder="請輸入電話號碼" required>
+                <input type="text" id="custAddress" placeholder="請輸入收件地址" required>
+                <button type="submit">確認送出</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const grid = document.getElementById('blindbox-grid');
+        const modal = document.getElementById('infoModal');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const form = document.getElementById('shippingForm');
+        const resultImgContainer = document.getElementById('resultImageContainer');
+
+        // ⚠️⚠️⚠️ 請在這裡填寫你的 Email 信箱 ⚠️⚠️⚠️
+        const yourEmail = 'your_email@gmail.com'; 
+
+        // 洗牌圖片池
+        let imagePool = Array.from({length: 36}, (_, i) => i + 1); 
+        for (let i = imagePool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [imagePool[i], imagePool[j]] = [imagePool[j], imagePool[i]];
+        }
+
+        let currentSelectedImage = ''; 
+        let hasDrawn = false; // 🌟 新增：紀錄是否已經抽過獎了
+
+        // 渲染格子
+        for (let index = 0; index < 36; index++) {
+            const box = document.createElement('div');
+            box.className = 'box';
+            const displayNumber = index + 1;
+            box.innerText = displayNumber;
+            
+            const randomImageNumber = imagePool[index];
+            
+            box.addEventListener('click', function() {
+                // 🌟 檢查：如果已經抽過了，就跳出提示並中止
+                if (hasDrawn) {
+                    alert("您已經抽過盲盒囉！每人限抽一次。");
+                    return;
+                }
+
+                if (!this.classList.contains('opened')) {
+                    hasDrawn = true; // 🌟 標記為已抽獎
+                    this.classList.add('opened');
+                    currentSelectedImage = randomImageNumber;
+                    
+                    // 顯示圖片
+                    this.innerHTML = `<img src="images/${randomImageNumber}.webp" style="width: 100%; height: 100%; object-fit: cover;">`;
+                    
+                    // 🌟 將其他還沒打開的格子變成半透明且不可點擊
+                    const allBoxes = document.querySelectorAll('.box');
+                    allBoxes.forEach(b => {
+                        if (!b.classList.contains('opened')) {
+                            b.classList.add('disabled');
+                        }
+                    });
+
+                    // 延遲 0.5 秒後彈出表單
+                    setTimeout(() => {
+                        openModal(randomImageNumber, displayNumber);
+                    }, 500);
+                }
+            });
+            
+            grid.appendChild(box);
+        }
+
+        // 打開彈出視窗
+        function openModal(imgNum, boxNum) {
+            resultImgContainer.innerHTML = `<img src="images/${imgNum}.webp">`;
+            modal.style.display = 'flex';
+            form.dataset.boxNum = boxNum; 
+        }
+
+        // 關閉視窗
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // 處理表單送出
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+            const boxNum = this.dataset.boxNum;
+            
+            const subject = encodeURIComponent(`【盲盒中獎通知】客戶：${name}`);
+            const body = encodeURIComponent(
+                `老闆您好，有客戶抽中了盲盒並填寫了資料：\n\n` +
+                `抽中盲盒編號：第 ${boxNum} 格\n` +
+                `對應手錶圖片：${currentSelectedImage}.webp\n\n` +
+                `姓名：${name}\n` +
+                `電話：${phone}\n` +
+                `地址：${address}\n\n` +
+                `請盡快安排寄送！`
+            );
+
+            window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
+            alert("資料已準備送出！請在跳出的郵件視窗中按下『傳送』。");
+            modal.style.display = 'none';
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>
