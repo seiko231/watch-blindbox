@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>尊享腕錶盲盒</title>
     <style>
-        /* 🌟 背景與基礎設定：深灰漸層 + 微光點綴 */
+        /* 🌟 基礎與背景設定 */
         body {
             background-color: #1a1a1a;
             background-image: 
@@ -14,47 +14,61 @@
                 linear-gradient(135deg, #1c1c1c 0%, #0d0d0d 100%);
             color: #ffffff;
             font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin: 0;
             padding: 20px;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* 🌟 標題引導區 */
-        .header-section {
-            text-align: center;
-            margin-bottom: 20px;
+        /* 🌟 主佈局 */
+        .main-layout {
+            display: flex;
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+            align-items: flex-start;
         }
-        h1 {
-            color: #d4af37;
-            font-size: 34px;
-            margin-bottom: 10px;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-            font-weight: 600;
+        .left-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
         }
-        .subtitle {
-            color: #ccc;
-            font-size: 16px;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
+        .right-section {
+            width: 380px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
         }
-        
-        /* 🌟 法規提示區塊 */
-        .legal-notice {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px dashed rgba(255, 255, 255, 0.2);
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .overview-grid img {
+            width: 100%;
             border-radius: 8px;
-            padding: 10px 15px;
-            font-size: 12px;
-            color: #aaa;
-            max-width: 600px;
-            margin: 0 auto 20px auto;
-            line-height: 1.5;
-            text-align: left;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .overview-grid img:hover {
+            transform: scale(1.05);
+            border-color: #d4af37;
+        }
+
+        /* 🌟 標題與法規說明 */
+        .header-section { text-align: center; margin-bottom: 20px; }
+        h1 {
+            color: #d4af37; font-size: 34px; margin-bottom: 10px;
+            letter-spacing: 4px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        .subtitle { color: #ccc; font-size: 16px; margin-bottom: 12px; letter-spacing: 1px; }
+        .legal-notice {
+            background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 8px; padding: 10px 15px; font-size: 12px; color: #aaa;
+            max-width: 600px; margin: 0 auto 20px auto; line-height: 1.5; text-align: left;
         }
         .legal-notice strong { color: #d4af37; }
 
@@ -62,281 +76,162 @@
         .grid-container {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 18px;
-            max-width: 850px;
+            gap: 15px;
             width: 100%;
-            perspective: 1000px;
+            max-width: 800px;
         }
         .box {
             background: linear-gradient(145deg, rgba(40,40,40,0.8), rgba(20,20,20,0.9));
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            aspect-ratio: 1 / 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 26px;
-            font-weight: bold;
-            color: #d4af37;
-            cursor: pointer;
+            backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px; aspect-ratio: 1 / 1;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 24px; font-weight: bold; color: #d4af37; cursor: pointer;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 8px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
-            overflow: hidden; 
-            position: relative;
+            overflow: hidden; position: relative;
         }
         .box:hover:not(.opened):not(.disabled) {
             transform: translateY(-8px) scale(1.05);
             border-color: rgba(212, 175, 55, 0.6);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.3);
             color: #fff;
-            background: linear-gradient(145deg, rgba(60,60,60,0.9), rgba(30,30,30,0.9));
         }
         .box.opened {
-            background-color: #000;
-            border-color: #d4af37;
-            cursor: default;
-            transform: scale(1.1);
-            z-index: 2;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
-            padding: 0; 
+            background-color: #000; border-color: #d4af37;
+            cursor: pointer; transform: scale(1.1); z-index: 2;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8); padding: 0; 
+        }
+        .box.opened:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 35px rgba(212, 175, 55, 1);
         }
         .box.disabled {
-            opacity: 0.2;
-            cursor: not-allowed;
-            transform: scale(0.95);
-            border-color: transparent;
-            box-shadow: none;
-            filter: grayscale(100%);
+            opacity: 0.15; cursor: not-allowed; transform: scale(0.95);
+            border-color: transparent; box-shadow: none; filter: grayscale(100%);
+            pointer-events: none;
         }
 
-        /* 🌟 彈出視窗 */
+        /* 🌟 彈出視窗 (移除文字介紹後的精簡版) */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(12px);
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(12px);
+            display: none; justify-content: center; align-items: center; z-index: 999;
+            opacity: 0; transition: opacity 0.3s ease;
         }
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
+        .modal-overlay.active { display: flex; opacity: 1; }
         .modal-content {
             background: linear-gradient(160deg, #2a2a2a 0%, #151515 100%);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            width: 92%;
-            max-width: 480px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
-            max-height: 90vh;
-            overflow-y: auto;
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
+            padding: 25px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.4);
+            width: 92%; max-width: 480px; text-align: center; position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto;
+            transform: translateY(20px); transition: transform 0.3s ease;
         }
         .modal-overlay.active .modal-content { transform: translateY(0); }
-        .modal-content h2 {
-            color: #d4af37;
-            margin-top: 0;
-            font-size: 24px;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
-        }
+        .modal-content h2 { color: #d4af37; margin-top: 0; font-size: 24px; }
         
-        /* 畫廊區 */
-        .gallery-title {
-            font-size: 13px;
-            color: #aaa;
-            text-align: left;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
+        .gallery-title { font-size: 13px; color: #aaa; text-align: left; margin-bottom: 10px; display: flex; align-items: center; }
         .gallery-title::before { content: "🔍"; margin-right: 5px; }
-        .image-gallery {
-            display: flex;
-            overflow-x: auto;
-            gap: 12px;
-            scroll-snap-type: x mandatory;
-            margin-bottom: 20px;
-            padding-bottom: 5px;
-            border-radius: 10px;
-        }
+        .image-gallery { display: flex; overflow-x: auto; gap: 12px; scroll-snap-type: x mandatory; margin-bottom: 20px; padding-bottom: 5px; }
         .image-gallery img {
-            height: 220px;
-            width: auto;
-            border-radius: 10px;
-            scroll-snap-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
-            object-fit: cover;
-            cursor: zoom-in; 
-            transition: transform 0.2s, border-color 0.2s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            height: 250px; width: auto; border-radius: 10px; scroll-snap-align: center;
+            border: 1px solid rgba(255,255,255,0.1); object-fit: cover; cursor: zoom-in; transition: 0.2s;
         }
         .image-gallery img:hover { border-color: #d4af37; }
         .image-gallery::-webkit-scrollbar { display: none; }
 
-        /* 產品資訊區 */
-        .product-details {
-            background: rgba(0,0,0,0.3);
-            padding: 18px 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: left;
-            border-left: 4px solid #d4af37;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-        }
-        .product-details h3 { color: #fff; margin: 0 0 10px 0; font-size: 20px; }
-        .product-details p { color: #bbb; margin: 0; font-size: 14px; line-height: 1.8; white-space: pre-wrap; }
-
-        /* 表單引導區 */
-        .form-divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: #d4af37;
-            font-size: 15px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        .form-divider::before, .form-divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-        }
+        .form-divider { display: flex; align-items: center; text-align: center; color: #d4af37; font-size: 15px; font-weight: bold; margin: 20px 0; }
+        .form-divider::before, .form-divider::after { content: ''; flex: 1; border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
         .form-divider::before { margin-right: 15px; }
         .form-divider::after { margin-left: 15px; }
 
         .modal-content input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-            box-sizing: border-box;
-            font-size: 15px;
-            transition: all 0.3s;
+            width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; background: rgba(255,255,255,0.05); color: #fff; box-sizing: border-box; font-size: 15px;
         }
-        .modal-content input::placeholder { color: #777; }
-        .modal-content input:focus {
-            outline: none;
-            border-color: #d4af37;
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-        }
+        .modal-content input:focus { outline: none; border-color: #d4af37; background: rgba(255,255,255,0.08); }
         
-        /* 🌟 個資法聲明區塊 (放在表單送出按鈕上方) */
         .privacy-notice {
-            font-size: 11px;
-            color: #888;
-            text-align: left;
-            margin-bottom: 15px;
-            line-height: 1.4;
-            background: rgba(0,0,0,0.2);
-            padding: 10px;
-            border-radius: 6px;
+            font-size: 11px; color: #888; text-align: left; margin-bottom: 15px;
+            line-height: 1.4; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;
         }
-        .privacy-notice a { color: #d4af37; text-decoration: none; }
 
-        /* 最終下單按鈕 */
         .submit-btn {
-            width: 100%;
-            padding: 16px;
+            width: 100%; padding: 16px;
             background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            background-size: 200% auto;
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.5s;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            animation: shine 4s infinite linear; 
+            background-size: 200% auto; color: #000; border: none; border-radius: 8px;
+            font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.5s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); animation: shine 4s infinite linear; 
         }
-        .submit-btn:hover {
-            background-position: right center;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
-        }
+        .submit-btn:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6); }
         @keyframes shine { to { background-position: 200% center; } }
-        .submit-btn:disabled {
-            background: #333; color: #666; cursor: not-allowed; box-shadow: none; animation: none; transform: none;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            color: #888; font-size: 28px; cursor: pointer; transition: color 0.2s; line-height: 1;
-        }
+        .submit-btn:disabled { background: #333; color: #666; cursor: not-allowed; animation: none; transform: none; }
+        
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #888; font-size: 28px; cursor: pointer; }
         .close-btn:hover { color: #d4af37; }
 
-        /* 全螢幕看圖 */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
-            display: none; justify-content: center; align-items: center;
-            z-index: 1000; cursor: zoom-out; opacity: 0; transition: opacity 0.3s ease;
+            display: none; justify-content: center; align-items: center; z-index: 1000; cursor: zoom-out;
         }
-        .lightbox.active { display: flex; opacity: 1; }
-        .lightbox img {
-            max-width: 95vw; max-height: 95vh; object-fit: contain;
-            border-radius: 5px; box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
-            transform: scale(0.9); transition: transform 0.3s ease;
-        }
-        .lightbox.active img { transform: scale(1); }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 5px; }
 
-        /* 📱 手機端適配 */
+        /* 📱 響應式設計 */
+        @media (max-width: 1024px) {
+            .main-layout { flex-direction: column; align-items: center; }
+            .right-section { width: 100%; position: static; order: 2; margin-top: 30px; }
+            .left-section { width: 100%; order: 1; }
+            .overview-grid { grid-template-columns: repeat(4, 1fr); }
+        }
         @media (max-width: 600px) {
-            h1 { font-size: 26px; letter-spacing: 2px; }
+            h1 { font-size: 26px; }
             .grid-container { grid-template-columns: repeat(4, 1fr); gap: 10px; }
-            .box { font-size: 20px; border-radius: 10px; }
+            .box { font-size: 20px; }
+            .overview-grid { grid-template-columns: 1fr 1fr; }
             .modal-content { padding: 20px 15px; width: 95%; }
-            .image-gallery img { height: 180px; }
+            .image-gallery img { height: 200px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header-section">
-        <h1>尊享腕錶盲盒</h1>
-        <div class="subtitle">點擊下方任一數字，開啟您的專屬幸運</div>
-        
-        <!-- 🌟 新增：機率與活動聲明（符合公平交易法精神） -->
-        <div class="legal-notice">
-            <strong>【活動說明】</strong><br>
-            本盲盒活動包含 36 款精選腕錶。為維護您的權益，特此說明：<br>
-            ・<strong>中獎機率：</strong>所有獎項均為隨機抽出，每格被抽中的機率均等。<br>
-            ・<strong>活動限制：</strong>每人限抽一次，選定後不可更改或退換。
+    <div class="main-layout">
+        <div class="left-section">
+            <div class="header-section">
+                <h1>尊享腕錶盲盒</h1>
+                <div class="subtitle">點擊下方任一數字，開啟您的專屬幸運</div>
+                
+                <div class="legal-notice">
+                    <strong>【活動說明】</strong><br>
+                    本盲盒活動包含 36 款精選腕錶。為維護您的權益，特此說明：<br>
+                    ・<strong>中獎機率：</strong>所有獎項均為隨機抽出，每格被抽中的機率均等。<br>
+                    ・<strong>活動限制：</strong>每人限抽一次，選定後不可更改或退換。
+                </div>
+            </div>
+            <div class="grid-container" id="blindbox-grid"></div>
+        </div>
+
+        <div class="right-section">
+            <div style="color: #d4af37; font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center;">
+                ✨ 36 款腕錶總覽 ✨
+            </div>
+            <div class="overview-grid">
+                <img src="images/overview1.jpg" alt="總覽圖1" onclick="openLightbox('images/overview1.jpg')" onerror="this.src='https://via.placeholder.com/300x300?text=Image+1'">
+                <img src="images/overview2.jpg" alt="總覽圖2" onclick="openLightbox('images/overview2.jpg')" onerror="this.src='https://via.placeholder.com/300x300?text=Image+2'">
+                <img src="images/overview3.jpg" alt="總覽圖3" onclick="openLightbox('images/overview3.jpg')" onerror="this.src='https://via.placeholder.com/300x300?text=Image+3'">
+                <img src="images/overview4.jpg" alt="總覽圖4" onclick="openLightbox('images/overview4.jpg')" onerror="this.src='https://via.placeholder.com/300x300?text=Image+4'">
+            </div>
         </div>
     </div>
 
-    <div class="grid-container" id="blindbox-grid"></div>
-
-    <!-- 彈出視窗 -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
             <h2>🎉 恭喜您抽中！</h2>
             
             <div class="gallery-title">點擊圖片可放大查看細節</div>
-            
             <div class="image-gallery" id="galleryContainer"></div>
-
-            <div class="product-details" id="productInfoContainer">
-                <h3 id="productName">手錶名稱</h3>
-                <p id="productDesc">手錶描述</p>
-            </div>
 
             <div class="form-divider">填寫收件資訊</div>
 
@@ -345,10 +240,9 @@
                 <input type="tel" id="custPhone" placeholder="請輸入聯絡電話" required>
                 <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required>
                 
-                <!-- 🌟 新增：個資收集聲明（符合個人資料保護法第8條） -->
                 <div class="privacy-notice">
                     <strong>個人資料保護聲明：</strong><br>
-                    本表單收集之姓名、電話及地址，僅限用於本次盲盒活動之獎品寄送與聯繫。我們不會將您的資料用於其他行銷用途或提供給第三方。送出表單即表示您同意上述收集目的。
+                    本表單收集之姓名、電話及地址，僅限用於本次盲盒活動之獎品寄送與聯繫。我們不會將您的資料用於其他行銷用途或提供給第三方。
                 </div>
 
                 <button type="submit" class="submit-btn">確認資料，立即領取</button>
@@ -356,7 +250,6 @@
         </div>
     </div>
 
-    <!-- 全螢幕看圖 -->
     <div class="lightbox" id="lightbox">
         <img id="lightboxImg" src="" alt="放大圖片">
     </div>
@@ -366,35 +259,14 @@
         const modal = document.getElementById('infoModal');
         const closeBtn = document.getElementById('closeModalBtn');
         const form = document.getElementById('shippingForm');
-        
         const galleryContainer = document.getElementById('galleryContainer');
-        const productNameEl = document.getElementById('productName');
-        const productDescEl = document.getElementById('productDesc');
-
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
 
-        // ⚠️⚠️⚠️ 請在這裡填寫你要接收信件的 Email ⚠️⚠️⚠️
+        // ⚠️⚠️⚠️ 接收訂單的信箱 ⚠️⚠️⚠️
         const yourEmail = 'c17872822528@163.com'; 
 
-        const watchData = {
-            1: { 
-                name: "百達翡麗 鸚鵡螺 (綠盤)", 
-                desc: "型號：5711/1A-014\n機芯：26-330 S C 自動上鍊\n錶徑：40mm\n材質：不鏽鋼\n防水：120米\n\n經典橫紋綠色面盤，奢華運動腕錶的標竿。",
-                images: ["images/1.webp", "images/1_2.webp"]
-            },
-            2: { 
-                name: "愛彼 皇家橡樹 (玫瑰金)", 
-                desc: "型號：15400OR\n機芯：Calibre 3120 自動上鍊\n錶徑：41mm\n材質：18K玫瑰金\n\n標誌性八角形錶圈與 Tapisserie 格紋面盤。",
-                images: ["images/2.webp"]
-            },
-            36: { 
-                name: "勞力士 水鬼 (黑水鬼)", 
-                desc: "型號：126610LN\n機芯：3235 自動上鍊\n錶徑：41mm\n材質：蠔式鋼\n防水：300米\n\n經典不敗款，保值首選。",
-                images: ["images/36.webp"]
-            }
-        };
-
+        // 洗牌圖片池 (1~36)
         let imagePool = Array.from({length: 36}, (_, i) => i + 1); 
         for (let i = imagePool.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -402,116 +274,109 @@
         }
 
         let currentSelectedImage = ''; 
+        let currentSelectedBoxNum = 0;
         let hasDrawn = false; 
 
+        // 生成格子
         for (let index = 0; index < 36; index++) {
             const box = document.createElement('div');
             box.className = 'box';
-            const displayNumber = index + 1;
-            box.innerText = displayNumber;
+            box.innerText = index + 1; 
             
+            // 這格對應的真實圖片編號
             const randomImageNumber = imagePool[index];
             
             box.addEventListener('click', function() {
-                if (hasDrawn) return;
+                // 防呆 1：如果已經抽過，點自己抽中的格子可以重看，點別的格子會警告
+                if (hasDrawn) {
+                    if (this.classList.contains('opened')) {
+                        openModal(currentSelectedImage, currentSelectedBoxNum);
+                    } else {
+                        alert("您已經抽過盲盒囉！請點擊您抽中的號碼完成領取。");
+                    }
+                    return;
+                }
 
                 if (!this.classList.contains('opened')) {
                     hasDrawn = true; 
                     this.classList.add('opened');
-                    currentSelectedImage = randomImageNumber;
                     
+                    currentSelectedImage = randomImageNumber;
+                    currentSelectedBoxNum = index + 1;
+                    
+                    // 顯示圖片
                     this.innerHTML = `<img src="images/${randomImageNumber}.webp" style="width: 100%; height: 100%; object-fit: cover;">`;
                     
-                    const allBoxes = document.querySelectorAll('.box');
-                    allBoxes.forEach(b => {
+                    // 鎖定其他格子
+                    document.querySelectorAll('.box').forEach(b => {
                         if (!b.classList.contains('opened')) {
                             b.classList.add('disabled');
                         }
                     });
-
-                    setTimeout(() => {
-                        openModal(randomImageNumber, displayNumber);
-                    }, 600);
+                    
+                    setTimeout(() => openModal(currentSelectedImage, currentSelectedBoxNum), 400);
                 }
             });
-            
             grid.appendChild(box);
         }
 
+        // 打開視窗 (只顯示圖片)
         function openModal(imgNum, boxNum) {
-            const info = watchData[imgNum] || { 
-                name: `${imgNum} 號精選腕錶`, 
-                desc: "恭喜您抽中這款精選腕錶！",
-                images: [`images/${imgNum}.webp`] 
-            };
-
-            let galleryHTML = '';
-            info.images.forEach(imgSrc => {
-                galleryHTML += `<img src="${imgSrc}" onclick="openLightbox('${imgSrc}')" onerror="this.style.display='none'">`;
-            });
-            galleryContainer.innerHTML = galleryHTML;
-
-            productNameEl.innerText = info.name;
-            productDescEl.innerText = info.desc;
-
+            const imgSrc = `images/${imgNum}.webp`;
+            
+            // 防呆 2：如果圖片真的不見了，顯示預設圖片
+            galleryContainer.innerHTML = `<img src="${imgSrc}" onclick="openLightbox('${imgSrc}')" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'">`;
+            
             modal.classList.add('active'); 
             form.dataset.boxNum = boxNum; 
+            form.dataset.imgNum = imgNum; // 把圖片編號存進表單
         }
 
         closeBtn.onclick = function() { modal.classList.remove('active'); }
-        window.onclick = function(event) { if (event.target == modal) { modal.classList.remove('active'); } }
+        window.onclick = function(event) { if (event.target == modal) modal.classList.remove('active'); }
 
-        function openLightbox(src) {
-            lightboxImg.src = src;
-            lightbox.classList.add('active');
-        }
+        function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
         lightbox.onclick = function() { lightbox.classList.remove('active'); }
 
         form.addEventListener('submit', function(e) {
             e.preventDefault(); 
-            
             const name = document.getElementById('custName').value;
             const phone = document.getElementById('custPhone').value;
             const address = document.getElementById('custAddress').value;
             const boxNum = this.dataset.boxNum; 
+            const imgNum = this.dataset.imgNum;
             const submitBtn = this.querySelector('button[type="submit"]');
             
-            const info = watchData[currentSelectedImage] || { name: `${currentSelectedImage} 號精選腕錶` };
-            
-            submitBtn.innerText = '處理中，請稍候...';
-            submitBtn.disabled = true;
+            submitBtn.innerText = '處理中...'; submitBtn.disabled = true;
 
+            // 寄信內容 (只有格子和圖片編號)
             fetch(`https://formsubmit.co/ajax/${yourEmail}`, {
                 method: "POST",
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
-                    客戶姓名: name,
-                    客戶電話: phone,
+                    客戶姓名: name, 
+                    客戶電話: phone, 
                     收件地址: address,
-                    "抽中的格子": `第 ${boxNum} 格`,
-                    "下單商品": info.name,
-                    "商品圖片": `${currentSelectedImage}.webp`,
-                    _subject: `【新訂單】客戶 ${name} 抽中並下單了 ${info.name}！`
+                    "抽中的格子": `第 ${boxNum} 格`, 
+                    "抽中的手錶圖片編號": `${imgNum}.webp`,
+                    _subject: `【新訂單】客戶 ${name} 抽中了第 ${boxNum} 格 (商品編號 ${imgNum})`
                 })
             })
             .then(response => response.json())
             .then(data => {
                 alert(`✅ 下單成功！\n${name} 您好，我們已收到您的訂單資訊，將盡快與您聯繫！`);
-                modal.classList.remove('active');
+                modal.classList.remove('active'); 
                 form.reset();
-                submitBtn.innerText = '確認資料，立即領取';
+                submitBtn.innerText = '確認資料，立即領取'; 
                 submitBtn.disabled = false;
             })
             .catch(error => {
+                // 防呆 3：網路錯誤提示
                 alert("⚠️ 網路連線錯誤，請稍後再試一次。");
-                submitBtn.innerText = '確認資料，立即領取';
+                submitBtn.innerText = '確認資料，立即領取'; 
                 submitBtn.disabled = false;
             });
         });
     </script>
-
 </body>
 </html>
