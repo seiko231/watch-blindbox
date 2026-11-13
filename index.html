@@ -93,14 +93,14 @@
         }
         .image-gallery img:hover { border-color: var(--gold); transform: scale(1.02); }
 
-        /* 🌟 彈出視窗內的 LINE 聯絡區塊 */
+        /* 🌟 彈出視窗內的 LINE 提醒 */
         .modal-line-banner {
             background: rgba(0, 200, 0, 0.1); border: 1px dashed #00c800; border-radius: 10px;
-            padding: 10px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; text-align: left;
+            padding: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; text-align: left;
         }
-        .modal-line-banner img { width: 80px; height: 80px; border-radius: 8px; background: #fff; padding: 3px; cursor: zoom-in; }
+        .modal-line-banner img { width: 60px; height: 60px; border-radius: 8px; background: #fff; padding: 3px; cursor: zoom-in; }
         .modal-line-banner .text h4 { color: #00c800; margin: 0 0 5px 0; font-size: 16px; }
-        .modal-line-banner .text p { color: #ccc; margin: 0; font-size: 13px; line-height: 1.4; }
+        .modal-line-banner .text p { color: #ccc; margin: 0; font-size: 13px; line-height: 1.5; }
         .modal-line-banner .text p span { color: #ff4757; font-weight: bold; }
 
         .form-divider { display: flex; align-items: center; text-align: center; color: var(--gold); font-size: 15px; font-weight: bold; margin: 20px 0; }
@@ -119,10 +119,10 @@
         /* 🌟 送出按鈕 */
         .submit-btn {
             width: 100%; padding: 18px;
-            background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            background-size: 200% auto; color: #000; border: none; border-radius: 10px;
+            background: linear-gradient(90deg, #00c800, #00e600, #00c800); /* 改成綠色，代表 LINE */
+            background-size: 200% auto; color: #fff; border: none; border-radius: 10px;
             font-size: 18px; font-weight: 900; cursor: pointer; transition: 0.5s;
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(0, 200, 0, 0.3); letter-spacing: 1px;
         }
         .submit-btn:hover { background-position: right center; transform: translateY(-2px); }
 
@@ -181,13 +181,12 @@
                 <img src="images/line-qr.jpg" alt="LINE QR Code" onclick="openLightbox('images/line-qr.jpg')" onerror="this.src='https://via.placeholder.com/80x80?text=QR+Code'">
                 <div class="text">
                     <h4>⚠️ 填寫後請跳轉 LINE 傳送資料</h4>
-                    <p>請填寫下方資料，點擊送出後系統會<b>自動複製資料</b>並跳轉 LINE，請將資料貼上發送給我們才算完成！</p>
+                    <p>點擊下方按鈕後，系統會<b>自動複製您的資料</b>並跳轉 LINE，請將資料貼上發送給我們才算完成！</p>
                 </div>
             </div>
 
             <div class="form-divider">填寫收件資訊</div>
 
-            <!-- 這裡不再使用 form 的 submit，改用 button click -->
             <form id="shippingForm" onsubmit="event.preventDefault();">
                 <input type="text" id="custName" placeholder="請輸入收件人姓名" required>
                 <input type="tel" id="custPhone" placeholder="請輸入聯絡電話" required>
@@ -197,7 +196,7 @@
                     <strong>個人資料保護聲明：</strong>本表單收集之資料，僅限用於本次活動之獎品寄送與聯繫。
                 </div>
 
-                <button type="button" class="submit-btn" id="submitBtn">確認資料，跳轉 LINE</button>
+                <button type="button" class="submit-btn" id="submitBtn">一鍵複製並加 LINE 領取</button>
             </form>
         </div>
     </div>
@@ -216,9 +215,8 @@
         const lightboxImg = document.getElementById('lightboxImg');
         const submitBtn = document.getElementById('submitBtn');
 
-        // ⚠️⚠️⚠️ 替換成你的 LINE 連結 ⚠️⚠️⚠️
-        // 請在 LINE 官方帳號或個人帳號後台，取得你的專屬連結 (例如 https://lin.ee/xxxxx)
-        const lineUrl = 'https://lin.ee/你的LINE連結'; 
+        // ✅ 已替換成你的 LINE 連結
+        const lineUrl = 'https://line.me/ti/p/vCEhGhnT9Z'; 
 
         // 洗牌圖片池
         let imagePool = Array.from({length: 36}, (_, i) => i + 1); 
@@ -289,7 +287,7 @@
             
             // 1. 檢查必填欄位
             if (!form.checkValidity()) {
-                form.reportValidity(); // 顯示瀏覽器內建的錯誤提示
+                form.reportValidity(); 
                 return;
             }
 
@@ -305,12 +303,12 @@
             // 3. 自動複製到剪貼簿
             navigator.clipboard.writeText(messageText).then(() => {
                 // 複製成功後，跳出提示
-                alert(`✅ 資料已複製！\n\n接下來將為您跳轉至 LINE，請在 LINE 聊天室中「貼上」並發送，我們收到後才算完成登記喔！`);
+                alert(`✅ 資料已複製！\n\n接下來將為您跳轉至 LINE，請在 LINE 聊天室中「長按貼上」並發送，我們收到後才算完成登記喔！`);
                 
                 // 4. 跳轉到 LINE
                 window.location.href = lineUrl;
             }).catch(err => {
-                // 如果複製失敗，讓客戶手動複製
+                // 如果複製失敗（有些舊手機不支援），跳出警告讓他手動複製
                 alert(`⚠️ 無法自動複製，請手動記下您的資料：\n\n${messageText}\n\n接下來將跳轉至 LINE，請將資料傳送給我們。`);
                 window.location.href = lineUrl;
             });
