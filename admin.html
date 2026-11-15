@@ -98,8 +98,8 @@
 
                 document.getElementById('online-count').innerText = activeCount;
                 document.getElementById('status-text').innerText = `最後更新時間：${new Date().toLocaleTimeString()}`;
-            } catch (error) {
-                document.getElementById('status-text').innerText = "連線異常，請稍後再試。";
+                       } catch (error) {
+                document.getElementById('status-text').innerText = "錯誤: " + error.message;
             }
         }
     </script>
