@@ -613,11 +613,29 @@
                     online_at: new Date().toISOString()
                 });
                 
-                // 🌟 呼叫 RPC 函數來增加總瀏覽量
+                               // 🌟 改用直接更新資料表的方式
                 try {
-                    await supabase.rpc('increment_view_count');
+                    // 先取得目前數字
+                    const { data: stats, error: fetchErr } = await supabase
+                        .from('site_stats')
+                        .select('view_count')
+                        .eq('id', 1)
+                        .single();
+                        
+                    if (fetchErr) throw fetchErr;
+
+                    // 直接 +1 並寫回資料庫
+                    const newCount = (stats?.view_count || 0) + 1;
+                    const { error: updateErr } = await supabase
+                        .from('site_stats')
+                        .update({ view_count: newCount })
+                        .eq('id', 1);
+
+                    if (updateErr) throw updateErr;
+                    console.log('✅ 瀏覽量已更新為:', newCount);
+                    
                 } catch (err) {
-                    console.error('瀏覽量統計失敗', err);
+                    console.error('❌ 瀏覽量統計失敗:', err);
                 }
             }
         });
