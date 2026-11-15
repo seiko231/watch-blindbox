@@ -4,132 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理員後台</title>
-    <!-- 🌟 引入 Supabase SDK (鎖定版本) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
     <style>
-        body { 
-            background-color: #111; 
-            color: #fff; 
-            font-family: 'Microsoft JhengHei', sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px; 
-            box-sizing: border-box; 
-        }
+        body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
         
-        /* ===== 登入畫面 ===== */
-        #login-screen { 
-            background: #222; 
-            padding: 40px; 
-            border-radius: 15px; 
-            border: 2px solid #d4af37; 
-            text-align: center; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8); 
-            width: 320px; 
-        }
+        #login-screen { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 320px; }
         #login-screen h2 { color: #d4af37; margin-top: 0; }
-        #login-screen input { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 10px 0; 
-            box-sizing: border-box; 
-            border: 1px solid #555; 
-            border-radius: 5px; 
-            background: #333; 
-            color: #fff; 
-            font-size: 15px; 
-        }
-        #login-screen button { 
-            width: 100%; 
-            padding: 12px; 
-            background: #d4af37; 
-            color: #000; 
-            border: none; 
-            border-radius: 5px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 10px; 
-            transition: 0.3s;
-        }
+        #login-screen input { width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box; border: 1px solid #555; border-radius: 5px; background: #333; color: #fff; font-size: 15px; }
+        #login-screen button { width: 100%; padding: 12px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         #login-screen button:hover { background: #fcf6ba; }
         #login-screen button:disabled { background: #555; color: #888; cursor: not-allowed; }
         
         .error-msg { color: #ff4757; font-size: 13px; height: 20px; margin-top: 10px; }
         .success-msg { color: #00c800; font-size: 13px; height: 20px; margin-top: 10px; }
 
-        /* ===== 後台主畫面 ===== */
         #admin-panel { display: none; width: 100%; max-width: 900px; }
         .dashboard { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
-        .box { 
-            background: #222; 
-            padding: 30px; 
-            border-radius: 15px; 
-            border: 2px solid #d4af37; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8); 
-            flex: 1; 
-            min-width: 250px; 
-            text-align: center; 
-        }
+        .box { background: #222; padding: 30px; border-radius: 15px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex: 1; min-width: 250px; text-align: center; }
         .box h1 { color: #d4af37; margin-top: 0; font-size: 20px; }
         .number { font-size: 70px; font-weight: bold; color: #00c800; margin: 10px 0; text-shadow: 0 0 20px rgba(0, 200, 0, 0.5); }
         .status { font-size: 13px; color: #888; }
         
-        .panel-section { 
-            background: #222; 
-            padding: 20px; 
-            border-radius: 15px; 
-            border: 1px solid #333; 
-            margin-bottom: 20px; 
-            text-align: left; 
-        }
-        .panel-section h2 { 
-            color: #d4af37; 
-            font-size: 18px; 
-            margin-top: 0; 
-            border-bottom: 1px solid #333; 
-            padding-bottom: 10px; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .panel-section { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
+        .panel-section h2 { color: #d4af37; font-size: 18px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         
-        /* 訪客列表 */
         .visitor-list { list-style: none; padding: 0; margin: 0; line-height: 2; max-height: 200px; overflow-y: auto; font-size: 14px; }
         .visitor-list li { border-bottom: 1px solid #2a2a2a; padding-bottom: 5px; }
         
-        /* 訂單表格 */
         .order-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .order-table th, .order-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; }
         .order-table th { color: #d4af37; background: #1a1a1a; }
         .order-table tr:hover { background: rgba(212, 175, 55, 0.05); }
 
-        .refresh-btn {
-            background: transparent;
-            color: #d4af37;
-            border: 1px solid #d4af37;
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: 0.3s;
-        }
+        .refresh-btn { background: transparent; color: #d4af37; border: 1px solid #d4af37; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: 0.3s; }
         .refresh-btn:hover { background: rgba(212, 175, 55, 0.2); }
 
-        .logout-btn { 
-            padding: 8px 20px; 
-            background: transparent; 
-            color: #888; 
-            border: 1px solid #888; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: 13px; 
-            margin-top: 10px; 
-            transition: 0.3s;
-        }
+        .logout-btn { padding: 8px 20px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 13px; margin-top: 10px; transition: 0.3s; }
         .logout-btn:hover { color: #fff; border-color: #fff; }
         
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -138,7 +48,6 @@
 </head>
 <body>
 
-    <!-- 登入畫面 -->
     <div id="login-screen">
         <h2>👑 管理員登入</h2>
         <input type="email" id="email-input" placeholder="請輸入管理員 Email">
@@ -148,7 +57,6 @@
         <div class="success-msg" id="success-msg"></div>
     </div>
 
-    <!-- 後台主畫面 -->
     <div id="admin-panel">
         <div class="dashboard">
             <div class="box">
@@ -199,15 +107,21 @@
     </div>
 
     <script>
-        // ===== 設定區 =====
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
-        // 初始化 Supabase
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        let presenceChannel = null; 
+        // 🌟 加入 lock 設定，解決部分瀏覽器 SecurityError
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: {
+                lock: async (name, acquireTimeout, fn) => {
+                    return await fn();
+                }
+            }
+        });
 
-        // 頁面載入時，檢查是否已經有登入 Session
+        let presenceChannel = null; 
+        let isAdminPanelLoaded = false; // 🌟 防止重複執行
+
         window.onload = async function() {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
@@ -215,12 +129,10 @@
             }
         };
 
-        // 支援 Enter 鍵登入
         document.getElementById('password-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') handleLogin();
         });
 
-        // ===== 登入邏輯 =====
         async function handleLogin() {
             const email = document.getElementById('email-input').value.trim();
             const password = document.getElementById('password-input').value;
@@ -238,7 +150,6 @@
             errorMsg.innerText = '';
             successMsg.innerText = '';
 
-            // 使用 Supabase Auth 驗證
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: email,
                 password: password
@@ -254,13 +165,15 @@
             }
         }
 
-        // ===== 顯示後台 =====
         async function showAdminPanel(email) {
+            // 🌟 如果已經載入過，就不要再重複綁定頻道
+            if (isAdminPanelLoaded) return;
+            isAdminPanelLoaded = true;
+
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
             document.title = `後台 - ${email}`;
 
-            // 1. 初始化即時人流監聽 (避免重複建立)
             if (!presenceChannel) {
                 presenceChannel = supabase.channel('online-users');
                 
@@ -273,7 +186,6 @@
                     for (const key in state) {
                         activeCount++;
                         const user = state[key][0];
-                        // 抓取設備資訊 (相容不同版本的 Supabase 結構)
                         const deviceName = user.device || (user.metadata && user.metadata.device) || '未知設備';
                         
                         const li = document.createElement('li');
@@ -289,20 +201,32 @@
                     document.getElementById('status-text').innerText = `最後更新：${new Date().toLocaleTimeString()}`;
                 });
 
-                presenceChannel.subscribe();
+                // 🌟 顯示連線狀態，確認 WebSocket 是否活著
+                presenceChannel.subscribe((status) => {
+                    const statusText = document.getElementById('status-text');
+                    if (status === 'SUBSCRIBED') {
+                        statusText.innerText = '已成功連線至即時系統';
+                    } else if (status === 'CHANNEL_ERROR') {
+                        statusText.innerText = '❌ 連線失敗 (請檢查 Realtime 設定)';
+                        statusText.style.color = '#ff4757';
+                    } else if (status === 'TIMED_OUT') {
+                        statusText.innerText = '❌ 連線逾時，請重新整理';
+                        statusText.style.color = '#ff4757';
+                    } else if (status === 'CLOSED') {
+                        statusText.innerText = '⚠️ 連線已關閉';
+                        statusText.style.color = '#ff4757';
+                    }
+                });
             }
 
-            // 2. 載入訂單資料
             loadOrders();
         }
 
-        // ===== 載入訂單 =====
         async function loadOrders() {
             const tbody = document.getElementById('order-list');
             tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#666;">載入中...</td></tr>';
             
             try {
-                // 讀取 orders 資料表，依照時間遞減排序
                 const { data, error } = await supabase
                     .from('orders')
                     .select('*')
@@ -321,10 +245,8 @@
                 tbody.innerHTML = '';
                 data.forEach(order => {
                     const tr = document.createElement('tr');
-                    // 格式化時間 (解決時區問題)
                     const time = order.created_at ? new Date(order.created_at).toLocaleString('zh-TW', { hour12: false }) : '-';
                     
-                    // 使用 textContent 防止 XSS 攻擊 (雖然是自己的資料，但這是最佳實踐)
                     tr.innerHTML = `
                         <td style="white-space: nowrap;">${time}</td>
                         <td>${order.product_name || '-'}</td>
@@ -336,15 +258,14 @@
                 });
             } catch (err) {
                 console.error('載入訂單失敗:', err);
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#ff4757;">載入失敗：${err.message}<br><span style="font-size:11px;color:#888;">(請確認 Supabase RLS 權限是否已允許登入者讀取)</span></td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#ff4757;">載入失敗：${err.message}<br><span style="font-size:11px;color:#888;">(請確認 Supabase RLS 權限是否已設定)</span></td></tr>`;
             }
         }
 
-        // ===== 登出系統 =====
         async function logout() {
-            await supabase.auth.signOut(); // 清除 Supabase Auth Session
+            await supabase.auth.signOut();
             if (presenceChannel) {
-                supabase.removeChannel(presenceChannel); // 關閉 WebSocket 連線
+                supabase.removeChannel(presenceChannel);
                 presenceChannel = null;
             }
             location.reload();
