@@ -30,7 +30,6 @@
         .line-text p { color: #ddd; margin: 0; font-size: 13px; line-height: 1.5; }
         .line-text p span { color: #ff4757; font-weight: bold; }
 
-        /* 🌟 新增：合規聲明區塊 */
         .legal-banner {
             background: rgba(255, 255, 255, 0.03);
             border: 1px dashed rgba(212, 175, 55, 0.3);
@@ -49,14 +48,30 @@
             background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.9));
             border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; overflow: hidden;
             display: flex; flex-direction: column; transition: all 0.3s ease;
-            will-change: transform;
         }
         .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
 
-        .product-image-wrapper { position: relative; width: 100%; height: 220px; overflow: hidden; cursor: zoom-in; }
-        .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; will-change: transform; }
+        .product-image-wrapper { 
+            position: relative; width: 100%; height: 220px; overflow: hidden; cursor: zoom-in; 
+            background-color: #1a1a1a;
+        }
+        
+        .product-image-wrapper img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: transform 0.4s, opacity 0.4s; 
+            opacity: 0; 
+        }
+        .product-image-wrapper img.loaded { opacity: 1; }
         .product-card:hover .product-image-wrapper img { transform: scale(1.08); }
         
+        .loader {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 30px; height: 30px; border: 3px solid rgba(212, 175, 55, 0.3);
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 1s linear infinite; z-index: 1;
+        }
+        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
         .image-number-badge {
             position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.85);
             color: var(--gold); font-size: 20px; font-weight: 900; padding: 5px 12px;
@@ -99,7 +114,6 @@
         }
         .modal-content input:focus { outline: none; border-color: var(--gold); }
         
-        /* 🌟 新增：表單內的個資法聲明 */
         .form-privacy-text {
             font-size: 11px; color: #777; text-align: left;
             margin-bottom: 15px; line-height: 1.4;
@@ -120,6 +134,15 @@
             opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s;
         }
         .lightbox.active { opacity: 1; visibility: visible; }
+
+        .lightbox-close {
+            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            color: #fff; font-size: 24px; cursor: pointer; z-index: 1001;
+            backdrop-filter: blur(5px); transition: 0.3s;
+        }
+        .lightbox-close:hover { background: rgba(255, 71, 87, 0.8); border-color: #ff4757; transform: rotate(90deg); }
         
         .gallery-track {
             display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -144,6 +167,7 @@
             .promo-text { font-size: 11px; }
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; }
+            .lightbox-close { top: 15px; right: 15px; width: 36px; height: 36px; font-size: 20px; }
         }
     </style>
 </head>
@@ -151,7 +175,7 @@
 
     <div class="header-section">
         <h1>尊享腕錶 精品展示</h1>
-        <div class="subtitle">精選 36 款經典腕錶，請挑選您的最愛</div>
+        <div class="subtitle">精選 52 款經典腕錶，請挑選您的最愛</div>
         
         <div class="line-contact-banner">
             <img src="images/line-qr.jpg" alt="LINE QR Code" onclick="openLightbox(['images/line-qr.jpg'])" onerror="this.src='https://via.placeholder.com/100x100?text=QR+Code'">
@@ -161,7 +185,6 @@
             </div>
         </div>
 
-        <!-- 🌟 新增：首頁合規聲明區塊 -->
         <div class="legal-banner">
             <strong>【交易與售後說明】</strong><br>
             本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益（商品需保持全新未使用狀態）。<br>
@@ -180,9 +203,8 @@
                 <input type="tel" id="custPhone" placeholder="請輸入聯絡電話" required>
                 <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required>
                 
-                <!-- 🌟 新增：表單個資法聲明 -->
                 <div class="form-privacy-text">
-                    <strong>個人資料保護聲明：</strong>本表單收集之姓名、電話及地址，僅限用於本次「貨到付款」之商品寄送與訂單聯繫。我們絕不會將您的資料用於其他行銷用途或提供給第三方。點擊送出即表示您同意上述條款。
+                    <strong>個人資料保護聲明：</strong>本表單收集之姓名、電話及地址，僅限用於本次「貨到付款」之商品寄送與訂單聯繫。我們絕不會將您的資料用於其他行銷用途或提供給第三方。
                 </div>
 
                 <button type="button" class="submit-btn" id="submitBtn">確認送出，加 LINE 領取</button>
@@ -191,6 +213,7 @@
     </div>
 
     <div class="lightbox" id="lightbox">
+        <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
         <div class="gallery-track" id="galleryTrack"></div>
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
@@ -206,6 +229,7 @@
         const yourEmail = 'c17872822528@163.com'; 
         const lineUrl = 'https://line.me/ti/p/vCEhGhnT9Z'; 
 
+        // 🌟 根據你最新提供的圖片，精準對齊的 52 款資料庫
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
             2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
@@ -242,11 +266,32 @@
             33: { name: "勞力士 Datejust (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", images: ["images/33.webp"] },
             34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
             35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
-            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] }
+            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
+            
+            // 🌟 以下為你新加入的 16 款 (37~52)
+            37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
+            38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
+            39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
+            40: { name: "百達翡麗 Aquanaut (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", images: ["images/40.webp"] },
+            41: { name: "勞力士 Daytona (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", images: ["images/41.webp"] },
+            42: { name: "百達翡麗 Aquanaut (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", images: ["images/42.webp"] },
+            43: { name: "歐米茄 海馬 Planet Ocean (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", images: ["images/43.webp"] },
+            44: { name: "百達翡麗 鸚鵡螺 (藍面)", desc: "經典藍色橫紋面盤，鋼款鸚鵡螺。", images: ["images/44.webp"] },
+            45: { name: "歐米茄 海馬 Planet Ocean (藍面)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", images: ["images/45.webp"] },
+            46: { name: "百達翡麗 Aquanaut (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", images: ["images/46.webp"] },
+            47: { name: "百達翡麗 Aquanaut (黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", images: ["images/47.webp"] },
+            48: { name: "勞力士 Datejust (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", images: ["images/48.webp"] },
+            49: { name: "歐米茄 海馬 300 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/49.webp"] },
+            50: { name: "勞力士 Yacht-Master (玫瑰金黑面)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", images: ["images/50.webp"] },
+            51: { name: "勞力士 Daytona (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", images: ["images/51.webp"] },
+            52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人氣綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
         };
 
-        for (let i = 1; i <= 36; i++) {
+        // 將迴圈上限改為 52
+        for (let i = 1; i <= 52; i++) {
             const watch = watchData[i];
+            if (!watch) continue; 
+            
             const mainImgSrc = watch.images[0];
 
             const card = document.createElement('div');
@@ -254,8 +299,9 @@
 
             card.innerHTML = `
                 <div class="product-image-wrapper" onclick='openLightbox(${JSON.stringify(watch.images)})'>
+                    <div class="loader" id="loader-${i}"></div>
                     <div class="image-number-badge">${i}</div>
-                    <img src="${mainImgSrc}" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'">
+                    <img src="${mainImgSrc}" loading="lazy" onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
                 </div>
                 <div class="product-info">
                     <h3>${watch.name}</h3>
@@ -287,9 +333,13 @@
             galleryTrack.scrollLeft = 0; 
         }
 
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
         lightbox.onclick = function(event) { 
             if (event.target === lightbox || event.target.classList.contains('gallery-track')) {
-                lightbox.classList.remove('active'); 
+                closeLightbox();
             }
         }
 
