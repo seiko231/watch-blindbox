@@ -349,12 +349,11 @@
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
-    <!-- 🌟 把所有邏輯整合在同一個 script 裡，避免重複宣告錯誤 -->
+    <!-- 🌟 整合所有邏輯在同一個 script -->
     <script>
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
         
-        // 解決 LockManager 錯誤
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: {
                 lock: async (name, acquireTimeout, fn) => { return await fn(); }
@@ -613,29 +612,27 @@
                     online_at: new Date().toISOString()
                 });
                 
-                               // 🌟 改用直接更新資料表的方式
+                // 🌟 直接讀取、+1、寫回（避開 RPC 權限卡住的問題）
                 try {
-                    // 先取得目前數字
-                    const { data: stats, error: fetchErr } = await supabase
+                    const { data, error: fetchError } = await supabase
                         .from('site_stats')
                         .select('view_count')
                         .eq('id', 1)
                         .single();
                         
-                    if (fetchErr) throw fetchErr;
+                    if (fetchError) throw fetchError;
 
-                    // 直接 +1 並寫回資料庫
-                    const newCount = (stats?.view_count || 0) + 1;
-                    const { error: updateErr } = await supabase
+                    const newCount = (data?.view_count || 0) + 1;
+                    const { error: updateError } = await supabase
                         .from('site_stats')
                         .update({ view_count: newCount })
                         .eq('id', 1);
 
-                    if (updateErr) throw updateErr;
-                    console.log('✅ 瀏覽量已更新為:', newCount);
+                    if (updateError) throw updateError;
+                    console.log('✅ 瀏覽量已成功增加！新數字：', newCount);
                     
                 } catch (err) {
-                    console.error('❌ 瀏覽量統計失敗:', err);
+                    console.error('❌ 瀏覽量統計失敗，原因：', err);
                 }
             }
         });
