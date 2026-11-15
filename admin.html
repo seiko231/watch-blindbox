@@ -3,25 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理員後台 - 登入</title>
-    <!-- 🌟 引入 Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>管理員後台</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
     <style>
-        body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        
         #login-screen { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 300px; }
         #login-screen h2 { color: #d4af37; margin-top: 0; }
         #login-screen input { width: 100%; padding: 12px; margin: 15px 0; box-sizing: border-box; border: 1px solid #555; border-radius: 5px; background: #333; color: #fff; font-size: 16px; text-align: center; }
         #login-screen button { width: 100%; padding: 12px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
         #login-screen button:hover { background: #fcf6ba; }
         .error-msg { color: #ff4757; font-size: 14px; height: 20px; margin-top: 10px; }
-        #admin-panel { display: none; text-align: center; }
-        .box { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; display: inline-block; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .box h1 { color: #d4af37; margin-top: 0; }
-        .number { font-size: 80px; font-weight: bold; color: #00c800; margin: 20px 0; text-shadow: 0 0 20px rgba(0, 200, 0, 0.5); }
-        .status { font-size: 14px; color: #888; }
-        .logout-btn { margin-top: 20px; padding: 8px 15px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 12px; }
+
+        #admin-panel { display: none; width: 100%; max-width: 900px; }
+        .dashboard { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
+        .box { background: #222; padding: 30px; border-radius: 15px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex: 1; min-width: 250px; text-align: center; }
+        .box h1 { color: #d4af37; margin-top: 0; font-size: 22px; }
+        .number { font-size: 70px; font-weight: bold; color: #00c800; margin: 10px 0; text-shadow: 0 0 20px rgba(0, 200, 0, 0.5); }
+        .status { font-size: 13px; color: #888; }
+        
+        .panel-section { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
+        .panel-section h2 { color: #d4af37; font-size: 18px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        
+        .visitor-list { list-style: none; padding: 0; margin: 0; line-height: 2; max-height: 200px; overflow-y: auto; font-size: 14px; }
+        .visitor-list li { border-bottom: 1px solid #2a2a2a; padding-bottom: 5px; }
+        
+        .order-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .order-table th, .order-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; }
+        .order-table th { color: #d4af37; background: #1a1a1a; }
+        .order-table tr:hover { background: rgba(212, 175, 55, 0.05); }
+
+        .logout-btn { padding: 8px 15px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 12px; margin-top: 10px; }
         .logout-btn:hover { color: #fff; border-color: #fff; }
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
     </style>
 </head>
@@ -29,41 +43,78 @@
 
     <div id="login-screen">
         <h2>👑 管理員登入</h2>
-        <p style="font-size: 13px; color: #aaa;">請輸入專屬密碼以查看即時人流</p>
+        <p style="font-size: 13px; color: #aaa;">請輸入專屬密碼</p>
         <input type="password" id="password-input" placeholder="請輸入密碼">
         <button onclick="checkPassword()">登入</button>
         <div class="error-msg" id="error-msg"></div>
     </div>
 
     <div id="admin-panel">
-        <div class="box">
-            <h1>👑 專屬管理後台</h1>
-            <div>目前真實線上人數</div>
-            <div class="number" id="online-count">--</div>
-            <div class="status" id="status-text">正在連線至資料庫...</div>
-            
-            <div style="margin-top: 20px; text-align: left; font-size: 13px; color: #aaa; max-height: 180px; overflow-y: auto; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #333;">
-                <div style="color: #d4af37; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 5px;">👥 即時訪客狀態：</div>
-                <ul id="visitor-list" style="list-style: none; padding: 0; margin: 0; line-height: 1.8;"></ul>
+        <div class="dashboard">
+            <div class="box">
+                <h1>📊 目前真實線上人數</h1>
+                <div class="number" id="online-count">--</div>
+                <div class="status" id="status-text">等待連線...</div>
             </div>
+            <div class="box">
+                <h1>📦 最新訂單數</h1>
+                <div class="number" id="order-count" style="color: #d4af37;">--</div>
+                <div class="status">資料來自 Supabase</div>
+            </div>
+        </div>
 
-            <button class="logout-btn" onclick="logout()">登出</button>
+        <div class="panel-section">
+            <h2>👥 即時訪客狀態</h2>
+            <ul class="visitor-list" id="visitor-list">
+                <li style="color:#666;">等待訪客連線...</li>
+            </ul>
+        </div>
+
+        <div class="panel-section">
+            <h2>📋 最新訂單列表</h2>
+            <div style="overflow-x: auto;">
+                <table class="order-table" id="order-table">
+                    <thead>
+                        <tr>
+                            <th>時間</th>
+                            <th>商品</th>
+                            <th>姓名</th>
+                            <th>電話</th>
+                            <th>地址</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-list">
+                        <tr><td colspan="5" style="text-align:center; color:#666;">載入中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="logout-btn" onclick="logout()">登出系統</button>
         </div>
     </div>
 
     <script>
-        const ADMIN_PASSWORD = 'adnim'; 
+        // ⚠️ 注意：這是你的登入密碼，我改成正確拼音，你自己要改掉
+        const ADMIN_PASSWORD = 'admin'; 
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
-        // 這裡只會有一個 supabase 宣告，不會衝突
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let presenceChannel = null; // 避免重複建立連線
 
         window.onload = function() {
-            if (localStorage.getItem('admin_logged_in') === 'true') { showAdminPanel(); }
+            if (localStorage.getItem('admin_logged_in') === 'true') { 
+                showAdminPanel(); 
+            }
         };
 
-        // 登入函數
+        // Enter 鍵也能登入
+        document.getElementById('password-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
         function checkPassword() {
             const input = document.getElementById('password-input').value;
             if (input === ADMIN_PASSWORD) {
@@ -74,32 +125,82 @@
             }
         }
 
-        // 顯示後台並監聽人流
-        function showAdminPanel() {
+        async function showAdminPanel() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
 
-            const channel = supabase.channel('online-users');
-
-            channel.on('presence', { event: 'sync' }, () => {
-                const state = channel.presenceState();
-                const visitorList = document.getElementById('visitor-list');
-                visitorList.innerHTML = '';
+            // 1. 初始化即時人流監聽
+            if (!presenceChannel) {
+                presenceChannel = supabase.channel('online-users');
                 
-                let activeCount = 0;
-                for (const key in state) {
-                    activeCount++;
-                    const user = state[key][0];
-                    const li = document.createElement('li');
-                    li.innerHTML = `🟢 ${user.device} <span style="color:#888; font-size:11px;">(在線)</span>`;
-                    visitorList.appendChild(li);
+                presenceChannel.on('presence', { event: 'sync' }, () => {
+                    const state = presenceChannel.presenceState();
+                    const visitorList = document.getElementById('visitor-list');
+                    visitorList.innerHTML = '';
+                    
+                    let activeCount = 0;
+                    for (const key in state) {
+                        activeCount++;
+                        // 取得第一個使用者的 metadata (或直接取 device)
+                        const user = state[key][0];
+                        const deviceName = user.device || (user.metadata && user.metadata.device) || '未知設備';
+                        
+                        const li = document.createElement('li');
+                        li.innerHTML = `🟢 ${deviceName} <span style="color:#888; font-size:11px;">(在線)</span>`;
+                        visitorList.appendChild(li);
+                    }
+                    
+                    if (activeCount === 0) {
+                        visitorList.innerHTML = '<li style="color:#666;">目前無訪客</li>';
+                    }
+
+                    document.getElementById('online-count').innerText = activeCount;
+                    document.getElementById('status-text').innerText = `最後更新：${new Date().toLocaleTimeString()}`;
+                });
+
+                presenceChannel.subscribe();
+            }
+
+            // 2. 載入訂單資料
+            loadOrders();
+        }
+
+        async function loadOrders() {
+            const tbody = document.getElementById('order-list');
+            try {
+                // 注意：這裡的 select 需要你的 RLS 允許 anon 讀取，若你只設定 insert，這裡會抓不到
+                const { data, error } = await supabase
+                    .from('orders')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(20);
+
+                if (error) throw error;
+
+                document.getElementById('order-count').innerText = data.length;
+                
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#666;">目前尚無訂單</td></tr>';
+                    return;
                 }
-                
-                document.getElementById('online-count').innerText = activeCount;
-                document.getElementById('status-text').innerText = `最後更新時間：${new Date().toLocaleTimeString()}`;
-            });
 
-            channel.subscribe();
+                tbody.innerHTML = '';
+                data.forEach(order => {
+                    const tr = document.createElement('tr');
+                    const time = new Date(order.created_at).toLocaleString('zh-TW', { hour12: false });
+                    tr.innerHTML = `
+                        <td style="white-space: nowrap;">${time}</td>
+                        <td>${order.product_name || '-'}</td>
+                        <td>${order.customer_name || '-'}</td>
+                        <td style="color: #00c800;">${order.customer_phone || '-'}</td>
+                        <td>${order.customer_address || '-'}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error('載入訂單失敗:', err);
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#ff4757;">載入失敗：${err.message}<br><span style="font-size:11px;color:#888;">(請確認 Supabase RLS 是否允許讀取)</span></td></tr>`;
+            }
         }
 
         function logout() {
