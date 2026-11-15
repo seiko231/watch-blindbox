@@ -507,7 +507,10 @@
     <script>
         const GITHUB_USER = 'seiko231'; 
         const GITHUB_REPO = 'live-counter-data'; 
-        const GITHUB_TOKEN = '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'; // 👈 請務必換成 github_pat_ 開頭的新金鑰
+                // ⚠️ 替換成你的 Supabase 專案網址 (注意不要有 /rest/v1/)
+        const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
+        // ⚠️ 替換成你的 anon 金鑰
+        const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
         const FILE_PATH = 'online.json';
 
         const sessionId = Math.random().toString(36).substring(2, 15);
