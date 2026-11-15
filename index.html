@@ -349,7 +349,18 @@
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
+    <!-- 🌟 把所有邏輯整合在同一個 script 裡，避免重複宣告錯誤 -->
     <script>
+        const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
+        
+        // 解決 LockManager 錯誤
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: {
+                lock: async (name, acquireTimeout, fn) => { return await fn(); }
+            }
+        });
+
         const productGrid = document.getElementById('productGrid');
         const modal = document.getElementById('infoModal');
         const closeBtn = document.getElementById('closeModalBtn');
@@ -359,16 +370,6 @@
         const formContainer = document.getElementById('formContainer');
         const successContainer = document.getElementById('successContainer');
         const modalProductName = document.getElementById('modalProductName');
-
-        /* ============ Supabase 初始化 ============ */
-        const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
-        
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: {
-                lock: async (name, acquireTimeout, fn) => { return await fn(); }
-            }
-        });
 
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
@@ -573,10 +574,8 @@
                 isSubmitting = false;
             }
         });
-    </script>
 
-    <!-- 🌟 Supabase 真實線上人數 & 累計瀏覽量 -->
-    <script>
+        /* ============ 真實線上人數 & 累計瀏覽量 ============ */
         const sessionId = Math.random().toString(36).substring(2, 15);
 
         function getDeviceInfo() {
