@@ -129,7 +129,7 @@
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
         .modal-content h2 { color: var(--gold); font-size: 22px; margin-top: 0; margin-bottom: 20px;}
 
-        /* 🌟 彈出視窗內的商品資訊與「解鎖價格」提示 */
+        /* 彈出視窗內的商品資訊與「解鎖價格」提示 */
         .price-display-box {
             background: rgba(212, 175, 55, 0.1); 
             border: 1px dashed var(--gold); 
@@ -264,7 +264,7 @@
             <div id="formContainer">
                 <h2>確認商品與填寫資訊</h2>
 
-                <!-- 🌟 商品資訊與「解鎖價格」提示 -->
+                <!-- 商品資訊與「解鎖價格」提示 -->
                 <div class="price-display-box">
                     <p>您選擇的商品：</p>
                     <h3 id="modalProductName">手錶名稱</h3>
@@ -342,10 +342,59 @@
             }
         });
 
-        // 這裡保留你原本的 52 款資料，不需要填價格了
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
-            // ... (請貼回你完整的 52 款資料) ...
+            2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
+            3: { name: "歐米茄 海馬 300 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", images: ["images/3.webp"] },
+            4: { name: "愛彼 皇家橡樹 (玫瑰金黑面)", desc: "霸氣玫瑰金，Tapisserie 格紋面盤。", images: ["images/4.webp"] },
+            5: { name: "沛納海 Luminor Marina (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", images: ["images/5.webp"] },
+            6: { name: "愛彼 皇家橡樹 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", images: ["images/6.webp"] },
+            7: { name: "勞力士 水鬼 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", images: ["images/7.webp"] },
+            8: { name: "勞力士 Datejust (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", images: ["images/8.webp"] },
+            9: { name: "勞力士 Air-King", desc: "航空傳奇，獨特黑面數字時標。", images: ["images/9.webp"] },
+            10: { name: "勞力士 Yacht-Master (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", images: ["images/10.webp"] },
+            11: { name: "歐米茄 海馬 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", images: ["images/11.webp"] },
+            12: { name: "沛納海 Luminor Marina (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", images: ["images/12.webp"] },
+            13: { name: "勞力士 綠水鬼", desc: "超人氣綠水鬼，一錶難求。", images: ["images/13.webp"] },
+            14: { name: "勞力士 水鬼 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", images: ["images/14.webp"] },
+            15: { name: "勞力士 Day-Date (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", images: ["images/15.webp"] },
+            16: { name: "勞力士 GMT-Master II (百事圈)", desc: "紅藍百事圈，超人氣款。", images: ["images/16.webp"] },
+            17: { name: "勞力士 蠔式恒動 (彩色慶典面盤)", desc: "活潑亮眼的慶典面盤。", images: ["images/17.webp"] },
+            18: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", images: ["images/18.webp"] },
+            19: { name: "歐米茄 海馬 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", images: ["images/19.webp"] },
+            20: { name: "沛納海 Luminor (全黑陶瓷)", desc: "全黑面盤，黑色皮帶，低調神秘。", images: ["images/20.webp"] },
+            21: { name: "沛納海 Submersible (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", images: ["images/21.webp"] },
+            22: { name: "歐米茄 海馬 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", images: ["images/22.webp"] },
+            23: { name: "勞力士 Explorer II (白面橘針)", desc: "探險家II，兩地時區。", images: ["images/23.webp"] },
+            24: { name: "勞力士 Day-Date (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", images: ["images/24.webp"] },
+            25: { name: "愛彼 皇家橡樹 (玫瑰金黑面皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", images: ["images/25.webp"] },
+            26: { name: "愛彼 皇家橡樹 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", images: ["images/26.webp"] },
+            27: { name: "勞力士 Datejust (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", images: ["images/27.webp"] },
+            28: { name: "沛納海 Luminor Marina (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", images: ["images/28.webp"] },
+            29: { name: "勞力士 黑水鬼", desc: "黑水鬼經典款，保值首選。", images: ["images/29.webp"] },
+            30: { name: "沛納海 Luminor (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", images: ["images/30.webp"] },
+            31: { name: "勞力士 海使型 Deepsea (漸變藍)", desc: "深潛王者，霸氣外露。", images: ["images/31.webp"] },
+            32: { name: "勞力士 GMT-Master II (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", images: ["images/32.webp"] },
+            33: { name: "勞力士 Datejust (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", images: ["images/33.webp"] },
+            34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
+            35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
+            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
+            
+            37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
+            38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
+            39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
+            40: { name: "百達翡麗 Aquanaut (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", images: ["images/40.webp"] },
+            41: { name: "勞力士 Daytona (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", images: ["images/41.webp"] },
+            42: { name: "百達翡麗 Aquanaut (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", images: ["images/42.webp"] },
+            43: { name: "歐米茄 海馬 Planet Ocean (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", images: ["images/43.webp"] },
+            44: { name: "百達翡麗 鸚鵡螺 (藍面)", desc: "經典藍色橫紋面盤，鋼款鸚鵡螺。", images: ["images/44.webp"] },
+            45: { name: "歐米茄 海馬 Planet Ocean (藍面)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", images: ["images/45.webp"] },
+            46: { name: "百達翡麗 Aquanaut (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", images: ["images/46.webp"] },
+            47: { name: "百達翡麗 Aquanaut (黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", images: ["images/47.webp"] },
+            48: { name: "勞力士 Datejust (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", images: ["images/48.webp"] },
+            49: { name: "歐米茄 海馬 300 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/49.webp"] },
+            50: { name: "勞力士 Yacht-Master (玫瑰金黑面)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", images: ["images/50.webp"] },
+            51: { name: "勞力士 Daytona (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", images: ["images/51.webp"] },
             52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
         };
 
@@ -386,7 +435,6 @@
             productGrid.appendChild(card);
         }
 
-        // 🌟 打開彈窗，只顯示名稱，不顯示價格
         function openModal(imgNum) {
             const watch = watchData[imgNum];
             modalProductName.innerText = watch.name;
