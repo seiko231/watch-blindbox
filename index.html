@@ -20,9 +20,29 @@
             scroll-behavior: smooth;
         }
 
+        /* 🌟 頂部跑馬燈公告 */
+        .marquee-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 35px;
+            background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728);
+            color: #111; font-weight: bold; font-size: 14px;
+            display: flex; align-items: center; overflow: hidden; z-index: 2000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .marquee-text {
+            white-space: nowrap; animation: scrollText 15s linear infinite;
+            padding-left: 100%; font-family: 'Microsoft JhengHei', sans-serif;
+        }
+        @keyframes scrollText {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* 讓 body 往下移，避免被跑馬燈擋住 */
+        body { padding-top: 55px; }
+
         /* 右上角真實線上人數 */
         .live-counter {
-            position: fixed; top: 15px; right: 15px;
+            position: fixed; top: 45px; right: 15px;
             background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px);
             border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800;
             padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;
@@ -90,7 +110,7 @@
         .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8); transform: translateY(-2px); }
 
         /* 彈出視窗 */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; }
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
@@ -116,7 +136,7 @@
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
         /* 3D 放大畫廊 */
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 2500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
         .lightbox.active { opacity: 1; visibility: visible; }
         .lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s; }
         .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(255, 255, 255, 0.2); }
@@ -126,14 +146,14 @@
         .gallery-track img:hover, .gallery-track img:active { transform: scale(1) rotateX(0deg); box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2); cursor: zoom-in; }
         .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px; }
 
-        /* 🌟 懸浮按鈕 (LINE & 回到頂部) */
+        /* 🌟 懸浮按鈕 (只有 LINE & 回到頂部) */
         .floating-btns { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1500; }
-        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; transition: 0.3s; border: none; outline: none; }
+        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; transition: 0.3s; border: none; outline: none; position: relative; }
         .float-btn:hover { transform: translateY(-5px); }
         .btn-line { background: #00c800; color: #fff; font-size: 28px; text-decoration: none; }
         .btn-top { background: #333; color: var(--gold); border: 1px solid var(--gold); font-size: 24px; display: none; }
 
-        /* 🌟 品牌 FAQ 區塊 */
+        /* 品牌 FAQ 區塊 */
         .faq-section { width: 100%; max-width: 800px; margin: 40px auto; text-align: left; }
         .faq-section h2 { text-align: center; color: var(--gold); margin-bottom: 20px; }
         .faq-item { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
@@ -143,7 +163,7 @@
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
         .faq-item.active .faq-question { color: var(--gold); }
 
-        /* 🌟 左下角購買通知彈窗 */
+        /* 左下角購買通知彈窗 */
         .purchase-toast { position: fixed; bottom: 20px; left: 20px; background: rgba(30, 30, 30, 0.95); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.8); z-index: 2000; transform: translateX(-150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .purchase-toast.show { transform: translateX(0); }
         .purchase-toast img { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; border: 1px solid #444; }
@@ -162,10 +182,19 @@
             .line-contact-banner { flex-direction: column; text-align: center; }
             .purchase-toast { bottom: 90px; left: 10px; right: 10px; transform: translateY(150%); }
             .purchase-toast.show { transform: translateY(0); }
+            .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
+            .float-btn { width: 45px; height: 45px; font-size: 22px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- 🌟 頂部跑馬燈 -->
+    <div class="marquee-container">
+        <div class="marquee-text">
+            🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
+        </div>
+    </div>
 
     <!-- 🌟 左下角購買通知 -->
     <div class="purchase-toast" id="purchaseToast">
@@ -225,7 +254,6 @@
 
     <div class="product-grid" id="productGrid"></div>
 
-    <!-- 🌟 品牌 FAQ 區塊 -->
     <div class="faq-section">
         <h2>💡 常見問題 (FAQ)</h2>
         <div class="faq-item">
@@ -242,7 +270,6 @@
         </div>
     </div>
 
-    <!-- 彈出視窗 -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
@@ -302,6 +329,7 @@
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
+    <!-- 🌟 懸浮按鈕 (只有 LINE & 回到頂部) -->
     <div class="floating-btns">
         <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="聯絡客服">💬</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
@@ -390,6 +418,9 @@
         let currentCategory = '全部';
         let currentSearch = '';
 
+        // 🌟 如果抓不到 images/ 裡的圖，會自動顯示這張網路上的手錶圖，避免破圖
+        const fallbackImg = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400&auto=format&fit=crop';
+
         function renderProducts() {
             productGrid.innerHTML = '';
             for (let i = 1; i <= 52; i++) {
@@ -401,10 +432,14 @@
 
                 const mainImgSrc = watch.images[0];
                 const showHotBadge = hotItems.includes(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
+                
+                // 隨機顯示庫存緊張
+                const stockText = Math.random() > 0.7 ? `<div style="font-size:11px; color:#ff4757; margin-bottom:8px;">⚠️ 庫存僅剩 ${Math.floor(Math.random() * 3) + 1} 支</div>` : '';
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
 
+                // 🌟 在 img 標籤中加入了 onerror 屬性，指定 fallbackImg
                 card.innerHTML = `
                     <div class="product-image-wrapper" data-images='${JSON.stringify(watch.images)}'>
                         <div class="loader" id="loader-${i}"></div>
@@ -412,11 +447,12 @@
                         ${showHotBadge}
                         <img src="${mainImgSrc}" loading="lazy"
                              onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';"
-                             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
+                             onerror="this.onerror=null; this.src='${fallbackImg}'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
                     </div>
                     <div class="product-info">
                         <h3>${watch.name}</h3>
                         <p>${watch.desc}</p>
+                        ${stockText}
                         <div class="card-trust-tags">
                             <span>🛡️ 7天退換</span>
                             <span>🚚 貨到付款</span>
@@ -442,7 +478,6 @@
             renderProducts();
         }
 
-        // FAQ 折疊選單
         function toggleFaq(element) {
             const item = element.parentElement;
             item.classList.toggle('active');
@@ -458,9 +493,7 @@
             }
             const imgWrapper = e.target.closest('.product-image-wrapper');
             if (imgWrapper && imgWrapper.dataset.images) {
-                try {
-                    openLightbox(JSON.parse(imgWrapper.dataset.images));
-                } catch (err) {}
+                try { openLightbox(JSON.parse(imgWrapper.dataset.images)); } catch (err) {}
             }
         });
 
@@ -489,7 +522,8 @@
             imagesArray.forEach(src => {
                 const img = document.createElement('img');
                 img.src = src;
-                img.onerror = function () { this.onerror = null; this.src = 'https://via.placeholder.com/800x600?text=Image+Not+Found'; };
+                // 🌟 放大圖也加入防破圖
+                img.onerror = function () { this.onerror = null; this.src = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop'; };
                 galleryTrack.appendChild(img);
             });
             lightbox.classList.add('active');
@@ -547,7 +581,7 @@
             else btn.style.display = 'none';
         });
 
-        // 🌟 假購買通知邏輯
+        // 假購買通知邏輯
         const fakeNames = ['王先生', '李小姐', '陳先生', '林小姐', '張先生', '劉小姐'];
         const fakeProducts = ['勞力士 綠水鬼', '歐米茄 海馬', '愛彼 皇家橡樹', '百達翡麗 鸚鵡螺', '勞力士 黑水鬼'];
         
@@ -559,16 +593,21 @@
             document.getElementById('toastName').innerText = name;
             document.getElementById('toastProduct').innerText = prod;
             document.getElementById('toastTime').innerText = `${time} 分鐘前`;
-            document.getElementById('toastImg').src = `images/${Math.floor(Math.random() * 52) + 1}.webp`;
+            
+            // 🌟 左下角彈窗圖片也加入防破圖
+            const randomImgNum = Math.floor(Math.random() * 52) + 1;
+            const imgElement = document.getElementById('toastImg');
+            imgElement.onerror = function() {
+                this.onerror = null; 
+                this.src = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=100&auto=format&fit=crop'; 
+            };
+            imgElement.src = `images/${randomImgNum}.webp`;
             
             const toast = document.getElementById('purchaseToast');
             toast.classList.add('show');
-            
-            // 顯示 5 秒後隱藏
             setTimeout(() => toast.classList.remove('show'), 5000);
         }
 
-        // 每隔 15~30 秒隨機彈出一次
         setTimeout(function loop() {
             showPurchaseToast();
             setTimeout(loop, Math.floor(Math.random() * 15000) + 15000);
