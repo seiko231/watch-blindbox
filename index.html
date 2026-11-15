@@ -581,30 +581,33 @@
             else btn.style.display = 'none';
         });
 
-        // 🌟 假購買通知邏輯 (隨機抽取 52 款手錶)
-        const fakeNames = ['王先生', '李小姐', '陳先生', '林小姐', '張先生', '劉小姐', '黃先生', '吳小姐', '趙先生', '周小姐'];
-        
+        // 🌟 假購買通知邏輯 (100% 綁定商品名稱與圖片)
+        const fakeData = [
+            { name: '王先生', product: '勞力士 綠水鬼', img: 'images/13.webp' },
+            { name: '李小姐', product: '歐米茄 海馬 300', img: 'images/3.webp' },
+            { name: '陳先生', product: '愛彼 皇家橡樹', img: 'images/4.webp' },
+            { name: '林小姐', product: '百達翡麗 鸚鵡螺', img: 'images/44.webp' },
+            { name: '張先生', product: '勞力士 黑水鬼', img: 'images/29.webp' },
+            { name: '劉小姐', product: '勞力士 沙士圈', img: 'images/1.webp' },
+            { name: '黃先生', product: '沛納海 Luminor Marina', img: 'images/2.webp' }
+        ];
+
         function showPurchaseToast() {
-            // 隨機抽一個人名
-            const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
-            
-            // 從你的 watchData 隨機抽一支手錶 (1 到 52)
-            const randomId = Math.floor(Math.random() * 52) + 1;
-            const randomWatch = watchData[randomId];
-            
+            // 隨機抽一組資料
+            const randomData = fakeData[Math.floor(Math.random() * fakeData.length)];
             const time = Math.floor(Math.random() * 15) + 1;
             
-            document.getElementById('toastName').innerText = randomName;
-            document.getElementById('toastProduct').innerText = randomWatch.name;
+            document.getElementById('toastName').innerText = randomData.name;
+            document.getElementById('toastProduct').innerText = randomData.product;
             document.getElementById('toastTime').innerText = `${time} 分鐘前`;
             
-            // 圖片與抽到的手錶完全對應
             const imgElement = document.getElementById('toastImg');
+            // 防破圖機制：如果真的找不到 images/ 裡的圖，就顯示網路上的手錶圖
             imgElement.onerror = function() {
                 this.onerror = null; 
                 this.src = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=100&auto=format&fit=crop'; 
             };
-            imgElement.src = `images/${randomId}.webp`;
+            imgElement.src = randomData.img;
             
             const toast = document.getElementById('purchaseToast');
             toast.classList.add('show');
