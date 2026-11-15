@@ -17,6 +17,7 @@
             margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
             -webkit-tap-highlight-color: transparent;
             position: relative;
+            scroll-behavior: smooth;
         }
 
         /* 右上角真實線上人數 */
@@ -28,219 +29,99 @@
             display: flex; align-items: center; gap: 6px; z-index: 1000;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 200, 0, 0.2);
         }
-        .live-dot {
-            width: 8px; height: 8px; background: #00c800; border-radius: 50%;
-            box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite;
-        }
+        .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
         /* 頂部信任標籤 */
         .trust-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; font-size: 13px; color: #aaa; flex-wrap: wrap; }
-        .trust-item {
-            display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1);
-            padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3);
-        }
+        .trust-item { display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3); }
         .trust-item span { color: var(--gold); font-weight: bold; }
 
-        .header-section { text-align: center; margin-bottom: 30px; width: 100%; max-width: 1000px; }
+        .header-section { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1000px; }
         h1 { color: var(--gold); font-size: 36px; margin-bottom: 10px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
         .subtitle { color: #bbb; font-size: 15px; margin-bottom: 20px; letter-spacing: 1px; }
 
         /* LINE 客服區塊 */
-        .line-contact-banner {
-            background: linear-gradient(145deg, rgba(30,30,30,0.9), rgba(15,15,15,0.9));
-            border: 1px solid var(--gold); border-radius: 12px;
-            padding: 15px 20px; margin: 0 auto 20px auto;
-            display: flex; align-items: center; justify-content: center; gap: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 600px; position: relative;
-        }
-        .online-dot {
-            position: absolute; top: 10px; right: 10px; width: 10px; height: 10px;
-            background: #00c800; border-radius: 50%; box-shadow: 0 0 10px #00c800; animation: blink 2s infinite;
-        }
+        .line-contact-banner { background: linear-gradient(145deg, rgba(30,30,30,0.9), rgba(15,15,15,0.9)); border: 1px solid var(--gold); border-radius: 12px; padding: 15px 20px; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 600px; position: relative; }
+        .online-dot { position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; background: #00c800; border-radius: 50%; box-shadow: 0 0 10px #00c800; animation: blink 2s infinite; }
         .line-contact-banner img { width: 80px; height: 80px; border-radius: 8px; border: 2px solid #fff; cursor: zoom-in; }
         .line-text h3 { color: var(--gold); margin: 0 0 8px 0; font-size: 16px; display: flex; align-items: center; gap: 5px;}
         .line-text p { color: #ddd; margin: 0; font-size: 13px; line-height: 1.5; }
         .line-text p span { color: #ff4757; font-weight: bold; }
 
-        .legal-banner {
-            background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(212, 175, 55, 0.3);
-            border-radius: 8px; padding: 12px 15px; margin-bottom: 30px;
-            max-width: 600px; font-size: 12px; color: #999; line-height: 1.6; text-align: left;
-        }
+        .legal-banner { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 600px; font-size: 12px; color: #999; line-height: 1.6; text-align: left; }
         .legal-banner strong { color: var(--gold); }
+
+        /* 🌟 搜尋與分類工具列 */
+        .filter-section { width: 100%; max-width: 1200px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .search-box { position: relative; width: 100%; max-width: 500px; }
+        .search-box input { width: 100%; padding: 12px 15px 12px 45px; border-radius: 30px; border: 1px solid #555; background: #222; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; transition: 0.3s; }
+        .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+        .search-box::before { content: '🔍'; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #888; }
+        
+        .category-tabs { display: flex; gap: 10px; overflow-x: auto; width: 100%; justify-content: flex-start; padding-bottom: 5px; }
+        .category-tabs::-webkit-scrollbar { display: none; }
+        .category-btn { background: #222; color: #aaa; border: 1px solid #444; padding: 8px 16px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 14px; transition: 0.3s; }
+        .category-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .category-btn.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: bold; }
 
         /* 產品網格 */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .product-card {
-            background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.9));
-            border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; overflow: hidden;
-            display: flex; flex-direction: column; transition: all 0.3s ease; position: relative;
-        }
+        .product-card { background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.9)); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease; position: relative; }
         .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
         .product-image-wrapper { position: relative; width: 100%; height: 220px; overflow: hidden; cursor: zoom-in; background-color: #1a1a1a; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s, opacity 0.4s; opacity: 0; }
         .product-image-wrapper img.loaded { opacity: 1; }
         .product-card:hover .product-image-wrapper img { transform: scale(1.08); }
 
-        .loader {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 30px; height: 30px; border: 3px solid rgba(212, 175, 55, 0.3);
-            border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; z-index: 1;
-        }
+        .loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border: 3px solid rgba(212, 175, 55, 0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; z-index: 1; }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        .image-number-badge {
-            position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.85);
-            color: var(--gold); font-size: 20px; font-weight: 900; padding: 5px 12px;
-            border-radius: 8px; border: 2px solid var(--gold); z-index: 10;
-        }
-
-        .stock-badge {
-            position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81);
-            color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px;
-            z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5); border: 1px solid rgba(255, 255, 255, 0.3);
-        }
+        .image-number-badge { position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.85); color: var(--gold); font-size: 20px; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 2px solid var(--gold); z-index: 10; }
+        .stock-badge { position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81); color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px; z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5); border: 1px solid rgba(255, 255, 255, 0.3); }
 
         .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-info h3 { color: var(--gold); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; }
         .product-info p { color: #888; margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
-
         .card-trust-tags { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #999; }
         .card-trust-tags span { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
 
-        /* 🌟 奢華液態金按鈕 */
-        .claim-btn {
-            width: 100%; padding: 14px;
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            background-size: 200% auto;
-            color: #111;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6);
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-        }
-        .claim-btn:hover {
-            background-position: right center;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8);
-            transform: translateY(-2px);
-        }
-        .claim-btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3), inset 0 0 0 rgba(0,0,0,0);
-        }
+        .claim-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); background-size: 200% auto; color: #111; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; font-size: 15px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6); transition: all 0.3s ease; text-shadow: 0 1px 0 rgba(255,255,255,0.4); }
+        .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8); transform: translateY(-2px); }
 
         /* 彈出視窗 */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
-            display: flex; justify-content: center; align-items: center; z-index: 999;
-            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content {
-            background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold);
-            width: 92%; max-width: 450px; text-align: center; position: relative;
-            transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-height: 90vh; overflow-y: auto;
-        }
+        .modal-content { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; }
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
         .modal-content h2 { color: var(--gold); font-size: 22px; margin-top: 0; margin-bottom: 20px;}
 
-        .price-display-box {
-            background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left;
-        }
+        .price-display-box { background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
         .price-display-box p { color: #aaa; font-size: 12px; margin: 0 0 5px 0; }
         .price-display-box h3 { color: #fff; font-size: 18px; margin: 0 0 10px 0; }
         .unlock-price { color: #ff4757; font-size: 16px; font-weight: bold; margin: 0; display: flex; align-items: center; gap: 5px; }
 
         .input-group { position: relative; margin-bottom: 15px; }
-        .input-group::before {
-            content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
-            font-size: 18px; color: #666; z-index: 2;
-        }
-        .modal-content input {
-            width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333;
-            border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; outline: none;
-        }
+        .input-group::before { content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #666; z-index: 2; }
+        .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333; border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; outline: none; }
         .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
 
-        /* 🌟 低調金色提醒 */
-        .form-warning {
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px dashed rgba(212, 175, 55, 0.4);
-            color: #d4af37;
-            font-size: 12px;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: left;
-            line-height: 1.5;
-        }
-
+        .form-warning { background: rgba(212, 175, 55, 0.08); border: 1px dashed rgba(212, 175, 55, 0.4); color: #d4af37; font-size: 12px; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.5; }
         .form-privacy-text { font-size: 11px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
         .form-privacy-text span { color: var(--gold); font-size: 14px; }
 
-        .submit-btn {
-            width: 100%; padding: 16px; background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%);
-            color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px;
-            font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
-            display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
+        .submit-btn { width: 100%; padding: 16px; background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%); color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
         .submit-btn:hover { border-color: var(--gold); transform: translateY(-2px); background: linear-gradient(180deg, #333 0%, #1a1a1a 100%); }
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
-        /* 🌟 3D 放大畫廊 */
-        .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
-            display: flex; justify-content: center; align-items: center; z-index: 1000;
-            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s;
-            perspective: 1500px;
-        }
-        .lightbox.active { opacity: 1; visibility: visible; }
-
-        .lightbox-close {
-            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center;
-            align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s;
-        }
-        .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(255, 255, 255, 0.2); }
-
-        .gallery-track {
-            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-            width: 95vw; height: 85vh; gap: 20px; padding: 0 20px;
-            align-items: center;
-        }
-        .gallery-track::-webkit-scrollbar { display: none; }
-
-        .gallery-track img {
-            flex-shrink: 0; width: 100%; height: 100%; object-fit: contain;
-            scroll-snap-align: center; border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1);
-            transform: scale(0.95) rotateX(2deg);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
-            will-change: transform;
-        }
-
-        .gallery-track img:hover, .gallery-track img:active {
-            transform: scale(1) rotateX(0deg);
-            box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2);
-            cursor: zoom-in;
-        }
-
-        .gallery-hint {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none;
-            background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
-        }
-
+        /* 🌟 懸浮按鈕 (LINE & 回到頂部) */
+        .floating-btns { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1500; }
+        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; transition: 0.3s; border: none; outline: none; }
+        .float-btn:hover { transform: translateY(-5px); }
+        .btn-line { background: #00c800; color: #fff; font-size: 28px; text-decoration: none; }
+        .btn-top { background: #333; color: var(--gold); border: 1px solid var(--gold); font-size: 24px; display: none; }
+        
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .product-image-wrapper { height: 150px; }
@@ -287,6 +168,21 @@
         </div>
     </div>
 
+    <!-- 🌟 搜尋與分類工具列 -->
+    <div class="filter-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="搜尋手錶名稱或關鍵字..." oninput="filterProducts()">
+        </div>
+        <div class="category-tabs" id="categoryTabs">
+            <button class="category-btn active" onclick="setCategory('全部', this)">全部</button>
+            <button class="category-btn" onclick="setCategory('勞力士', this)">勞力士</button>
+            <button class="category-btn" onclick="setCategory('歐米茄', this)">歐米茄</button>
+            <button class="category-btn" onclick="setCategory('愛彼', this)">愛彼</button>
+            <button class="category-btn" onclick="setCategory('沛納海', this)">沛納海</button>
+            <button class="category-btn" onclick="setCategory('百達翡麗', this)">百達翡麗</button>
+        </div>
+    </div>
+
     <div class="product-grid" id="productGrid"></div>
 
     <div class="modal-overlay" id="infoModal">
@@ -327,7 +223,6 @@
                 </form>
             </div>
 
-            <!-- 🌟 改成顯示 LINE 按鈕直跳 -->
             <div id="successContainer" style="display: none;">
                 <h2 style="color: #00c800; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
                 <p style="color: #ddd; margin-bottom: 25px; font-size: 14px;">請點擊下方按鈕加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
@@ -349,15 +244,18 @@
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
-    <!-- 🌟 整合所有邏輯在同一個 script -->
+    <!-- 🌟 懸浮按鈕 -->
+    <div class="floating-btns">
+        <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="聯絡客服">💬</a>
+        <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
+    </div>
+
     <script>
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: {
-                lock: async (name, acquireTimeout, fn) => { return await fn(); }
-            }
+            auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
         });
 
         const productGrid = document.getElementById('productGrid');
@@ -432,39 +330,66 @@
         }
         const hotItems = allIds.slice(0, 20);
 
-        for (let i = 1; i <= 52; i++) {
-            const watch = watchData[i];
-            if (!watch) continue;
+        // 🌟 渲染商品函數 (加入過濾邏輯)
+        let currentCategory = '全部';
+        let currentSearch = '';
 
-            const mainImgSrc = watch.images[0];
-            const showHotBadge = hotItems.includes(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
+        function renderProducts() {
+            productGrid.innerHTML = '';
+            for (let i = 1; i <= 52; i++) {
+                const watch = watchData[i];
+                if (!watch) continue;
 
-            const card = document.createElement('div');
-            card.className = 'product-card';
+                // 過濾邏輯
+                if (currentCategory !== '全部' && !watch.name.includes(currentCategory)) continue;
+                if (currentSearch && !watch.name.toLowerCase().includes(currentSearch.toLowerCase())) continue;
 
-            card.innerHTML = `
-                <div class="product-image-wrapper" data-images='${JSON.stringify(watch.images)}'>
-                    <div class="loader" id="loader-${i}"></div>
-                    <div class="image-number-badge">${i}</div>
-                    ${showHotBadge}
-                    <img src="${mainImgSrc}" loading="lazy"
-                         onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';"
-                         onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
-                </div>
-                <div class="product-info">
-                    <h3>${watch.name}</h3>
-                    <p>${watch.desc}</p>
-                    <div class="card-trust-tags">
-                        <span>🛡️ 7天退換</span>
-                        <span>🚚 貨到付款</span>
+                const mainImgSrc = watch.images[0];
+                const showHotBadge = hotItems.includes(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+
+                card.innerHTML = `
+                    <div class="product-image-wrapper" data-images='${JSON.stringify(watch.images)}'>
+                        <div class="loader" id="loader-${i}"></div>
+                        <div class="image-number-badge">${i}</div>
+                        ${showHotBadge}
+                        <img src="${mainImgSrc}" loading="lazy"
+                             onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';"
+                             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
                     </div>
-                    <button class="claim-btn" data-id="${i}">👉 加 LINE 獲取專屬報價</button>
-                </div>
-            `;
-            productGrid.appendChild(card);
+                    <div class="product-info">
+                        <h3>${watch.name}</h3>
+                        <p>${watch.desc}</p>
+                        <div class="card-trust-tags">
+                            <span>🛡️ 7天退換</span>
+                            <span>🚚 貨到付款</span>
+                        </div>
+                        <button class="claim-btn" data-id="${i}">👉 加 LINE 獲取專屬報價</button>
+                    </div>
+                `;
+                productGrid.appendChild(card);
+            }
         }
 
-        /* ============ 事件綁定 ============ */
+        // 初始化渲染
+        renderProducts();
+
+        // 搜尋與分類事件
+        function filterProducts() {
+            currentSearch = document.getElementById('searchInput').value;
+            renderProducts();
+        }
+
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts();
+        }
+
+        // 事件綁定
         productGrid.addEventListener('click', function (e) {
             const claimBtn = e.target.closest('.claim-btn');
             if (claimBtn) {
@@ -503,39 +428,27 @@
         }
 
         closeBtn.addEventListener('click', function () { modal.classList.remove('active'); });
-
-        window.addEventListener('click', function (event) {
-            if (event.target === modal) modal.classList.remove('active');
-        });
+        window.addEventListener('click', function (event) { if (event.target === modal) modal.classList.remove('active'); });
 
         function openLightbox(imagesArray) {
             galleryTrack.innerHTML = '';
             imagesArray.forEach(src => {
                 const img = document.createElement('img');
                 img.src = src;
-                img.onerror = function () {
-                    this.onerror = null;
-                    this.src = 'https://via.placeholder.com/800x600?text=Image+Not+Found';
-                };
+                img.onerror = function () { this.onerror = null; this.src = 'https://via.placeholder.com/800x600?text=Image+Not+Found'; };
                 galleryTrack.appendChild(img);
             });
             lightbox.classList.add('active');
             galleryTrack.scrollLeft = 0;
         }
-
         function closeLightbox() { lightbox.classList.remove('active'); }
-
         lightbox.addEventListener('click', function (event) {
-            if (event.target === lightbox || event.target.classList.contains('gallery-track')) {
-                closeLightbox();
-            }
+            if (event.target === lightbox || event.target.classList.contains('gallery-track')) closeLightbox();
         });
 
-        /* ============ 送出表單 ============ */
         let isSubmitting = false;
         submitBtn.addEventListener('click', async function () {
             if (isSubmitting) return;
-
             const form = document.getElementById('shippingForm');
             if (!form.checkValidity()) { form.reportValidity(); return; }
 
@@ -566,11 +479,21 @@
                 successContainer.style.display = 'block';
             } catch (err) {
                 console.error('送出失敗:', err);
-                alert('送出失敗，請稍後再試，或直接加入 LINE 與我們聯繫。');
+                alert('送出失敗，請稍後再試。');
                 submitBtn.innerText = '🔒 確認送出，加 LINE 獲取報價';
                 submitBtn.disabled = false;
             } finally {
                 isSubmitting = false;
+            }
+        });
+
+        // 🌟 回到頂部按鈕顯示邏輯
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('backToTopBtn');
+            if (window.scrollY > 300) {
+                btn.style.display = 'flex';
+            } else {
+                btn.style.display = 'none';
             }
         });
 
@@ -612,27 +535,13 @@
                     online_at: new Date().toISOString()
                 });
                 
-                // 🌟 直接讀取、+1、寫回（避開 RPC 權限卡住的問題）
                 try {
-                    const { data, error: fetchError } = await supabase
-                        .from('site_stats')
-                        .select('view_count')
-                        .eq('id', 1)
-                        .single();
-                        
+                    const { data, error: fetchError } = await supabase.from('site_stats').select('view_count').eq('id', 1).single();
                     if (fetchError) throw fetchError;
-
                     const newCount = (data?.view_count || 0) + 1;
-                    const { error: updateError } = await supabase
-                        .from('site_stats')
-                        .update({ view_count: newCount })
-                        .eq('id', 1);
-
-                    if (updateError) throw updateError;
-                    console.log('✅ 瀏覽量已成功增加！新數字：', newCount);
-                    
+                    await supabase.from('site_stats').update({ view_count: newCount }).eq('id', 1);
                 } catch (err) {
-                    console.error('❌ 瀏覽量統計失敗，原因：', err);
+                    console.error('❌ 瀏覽量統計失敗:', err);
                 }
             }
         });
