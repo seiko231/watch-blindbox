@@ -3,105 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理員後台 - 登入</title>
-    <!-- 🌟 引入 Supabase SDK -->
+    <title>管理員後台</title>
+    <!-- 引入 Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        #login-screen { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 300px; }
-        #login-screen h2 { color: #d4af37; margin-top: 0; }
-        #login-screen input { width: 100%; padding: 12px; margin: 15px 0; box-sizing: border-box; border: 1px solid #555; border-radius: 5px; background: #333; color: #fff; font-size: 16px; text-align: center; }
-        #login-screen button { width: 100%; padding: 12px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        #login-screen button:hover { background: #fcf6ba; }
-        .error-msg { color: #ff4757; font-size: 14px; height: 20px; margin-top: 10px; }
-        #admin-panel { display: none; text-align: center; }
-        .box { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; display: inline-block; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .box h1 { color: #d4af37; margin-top: 0; }
-        .number { font-size: 80px; font-weight: bold; color: #00c800; margin: 20px 0; text-shadow: 0 0 20px rgba(0, 200, 0, 0.5); }
-        .status { font-size: 14px; color: #888; }
-        .logout-btn { margin-top: 20px; padding: 8px 15px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 12px; }
-        .logout-btn:hover { color: #fff; border-color: #fff; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+        body { background: #111; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #222; padding: 30px; border-radius: 10px; border: 2px solid #d4af37; text-align: center; width: 280px; }
+        h2 { color: #d4af37; }
+        input { width: 100%; padding: 10px; margin: 10px 0; background: #333; border: 1px solid #555; color: #fff; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #d4af37; border: none; font-weight: bold; cursor: pointer; }
+        #error { color: #ff4757; font-size: 12px; margin-top: 10px; height: 15px; }
+        #panel { display: none; }
+        .num { font-size: 60px; color: #00c800; margin: 10px 0; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
+    <div id="login" class="box">
         <h2>👑 管理員登入</h2>
-        <p style="font-size: 13px; color: #aaa;">請輸入專屬密碼以查看即時人流</p>
-        <input type="password" id="password-input" placeholder="請輸入密碼">
-        <button onclick="checkPassword()">登入</button>
-        <div class="error-msg" id="error-msg"></div>
+        <input type="password" id="pwd" placeholder="請輸入密碼">
+        <button onclick="login()">登入</button>
+        <div id="error"></div>
     </div>
 
-    <div id="admin-panel">
-        <div class="box">
-            <h1>👑 專屬管理後台</h1>
-            <div>目前真實線上人數</div>
-            <div class="number" id="online-count">--</div>
-            <div class="status" id="status-text">正在連線至資料庫...</div>
-            
-            <div style="margin-top: 20px; text-align: left; font-size: 13px; color: #aaa; max-height: 180px; overflow-y: auto; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #333;">
-                <div style="color: #d4af37; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 5px;">👥 即時訪客狀態：</div>
-                <ul id="visitor-list" style="list-style: none; padding: 0; margin: 0; line-height: 1.8;"></ul>
-            </div>
-
-            <button class="logout-btn" onclick="logout()">登出</button>
-        </div>
+    <div id="panel" class="box">
+        <h2>👑 專屬管理後台</h2>
+        <div>目前真實線上人數</div>
+        <div class="num" id="count">--</div>
+        <div id="status" style="font-size: 12px; color: #888;">連線中...</div>
+        <button style="margin-top: 20px; background: transparent; color: #aaa; border: 1px solid #555;" onclick="location.reload()">登出</button>
     </div>
 
     <script>
-        const ADMIN_PASSWORD = 'adnim'; 
-        const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
+        const pwd = 'adnim';
+        const url = 'https://ncebylvmcnrrayqbwtog.supabase.co';
+        const key = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        window.onload = function() {
-            if (localStorage.getItem('admin_logged_in') === 'true') { showAdminPanel(); }
-        };
-
-        function checkPassword() {
-            const input = document.getElementById('password-input').value;
-            if (input === ADMIN_PASSWORD) {
-                localStorage.setItem('admin_logged_in', 'true');
-                showAdminPanel();
+        function login() {
+            const input = document.getElementById('pwd').value;
+            if (input === pwd) {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('panel').style.display = 'block';
+                startTracking();
             } else {
-                document.getElementById('error-msg').innerText = '密碼錯誤，請重新輸入！';
+                document.getElementById('error').innerText = '密碼錯誤！';
             }
         }
 
-        function showAdminPanel() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'block';
-
-            const channel = supabase.channel('online-users');
-
+        function startTracking() {
+            const sb = window.supabase.createClient(url, key);
+            const channel = sb.channel('online-users');
             channel.on('presence', { event: 'sync' }, () => {
                 const state = channel.presenceState();
-                const visitorList = document.getElementById('visitor-list');
-                visitorList.innerHTML = '';
-                
-                let activeCount = 0;
-                for (const key in state) {
-                    activeCount++;
-                    const user = state[key][0];
-                    const li = document.createElement('li');
-                    li.innerHTML = `🟢 ${user.device} <span style="color:#888; font-size:11px;">(在線)</span>`;
-                    visitorList.appendChild(li);
-                }
-                
-                document.getElementById('online-count').innerText = activeCount;
-                document.getElementById('status-text').innerText = `最後更新時間：${new Date().toLocaleTimeString()}`;
+                document.getElementById('count').innerText = Object.keys(state).length;
+                document.getElementById('status').innerText = '最後更新：' + new Date().toLocaleTimeString();
             });
-
             channel.subscribe();
-        }
-
-        function logout() {
-            localStorage.removeItem('admin_logged_in');
-            location.reload();
         }
     </script>
 </body>
