@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>尊享腕錶 精品展示</title>
-
-    <!-- 🌟 引入 Supabase SDK（鎖定版本，避免未來 breaking change） -->
+    
+    <!-- 🌟 引入 Supabase SDK (鎖定版本) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 
     <style>
@@ -292,7 +292,7 @@
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
-
+            
             <div id="formContainer">
                 <h2>確認商品與填寫資訊</h2>
                 <div class="price-display-box">
@@ -315,7 +315,7 @@
                     <div class="form-warning">
                         ✦ 貼心提醒：本服務為「貨到付款」，若無故拒收，將依《民法》追究相關運費損失。
                     </div>
-
+                    
                     <div class="form-privacy-text">
                         <span>🔒</span>
                         <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
@@ -330,7 +330,8 @@
             <div id="successContainer" style="display: none;">
                 <h2 style="color: #00c800;">✅ 已收到您的預約！</h2>
                 <p style="color: #ddd; margin-bottom: 25px;">請點擊下方按鈕加入客服 LINE，我們將立刻為您提供「專屬優惠價格」並安排貨到付款。</p>
-                <a href="https://line.me/ti/p/vCEhGgnT9Z" style="display: inline-block; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box;">
+                <!-- 🌟 這裡已更新為最新 LINE 連結 -->
+                <a href="https://line.me/ti/p/vCEhGhnT9Z" target="_blank" style="display: inline-block; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box;">
                     📱 點此加入 LINE 獲取報價
                 </a>
             </div>
@@ -354,7 +355,7 @@
         const successContainer = document.getElementById('successContainer');
         const modalProductName = document.getElementById('modalProductName');
 
-        /* ============ Supabase 初始化（統一在這裡建立 client，供收單與線上人數共用） ============ */
+        /* ============ Supabase 初始化 ============ */
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -453,7 +454,7 @@
             productGrid.appendChild(card);
         }
 
-        /* ============ 事件綁定（改用 data-* + addEventListener，避免內嵌 JSON 引號問題） ============ */
+        /* ============ 事件綁定 ============ */
         productGrid.addEventListener('click', function (e) {
             const claimBtn = e.target.closest('.claim-btn');
             if (claimBtn) {
@@ -470,7 +471,6 @@
             }
         });
 
-        // 首頁 LINE QR 放大
         const qrImg = document.querySelector('.line-contact-banner img');
         if (qrImg) {
             qrImg.addEventListener('click', function () {
@@ -494,7 +494,6 @@
 
         closeBtn.addEventListener('click', function () { modal.classList.remove('active'); });
 
-        // 改用 addEventListener，不覆蓋其他 onclick
         window.addEventListener('click', function (event) {
             if (event.target === modal) modal.classList.remove('active');
         });
@@ -522,7 +521,7 @@
             }
         });
 
-        /* ============ 送出表單：改為寫入 Supabase，並處理失敗 ============ */
+        /* ============ 送出表單 ============ */
         let isSubmitting = false;
         submitBtn.addEventListener('click', async function () {
             if (isSubmitting) return;
@@ -544,7 +543,6 @@
             submitBtn.disabled = true;
 
             try {
-                // ⚠️ 需先在 Supabase 建立 orders 資料表（SQL 見下方）
                 const { error } = await supabase.from('orders').insert([{
                     customer_name: name,
                     customer_phone: phone,
@@ -567,9 +565,8 @@
         });
     </script>
 
-    <!-- 🌟 Supabase 真實線上人數系統 (前台) -->
+    <!-- 🌟 Supabase 真實線上人數系統 -->
     <script>
-        // Supabase client 已在上面建立，這裡直接使用
         const sessionId = Math.random().toString(36).substring(2, 15);
 
         function getDeviceInfo() {
