@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>尊享腕錶 精品展示</title>
-    
-    <!-- 🌟 引入 Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- 🌟 引入 Supabase SDK（鎖定版本，避免未來 breaking change） -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 
     <style>
         :root { --gold: #d4af37; --bg-dark: #0f0f0f; }
@@ -36,8 +36,8 @@
 
         /* 頂部信任標籤 */
         .trust-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; font-size: 13px; color: #aaa; flex-wrap: wrap; }
-        .trust-item { 
-            display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1); 
+        .trust-item {
+            display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1);
             padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3);
         }
         .trust-item span { color: var(--gold); font-weight: bold; }
@@ -45,7 +45,7 @@
         .header-section { text-align: center; margin-bottom: 30px; width: 100%; max-width: 1000px; }
         h1 { color: var(--gold); font-size: 36px; margin-bottom: 10px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
         .subtitle { color: #bbb; font-size: 15px; margin-bottom: 20px; letter-spacing: 1px; }
-        
+
         /* LINE 客服區塊 */
         .line-contact-banner {
             background: linear-gradient(145deg, rgba(30,30,30,0.9), rgba(15,15,15,0.9));
@@ -55,7 +55,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 600px; position: relative;
         }
         .online-dot {
-            position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; 
+            position: absolute; top: 10px; right: 10px; width: 10px; height: 10px;
             background: #00c800; border-radius: 50%; box-shadow: 0 0 10px #00c800; animation: blink 2s infinite;
         }
         .line-contact-banner img { width: 80px; height: 80px; border-radius: 8px; border: 2px solid #fff; cursor: zoom-in; }
@@ -82,7 +82,7 @@
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s, opacity 0.4s; opacity: 0; }
         .product-image-wrapper img.loaded { opacity: 1; }
         .product-card:hover .product-image-wrapper img { transform: scale(1.08); }
-        
+
         .loader {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 30px; height: 30px; border: 3px solid rgba(212, 175, 55, 0.3);
@@ -97,8 +97,8 @@
         }
 
         .stock-badge {
-            position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81); 
-            color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px; 
+            position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81);
+            color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px;
             z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5); border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
@@ -111,17 +111,17 @@
 
         /* 🌟 奢華液態金按鈕 */
         .claim-btn {
-            width: 100%; padding: 14px; 
+            width: 100%; padding: 14px;
             background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            background-size: 200% auto; 
-            color: #111; 
-            border: 1px solid rgba(255, 255, 255, 0.4); 
+            background-size: 200% auto;
+            color: #111;
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 8px;
-            font-size: 15px; 
-            font-weight: 700; 
-            letter-spacing: 1px; 
-            cursor: pointer; 
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6); 
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6);
             transition: all 0.3s ease;
             text-shadow: 0 1px 0 rgba(255,255,255,0.4);
         }
@@ -130,9 +130,9 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8);
             transform: translateY(-2px);
         }
-        .claim-btn:active { 
-            transform: translateY(1px); 
-            box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3), inset 0 0 0 rgba(0,0,0,0); 
+        .claim-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3), inset 0 0 0 rgba(0,0,0,0);
         }
 
         /* 彈出視窗 */
@@ -144,7 +144,7 @@
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content {
-            background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); 
+            background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold);
             width: 92%; max-width: 450px; text-align: center; position: relative;
             transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             max-height: 90vh; overflow-y: auto;
@@ -188,7 +188,7 @@
 
         .submit-btn {
             width: 100%; padding: 16px; background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%);
-            color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px; 
+            color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px;
             font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
             display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
@@ -198,31 +198,31 @@
 
         /* 🌟 3D 放大畫廊 */
         .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
             display: flex; justify-content: center; align-items: center; z-index: 1000;
             opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s;
-            perspective: 1500px; 
+            perspective: 1500px;
         }
         .lightbox.active { opacity: 1; visibility: visible; }
-        
+
         .lightbox-close {
-            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center; 
+            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center;
             align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s;
         }
         .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(255, 255, 255, 0.2); }
 
-        .gallery-track { 
-            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
-            width: 95vw; height: 85vh; gap: 20px; padding: 0 20px; 
+        .gallery-track {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+            width: 95vw; height: 85vh; gap: 20px; padding: 0 20px;
             align-items: center;
         }
         .gallery-track::-webkit-scrollbar { display: none; }
 
-        .gallery-track img { 
-            flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; 
-            scroll-snap-align: center; border-radius: 12px; 
+        .gallery-track img {
+            flex-shrink: 0; width: 100%; height: 100%; object-fit: contain;
+            scroll-snap-align: center; border-radius: 12px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1);
             transform: scale(0.95) rotateX(2deg);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
@@ -235,9 +235,9 @@
             cursor: zoom-in;
         }
 
-        .gallery-hint { 
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; 
+        .gallery-hint {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none;
             background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
         }
 
@@ -269,10 +269,11 @@
     <div class="header-section">
         <h1>尊享腕錶 精品展示</h1>
         <div class="subtitle">精選 52 款經典腕錶，請挑選您的最愛</div>
-        
+
         <div class="line-contact-banner">
             <div class="online-dot"></div>
-            <img src="images/line-qr.jpg" alt="LINE QR Code" onclick="openLightbox(['images/line-qr.jpg'])" onerror="this.src='https://via.placeholder.com/100x100?text=QR+Code'">
+            <img src="images/line-qr.jpg" alt="LINE QR Code" data-images='["images/line-qr.jpg"]'
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/100x100?text=QR+Code';">
             <div class="line-text">
                 <h3>📱 真人客服在線回覆</h3>
                 <p>點擊放大 QR Code 加入好友<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
@@ -291,7 +292,7 @@
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
-            
+
             <div id="formContainer">
                 <h2>確認商品與填寫資訊</h2>
                 <div class="price-display-box">
@@ -302,19 +303,19 @@
 
                 <form id="shippingForm" onsubmit="event.preventDefault();">
                     <div class="input-group" data-icon="👤">
-                        <input type="text" id="custName" placeholder="請輸入收件人姓名" required>
+                        <input type="text" id="custName" placeholder="請輸入收件人姓名" maxlength="30" required>
                     </div>
                     <div class="input-group" data-icon="📞">
-                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" title="請輸入 09 開頭的 10 碼手機號碼" required>
+                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="10" title="請輸入 09 開頭的 10 碼手機號碼" required>
                     </div>
                     <div class="input-group" data-icon="📍">
-                        <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required>
+                        <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" maxlength="100" required>
                     </div>
 
                     <div class="form-warning">
                         ✦ 貼心提醒：本服務為「貨到付款」，若無故拒收，將依《民法》追究相關運費損失。
                     </div>
-                    
+
                     <div class="form-privacy-text">
                         <span>🔒</span>
                         <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
@@ -353,7 +354,10 @@
         const successContainer = document.getElementById('successContainer');
         const modalProductName = document.getElementById('modalProductName');
 
-        const yourEmail = 'c17872822528@163.com'; 
+        /* ============ Supabase 初始化（統一在這裡建立 client，供收單與線上人數共用） ============ */
+        const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
@@ -392,7 +396,6 @@
             34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
             35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
             36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
-            
             37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
             38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
             39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
@@ -411,17 +414,17 @@
             52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
         };
 
-        let allIds = Array.from({length: 52}, (_, i) => i + 1); 
+        let allIds = Array.from({length: 52}, (_, i) => i + 1);
         for (let i = allIds.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [allIds[i], allIds[j]] = [allIds[j], allIds[i]];
         }
-        const hotItems = allIds.slice(0, 20); 
+        const hotItems = allIds.slice(0, 20);
 
         for (let i = 1; i <= 52; i++) {
             const watch = watchData[i];
-            if (!watch) continue; 
-            
+            if (!watch) continue;
+
             const mainImgSrc = watch.images[0];
             const showHotBadge = hotItems.includes(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
 
@@ -429,11 +432,13 @@
             card.className = 'product-card';
 
             card.innerHTML = `
-                <div class="product-image-wrapper" onclick='openLightbox(${JSON.stringify(watch.images)})'>
+                <div class="product-image-wrapper" data-images='${JSON.stringify(watch.images)}'>
                     <div class="loader" id="loader-${i}"></div>
                     <div class="image-number-badge">${i}</div>
                     ${showHotBadge}
-                    <img src="${mainImgSrc}" loading="lazy" onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
+                    <img src="${mainImgSrc}" loading="lazy"
+                         onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
                 </div>
                 <div class="product-info">
                     <h3>${watch.name}</h3>
@@ -442,90 +447,129 @@
                         <span>🛡️ 7天退換</span>
                         <span>🚚 貨到付款</span>
                     </div>
-                    <button class="claim-btn" onclick="openModal(${i})">👉 加 LINE 獲取專屬報價</button>
+                    <button class="claim-btn" data-id="${i}">👉 加 LINE 獲取專屬報價</button>
                 </div>
             `;
             productGrid.appendChild(card);
         }
 
+        /* ============ 事件綁定（改用 data-* + addEventListener，避免內嵌 JSON 引號問題） ============ */
+        productGrid.addEventListener('click', function (e) {
+            const claimBtn = e.target.closest('.claim-btn');
+            if (claimBtn) {
+                openModal(parseInt(claimBtn.dataset.id, 10));
+                return;
+            }
+            const imgWrapper = e.target.closest('.product-image-wrapper');
+            if (imgWrapper && imgWrapper.dataset.images) {
+                try {
+                    openLightbox(JSON.parse(imgWrapper.dataset.images));
+                } catch (err) {
+                    console.error('無法解析圖片資料', err);
+                }
+            }
+        });
+
+        // 首頁 LINE QR 放大
+        const qrImg = document.querySelector('.line-contact-banner img');
+        if (qrImg) {
+            qrImg.addEventListener('click', function () {
+                try {
+                    openLightbox(JSON.parse(this.dataset.images));
+                } catch (err) {
+                    console.error('無法解析 QR 圖片資料', err);
+                }
+            });
+        }
+
         function openModal(imgNum) {
             const watch = watchData[imgNum];
+            if (!watch) return;
             modalProductName.innerText = watch.name;
-            modal.classList.add('active'); 
+            modal.classList.add('active');
             document.getElementById('shippingForm').dataset.imgNum = imgNum;
             formContainer.style.display = 'block';
             successContainer.style.display = 'none';
         }
 
-        closeBtn.onclick = function() { modal.classList.remove('active'); }
-        window.onclick = function(event) { if (event.target == modal) modal.classList.remove('active'); }
+        closeBtn.addEventListener('click', function () { modal.classList.remove('active'); });
+
+        // 改用 addEventListener，不覆蓋其他 onclick
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) modal.classList.remove('active');
+        });
 
         function openLightbox(imagesArray) {
             galleryTrack.innerHTML = '';
             imagesArray.forEach(src => {
                 const img = document.createElement('img');
                 img.src = src;
-                img.onerror = function() { this.src = 'https://via.placeholder.com/800x600?text=Image+Not+Found'; };
+                img.onerror = function () {
+                    this.onerror = null;
+                    this.src = 'https://via.placeholder.com/800x600?text=Image+Not+Found';
+                };
                 galleryTrack.appendChild(img);
             });
             lightbox.classList.add('active');
-            galleryTrack.scrollLeft = 0; 
+            galleryTrack.scrollLeft = 0;
         }
 
         function closeLightbox() { lightbox.classList.remove('active'); }
 
-        lightbox.onclick = function(event) { 
+        lightbox.addEventListener('click', function (event) {
             if (event.target === lightbox || event.target.classList.contains('gallery-track')) {
                 closeLightbox();
             }
-        }
+        });
 
+        /* ============ 送出表單：改為寫入 Supabase，並處理失敗 ============ */
         let isSubmitting = false;
-        submitBtn.addEventListener('click', function() {
-            if (isSubmitting) return; 
-            
+        submitBtn.addEventListener('click', async function () {
+            if (isSubmitting) return;
+
             const form = document.getElementById('shippingForm');
             if (!form.checkValidity()) { form.reportValidity(); return; }
 
             const confirmSubmit = confirm("✦ 貼心提醒：\n送出後將為您保留商品並安排「貨到付款」。\n若無故拒收，將依《民法》追究相關運費損失。\n\n確認資料無誤並同意送出嗎？");
-            if (!confirmSubmit) {
-                return; 
-            }
+            if (!confirmSubmit) return;
 
             isSubmitting = true;
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const address = document.getElementById('custAddress').value;
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
             const imgNum = form.dataset.imgNum;
             const watch = watchData[imgNum];
 
             submitBtn.innerText = '處理中，請稍候...';
             submitBtn.disabled = true;
 
-            fetch(`https://formsubmit.co/ajax/${yourEmail}`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({
-                    客戶姓名: name, 客戶電話: phone, 收件地址: address,
-                    "預約商品": `${watch.name} (編號 ${imgNum})`,
-                    _subject: `【新訂單】客戶 ${name} 預約了 ${watch.name}`
-                })
-            }).catch(err => console.log('Mail error:', err));
+            try {
+                // ⚠️ 需先在 Supabase 建立 orders 資料表（SQL 見下方）
+                const { error } = await supabase.from('orders').insert([{
+                    customer_name: name,
+                    customer_phone: phone,
+                    customer_address: address,
+                    product_name: watch.name,
+                    product_id: parseInt(imgNum, 10)
+                }]);
+                if (error) throw error;
 
-            setTimeout(() => {
                 formContainer.style.display = 'none';
                 successContainer.style.display = 'block';
-                isSubmitting = false; 
-            }, 600);
+            } catch (err) {
+                console.error('送出失敗:', err);
+                alert('送出失敗，請稍後再試，或直接加入 LINE 與我們聯繫。');
+                submitBtn.innerText = '🔒 確認送出，加 LINE 獲取報價';
+                submitBtn.disabled = false;
+            } finally {
+                isSubmitting = false;
+            }
         });
     </script>
 
     <!-- 🌟 Supabase 真實線上人數系統 (前台) -->
     <script>
-        const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
-
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Supabase client 已在上面建立，這裡直接使用
         const sessionId = Math.random().toString(36).substring(2, 15);
 
         function getDeviceInfo() {
