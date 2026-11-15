@@ -84,8 +84,9 @@
                 });
                 const data = await res.json();
                 
-                if (!data.content) {
-                    document.getElementById('status-text').innerText = "讀取失敗，請檢查 Token 與專案名稱。";
+                               if (!data.content) {
+                    // 這行會把 GitHub 回的錯誤訊息直接印出來
+                    document.getElementById('status-text').innerText = "GitHub 錯誤: " + data.message;
                     return;
                 }
 
