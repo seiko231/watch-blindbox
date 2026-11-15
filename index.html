@@ -70,7 +70,7 @@
         }
         .legal-banner strong { color: var(--gold); }
 
-        /* 產品網格 (保持原本的平面質感) */
+        /* 產品網格 */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
         .product-card {
             background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.9));
@@ -109,12 +109,31 @@
         .card-trust-tags { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #999; }
         .card-trust-tags span { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
 
+        /* 🌟 奢華液態金按鈕 */
         .claim-btn {
-            width: 100%; padding: 14px; background: linear-gradient(90deg, #d4af37, #fcf6ba, #d4af37);
-            background-size: 200% auto; color: #000; border: none; border-radius: 8px;
-            font-size: 16px; font-weight: 900; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); transition: 0.3s;
+            width: 100%; padding: 14px; 
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+            background-size: 200% auto; 
+            color: #111; 
+            border: 1px solid rgba(255, 255, 255, 0.4); 
+            border-radius: 8px;
+            font-size: 15px; 
+            font-weight: 700; 
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6); 
+            transition: all 0.3s ease;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.4);
         }
-        .claim-btn:active { transform: scale(0.95); }
+        .claim-btn:hover {
+            background-position: right center;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8);
+            transform: translateY(-2px);
+        }
+        .claim-btn:active { 
+            transform: translateY(1px); 
+            box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3), inset 0 0 0 rgba(0,0,0,0); 
+        }
 
         /* 彈出視窗 */
         .modal-overlay {
@@ -168,7 +187,7 @@
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
-        /* 🌟 3D 放大畫廊 (只有點擊後才會有這效果) */
+        /* 🌟 3D 放大畫廊 */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
@@ -192,20 +211,10 @@
         }
         .gallery-track::-webkit-scrollbar { display: none; }
 
-        /* 3D 圖片特效 */
         .gallery-track img { 
-            flex-shrink: 0; 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-            scroll-snap-align: center; 
-            border-radius: 12px; 
-            
-            box-shadow: 
-                0 20px 50px rgba(0,0,0,0.9), 
-                0 0 40px rgba(212, 175, 55, 0.15),
-                inset 0 0 0 1px rgba(255,255,255,0.1);
-            
+            flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; 
+            scroll-snap-align: center; border-radius: 12px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1);
             transform: scale(0.95) rotateX(2deg);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
             will-change: transform;
@@ -213,10 +222,7 @@
 
         .gallery-track img:hover, .gallery-track img:active {
             transform: scale(1) rotateX(0deg);
-            box-shadow: 
-                0 30px 60px rgba(0,0,0,1), 
-                0 0 50px rgba(212, 175, 55, 0.3),
-                inset 0 0 0 1px rgba(255,255,255,0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2);
             cursor: zoom-in;
         }
 
@@ -440,7 +446,7 @@
                         <span>🛡️ 7天退換</span>
                         <span>🚚 貨到付款</span>
                     </div>
-                    <button class="claim-btn" onclick="openModal(${i})">👉 解鎖專屬優惠價</button>
+                    <button class="claim-btn" onclick="openModal(${i})">👉 加 LINE 獲取專屬報價</button>
                 </div>
             `;
             productGrid.appendChild(card);
