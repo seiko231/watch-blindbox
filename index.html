@@ -170,9 +170,18 @@
         }
         .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
 
-        .agreement-box { display: flex; align-items: flex-start; gap: 8px; text-align: left; margin-bottom: 15px; font-size: 12px; color: #bbb; cursor: pointer; }
-        .agreement-box input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--gold); cursor: pointer; }
-        .agreement-box a { color: var(--gold); text-decoration: underline; }
+        /* 🌟 低調奢華的提醒框 */
+        .form-warning {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px dashed rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+            font-size: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: left;
+            line-height: 1.5;
+        }
 
         .form-privacy-text { font-size: 11px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
         .form-privacy-text span { color: var(--gold); font-size: 14px; }
@@ -183,7 +192,7 @@
             font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
             display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
-        .submit-btn:hover { border-color: var(--gold); transform: translateY(-2px); }
+        .submit-btn:hover { border-color: var(--gold); transform: translateY(-2px); background: linear-gradient(180deg, #333 0%, #1a1a1a 100%); }
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
@@ -302,19 +311,17 @@
                         <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required>
                     </div>
 
-                    <label class="agreement-box">
-                        <input type="checkbox" id="agreeTerms" required>
-                        <span>我已詳細閱讀並同意<a href="#" onclick="alert('【免責聲明】\n1. 商品圖片僅供參考，以實物為準。\n2. 貨到付款若無故拒收，將保留法律追訴權。\n3. 退換貨需保持商品全新未拆封。'); return false;">賣家權益與退換貨規範</a>。</span>
-                    </label>
+                    <!-- 🌟 低調金色提醒 -->
+                    <div class="form-warning">
+                        ✦ 貼心提醒：本服務為「貨到付款」，若無故拒收，將依《民法》追究相關運費損失。
+                    </div>
                     
                     <div class="form-privacy-text">
                         <span>🔒</span>
                         <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
                     </div>
 
-                    <p style="color: #ff4757; font-size: 12px; font-weight: bold; margin-bottom: 15px;">⚠️ 提醒您：若無故拒收商品，將依《民法》追究相關運費損失。</p>
-
-                    <button type="button" class="submit-btn" id="submitBtn" disabled>
+                    <button type="button" class="submit-btn" id="submitBtn">
                         🔒 確認送出，加 LINE 獲取報價
                     </button>
                 </form>
@@ -343,21 +350,11 @@
         const lightbox = document.getElementById('lightbox');
         const galleryTrack = document.getElementById('galleryTrack');
         const submitBtn = document.getElementById('submitBtn');
-        const agreeTerms = document.getElementById('agreeTerms'); 
         const formContainer = document.getElementById('formContainer');
         const successContainer = document.getElementById('successContainer');
         const modalProductName = document.getElementById('modalProductName');
 
         const yourEmail = 'c17872822528@163.com'; 
-
-        agreeTerms.addEventListener('change', function() {
-            submitBtn.disabled = !this.checked;
-            if(this.checked) {
-                submitBtn.style.background = 'linear-gradient(180deg, #2a2a2a 0%, #111111 100%)';
-            } else {
-                submitBtn.style.background = '#333';
-            }
-        });
 
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
@@ -457,9 +454,6 @@
             modalProductName.innerText = watch.name;
             modal.classList.add('active'); 
             document.getElementById('shippingForm').dataset.imgNum = imgNum;
-            agreeTerms.checked = false;
-            submitBtn.disabled = true;
-            submitBtn.style.background = '#333';
             formContainer.style.display = 'block';
             successContainer.style.display = 'none';
         }
@@ -493,6 +487,12 @@
             
             const form = document.getElementById('shippingForm');
             if (!form.checkValidity()) { form.reportValidity(); return; }
+
+            // 🌟 防呆機制：跳出確認視窗，客戶必須點確定才會送出
+            const confirmSubmit = confirm("✦ 貼心提醒：\n送出後將為您保留商品並安排「貨到付款」。\n若無故拒收，將依《民法》追究相關運費損失。\n\n確認資料無誤並同意送出嗎？");
+            if (!confirmSubmit) {
+                return; 
+            }
 
             isSubmitting = true;
             const name = document.getElementById('custName').value;
