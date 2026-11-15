@@ -120,6 +120,11 @@
         .price-display-box h3 { color: #fff; font-size: 18px; margin: 0 0 10px 0; }
         .unlock-price { color: #ff4757; font-size: 16px; font-weight: bold; margin: 0; display: flex; align-items: center; gap: 5px; }
 
+        /* 🌟 預算區間選擇按鈕 */
+        .budget-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+        .budget-btn { flex: 1; padding: 10px 5px; background: #222; border: 1px solid #444; border-radius: 8px; color: #aaa; font-size: 13px; cursor: pointer; transition: 0.3s; }
+        .budget-btn.active { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); color: var(--gold); font-weight: bold; }
+
         .input-group { position: relative; margin-bottom: 15px; }
         .input-group::before { content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #666; z-index: 2; }
         .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333; border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; outline: none; }
@@ -276,7 +281,15 @@
                 <div class="price-display-box">
                     <p>您選擇的商品：</p>
                     <h3 id="modalProductName">手錶名稱</h3>
-                    <p class="unlock-price">🔒 加入 LINE 解鎖專屬優惠價</p>
+                </div>
+
+                <div style="text-align: left; margin-bottom: 15px;">
+                    <p style="color: #aaa; font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
+                    <div class="budget-selector">
+                        <button type="button" class="budget-btn active" onclick="selectBudget(this, '基礎 5,000 - 10,000')">基礎<br>5K-10K</button>
+                        <button type="button" class="budget-btn" onclick="selectBudget(this, '高端 10,000 - 20,000')">高端<br>10K-20K</button>
+                        <button type="button" class="budget-btn" onclick="selectBudget(this, '定制 20,000+')">定制<br>20K+</button>
+                    </div>
                 </div>
 
                 <form id="shippingForm" onsubmit="event.preventDefault();">
@@ -307,12 +320,19 @@
 
             <div id="successContainer" style="display: none;">
                 <h2 style="color: #00c800; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
-                <p style="color: #ddd; margin-bottom: 25px; font-size: 14px;">請點擊下方按鈕加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
+                <p style="color: #ddd; margin-bottom: 20px; font-size: 14px;">請點擊下方按鈕加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
                 
-                <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: inline-block; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4);">
+                <a id="mobile-line-btn" href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: none; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4); text-align: center;">
                     📱 點此加入 LINE 獲取報價
                 </a>
-                
+
+                <div id="desktop-line-box" style="display: none; padding: 10px 0;">
+                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0,200,0,0.3);">
+                        <img src="images/line-qr.jpg" alt="LINE QR Code" style="width: 150px; height: 150px; display: block; border-radius: 5px;" onerror="this.src='https://via.placeholder.com/150x150?text=QR+Code'">
+                    </div>
+                    <p style="color: #fff; font-size: 14px; margin: 0;">📷 請用手機 LINE 掃描上方 QR Code</p>
+                </div>
+
                 <div style="font-size: 12px; color: #aaa; line-height: 1.6; margin-top: 15px;">
                     💡 若未自動開啟，請點擊右上角選擇「在瀏覽器中開啟」
                 </div>
@@ -348,6 +368,14 @@
         const formContainer = document.getElementById('formContainer');
         const successContainer = document.getElementById('successContainer');
         const modalProductName = document.getElementById('modalProductName');
+
+        let selectedBudget = '基礎 5,000 - 10,000';
+
+        function selectBudget(btn, budget) {
+            document.querySelectorAll('.budget-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedBudget = budget;
+        }
 
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
@@ -524,6 +552,18 @@
             if (event.target === lightbox || event.target.classList.contains('gallery-track')) closeLightbox();
         });
 
+        function checkDeviceForLine() {
+            const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+            if (isMobile) {
+                document.getElementById('mobile-line-btn').style.display = 'block';
+                document.getElementById('desktop-line-box').style.display = 'none';
+            } else {
+                document.getElementById('mobile-line-btn').style.display = 'none';
+                document.getElementById('desktop-line-box').style.display = 'block';
+            }
+        }
+        checkDeviceForLine();
+
         let isSubmitting = false;
         submitBtn.addEventListener('click', async function () {
             if (isSubmitting) return;
@@ -544,11 +584,13 @@
             submitBtn.disabled = true;
 
             try {
+                const productNameWithBudget = `${watch.name} (預算: ${selectedBudget})`;
+
                 const { error } = await supabase.from('orders').insert([{
                     customer_name: name,
                     customer_phone: phone,
                     customer_address: address,
-                    product_name: watch.name,
+                    product_name: productNameWithBudget,
                     product_id: parseInt(imgNum, 10)
                 }]);
                 if (error) throw error;
@@ -571,7 +613,6 @@
             else btn.style.display = 'none';
         });
 
-        // 假購買通知邏輯
         const fakeData = [
             { name: '王先生', product: '勞力士 綠水鬼', img: 'images/13.webp' },
             { name: '李小姐', product: '歐米茄 海馬 300', img: 'images/3.webp' },
@@ -607,8 +648,6 @@
             setTimeout(loop, Math.floor(Math.random() * 15000) + 15000);
         }, 5000);
 
-        /* ============ 真實線上人數 & 累計瀏覽量 & 系統分類 ============ */
-               // 🌟 為每個瀏覽器產生唯一的 ID，存在 localStorage 中，避免重整或開多分頁被重複計算
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
             sessionId = Math.random().toString(36).substring(2, 15);
@@ -650,7 +689,6 @@
                     online_at: new Date().toISOString()
                 });
                 
-                // 🌟 計算瀏覽量與系統分類點擊
                 try {
                     const { data, error: fetchError } = await supabase.from('site_stats').select('*').eq('id', 1).single();
                     if (fetchError) throw fetchError;
