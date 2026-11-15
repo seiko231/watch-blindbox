@@ -15,39 +15,26 @@
             position: relative;
         }
 
-        /* 🌟 右上角真實線上人數 */
+        /* 右上角真實線上人數 */
         .live-counter {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #00c800;
-            color: #00c800;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            z-index: 1000;
-            box-shadow: 0 0 10px rgba(0, 200, 0, 0.3);
+            position: fixed; top: 15px; right: 15px;
+            background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800;
+            padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;
+            display: flex; align-items: center; gap: 6px; z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 200, 0, 0.2);
         }
         .live-dot {
             width: 8px; height: 8px; background: #00c800; border-radius: 50%;
-            box-shadow: 0 0 5px #00c800; animation: blink 1.5s infinite;
+            box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite;
         }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
         /* 頂部信任標籤 */
-        .trust-bar {
-            display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%;
-            font-size: 13px; color: #aaa; flex-wrap: wrap;
-        }
+        .trust-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; font-size: 13px; color: #aaa; flex-wrap: wrap; }
         .trust-item { 
-            display: flex; align-items: center; gap: 5px; 
-            background: rgba(212, 175, 55, 0.1); padding: 5px 12px; border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1); 
+            padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3);
         }
         .trust-item span { color: var(--gold); font-weight: bold; }
 
@@ -64,11 +51,9 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 600px; position: relative;
         }
         .online-dot {
-            position: absolute; top: 10px; right: 10px;
-            width: 10px; height: 10px; background: #00c800; border-radius: 50%;
-            box-shadow: 0 0 10px #00c800; animation: blink 2s infinite;
+            position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; 
+            background: #00c800; border-radius: 50%; box-shadow: 0 0 10px #00c800; animation: blink 2s infinite;
         }
-        
         .line-contact-banner img { width: 80px; height: 80px; border-radius: 8px; border: 2px solid #fff; cursor: zoom-in; }
         .line-text h3 { color: var(--gold); margin: 0 0 8px 0; font-size: 16px; display: flex; align-items: center; gap: 5px;}
         .line-text p { color: #ddd; margin: 0; font-size: 13px; line-height: 1.5; }
@@ -82,18 +67,13 @@
         .legal-banner strong { color: var(--gold); }
 
         /* 產品網格 */
-        .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px; width: 100%; max-width: 1200px;
-        }
-
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
         .product-card {
             background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.9));
             border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; overflow: hidden;
             display: flex; flex-direction: column; transition: all 0.3s ease; position: relative;
         }
         .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
-
         .product-image-wrapper { position: relative; width: 100%; height: 220px; overflow: hidden; cursor: zoom-in; background-color: #1a1a1a; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s, opacity 0.4s; opacity: 0; }
         .product-image-wrapper img.loaded { opacity: 1; }
@@ -112,28 +92,18 @@
             border-radius: 8px; border: 2px solid var(--gold); z-index: 10;
         }
 
-        /* 🌟 人氣爆款標籤 */
         .stock-badge {
-            position: absolute; bottom: 10px; right: 10px; 
-            background: linear-gradient(45deg, #ff4757, #ff6b81); 
-            color: #fff; font-size: 12px; font-weight: bold;
-            padding: 5px 12px; border-radius: 20px; z-index: 10; 
-            box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81); 
+            color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px; 
+            z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5); border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-info h3 { color: var(--gold); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; }
-        
         .product-info p { color: #888; margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
 
-        .card-trust-tags {
-            display: flex; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #999;
-        }
-        .card-trust-tags span {
-            background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;
-            display: flex; align-items: center; gap: 4px;
-        }
+        .card-trust-tags { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #999; }
+        .card-trust-tags span { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
 
         .claim-btn {
             width: 100%; padding: 14px; background: linear-gradient(90deg, #d4af37, #fcf6ba, #d4af37);
@@ -150,58 +120,52 @@
             opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        
         .modal-content {
-            background: #1a1a1a; padding: 25px; border-radius: 15px;
-            border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative;
+            background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); 
+            width: 92%; max-width: 450px; text-align: center; position: relative;
             transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 90vh; overflow-y: auto;
         }
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
-
         .modal-content h2 { color: var(--gold); font-size: 22px; margin-top: 0; margin-bottom: 20px;}
 
         .input-group { position: relative; margin-bottom: 15px; }
         .input-group::before {
             content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
-            font-size: 18px; color: #666;
+            font-size: 18px; color: #666; z-index: 2;
         }
         .modal-content input {
             width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333;
             border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px;
+            outline: none;
         }
-        .modal-content input:focus { outline: none; border-color: var(--gold); background: #2a2a2a; }
-        
+        .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
+
+        /* 賣家保障勾選框 */
+        .agreement-box {
+            display: flex; align-items: flex-start; gap: 8px; text-align: left; margin-bottom: 15px; font-size: 12px; color: #bbb; cursor: pointer;
+        }
+        .agreement-box input[type="checkbox"] {
+            width: 16px; height: 16px; margin-top: 2px; accent-color: var(--gold); cursor: pointer;
+        }
+        .agreement-box a { color: var(--gold); text-decoration: underline; }
+
         .form-privacy-text { 
-            font-size: 12px; color: #888; text-align: left; margin-bottom: 15px; line-height: 1.4; 
+            font-size: 11px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; 
             display: flex; align-items: flex-start; gap: 5px;
         }
         .form-privacy-text span { color: var(--gold); font-size: 14px; }
 
-        /* 🌟 信任感按鈕 */
         .submit-btn {
-            width: 100%; padding: 16px; 
-            background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%);
-            color: var(--gold); 
-            border: 2px solid rgba(212, 175, 55, 0.6);
-            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; 
-            transition: all 0.3s ease;
+            width: 100%; padding: 16px; background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%);
+            color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px; 
+            font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
             display: flex; justify-content: center; align-items: center; gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
-        
-        .submit-btn:hover {
-            background: linear-gradient(180deg, #333 0%, #1a1a1a 100%);
-            border-color: var(--gold);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .submit-btn:active { 
-            transform: translateY(1px); 
-            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.1);
-        }
-        
+        .submit-btn:hover { background: linear-gradient(180deg, #333 0%, #1a1a1a 100%); border-color: var(--gold); transform: translateY(-2px); }
+        .submit-btn:active { transform: translateY(1px); box-shadow: 0 2px 10px rgba(212, 175, 55, 0.1); }
+        .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; box-shadow: none;}
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
         /* 放大畫廊 */
@@ -211,7 +175,6 @@
             opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s;
         }
         .lightbox.active { opacity: 1; visibility: visible; }
-
         .lightbox-close {
             position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);
@@ -235,7 +198,7 @@
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; }
             .lightbox-close { top: 15px; right: 15px; width: 36px; height: 36px; font-size: 20px; }
-            .live-counter { top: 10px; right: 10px; font-size: 11px; padding: 4px 8px; }
+            .live-counter { top: 10px; right: 10px; font-size: 11px; padding: 5px 10px; }
         }
     </style>
 </head>
@@ -284,18 +247,25 @@
                     <input type="text" id="custName" placeholder="請輸入收件人姓名" required>
                 </div>
                 <div class="input-group" data-icon="📞">
-                    <input type="tel" id="custPhone" placeholder="請輸入聯絡電話" required>
+                    <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" title="請輸入 09 開頭的 10 碼手機號碼" required>
                 </div>
                 <div class="input-group" data-icon="📍">
                     <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required>
                 </div>
+
+                <label class="agreement-box">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <span>我已詳細閱讀並同意<a href="#" onclick="alert('【免責聲明】\n1. 商品圖片僅供參考，以實物為準。\n2. 貨到付款若無故拒收，將保留法律追訴權。\n3. 退換貨需保持商品全新未拆封。'); return false;">賣家權益與退換貨規範</a>。</span>
+                </label>
                 
                 <div class="form-privacy-text">
                     <span>🔒</span>
-                    <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。您可隨時聯繫我們要求刪除資料。</div>
+                    <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
                 </div>
 
-                <button type="button" class="submit-btn" id="submitBtn">
+                <p style="color: #ff4757; font-size: 12px; font-weight: bold; margin-bottom: 15px;">⚠️ 提醒您：若無故拒收商品，將依《民法》追究相關運費損失。</p>
+
+                <button type="button" class="submit-btn" id="submitBtn" disabled>
                     🔒 確認送出，安心貨到付款
                 </button>
             </form>
@@ -315,9 +285,19 @@
         const lightbox = document.getElementById('lightbox');
         const galleryTrack = document.getElementById('galleryTrack');
         const submitBtn = document.getElementById('submitBtn');
+        const agreeTerms = document.getElementById('agreeTerms'); 
 
         const yourEmail = 'c17872822528@163.com'; 
         const lineUrl = 'https://line.me/ti/p/vCEhGhnT9Z'; 
+
+        agreeTerms.addEventListener('change', function() {
+            submitBtn.disabled = !this.checked;
+            if(this.checked) {
+                submitBtn.style.background = 'linear-gradient(180deg, #2a2a2a 0%, #111111 100%)';
+            } else {
+                submitBtn.style.background = '#333';
+            }
+        });
 
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
@@ -415,6 +395,9 @@
         function openModal(imgNum) {
             modal.classList.add('active'); 
             document.getElementById('shippingForm').dataset.imgNum = imgNum;
+            agreeTerms.checked = false;
+            submitBtn.disabled = true;
+            submitBtn.style.background = '#333';
         }
 
         closeBtn.onclick = function() { modal.classList.remove('active'); }
@@ -440,6 +423,7 @@
             }
         }
 
+        // 🌟 核心：背景寄信 + 跳轉 LINE 流程 (已移除年齡)
         submitBtn.addEventListener('click', function() {
             const form = document.getElementById('shippingForm');
             if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -453,16 +437,20 @@
             submitBtn.innerText = '處理中，請稍候...';
             submitBtn.disabled = true;
 
+            // 1. 背景寄信
             fetch(`https://formsubmit.co/ajax/${yourEmail}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
-                    客戶姓名: name, 客戶電話: phone, 收件地址: address,
+                    客戶姓名: name, 
+                    客戶電話: phone, 
+                    收件地址: address,
                     "預約商品": `${watch.name} (編號 ${imgNum})`,
                     _subject: `【新訂單】客戶 ${name} 預約了 ${watch.name}`
                 })
             }).catch(err => console.log('Mail error:', err));
 
+            // 2. 跳出提示並跳轉 LINE
             setTimeout(() => {
                 alert(`✅ 已收到您的資料！\n\n接下來將為您跳轉至 LINE，請加入好友並回傳一個「貼圖」，以便為您安排貨到付款。`);
                 window.location.href = lineUrl;
@@ -479,21 +467,28 @@
 
         const sessionId = Math.random().toString(36).substring(2, 15);
 
-        // 偵測作業系統與設備
         function getDeviceInfo() {
             const ua = navigator.userAgent;
+            let browser = "未知瀏覽器";
             let os = "未知系統";
-            if (ua.indexOf("Win") != -1) os = "Windows";
-            if (ua.indexOf("Mac") != -1) os = "Mac OS";
-            if (ua.indexOf("Android") != -1) os = "Android";
-            if (ua.indexOf("like Mac") != -1) os = "iOS";
-            if (ua.indexOf("Linux") != -1) os = "Linux";
-
             let device = "電腦";
+
+            if (ua.indexOf("Edg") !== -1) browser = "Edge";
+            else if (ua.indexOf("Chrome") !== -1) browser = "Chrome";
+            else if (ua.indexOf("Safari") !== -1) browser = "Safari";
+            else if (ua.indexOf("Firefox") !== -1) browser = "Firefox";
+            else if (ua.indexOf("MSIE") !== -1 || ua.indexOf("Trident") !== -1) browser = "IE";
+
+            if (ua.indexOf("Win") !== -1) os = "Windows";
+            if (ua.indexOf("Mac") !== -1) os = "Mac";
+            if (ua.indexOf("Android") !== -1) os = "Android";
+            if (ua.indexOf("like Mac") !== -1) os = "iOS";
+            if (ua.indexOf("Linux") !== -1) os = "Linux";
+
             if (/Mobi|Android|iPhone/i.test(ua)) device = "手機";
             if (/iPad|Tablet/i.test(ua)) device = "平板";
             
-            return `${os} | ${device}`;
+            return `${browser} | ${os} | ${device}`;
         }
 
         async function getCurrentFile() {
