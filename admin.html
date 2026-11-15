@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理員後台 - 登入</title>
+    <!-- 🌟 引入 Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         #login-screen { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 300px; }
@@ -55,15 +57,11 @@
     <script>
         const ADMIN_PASSWORD = 'adnim'; 
 
-        const GITHUB_USER = 'seiko231';
-        const GITHUB_REPO = 'live-counter-data';
-               // ⚠️ 替換成你的 Supabase 專案網址 (注意不要有 /rest/v1/)
+        // ⚠️ 請替換成你的 Supabase 網址與 anon 金鑰
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
-        // ⚠️ 替換成你的 anon 金鑰
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
-        const FILE_PATH = 'online.json';
 
-        let fetchInterval = null;
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         window.onload = function() {
             if (localStorage.getItem('admin_logged_in') === 'true') { showAdminPanel(); }
@@ -82,56 +80,33 @@
         function showAdminPanel() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
-            fetchOnlineCount(); 
-            fetchInterval = setInterval(fetchOnlineCount, 5000); 
+
+            const channel = supabase.channel('online-users');
+
+            channel.on('presence', { event: 'sync' }, () => {
+                const state = channel.presenceState();
+                const visitorList = document.getElementById('visitor-list');
+                visitorList.innerHTML = '';
+                
+                let activeCount = 0;
+                for (const key in state) {
+                    activeCount++;
+                    const user = state[key][0];
+                    const li = document.createElement('li');
+                    li.innerHTML = `🟢 ${user.device} <span style="color:#888; font-size:11px;">(在線)</span>`;
+                    visitorList.appendChild(li);
+                }
+                
+                document.getElementById('online-count').innerText = activeCount;
+                document.getElementById('status-text').innerText = `最後更新時間：${new Date().toLocaleTimeString()}`;
+            });
+
+            channel.subscribe();
         }
 
         function logout() {
             localStorage.removeItem('admin_logged_in');
             location.reload();
-        }
-
-        async function fetchOnlineCount() {
-            try {
-                const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
-                    headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
-                });
-                const data = await res.json();
-                
-                if (!data.content) {
-                    document.getElementById('status-text').innerText = "GitHub 錯誤: " + data.message;
-                    return;
-                }
-
-                const content = JSON.parse(atob(data.content));
-                const now = Date.now();
-                let activeCount = 0;
-                
-                const visitorList = document.getElementById('visitor-list');
-                visitorList.innerHTML = '';
-
-                for (let id in content) {
-                    if (now - content[id].time < 60000) { 
-                        activeCount++;
-                        
-                        const timeDiff = now - content[id].time;
-                        const mins = Math.floor(timeDiff / 60000);
-                        const secs = Math.floor((timeDiff % 60000) / 1000);
-                        let timeText = "";
-                        if (mins > 0) timeText = `已停留 ${mins} 分 ${secs} 秒`;
-                        else timeText = `剛進入 ${secs} 秒`;
-
-                        const li = document.createElement('li');
-                        li.innerHTML = `🟢 ${content[id].device} <span style="color:#888; font-size:11px;">(${timeText})</span>`;
-                        visitorList.appendChild(li);
-                    }
-                }
-
-                document.getElementById('online-count').innerText = activeCount;
-                document.getElementById('status-text').innerText = `最後更新時間：${new Date().toLocaleTimeString()}`;
-            } catch (error) {
-                document.getElementById('status-text').innerText = "程式錯誤: " + error.message;
-            }
         }
     </script>
 </body>
