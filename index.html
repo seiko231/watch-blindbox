@@ -12,7 +12,32 @@
             color: #ffffff; font-family: 'Microsoft JhengHei', sans-serif;
             margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
         }
+
+        /* 🌟 右上角真實線上人數 */
+        .live-counter {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00c800;
+            color: #00c800;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 200, 0, 0.3);
+        }
+        .live-dot {
+            width: 8px; height: 8px; background: #00c800; border-radius: 50%;
+            box-shadow: 0 0 5px #00c800; animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
         /* 頂部信任標籤 */
         .trust-bar {
@@ -43,7 +68,6 @@
             width: 10px; height: 10px; background: #00c800; border-radius: 50%;
             box-shadow: 0 0 10px #00c800; animation: blink 2s infinite;
         }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         
         .line-contact-banner img { width: 80px; height: 80px; border-radius: 8px; border: 2px solid #fff; cursor: zoom-in; }
         .line-text h3 { color: var(--gold); margin: 0 0 8px 0; font-size: 16px; display: flex; align-items: center; gap: 5px;}
@@ -211,10 +235,16 @@
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; }
             .lightbox-close { top: 15px; right: 15px; width: 36px; height: 36px; font-size: 20px; }
+            .live-counter { top: 10px; right: 10px; font-size: 11px; padding: 4px 8px; }
         }
     </style>
 </head>
 <body>
+
+    <div class="live-counter">
+        <div class="live-dot"></div>
+        目前線上 <span id="frontend-online-count" style="font-size: 15px; margin: 0 2px;">0</span> 人
+    </div>
 
     <div class="trust-bar">
         <div class="trust-item">🛡️ <span>7天鑑賞期</span></div>
@@ -440,14 +470,31 @@
         });
     </script>
 
-    <!-- 🌟 前台隱藏簽到系統 (請替換下方 Token) -->
+    <!-- 🌟 前台隱藏簽到系統與人數讀取 (請替換 Token) -->
     <script>
         const GITHUB_USER = 'seiko231'; 
         const GITHUB_REPO = 'live-counter-data'; 
-        const GITHUB_TOKEN = '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'; // 👈 這裡換成你剛剛產生的新金鑰
+        const GITHUB_TOKEN = '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'; // 👈 請務必換成 github_pat_ 開頭的新金鑰
         const FILE_PATH = 'online.json';
 
         const sessionId = Math.random().toString(36).substring(2, 15);
+
+        // 偵測作業系統與設備
+        function getDeviceInfo() {
+            const ua = navigator.userAgent;
+            let os = "未知系統";
+            if (ua.indexOf("Win") != -1) os = "Windows";
+            if (ua.indexOf("Mac") != -1) os = "Mac OS";
+            if (ua.indexOf("Android") != -1) os = "Android";
+            if (ua.indexOf("like Mac") != -1) os = "iOS";
+            if (ua.indexOf("Linux") != -1) os = "Linux";
+
+            let device = "電腦";
+            if (/Mobi|Android|iPhone/i.test(ua)) device = "手機";
+            if (/iPad|Tablet/i.test(ua)) device = "平板";
+            
+            return `${os} | ${device}`;
+        }
 
         async function getCurrentFile() {
             const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
@@ -460,12 +507,14 @@
         async function updatePresence(action) {
             try {
                 const { content, sha } = await getCurrentFile();
-                if (action === 'add') { content[sessionId] = Date.now(); } 
+                if (action === 'add') { 
+                    content[sessionId] = { time: Date.now(), device: getDeviceInfo() }; 
+                } 
                 else if (action === 'remove') { delete content[sessionId]; }
 
                 const now = Date.now();
                 for (let id in content) {
-                    if (now - content[id] > 60000) delete content[id];
+                    if (now - content[id].time > 60000) delete content[id];
                 }
 
                 await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}`, {
@@ -480,8 +529,25 @@
             } catch (e) { console.log('更新失敗', e); }
         }
 
+        async function fetchAndDisplayOnlineCount() {
+            try {
+                const { content } = await getCurrentFile();
+                const now = Date.now();
+                let activeCount = 0;
+                for (let id in content) {
+                    if (now - content[id].time < 60000) { activeCount++; }
+                }
+                const displayElement = document.getElementById('frontend-online-count');
+                if (displayElement) displayElement.innerText = activeCount;
+            } catch (e) { console.log('讀取人數失敗', e); }
+        }
+
         updatePresence('add');
+        fetchAndDisplayOnlineCount();
+        
         setInterval(() => updatePresence('add'), 30000);
+        setInterval(fetchAndDisplayOnlineCount, 10000);
+        
         window.addEventListener('beforeunload', () => { updatePresence('remove'); });
     </script>
 </body>
