@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理員後台 - 登入</title>
-    <!-- 🌟 引入 Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
@@ -54,11 +53,11 @@
     <script>
         const ADMIN_PASSWORD = 'adnim'; 
 
-        // ⚠️ 替換成你的 Supabase URL 與 anon 金鑰
+        // 你的 Supabase 設定 (已幫你填好，請確認無誤)
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
-        // 初始化
+        // 初始化 Supabase (整份檔案只會有這一行)
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         window.onload = function() {
