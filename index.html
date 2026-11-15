@@ -115,12 +115,41 @@
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
+        /* 3D 放大畫廊 */
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s; }
+        .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(255, 255, 255, 0.2); }
+        .gallery-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; width: 95vw; height: 85vh; gap: 20px; padding: 0 20px; align-items: center; }
+        .gallery-track::-webkit-scrollbar { display: none; }
+        .gallery-track img { flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1); transform: scale(0.95) rotateX(2deg); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; will-change: transform; }
+        .gallery-track img:hover, .gallery-track img:active { transform: scale(1) rotateX(0deg); box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2); cursor: zoom-in; }
+        .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px; }
+
         /* 🌟 懸浮按鈕 (LINE & 回到頂部) */
         .floating-btns { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1500; }
         .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; transition: 0.3s; border: none; outline: none; }
         .float-btn:hover { transform: translateY(-5px); }
         .btn-line { background: #00c800; color: #fff; font-size: 28px; text-decoration: none; }
         .btn-top { background: #333; color: var(--gold); border: 1px solid var(--gold); font-size: 24px; display: none; }
+
+        /* 🌟 品牌 FAQ 區塊 */
+        .faq-section { width: 100%; max-width: 800px; margin: 40px auto; text-align: left; }
+        .faq-section h2 { text-align: center; color: var(--gold); margin-bottom: 20px; }
+        .faq-item { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+        .faq-question { padding: 15px; cursor: pointer; font-weight: bold; color: #ddd; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .faq-question:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
+        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: #aaa; font-size: 14px; line-height: 1.6; }
+        .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
+        .faq-item.active .faq-question { color: var(--gold); }
+
+        /* 🌟 左下角購買通知彈窗 */
+        .purchase-toast { position: fixed; bottom: 20px; left: 20px; background: rgba(30, 30, 30, 0.95); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.8); z-index: 2000; transform: translateX(-150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .purchase-toast.show { transform: translateX(0); }
+        .purchase-toast img { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; border: 1px solid #444; }
+        .purchase-toast .text { font-size: 13px; color: #ccc; }
+        .purchase-toast .text strong { color: var(--gold); }
+        .purchase-toast .text span { color: #888; font-size: 11px; }
         
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -131,10 +160,22 @@
             .product-info p { display: none; }
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; }
+            .purchase-toast { bottom: 90px; left: 10px; right: 10px; transform: translateY(150%); }
+            .purchase-toast.show { transform: translateY(0); }
         }
     </style>
 </head>
 <body>
+
+    <!-- 🌟 左下角購買通知 -->
+    <div class="purchase-toast" id="purchaseToast">
+        <img src="" id="toastImg" alt="product">
+        <div class="text">
+            <strong id="toastName">王先生</strong> 剛剛預約了<br>
+            <span id="toastProduct">勞力士黑水鬼</span><br>
+            <span id="toastTime">1 分鐘前</span>
+        </div>
+    </div>
 
     <div class="live-counter">
         <div class="live-dot"></div>
@@ -168,7 +209,6 @@
         </div>
     </div>
 
-    <!-- 🌟 搜尋與分類工具列 -->
     <div class="filter-section">
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="搜尋手錶名稱或關鍵字..." oninput="filterProducts()">
@@ -185,6 +225,24 @@
 
     <div class="product-grid" id="productGrid"></div>
 
+    <!-- 🌟 品牌 FAQ 區塊 -->
+    <div class="faq-section">
+        <h2>💡 常見問題 (FAQ)</h2>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">Q1: 請問是原廠公司貨嗎？有保固嗎？ <span>▼</span></div>
+            <div class="faq-answer">我們所有商品皆為嚴選品質保證，並提供 7 天鑑賞期。若收到商品有任何非人為瑕疵，均可聯繫客服辦理退換貨。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">Q2: 付款方式有哪些？ <span>▼</span></div>
+            <div class="faq-answer">本網站一律採用「貨到付款」。您只需填寫收件資訊，待商品送達時將款項交給物流司機即可，安全有保障。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">Q3: 下單後多久會出貨？ <span>▼</span></div>
+            <div class="faq-answer">確認訂單後，我們會在 1-3 個工作天內安排出貨。出貨後會將物流單號發送至您的 LINE，請耐心等候。</div>
+        </div>
+    </div>
+
+    <!-- 彈出視窗 -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
@@ -244,7 +302,6 @@
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
-    <!-- 🌟 懸浮按鈕 -->
     <div class="floating-btns">
         <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="聯絡客服">💬</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
@@ -330,7 +387,6 @@
         }
         const hotItems = allIds.slice(0, 20);
 
-        // 🌟 渲染商品函數 (加入過濾邏輯)
         let currentCategory = '全部';
         let currentSearch = '';
 
@@ -340,7 +396,6 @@
                 const watch = watchData[i];
                 if (!watch) continue;
 
-                // 過濾邏輯
                 if (currentCategory !== '全部' && !watch.name.includes(currentCategory)) continue;
                 if (currentSearch && !watch.name.toLowerCase().includes(currentSearch.toLowerCase())) continue;
 
@@ -373,10 +428,8 @@
             }
         }
 
-        // 初始化渲染
         renderProducts();
 
-        // 搜尋與分類事件
         function filterProducts() {
             currentSearch = document.getElementById('searchInput').value;
             renderProducts();
@@ -389,7 +442,14 @@
             renderProducts();
         }
 
-        // 事件綁定
+        // FAQ 折疊選單
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            item.classList.toggle('active');
+            const icon = element.querySelector('span');
+            icon.innerText = item.classList.contains('active') ? '▲' : '▼';
+        }
+
         productGrid.addEventListener('click', function (e) {
             const claimBtn = e.target.closest('.claim-btn');
             if (claimBtn) {
@@ -400,20 +460,14 @@
             if (imgWrapper && imgWrapper.dataset.images) {
                 try {
                     openLightbox(JSON.parse(imgWrapper.dataset.images));
-                } catch (err) {
-                    console.error('無法解析圖片資料', err);
-                }
+                } catch (err) {}
             }
         });
 
         const qrImg = document.querySelector('.line-contact-banner img');
         if (qrImg) {
             qrImg.addEventListener('click', function () {
-                try {
-                    openLightbox(JSON.parse(this.dataset.images));
-                } catch (err) {
-                    console.error('無法解析 QR 圖片資料', err);
-                }
+                try { openLightbox(JSON.parse(this.dataset.images)); } catch (err) {}
             });
         }
 
@@ -487,15 +541,38 @@
             }
         });
 
-        // 🌟 回到頂部按鈕顯示邏輯
         window.addEventListener('scroll', function() {
             const btn = document.getElementById('backToTopBtn');
-            if (window.scrollY > 300) {
-                btn.style.display = 'flex';
-            } else {
-                btn.style.display = 'none';
-            }
+            if (window.scrollY > 300) btn.style.display = 'flex';
+            else btn.style.display = 'none';
         });
+
+        // 🌟 假購買通知邏輯
+        const fakeNames = ['王先生', '李小姐', '陳先生', '林小姐', '張先生', '劉小姐'];
+        const fakeProducts = ['勞力士 綠水鬼', '歐米茄 海馬', '愛彼 皇家橡樹', '百達翡麗 鸚鵡螺', '勞力士 黑水鬼'];
+        
+        function showPurchaseToast() {
+            const name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+            const prod = fakeProducts[Math.floor(Math.random() * fakeProducts.length)];
+            const time = Math.floor(Math.random() * 15) + 1;
+            
+            document.getElementById('toastName').innerText = name;
+            document.getElementById('toastProduct').innerText = prod;
+            document.getElementById('toastTime').innerText = `${time} 分鐘前`;
+            document.getElementById('toastImg').src = `images/${Math.floor(Math.random() * 52) + 1}.webp`;
+            
+            const toast = document.getElementById('purchaseToast');
+            toast.classList.add('show');
+            
+            // 顯示 5 秒後隱藏
+            setTimeout(() => toast.classList.remove('show'), 5000);
+        }
+
+        // 每隔 15~30 秒隨機彈出一次
+        setTimeout(function loop() {
+            showPurchaseToast();
+            setTimeout(loop, Math.floor(Math.random() * 15000) + 15000);
+        }, 5000);
 
         /* ============ 真實線上人數 & 累計瀏覽量 ============ */
         const sessionId = Math.random().toString(36).substring(2, 15);
@@ -540,9 +617,7 @@
                     if (fetchError) throw fetchError;
                     const newCount = (data?.view_count || 0) + 1;
                     await supabase.from('site_stats').update({ view_count: newCount }).eq('id', 1);
-                } catch (err) {
-                    console.error('❌ 瀏覽量統計失敗:', err);
-                }
+                } catch (err) {}
             }
         });
     </script>
