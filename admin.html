@@ -7,41 +7,32 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
     <style>
         body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        
         #login-screen { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 320px; }
         #login-screen h2 { color: #d4af37; margin-top: 0; }
         #login-screen input { width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box; border: 1px solid #555; border-radius: 5px; background: #333; color: #fff; font-size: 15px; }
         #login-screen button { width: 100%; padding: 12px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         #login-screen button:hover { background: #fcf6ba; }
         #login-screen button:disabled { background: #555; color: #888; cursor: not-allowed; }
-        
         .error-msg { color: #ff4757; font-size: 13px; height: 20px; margin-top: 10px; }
         .success-msg { color: #00c800; font-size: 13px; height: 20px; margin-top: 10px; }
-
         #admin-panel { display: none; width: 100%; max-width: 900px; }
         .dashboard { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
         .box { background: #222; padding: 30px; border-radius: 15px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.8); flex: 1; min-width: 250px; text-align: center; }
         .box h1 { color: #d4af37; margin-top: 0; font-size: 20px; }
         .number { font-size: 70px; font-weight: bold; color: #00c800; margin: 10px 0; text-shadow: 0 0 20px rgba(0, 200, 0, 0.5); }
         .status { font-size: 13px; color: #888; }
-        
         .panel-section { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
         .panel-section h2 { color: #d4af37; font-size: 18px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        
         .visitor-list { list-style: none; padding: 0; margin: 0; line-height: 2; max-height: 200px; overflow-y: auto; font-size: 14px; }
         .visitor-list li { border-bottom: 1px solid #2a2a2a; padding-bottom: 5px; }
-        
         .order-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .order-table th, .order-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; }
         .order-table th { color: #d4af37; background: #1a1a1a; }
         .order-table tr:hover { background: rgba(212, 175, 55, 0.05); }
-
         .refresh-btn { background: transparent; color: #d4af37; border: 1px solid #d4af37; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: 0.3s; }
         .refresh-btn:hover { background: rgba(212, 175, 55, 0.2); }
-
         .logout-btn { padding: 8px 20px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 13px; margin-top: 10px; transition: 0.3s; }
         .logout-btn:hover { color: #fff; border-color: #fff; }
-        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
     </style>
@@ -110,17 +101,14 @@
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
-        // 🌟 加入 lock 設定，解決部分瀏覽器 SecurityError
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: {
-                lock: async (name, acquireTimeout, fn) => {
-                    return await fn();
-                }
+                lock: async (name, acquireTimeout, fn) => { return await fn(); }
             }
         });
 
         let presenceChannel = null; 
-        let isAdminPanelLoaded = false; // 🌟 防止重複執行
+        let isAdminPanelLoaded = false;
 
         window.onload = async function() {
             const { data: { session } } = await supabase.auth.getSession();
@@ -166,7 +154,6 @@
         }
 
         async function showAdminPanel(email) {
-            // 🌟 如果已經載入過，就不要再重複綁定頻道
             if (isAdminPanelLoaded) return;
             isAdminPanelLoaded = true;
 
@@ -175,10 +162,7 @@
             document.title = `後台 - ${email}`;
 
             if (!presenceChannel) {
-               // 加入 config 設定，確保與前台頻道對接
-presenceChannel = supabase.channel('online-users', {
-    config: { presence: { key: 'admin-monitor' } }
-});
+                presenceChannel = supabase.channel('online-users');
                 
                 presenceChannel.on('presence', { event: 'sync' }, () => {
                     const state = presenceChannel.presenceState();
@@ -204,19 +188,16 @@ presenceChannel = supabase.channel('online-users', {
                     document.getElementById('status-text').innerText = `最後更新：${new Date().toLocaleTimeString()}`;
                 });
 
-                // 🌟 顯示連線狀態，確認 WebSocket 是否活著
-                presenceChannel.subscribe((status) => {
+                presenceChannel.subscribe(async (status) => {
                     const statusText = document.getElementById('status-text');
                     if (status === 'SUBSCRIBED') {
                         statusText.innerText = '已成功連線至即時系統';
+                        await presenceChannel.track({ device: '管理員 (後台)' });
                     } else if (status === 'CHANNEL_ERROR') {
-                        statusText.innerText = '❌ 連線失敗 (請檢查 Realtime 設定)';
+                        statusText.innerText = '❌ 連線失敗';
                         statusText.style.color = '#ff4757';
                     } else if (status === 'TIMED_OUT') {
-                        statusText.innerText = '❌ 連線逾時，請重新整理';
-                        statusText.style.color = '#ff4757';
-                    } else if (status === 'CLOSED') {
-                        statusText.innerText = '⚠️ 連線已關閉';
+                        statusText.innerText = '❌ 連線逾時';
                         statusText.style.color = '#ff4757';
                     }
                 });
