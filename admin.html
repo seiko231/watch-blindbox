@@ -42,12 +42,9 @@
             <div class="number" id="online-count">--</div>
             <div class="status" id="status-text">正在連線至資料庫...</div>
             
-            <!-- 🌟 訪客狀態列表 -->
             <div style="margin-top: 20px; text-align: left; font-size: 13px; color: #aaa; max-height: 180px; overflow-y: auto; background: #111; padding: 12px; border-radius: 8px; border: 1px solid #333;">
                 <div style="color: #d4af37; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 5px;">👥 即時訪客狀態：</div>
-                <ul id="visitor-list" style="list-style: none; padding: 0; margin: 0; line-height: 1.8;">
-                    <!-- 訪客資料會動態插入這裡 -->
-                </ul>
+                <ul id="visitor-list" style="list-style: none; padding: 0; margin: 0; line-height: 1.8;"></ul>
             </div>
 
             <button class="logout-btn" onclick="logout()">登出</button>
@@ -61,6 +58,7 @@
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
+        // 初始化 Supabase
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         window.onload = function() {
