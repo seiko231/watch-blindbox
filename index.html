@@ -272,7 +272,6 @@
 
         <div class="line-contact-banner">
             <div class="online-dot"></div>
-            <!-- 頂部客服 QR Code 保留，因為點擊可以放大 -->
             <img src="images/line-qr.jpg" alt="LINE QR Code" data-images='["images/line-qr.jpg"]'
                  onerror="this.onerror=null; this.src='https://via.placeholder.com/100x100?text=QR+Code';">
             <div class="line-text">
@@ -333,7 +332,6 @@
                 <h2 style="color: #00c800; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
                 <p style="color: #ddd; margin-bottom: 25px; font-size: 14px;">請點擊下方按鈕加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
                 
-                <!-- openExternalBrowser=1 強制使用外部瀏覽器開啟，大幅提高跳轉成功率 -->
                 <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: inline-block; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4);">
                     📱 點此加入 LINE 獲取報價
                 </a>
@@ -577,7 +575,7 @@
         });
     </script>
 
-    <!-- 🌟 Supabase 真實線上人數系統 -->
+    <!-- 🌟 Supabase 真實線上人數 & 累計瀏覽量 -->
     <script>
         const sessionId = Math.random().toString(36).substring(2, 15);
 
@@ -615,6 +613,13 @@
                     device: getDeviceInfo(),
                     online_at: new Date().toISOString()
                 });
+                
+                // 🌟 呼叫 RPC 函數來增加總瀏覽量
+                try {
+                    await supabase.rpc('increment_view_count');
+                } catch (err) {
+                    console.error('瀏覽量統計失敗', err);
+                }
             }
         });
     </script>
