@@ -175,7 +175,10 @@
             document.title = `後台 - ${email}`;
 
             if (!presenceChannel) {
-                presenceChannel = supabase.channel('online-users');
+               // 加入 config 設定，確保與前台頻道對接
+presenceChannel = supabase.channel('online-users', {
+    config: { presence: { key: 'admin-monitor' } }
+});
                 
                 presenceChannel.on('presence', { event: 'sync' }, () => {
                     const state = presenceChannel.presenceState();
