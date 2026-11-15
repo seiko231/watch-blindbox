@@ -581,33 +581,37 @@
             else btn.style.display = 'none';
         });
 
-        // 假購買通知邏輯
-        const fakeNames = ['王先生', '李小姐', '陳先生', '林小姐', '張先生', '劉小姐'];
-        const fakeProducts = ['勞力士 綠水鬼', '歐米茄 海馬', '愛彼 皇家橡樹', '百達翡麗 鸚鵡螺', '勞力士 黑水鬼'];
+        // 🌟 假購買通知邏輯 (隨機抽取 52 款手錶)
+        const fakeNames = ['王先生', '李小姐', '陳先生', '林小姐', '張先生', '劉小姐', '黃先生', '吳小姐', '趙先生', '周小姐'];
         
         function showPurchaseToast() {
-            const name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
-            const prod = fakeProducts[Math.floor(Math.random() * fakeProducts.length)];
+            // 隨機抽一個人名
+            const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+            
+            // 從你的 watchData 隨機抽一支手錶 (1 到 52)
+            const randomId = Math.floor(Math.random() * 52) + 1;
+            const randomWatch = watchData[randomId];
+            
             const time = Math.floor(Math.random() * 15) + 1;
             
-            document.getElementById('toastName').innerText = name;
-            document.getElementById('toastProduct').innerText = prod;
+            document.getElementById('toastName').innerText = randomName;
+            document.getElementById('toastProduct').innerText = randomWatch.name;
             document.getElementById('toastTime').innerText = `${time} 分鐘前`;
             
-            // 🌟 左下角彈窗圖片也加入防破圖
-            const randomImgNum = Math.floor(Math.random() * 52) + 1;
+            // 圖片與抽到的手錶完全對應
             const imgElement = document.getElementById('toastImg');
             imgElement.onerror = function() {
                 this.onerror = null; 
                 this.src = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=100&auto=format&fit=crop'; 
             };
-            imgElement.src = `images/${randomImgNum}.webp`;
+            imgElement.src = `images/${randomId}.webp`;
             
             const toast = document.getElementById('purchaseToast');
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 5000);
         }
 
+        // 每隔 15~30 秒隨機彈出一次
         setTimeout(function loop() {
             showPurchaseToast();
             setTimeout(loop, Math.floor(Math.random() * 15000) + 15000);
