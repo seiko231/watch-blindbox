@@ -608,7 +608,12 @@
         }, 5000);
 
         /* ============ 真實線上人數 & 累計瀏覽量 & 系統分類 ============ */
-        const sessionId = Math.random().toString(36).substring(2, 15);
+               // 🌟 為每個瀏覽器產生唯一的 ID，存在 localStorage 中，避免重整或開多分頁被重複計算
+        let sessionId = localStorage.getItem('visitor_session_id');
+        if (!sessionId) {
+            sessionId = Math.random().toString(36).substring(2, 15);
+            localStorage.setItem('visitor_session_id', sessionId);
+        }
 
         function getDeviceInfo() {
             const ua = navigator.userAgent;
