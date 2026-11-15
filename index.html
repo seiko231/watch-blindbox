@@ -129,6 +129,26 @@
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
         .modal-content h2 { color: var(--gold); font-size: 22px; margin-top: 0; margin-bottom: 20px;}
 
+        /* 🌟 彈出視窗內的商品資訊與「解鎖價格」提示 */
+        .price-display-box {
+            background: rgba(212, 175, 55, 0.1); 
+            border: 1px dashed var(--gold); 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .price-display-box p {
+            color: #aaa; font-size: 12px; margin: 0 0 5px 0;
+        }
+        .price-display-box h3 {
+            color: #fff; font-size: 18px; margin: 0 0 10px 0;
+        }
+        .unlock-price {
+            color: #ff4757; font-size: 16px; font-weight: bold; margin: 0;
+            display: flex; align-items: center; gap: 5px;
+        }
+
         .input-group { position: relative; margin-bottom: 15px; }
         .input-group::before {
             content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
@@ -240,35 +260,55 @@
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
-            <h2>填寫購買資訊</h2>
             
-            <form id="shippingForm" onsubmit="event.preventDefault();">
-                <div class="input-group" data-icon="👤">
-                    <input type="text" id="custName" placeholder="請輸入收件人姓名" required>
-                </div>
-                <div class="input-group" data-icon="📞">
-                    <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" title="請輸入 09 開頭的 10 碼手機號碼" required>
-                </div>
-                <div class="input-group" data-icon="📍">
-                    <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required>
+            <div id="formContainer">
+                <h2>確認商品與填寫資訊</h2>
+
+                <!-- 🌟 商品資訊與「解鎖價格」提示 -->
+                <div class="price-display-box">
+                    <p>您選擇的商品：</p>
+                    <h3 id="modalProductName">手錶名稱</h3>
+                    <p class="unlock-price">🔒 加入 LINE 解鎖專屬優惠價</p>
                 </div>
 
-                <label class="agreement-box">
-                    <input type="checkbox" id="agreeTerms" required>
-                    <span>我已詳細閱讀並同意<a href="#" onclick="alert('【免責聲明】\n1. 商品圖片僅供參考，以實物為準。\n2. 貨到付款若無故拒收，將保留法律追訴權。\n3. 退換貨需保持商品全新未拆封。'); return false;">賣家權益與退換貨規範</a>。</span>
-                </label>
-                
-                <div class="form-privacy-text">
-                    <span>🔒</span>
-                    <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
-                </div>
+                <form id="shippingForm" onsubmit="event.preventDefault();">
+                    <div class="input-group" data-icon="👤">
+                        <input type="text" id="custName" placeholder="請輸入收件人姓名" required>
+                    </div>
+                    <div class="input-group" data-icon="📞">
+                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" title="請輸入 09 開頭的 10 碼手機號碼" required>
+                    </div>
+                    <div class="input-group" data-icon="📍">
+                        <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required>
+                    </div>
 
-                <p style="color: #ff4757; font-size: 12px; font-weight: bold; margin-bottom: 15px;">⚠️ 提醒您：若無故拒收商品，將依《民法》追究相關運費損失。</p>
+                    <label class="agreement-box">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span>我已詳細閱讀並同意<a href="#" onclick="alert('【免責聲明】\n1. 商品圖片僅供參考，以實物為準。\n2. 貨到付款若無故拒收，將保留法律追訴權。\n3. 退換貨需保持商品全新未拆封。'); return false;">賣家權益與退換貨規範</a>。</span>
+                    </label>
+                    
+                    <div class="form-privacy-text">
+                        <span>🔒</span>
+                        <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
+                    </div>
 
-                <button type="button" class="submit-btn" id="submitBtn" disabled>
-                    🔒 確認送出，安心貨到付款
-                </button>
-            </form>
+                    <p style="color: #ff4757; font-size: 12px; font-weight: bold; margin-bottom: 15px;">⚠️ 提醒您：若無故拒收商品，將依《民法》追究相關運費損失。</p>
+
+                    <button type="button" class="submit-btn" id="submitBtn" disabled>
+                        🔒 確認送出，加 LINE 獲取報價
+                    </button>
+                </form>
+            </div>
+
+            <!-- 成功後的畫面 -->
+            <div id="successContainer" style="display: none;">
+                <h2 style="color: #00c800;">✅ 已收到您的預約！</h2>
+                <p style="color: #ddd; margin-bottom: 25px;">請點擊下方按鈕加入客服 LINE，我們將立刻為您提供「專屬優惠價格」並安排貨到付款。</p>
+                <a href="https://line.me/ti/p/vCEhGhnT9Z" style="display: inline-block; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box;">
+                    📱 點此加入 LINE 獲取報價
+                </a>
+            </div>
+
         </div>
     </div>
 
@@ -286,9 +326,12 @@
         const galleryTrack = document.getElementById('galleryTrack');
         const submitBtn = document.getElementById('submitBtn');
         const agreeTerms = document.getElementById('agreeTerms'); 
+        const formContainer = document.getElementById('formContainer');
+        const successContainer = document.getElementById('successContainer');
+
+        const modalProductName = document.getElementById('modalProductName');
 
         const yourEmail = 'c17872822528@163.com'; 
-        const lineUrl = 'https://line.me/ti/p/vCEhGhnT9Z'; 
 
         agreeTerms.addEventListener('change', function() {
             submitBtn.disabled = !this.checked;
@@ -299,59 +342,10 @@
             }
         });
 
+        // 這裡保留你原本的 52 款資料，不需要填價格了
         const watchData = {
             1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
-            2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
-            3: { name: "歐米茄 海馬 300 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", images: ["images/3.webp"] },
-            4: { name: "愛彼 皇家橡樹 (玫瑰金黑面)", desc: "霸氣玫瑰金，Tapisserie 格紋面盤。", images: ["images/4.webp"] },
-            5: { name: "沛納海 Luminor Marina (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", images: ["images/5.webp"] },
-            6: { name: "愛彼 皇家橡樹 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", images: ["images/6.webp"] },
-            7: { name: "勞力士 水鬼 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", images: ["images/7.webp"] },
-            8: { name: "勞力士 Datejust (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", images: ["images/8.webp"] },
-            9: { name: "勞力士 Air-King", desc: "航空傳奇，獨特黑面數字時標。", images: ["images/9.webp"] },
-            10: { name: "勞力士 Yacht-Master (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", images: ["images/10.webp"] },
-            11: { name: "歐米茄 海馬 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", images: ["images/11.webp"] },
-            12: { name: "沛納海 Luminor Marina (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", images: ["images/12.webp"] },
-            13: { name: "勞力士 綠水鬼", desc: "超人氣綠水鬼，一錶難求。", images: ["images/13.webp"] },
-            14: { name: "勞力士 水鬼 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", images: ["images/14.webp"] },
-            15: { name: "勞力士 Day-Date (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", images: ["images/15.webp"] },
-            16: { name: "勞力士 GMT-Master II (百事圈)", desc: "紅藍百事圈，超人氣款。", images: ["images/16.webp"] },
-            17: { name: "勞力士 蠔式恒動 (彩色慶典面盤)", desc: "活潑亮眼的慶典面盤。", images: ["images/17.webp"] },
-            18: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", images: ["images/18.webp"] },
-            19: { name: "歐米茄 海馬 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", images: ["images/19.webp"] },
-            20: { name: "沛納海 Luminor (全黑陶瓷)", desc: "全黑面盤，黑色皮帶，低調神秘。", images: ["images/20.webp"] },
-            21: { name: "沛納海 Submersible (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", images: ["images/21.webp"] },
-            22: { name: "歐米茄 海馬 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", images: ["images/22.webp"] },
-            23: { name: "勞力士 Explorer II (白面橘針)", desc: "探險家II，兩地時區。", images: ["images/23.webp"] },
-            24: { name: "勞力士 Day-Date (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", images: ["images/24.webp"] },
-            25: { name: "愛彼 皇家橡樹 (玫瑰金黑面皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", images: ["images/25.webp"] },
-            26: { name: "愛彼 皇家橡樹 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", images: ["images/26.webp"] },
-            27: { name: "勞力士 Datejust (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", images: ["images/27.webp"] },
-            28: { name: "沛納海 Luminor Marina (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", images: ["images/28.webp"] },
-            29: { name: "勞力士 黑水鬼", desc: "黑水鬼經典款，保值首選。", images: ["images/29.webp"] },
-            30: { name: "沛納海 Luminor (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", images: ["images/30.webp"] },
-            31: { name: "勞力士 海使型 Deepsea (漸變藍)", desc: "深潛王者，霸氣外露。", images: ["images/31.webp"] },
-            32: { name: "勞力士 GMT-Master II (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", images: ["images/32.webp"] },
-            33: { name: "勞力士 Datejust (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", images: ["images/33.webp"] },
-            34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
-            35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
-            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
-            
-            37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
-            38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
-            39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
-            40: { name: "百達翡麗 Aquanaut (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", images: ["images/40.webp"] },
-            41: { name: "勞力士 Daytona (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", images: ["images/41.webp"] },
-            42: { name: "百達翡麗 Aquanaut (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", images: ["images/42.webp"] },
-            43: { name: "歐米茄 海馬 Planet Ocean (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", images: ["images/43.webp"] },
-            44: { name: "百達翡麗 鸚鵡螺 (藍面)", desc: "經典藍色橫紋面盤，鋼款鸚鵡螺。", images: ["images/44.webp"] },
-            45: { name: "歐米茄 海馬 Planet Ocean (藍面)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", images: ["images/45.webp"] },
-            46: { name: "百達翡麗 Aquanaut (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", images: ["images/46.webp"] },
-            47: { name: "百達翡麗 Aquanaut (黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", images: ["images/47.webp"] },
-            48: { name: "勞力士 Datejust (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", images: ["images/48.webp"] },
-            49: { name: "歐米茄 海馬 300 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/49.webp"] },
-            50: { name: "勞力士 Yacht-Master (玫瑰金黑面)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", images: ["images/50.webp"] },
-            51: { name: "勞力士 Daytona (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", images: ["images/51.webp"] },
+            // ... (請貼回你完整的 52 款資料) ...
             52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
         };
 
@@ -392,12 +386,18 @@
             productGrid.appendChild(card);
         }
 
+        // 🌟 打開彈窗，只顯示名稱，不顯示價格
         function openModal(imgNum) {
+            const watch = watchData[imgNum];
+            modalProductName.innerText = watch.name;
+
             modal.classList.add('active'); 
             document.getElementById('shippingForm').dataset.imgNum = imgNum;
             agreeTerms.checked = false;
             submitBtn.disabled = true;
             submitBtn.style.background = '#333';
+            formContainer.style.display = 'block';
+            successContainer.style.display = 'none';
         }
 
         closeBtn.onclick = function() { modal.classList.remove('active'); }
@@ -423,7 +423,6 @@
             }
         }
 
-        // 🌟 核心：背景寄信 + 跳轉 LINE 流程 (已移除年齡)
         submitBtn.addEventListener('click', function() {
             const form = document.getElementById('shippingForm');
             if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -437,7 +436,6 @@
             submitBtn.innerText = '處理中，請稍候...';
             submitBtn.disabled = true;
 
-            // 1. 背景寄信
             fetch(`https://formsubmit.co/ajax/${yourEmail}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -450,10 +448,9 @@
                 })
             }).catch(err => console.log('Mail error:', err));
 
-            // 2. 跳出提示並跳轉 LINE
             setTimeout(() => {
-                alert(`✅ 已收到您的資料！\n\n接下來將為您跳轉至 LINE，請加入好友並回傳一個「貼圖」，以便為您安排貨到付款。`);
-                window.location.href = lineUrl;
+                formContainer.style.display = 'none';
+                successContainer.style.display = 'block';
             }, 600);
         });
     </script>
