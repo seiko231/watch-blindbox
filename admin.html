@@ -13,7 +13,6 @@
         #login-screen input { width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box; border: 1px solid #555; border-radius: 5px; background: #333; color: #fff; font-size: 15px; }
         #login-screen button { width: 100%; padding: 12px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         #login-screen button:hover { background: #fcf6ba; }
-        #login-screen button:disabled { background: #555; color: #888; cursor: not-allowed; }
         
         .error-msg { color: #ff4757; font-size: 13px; height: 20px; margin-top: 10px; }
         .success-msg { color: #00c800; font-size: 13px; height: 20px; margin-top: 10px; }
@@ -32,48 +31,76 @@
         .visitor-list { list-style: none; padding: 0; margin: 0; line-height: 2; max-height: 200px; overflow-y: auto; font-size: 14px; }
         .visitor-list li { border-bottom: 1px solid #2a2a2a; padding-bottom: 5px; }
         
+        /* 🌟 搜尋與日期篩選工具列 */
+        .toolbar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; background: #1a1a1a; padding: 15px; border-radius: 8px; }
+        .toolbar input { padding: 8px 12px; border-radius: 5px; border: 1px solid #555; background: #333; color: #fff; font-size: 13px; }
+        .toolbar button { padding: 8px 15px; background: #d4af37; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .toolbar button:hover { background: #fcf6ba; }
+
+        /* 表格樣式 */
         .order-table { width: 100%; border-collapse: collapse; font-size: 13px; }
         .order-table th, .order-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; }
         .order-table th { color: #d4af37; background: #1a1a1a; }
         .order-table tr:hover { background: rgba(212, 175, 55, 0.05); }
 
-        /* 🌟 狀態按鈕樣式 */
-        .status-btn {
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: 0.3s;
-        }
+        .status-btn { padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; border: none; transition: 0.3s; }
         .status-pending { background: #ffc107; color: #000; }
         .status-shipped { background: #00c800; color: #fff; }
-
-        .refresh-btn { background: transparent; color: #d4af37; border: 1px solid #d4af37; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: 0.3s; }
-        .refresh-btn:hover { background: rgba(212, 175, 55, 0.2); }
+        
+        .del-btn { background: #ff4757; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 5px; }
+        .del-btn:hover { background: #ff6b81; }
 
         .logout-btn { padding: 8px 20px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 13px; margin-top: 10px; transition: 0.3s; }
         .logout-btn:hover { color: #fff; border-color: #fff; }
         
-        /* 🌟 新訂單通知彈窗 */
-        .toast {
-            position: fixed; top: 20px; right: 20px; 
-            background: #00c800; color: #fff; 
-            padding: 15px 25px; border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            font-weight: bold; z-index: 9999;
-            transform: translateX(150%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        /* 通知彈窗 */
+        .toast { position: fixed; top: 20px; right: 20px; background: #00c800; color: #fff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-weight: bold; z-index: 9999; transform: translateX(150%); transition: transform 0.3s; }
         .toast.show { transform: translateX(0); }
 
+        /* 🌟 手機版專屬優化 (RWD) */
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar input, .toolbar button { width: 100%; }
+            
+            /* 隱藏桌機版表頭 */
+            .order-table thead { display: none; }
+            
+            /* 將表格列轉為卡片 */
+            .order-table, .order-table tbody, .order-table tr, .order-table td { display: block; width: 100%; }
+            .order-table tr { 
+                margin-bottom: 15px; 
+                background: #1a1a1a; 
+                border: 1px solid #333; 
+                border-radius: 8px; 
+                padding: 10px;
+            }
+            .order-table td { 
+                text-align: right; 
+                padding: 8px 10px; 
+                border-bottom: 1px dashed #333; 
+                position: relative;
+                padding-left: 50%;
+            }
+            .order-table td:last-child { border-bottom: none; }
+            
+            /* 在手機上顯示欄位名稱 */
+            .order-table td::before { 
+                content: attr(data-label); 
+                position: absolute; 
+                left: 10px; 
+                font-weight: bold; 
+                color: #d4af37; 
+                text-align: left;
+            }
+        }
+        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
     </style>
 </head>
 <body>
 
-    <!-- 通知彈窗 -->
     <div id="toast" class="toast">🔔 收到新訂單！</div>
 
     <div id="login-screen">
@@ -94,13 +121,14 @@
             </div>
             <div class="box">
                 <h1>👁️ 累計總瀏覽量</h1>
-                <div class="number" id="view-count" style="color: #00bcd4; text-shadow: 0 0 20px rgba(0, 188, 212, 0.5);">--</div>
+                <div class="number" id="view-count" style="color: #00bcd4;">--</div>
                 <div class="status">從開站至今的總點擊</div>
             </div>
+            <!-- 🌟 營業額卡片 -->
             <div class="box">
-                <h1>📦 最新訂單數 (近20筆)</h1>
-                <div class="number" id="order-count" style="color: #d4af37; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);">--</div>
-                <div class="status">僅限登入管理員查看</div>
+                <h1>💰 區間總營業額</h1>
+                <div class="number" id="revenue" style="color: #d4af37; font-size: 50px;">$ 0</div>
+                <div class="status" id="order-count-text">目前顯示 0 筆訂單</div>
             </div>
         </div>
 
@@ -112,10 +140,18 @@
         </div>
 
         <div class="panel-section">
-            <h2>
-                📋 最新訂單列表
-                <button class="refresh-btn" onclick="loadOrders()">🔄 重新整理</button>
-            </h2>
+            <h2>📋 訂單管理</h2>
+            
+            <!-- 搜尋與日期篩選工具列 -->
+            <div class="toolbar">
+                <input type="text" id="search-input" placeholder="🔍 搜尋姓名或電話...">
+                <input type="date" id="start-date">
+                <span style="color:#888;">至</span>
+                <input type="date" id="end-date">
+                <button onclick="loadOrders()">查詢</button>
+                <button onclick="resetFilter()" style="background:transparent; border:1px solid #d4af37; color:#d4af37;">重置</button>
+            </div>
+
             <div style="overflow-x: auto;">
                 <table class="order-table" id="order-table">
                     <thead>
@@ -125,7 +161,7 @@
                             <th>姓名</th>
                             <th>電話</th>
                             <th>地址</th>
-                            <th>處理狀態</th>
+                            <th>狀態與操作</th>
                         </tr>
                     </thead>
                     <tbody id="order-list">
@@ -145,14 +181,15 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: {
-                lock: async (name, acquireTimeout, fn) => { return await fn(); }
-            }
+            auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
         });
 
         let presenceChannel = null; 
         let orderChannel = null; 
         let isAdminPanelLoaded = false;
+
+        // 💡 請在這裡設定你的「手錶平均客單價」，用來計算營業額
+        const AVERAGE_PRICE = 3000; 
 
         window.onload = async function() {
             const { data: { session } } = await supabase.auth.getSession();
@@ -182,10 +219,7 @@
             errorMsg.innerText = '';
             successMsg.innerText = '';
 
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
+            const { data, error } = await supabase.auth.signInWithPassword({ email: email, password: password });
 
             if (error) {
                 errorMsg.innerText = '登入失敗：' + error.message;
@@ -208,7 +242,6 @@
             // 1. 設定線上人數監聽
             if (!presenceChannel) {
                 presenceChannel = supabase.channel('online-users');
-                
                 presenceChannel.on('presence', { event: 'sync' }, () => {
                     const state = presenceChannel.presenceState();
                     const visitorList = document.getElementById('visitor-list');
@@ -219,15 +252,11 @@
                         activeCount++;
                         const user = state[key][0];
                         const deviceName = user.device || (user.metadata && user.metadata.device) || '未知設備';
-                        
                         const li = document.createElement('li');
                         li.innerHTML = `🟢 ${deviceName} <span style="color:#888; font-size:11px;">(在線)</span>`;
                         visitorList.appendChild(li);
                     }
-                    
-                    if (activeCount === 0) {
-                        visitorList.innerHTML = '<li style="color:#666;">目前無訪客</li>';
-                    }
+                    if (activeCount === 0) visitorList.innerHTML = '<li style="color:#666;">目前無訪客</li>';
 
                     document.getElementById('online-count').innerText = activeCount;
                     document.getElementById('status-text').innerText = `最後更新：${new Date().toLocaleTimeString()}`;
@@ -238,9 +267,6 @@
                     if (status === 'SUBSCRIBED') {
                         statusText.innerText = '已成功連線至即時系統';
                         await presenceChannel.track({ device: '管理員 (後台)' });
-                    } else if (status === 'CHANNEL_ERROR') {
-                        statusText.innerText = '❌ 連線失敗';
-                        statusText.style.color = '#ff4757';
                     }
                 });
             }
@@ -248,24 +274,17 @@
             // 2. 設定「新訂單即時通知」監聽
             if (!orderChannel) {
                 orderChannel = supabase.channel('custom-orders-channel')
-                    .on('postgres_changes', 
-                        { event: 'INSERT', schema: 'public', table: 'orders' }, 
-                        payload => {
-                            // 播放音效
-                            try {
-                                const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
-                                audio.play();
-                            } catch(e) {}
-                            
-                            // 顯示彈窗
-                            const toast = document.getElementById('toast');
-                            toast.classList.add('show');
-                            setTimeout(() => toast.classList.remove('show'), 4000);
-
-                            // 重新載入訂單列表
-                            loadOrders();
-                        }
-                    )
+                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, payload => {
+                        try {
+                            const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+                            audio.play();
+                        } catch(e) {}
+                        
+                        const toast = document.getElementById('toast');
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 4000);
+                        loadOrders(); // 收到新單立刻更新列表
+                    })
                     .subscribe();
             }
 
@@ -279,23 +298,45 @@
                 if (error) throw error;
                 document.getElementById('view-count').innerText = data.view_count;
             } catch (err) {
-                console.error('載入瀏覽量失敗:', err);
                 document.getElementById('view-count').innerText = '0';
             }
         }
 
+        // 🌟 升級版：帶有搜尋、日期篩選與營業額統計的訂單讀取
         async function loadOrders() {
             const tbody = document.getElementById('order-list');
             tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#666;">載入中...</td></tr>';
             
+            const searchText = document.getElementById('search-input').value.trim();
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+
             try {
-                const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(20);
+                let query = supabase.from('orders').select('*').order('created_at', { ascending: false });
+
+                // 搜尋姓名或電話
+                if (searchText) {
+                    query = query.or(`customer_name.ilike.%${searchText}%,customer_phone.ilike.%${searchText}%`);
+                }
+                
+                // 日期區間
+                if (startDate) {
+                    query = query.gte('created_at', `${startDate}T00:00:00Z`);
+                }
+                if (endDate) {
+                    query = query.lte('created_at', `${endDate}T23:59:59Z`);
+                }
+
+                const { data, error } = await query.limit(100); // 放寬限制到 100 筆以方便查詢
+
                 if (error) throw error;
 
-                document.getElementById('order-count').innerText = data.length;
+                // 🌟 更新營業額統計
+                document.getElementById('order-count-text').innerText = `目前顯示 ${data.length} 筆訂單`;
+                document.getElementById('revenue').innerText = `$ ${(data.length * AVERAGE_PRICE).toLocaleString()}`;
                 
                 if (data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#666;">目前尚無訂單</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#666;">查無符合條件的訂單</td></tr>';
                     return;
                 }
 
@@ -308,16 +349,16 @@
                     const btnClass = isShipped ? 'status-shipped' : 'status-pending';
                     const btnText = isShipped ? '✅ 已出貨' : '🟡 待處理';
                     
+                    // 加上 data-label 供手機版顯示
                     tr.innerHTML = `
-                        <td style="white-space: nowrap;">${time}</td>
-                        <td>${order.product_name || '-'}</td>
-                        <td>${order.customer_name || '-'}</td>
-                        <td style="color: #00c800; font-weight: bold;">${order.customer_phone || '-'}</td>
-                        <td>${order.customer_address || '-'}</td>
-                        <td>
-                            <button class="status-btn ${btnClass}" onclick="toggleStatus(${order.id}, '${order.status || 'pending'}')">
-                                ${btnText}
-                            </button>
+                        <td data-label="時間" style="white-space: nowrap;">${time}</td>
+                        <td data-label="商品">${order.product_name || '-'}</td>
+                        <td data-label="姓名">${order.customer_name || '-'}</td>
+                        <td data-label="電話" style="color: #00c800; font-weight: bold;">${order.customer_phone || '-'}</td>
+                        <td data-label="地址">${order.customer_address || '-'}</td>
+                        <td data-label="操作" style="white-space: nowrap;">
+                            <button class="status-btn ${btnClass}" onclick="toggleStatus(${order.id}, '${order.status || 'pending'}')">${btnText}</button>
+                            <button class="del-btn" onclick="deleteOrder(${order.id}, '${order.customer_name}')">🗑️</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -328,7 +369,13 @@
             }
         }
 
-        // 切換出貨狀態的函數
+        function resetFilter() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('start-date').value = '';
+            document.getElementById('end-date').value = '';
+            loadOrders();
+        }
+
         async function toggleStatus(orderId, currentStatus) {
             const newStatus = currentStatus === 'pending' ? 'shipped' : 'pending';
             try {
@@ -337,7 +384,21 @@
                 loadOrders(); 
             } catch (err) {
                 console.error('更新狀態失敗:', err);
-                alert('更新失敗，請檢查資料庫。');
+                alert('更新失敗。');
+            }
+        }
+
+        // 刪除訂單功能
+        async function deleteOrder(orderId, customerName) {
+            if (!confirm(`⚠️ 確定要刪除「${customerName}」的這筆訂單嗎？\n刪除後將無法復原！`)) return;
+            
+            try {
+                const { error } = await supabase.from('orders').delete().eq('id', orderId);
+                if (error) throw error;
+                loadOrders(); // 刪除成功後刷新表格
+            } catch (err) {
+                console.error('刪除失敗:', err);
+                alert('刪除失敗：' + err.message);
             }
         }
 
