@@ -196,22 +196,6 @@
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
-        /* 🌟 成功畫面的 QR Code 樣式 */
-        .qr-success-box {
-            background: #fff;
-            padding: 10px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(0, 200, 0, 0.4);
-        }
-        .qr-success-box img {
-            width: 200px;
-            height: 200px;
-            display: block;
-            border-radius: 5px;
-        }
-
         /* 🌟 3D 放大畫廊 */
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -288,6 +272,7 @@
 
         <div class="line-contact-banner">
             <div class="online-dot"></div>
+            <!-- 頂部客服 QR Code 保留，因為點擊可以放大 -->
             <img src="images/line-qr.jpg" alt="LINE QR Code" data-images='["images/line-qr.jpg"]'
                  onerror="this.onerror=null; this.src='https://via.placeholder.com/100x100?text=QR+Code';">
             <div class="line-text">
@@ -343,17 +328,18 @@
                 </form>
             </div>
 
+            <!-- 🌟 改成顯示 LINE 按鈕直跳 -->
             <div id="successContainer" style="display: none;">
                 <h2 style="color: #00c800; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
-                <p style="color: #ddd; margin-bottom: 15px; font-size: 14px;">請掃描下方 QR Code 加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
+                <p style="color: #ddd; margin-bottom: 25px; font-size: 14px;">請點擊下方按鈕加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
                 
-                <div class="qr-success-box" onclick="openLightbox(['images/line-qr.jpg'])">
-                    <img src="images/line-qr.jpg" alt="LINE QR Code" onerror="this.src='https://via.placeholder.com/200x200?text=QR+Code'">
-                </div>
-
-                <div style="font-size: 12px; color: #aaa; line-height: 1.6;">
-                    💡 手機用戶：長按圖片可「儲存」或「掃描」<br>
-                    💡 電腦用戶：請用手機 LINE 掃描加入
+                <!-- openExternalBrowser=1 強制使用外部瀏覽器開啟，大幅提高跳轉成功率 -->
+                <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: inline-block; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4);">
+                    📱 點此加入 LINE 獲取報價
+                </a>
+                
+                <div style="font-size: 12px; color: #aaa; line-height: 1.6; margin-top: 15px;">
+                    💡 若未自動開啟，請點擊右上角選擇「在瀏覽器中開啟」
                 </div>
             </div>
         </div>
@@ -380,7 +366,6 @@
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
         
-        // 解決 LockManager 錯誤
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: {
                 lock: async (name, acquireTimeout, fn) => { return await fn(); }
