@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理員後台 - 登入</title>
+    <!-- 🌟 引入 Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
@@ -55,14 +56,14 @@
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
 
-        // 這裡只會有一個 supabase 宣告，絕對不會衝突
+        // 這裡只會有一個 supabase 宣告，不會衝突
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         window.onload = function() {
             if (localStorage.getItem('admin_logged_in') === 'true') { showAdminPanel(); }
         };
 
-        // 登入函式
+        // 登入函數
         function checkPassword() {
             const input = document.getElementById('password-input').value;
             if (input === ADMIN_PASSWORD) {
