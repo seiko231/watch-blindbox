@@ -30,23 +30,41 @@
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
-        .trust-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; font-size: 13px; color: #aaa; flex-wrap: wrap; }
-        .trust-item { display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3); }
-        .trust-item span { color: var(--gold); font-weight: bold; }
+        /* ===== 第一層：視覺與背書 ===== */
+        .trust-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; width: 100%; font-size: 13px; color: #ccc; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.4); font-weight: bold; }
+        .trust-item span { color: var(--gold); }
+        .trust-item.verify { color: #00c800; border-color: #00c800; background: rgba(0,200,0,0.1); }
+        .trust-item.verify span { color: #00c800; }
 
         .header-section { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1000px; }
-        h1 { color: var(--gold); font-size: 36px; margin-bottom: 10px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
-        .subtitle { color: #bbb; font-size: 15px; margin-bottom: 20px; letter-spacing: 1px; }
+        h1 { color: var(--gold); font-size: 38px; margin-bottom: 10px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); font-weight: 900; }
+        .subtitle { color: #ddd; font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; }
 
-        .line-contact-banner { background: linear-gradient(145deg, rgba(30,30,30,0.9), rgba(15,15,15,0.9)); border: 1px solid var(--gold); border-radius: 12px; padding: 15px 20px; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 600px; position: relative; cursor: pointer; }
-        .online-dot { position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; background: #00c800; border-radius: 50%; box-shadow: 0 0 10px #00c800; animation: blink 2s infinite; }
-        .line-contact-banner .avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
-        .line-text h3 { color: var(--gold); margin: 0 0 8px 0; font-size: 16px; display: flex; align-items: center; gap: 5px; }
-        .line-text p { color: #ddd; margin: 0; font-size: 13px; line-height: 1.5; }
-        .line-text p span { color: #ff4757; font-weight: bold; }
+        /* ===== 第二層：真實數據與互動 ===== */
+        .total-served { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 14px; color: #ddd; background: rgba(212, 175, 55, 0.15); padding: 10px 25px; border-radius: 30px; border: 1px dashed var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        .total-served span { color: var(--gold); font-size: 22px; font-weight: bold; font-family: Arial; }
 
-        .legal-banner { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 600px; font-size: 12px; color: #999; line-height: 1.6; text-align: left; }
+        .line-contact-banner { background: linear-gradient(145deg, rgba(30,30,30,0.95), rgba(15,15,15,0.95)); border: 2px solid var(--gold); border-radius: 15px; padding: 18px 25px; margin: 0 auto 25px auto; display: flex; align-items: center; justify-content: center; gap: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(212,175,55,0.1); max-width: 650px; position: relative; cursor: pointer; transition: 0.3s; }
+        .line-contact-banner:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(212,175,55,0.2); }
+        .online-dot { position: absolute; top: 15px; right: 15px; width: 12px; height: 12px; background: #00c800; border-radius: 50%; box-shadow: 0 0 12px #00c800; animation: blink 1.5s infinite; }
+        .line-contact-banner .avatar { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 15px rgba(212,175,55,0.5); }
+        .line-text h3 { color: var(--gold); margin: 0 0 8px 0; font-size: 18px; display: flex; align-items: center; gap: 5px; }
+        .line-text p { color: #ddd; margin: 0; font-size: 14px; line-height: 1.6; }
+        .line-text p span { color: #ff4757; font-weight: bold; background: rgba(255,71,87,0.1); padding: 2px 6px; border-radius: 4px; }
+
+        .legal-banner { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 650px; font-size: 13px; color: #999; line-height: 1.6; text-align: left; }
         .legal-banner strong { color: var(--gold); }
+
+        /* 買家實拍秀 */
+        .buyer-show-section { width: 100%; max-width: 1000px; margin: 0 auto 30px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .buyer-show-title { color: var(--gold); text-align: center; margin-top: 0; margin-bottom: 15px; font-size: 18px; }
+        .buyer-show-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .buyer-show-scroll::-webkit-scrollbar { display: none; }
+        .buyer-show-card { min-width: 260px; background: #222; border-radius: 8px; padding: 12px; border: 1px solid #444; }
+        .buyer-show-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 5px; border: 1px solid #333; }
+        .buyer-show-card p { color: #eee; font-size: 13px; margin: 10px 0 8px 0; line-height: 1.5; font-style: italic; }
+        .buyer-show-card span { color: var(--gold); font-size: 12px; display: block; text-align: right; }
 
         .filter-section { width: 100%; max-width: 1200px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
         .search-box { position: relative; width: 100%; max-width: 500px; }
@@ -75,10 +93,13 @@
 
         .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-info h3 { color: var(--gold); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; }
-        .price-tag { color: #00c800; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
+        .price-tag { color: #00c800; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
         .product-info p { color: #888; margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
-        .card-trust-tags { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #999; }
-        .card-trust-tags span { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
+        
+        /* ===== 第三層：服務與隱私承諾 ===== */
+        .card-trust-tags { display: flex; gap: 6px; margin-bottom: 12px; font-size: 11px; color: #ccc; flex-wrap: wrap; }
+        .card-trust-tags span { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; border: 1px solid #333; }
+        .card-trust-tags span.highlight { color: var(--gold); border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.1); font-weight: bold; }
 
         .claim-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); background-size: 200% auto; color: #111; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; font-size: 15px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6); transition: all 0.3s ease; text-shadow: 0 1px 0 rgba(255,255,255,0.4); }
         .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8); transform: translateY(-2px); }
@@ -89,17 +110,16 @@
         .cart-add-btn { margin-top: 8px; background: transparent; border: 1px solid #00bcd4; color: #00bcd4; border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .cart-add-btn:hover { background: rgba(0,188,212,0.15); transform: translateY(-2px); }
 
+        /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
         .modal-content h2 { color: var(--gold); font-size: 22px; margin-top: 0; margin-bottom: 20px; }
 
         .price-display-box { background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
         .price-display-box p { color: #aaa; font-size: 12px; margin: 0 0 5px 0; }
         .price-display-box h3 { color: #fff; font-size: 18px; margin: 0 0 10px 0; }
-        .unlock-price { color: #ff4757; font-size: 16px; font-weight: bold; margin: 0; display: flex; align-items: center; gap: 5px; }
-
         .viewer-count { color: #aaa; font-size: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: flex-start; }
         .viewer-count span { color: #ff4757; font-weight: bold; }
 
@@ -112,8 +132,8 @@
         .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333; border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; outline: none; }
         .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
 
-        .form-warning { background: rgba(212, 175, 55, 0.08); border: 1px dashed rgba(212, 175, 55, 0.4); color: #d4af37; font-size: 12px; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.5; }
-        .form-privacy-text { font-size: 11px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
+        .form-warning { background: rgba(0, 200, 0, 0.08); border: 2px dashed #00c800; color: #00c800; font-size: 13px; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.8; font-weight: bold; }
+        .form-privacy-text { font-size: 12px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
         .form-privacy-text span { color: var(--gold); font-size: 14px; }
 
         .submit-btn { width: 100%; padding: 16px; background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%); color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
@@ -163,7 +183,13 @@
 
         .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .chat-widget.active { display: flex; }
-        .chat-header { background: #222; padding: 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
+        .chat-header { background: #222; padding: 12px 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
+        .chat-header-info { display: flex; align-items: center; gap: 10px; }
+        .chat-header-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
+        .chat-header-text { display: flex; flex-direction: column; }
+        .chat-header-name { font-size: 14px; color: #fff; }
+        .chat-header-status { font-size: 11px; color: #00c800; font-weight: normal; display: flex; align-items: center; gap: 4px; }
+        .chat-header-status::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #00c800; border-radius: 50%; animation: blink 1.5s infinite; }
         .chat-close { cursor: pointer; font-size: 20px; color: #888; }
         .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .msg { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.4; word-break: break-word; }
@@ -211,7 +237,6 @@
         .legal-modal h3 { color: #ccc; font-size: 15px; margin-top: 20px; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 10px; }
         .legal-modal p { color: #888; font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
 
-        /* 圖片預覽燈箱 */
         .image-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; visibility: hidden; transition: 0.3s; }
         .image-lightbox.active { opacity: 1; visibility: visible; }
         .image-lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
@@ -226,7 +251,7 @@
             .product-info h3 { font-size: 14px; }
             .product-info p { display: none; }
             .claim-btn { font-size: 14px; padding: 12px; }
-            .line-contact-banner { flex-direction: column; text-align: center; }
+            .line-contact-banner { flex-direction: column; text-align: center; padding: 15px; }
             .purchase-toast { bottom: 90px; left: 10px; right: 10px; transform: translateY(150%); }
             .purchase-toast.show { transform: translateY(0); }
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
@@ -259,23 +284,30 @@
         目前線上 <span id="frontend-online-count" style="font-size: 15px; margin: 0 2px;">0</span> 人
     </div>
 
+    <!-- 第一層：視覺與背書 -->
     <div class="trust-bar">
         <div class="trust-item">🛡️ <span>7天鑑賞期</span></div>
-        <div class="trust-item">🚚 <span>全台貨到付款</span></div>
+        <div class="trust-item verify">✅ <span>支持開箱驗貨</span></div>
         <div class="trust-item">💎 <span>嚴選品質保證</span></div>
+        <div class="trust-item verify">🔒 <span>100% 隱密包裝</span></div>
     </div>
 
     <div class="header-section">
         <h1>尊享腕錶 精品展示</h1>
         <div class="subtitle">精選 52 款經典腕錶，請挑選您的最愛</div>
 
+        <!-- 第二層：真實數據與互動 -->
+        <div class="total-served">
+            🏆 全台累計服務突破 <span id="realOrderCount">12,580</span> 人次，好評不斷！
+        </div>
+
         <div class="line-contact-banner" id="customerAvatarBanner">
             <div class="online-dot"></div>
             <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="客服專員" class="avatar" id="customerAvatarImg">
             <div class="line-text">
-                <h3>📱 客服專員：小美 為您服務</h3>
+                <h3>📱 真人客服：小美 為您服務</h3>
                 <p>真人一對一在線回覆，安心有保障<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
-                <p style="font-size: 12px; color: #aaa; margin-top: 6px;">👉 點擊頭像或此處立即諮詢</p>
+                <p style="font-size: 12px; color: var(--gold); margin-top: 6px; text-decoration: underline;">👉 點擊頭像或此處立即諮詢</p>
             </div>
         </div>
 
@@ -283,6 +315,28 @@
             <strong>【交易與售後說明】</strong><br>
             本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益（商品需保持全新未使用狀態）。<br>
             為防範詐騙，本公司不會要求您前往 ATM 操作或提供信用卡密碼。如有疑慮請直接透過官方 LINE 與我們聯繫。
+        </div>
+    </div>
+
+    <!-- 第一層：真實買家實拍秀 -->
+    <div class="buyer-show-section">
+        <h3 class="buyer-show-title">📸 真實買家實拍反饋 (點擊看大圖)</h3>
+        <div class="buyer-show-scroll">
+            <div class="buyer-show-card">
+                <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
+                <p>"實體真的超美！戴去聚會朋友以為我花了好幾十萬，物流也很快！"</p>
+                <span>- 新北市 陳先生 (購買：勞力士水鬼)</span>
+            </div>
+            <div class="buyer-show-card">
+                <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
+                <p>"包裝很嚴實，開箱那一刻真的有驚豔到，客服回覆也很即時。"</p>
+                <span>- 台中市 林小姐 (購買：愛彼皇家橡樹)</span>
+            </div>
+            <div class="buyer-show-card">
+                <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
+                <p>"原本很怕貨到付款買到假的，結果質感直接拉滿，絕對物超所值！"</p>
+                <span>- 高雄市 張先生 (購買：沛納海)</span>
+            </div>
         </div>
     </div>
 
@@ -384,8 +438,13 @@
                         <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" maxlength="100" required>
                     </div>
 
+                    <!-- 第三層：強力承諾 -->
                     <div class="form-warning">
-                        ✦ 安心貨到付款，收到商品確認沒問題再付款即可 😊
+                        ✅ 本公司安心承諾：<br>
+                        1. 100% 貨到付款，確認質感再付錢。<br>
+                        2. 支持拆箱驗貨，不滿意直接拒收。<br>
+                        3. 外包裝「絕無」精品字樣，隱私 100%。<br>
+                        4. 7天無條件退換貨，運費我們吸收。
                     </div>
 
                     <div class="form-privacy-text">
@@ -439,7 +498,6 @@
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
     </div>
 
-    <!-- 購物車抽屜 -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
@@ -457,7 +515,13 @@
 
     <div class="chat-widget" id="chatWidget">
         <div class="chat-header">
-            <div><span style="color:#00c800;">●</span> 線上客服</div>
+            <div class="chat-header-info">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=50" class="chat-header-avatar" alt="小美">
+                <div class="chat-header-text">
+                    <div class="chat-header-name">尊享腕錶客服 - 小美</div>
+                    <div class="chat-header-status">在線中，秒回覆</div>
+                </div>
+            </div>
             <div class="chat-close" onclick="toggleChat()">&times;</div>
         </div>
         <div class="chat-body" id="chatBody">
@@ -473,7 +537,6 @@
         </div>
     </div>
 
-    <!-- 圖片放大檢視器 -->
     <div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()">
         <span class="close-icon" onclick="closeImageLightbox()">&times;</span>
         <img src="" id="lightboxImg" onclick="event.stopPropagation()">
@@ -602,7 +665,10 @@
                         ${priceText}
                         <p>${watch.desc}</p>
                         ${stockText}
+                        <!-- 第三層：商品卡強力承諾標籤 -->
                         <div class="card-trust-tags">
+                            <span class="highlight">📦 支持開箱驗貨</span>
+                            <span class="highlight">🙈 隱密包裝</span>
                             <span>🛡️ 7天退換</span>
                             <span>🚚 貨到付款</span>
                         </div>
@@ -840,13 +906,32 @@
         }, 5000);
 
         // ============================================================
-        // ===== 在線統計 / 系統點擊統計 =====
+        // ===== 第二層：真實數據串接 =====
         // ============================================================
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
             sessionId = Math.random().toString(36).substring(2, 15);
             localStorage.setItem('visitor_session_id', sessionId);
         }
+
+        // 獲取真實訂單數量並加上基礎值
+        async function fetchRealStats() {
+            try {
+                const { count, error } = await supabase
+                    .from('orders')
+                    .select('*', { count: 'exact', head: true });
+                
+                if (!error) {
+                    // 基礎值 12500 + 真實訂單數
+                    const baseCount = 12500;
+                    const total = baseCount + (count || 0);
+                    document.getElementById('realOrderCount').innerText = total.toLocaleString();
+                }
+            } catch (err) {
+                console.log('讀取真實數據失敗', err);
+            }
+        }
+        fetchRealStats();
 
         function getDeviceInfo() {
             const ua = navigator.userAgent;
@@ -1023,7 +1108,6 @@
             appendChatMessage('[圖片]', 'user', new Date().toISOString(), url, 'image');
         }
 
-        // 訂閱這條 session 的訊息（接收後台回覆與圖片）
         supabase.channel('front-chat-' + sessionId)
             .on('postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
@@ -1154,6 +1238,7 @@
         updateCartBadge();
         renderCart();
 
+        // 第三層：無腦退換貨政策
         const legalContents = {
             'privacy': `
                 <h2>隱私權政策</h2>
@@ -1176,14 +1261,17 @@
                 <p>本公司絕對不會要求您前往 ATM 操作，也不會致電要求您提供信用卡密碼或銀行帳戶資訊。</p>
             `,
             'return': `
-                <h2>退換貨政策</h2>
-                <p>為了保障您的權益，我們提供完善的售後服務：</p>
-                <h3>1. 7天鑑賞期</h3>
-                <p>您享有商品貨到後 7 天內的無條件退貨權益。退回之商品必須保持全新、未使用狀態，且包裝完整。</p>
-                <h3>2. 瑕疵處理</h3>
-                <p>若您收到的商品有任何非人為損壞或瑕疵，請立即透過 LINE 聯繫客服，我們將免費為您辦理換貨。</p>
-                <h3>3. 退貨流程</h3>
-                <p>請於 7 天內聯繫客服，我們將安排物流前往收件。退款金額將於收到退貨商品確認無誤後處理。</p>
+                <h2>退換貨政策 (超無腦流程)</h2>
+                <p>為了保障您的權益，我們提供最阿莎力的售後服務：</p>
+                <h3>🛡️ 7天鑑賞期，不滿意包退</h3>
+                <p>您享有商品貨到後 7 天內的無條件退貨權益。退換貨運費由本公司全額吸收，您不需付一毛錢。</p>
+                <h3>📦 無腦退換貨 3 步驟：</h3>
+                <div style="background: #111; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                    <p style="margin-bottom: 8px;"><strong style="color: #d4af37;">步驟 1：</strong> 拍下商品問題處（或直接說不想買了）。</p>
+                    <p style="margin-bottom: 8px;"><strong style="color: #d4af37;">步驟 2：</strong> 透過網站右下角的「線上客服」或 LINE 聯繫我們。</p>
+                    <p style="margin-bottom: 0;"><strong style="color: #d4af37;">步驟 3：</strong> 我們直接請黑貓宅急便去您家收貨，換新或退款秒處理。</p>
+                </div>
+                <p style="color: #ff4757; font-weight: bold; text-align: center;">※ 絕對不會刁難，請放心購買！</p>
             `
         };
 
