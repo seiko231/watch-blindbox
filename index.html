@@ -8,12 +8,13 @@
     <style>
         :root { --gold: #d4af37; --bg-dark: #0f0f0f; }
         body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%); color: #fff; font-family: 'Microsoft JhengHei', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
-        .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        
+        .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; }
         .marquee-text { white-space: nowrap; animation: scrollText 15s linear infinite; padding-left: 100%; }
         @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         body { padding-top: 55px; }
 
-        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; }
+        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(20, 20, 20, 0.7); border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; }
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
@@ -72,6 +73,19 @@
 
         .chat-product-btn { margin-top: 8px; width: 100%; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .chat-product-btn:hover { background: rgba(212, 175, 55, 0.15); transform: translateY(-2px); }
+
+        /* 購物車側邊欄 */
+        .cart-widget { position: fixed; bottom: 100px; left: 20px; width: 320px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); max-height: 500px; }
+        .cart-widget.active { display: flex; }
+        .cart-header { background: #222; padding: 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
+        .cart-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 10px; border-radius: 8px; border: 1px solid #333; font-size: 13px; }
+        .cart-item-name { flex: 1; color: #ddd; }
+        .cart-item-del { background: none; border: none; color: #ff4757; cursor: pointer; font-size: 16px; padding: 0 5px; }
+        .cart-footer { padding: 15px; border-top: 1px solid #333; background: #222; border-radius: 0 0 12px 12px; }
+        .cart-btn { width: 100%; padding: 12px; background: var(--gold); color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .cart-badge { position: absolute; top: -5px; left: -5px; background: #ff4757; color: #fff; border-radius: 50%; font-size: 11px; font-weight: bold; min-width: 18px; height: 18px; display: none; justify-content: center; align-items: center; padding: 0 4px; border: 2px solid #111; }
+        .btn-cart { background: #ff9800; color: #fff; font-size: 28px; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -153,7 +167,7 @@
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
             .trust-section { flex-direction: column; }
-            .chat-widget { width: 90%; right: 5%; bottom: 80px; }
+            .chat-widget, .cart-widget { width: 90%; right: 5%; left: 5%; bottom: 80px; }
         }
     </style>
 </head>
@@ -171,11 +185,11 @@
 
     <div class="header-section">
         <h1>尊享腕錶 精品展示</h1>
-        <div class="subtitle">精選 52 款經典腕錶，請挑選您的最愛</div>
+        <div class="subtitle">精選經典腕錶，請挑選您的最愛</div>
 
         <div class="line-contact-banner" id="customerAvatarBanner">
             <div class="online-dot"></div>
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="客服專員" class="avatar">
+            <img src="https://ui-avatars.com/api/?name=客服&background=d4af37&color=000&size=200" alt="客服專員" class="avatar">
             <div class="line-text">
                 <h3>📱 客服專員：小美 為您服務</h3>
                 <p>真人一對一在線回覆，安心有保障<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
@@ -215,7 +229,8 @@
         <div class="trust-card">
             <h3>📦 出貨實拍保證</h3>
             <p>每支手錶皆附贈精美錶盒，出貨前專人嚴格品檢，超商寄件單號皆可查詢。</p>
-            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=600&auto=format&fit=crop" alt="精美包裝">
+            <!-- 這裡你也可以換成你自己的出貨照片 -->
+            <img src="https://placehold.co/600x200/1a1a1a/d4af37?text=Package" alt="精美包裝">
         </div>
     </div>
 
@@ -239,12 +254,29 @@
         <div>&copy; 2026 尊享腕錶 精品展示. All rights reserved.</div>
     </div>
 
+    <!-- 懸浮按鈕 -->
     <div class="floating-btns">
+        <button class="float-btn btn-cart" onclick="toggleCart()">🛒<span class="cart-badge" id="cartBadge">0</span></button>
         <button class="float-btn btn-chat" onclick="toggleChat()">💬<span class="chat-badge" id="chatBadge">0</span></button>
         <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line">📱</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️</button>
     </div>
 
+    <!-- 購物車 -->
+    <div class="cart-widget" id="cartWidget">
+        <div class="cart-header">
+            <div>🛒 選購清單</div>
+            <div style="cursor:pointer;" onclick="toggleCart()">&times;</div>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div style="color:#888; text-align:center; margin-top:20px;">尚未加入商品</div>
+        </div>
+        <div class="cart-footer">
+            <button class="cart-btn" onclick="checkoutCart()">前往填寫收件資訊</button>
+        </div>
+    </div>
+
+    <!-- 聊天室 -->
     <div class="chat-widget" id="chatWidget">
         <div class="chat-header">
             <div><span style="color:#00c800;">●</span> 線上客服</div>
@@ -260,13 +292,14 @@
         </div>
     </div>
 
+    <!-- 購買表單 -->
     <div class="modal-overlay" id="orderModal">
         <div class="modal-content">
             <span class="close-btn" onclick="document.getElementById('orderModal').classList.remove('active')">&times;</span>
             <h2>確認商品與填寫資訊</h2>
             <div class="price-display-box">
                 <p>您選擇的商品：</p>
-                <h3 id="modalProductName">手錶名稱</h3>
+                <div id="modalProductName" style="color:#fff; font-size:16px; font-weight:bold; line-height:1.5;"></div>
             </div>
             <div style="text-align: left; margin-bottom: 15px;">
                 <p style="color: #aaa; font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
@@ -297,75 +330,83 @@
             localStorage.setItem('visitor_session_id', sessionId);
         }
 
+        // Presence 線上人數
+        const presenceChannel = supabase.channel('online-users', { config: { presence: { key: sessionId } } });
+        presenceChannel.on('presence', { event: 'sync' }, () => {
+            const state = presenceChannel.presenceState();
+            document.getElementById('frontend-online-count').innerText = Object.keys(state).length;
+        });
+        presenceChannel.subscribe(async (status) => {
+            if (status === 'SUBSCRIBED') {
+                await presenceChannel.track({ online_at: new Date().toISOString() });
+            }
+        });
+
         let chatWidgetOpen = false;
         let unreadCount = 0;
         let renderedIds = new Set();
-        let currentProductForOrder = "";
         let selectedBudget = '基礎';
+        let cart = [];
+        let cartWidgetOpen = false;
 
+        // 🌟 這裡將前 24 款綁定到你的本地圖片 images/1.jpg ~ images/24.jpg
         const watchData = {
-            1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            3: { name: "歐米茄 海馬 300 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            4: { name: "愛彼 皇家橡樹 (玫瑰金黑面)", desc: "霸氣玫瑰金，Tapisserie 格紋面盤。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            5: { name: "沛納海 Luminor Marina (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            6: { name: "愛彼 皇家橡樹 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            7: { name: "勞力士 水鬼 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            8: { name: "勞力士 Datejust (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            9: { name: "勞力士 Air-King", desc: "航空傳奇，獨特黑面數字時標。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            10: { name: "勞力士 Yacht-Master (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            11: { name: "歐米茄 海馬 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            12: { name: "沛納海 Luminor Marina (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            13: { name: "勞力士 綠水鬼", desc: "超人氣綠水鬼，一錶難求。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            14: { name: "勞力士 水鬼 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            15: { name: "勞力士 Day-Date (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            16: { name: "勞力士 GMT-Master II (百事圈)", desc: "紅藍百事圈，超人氣款。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            17: { name: "勞力士 蠔式恒動 (彩色慶典面盤)", desc: "活潑亮眼的慶典面盤。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            18: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            19: { name: "歐米茄 海馬 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            20: { name: "沛納海 Luminor (全黑陶瓷)", desc: "全黑面盤，黑色皮帶，低調神秘。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            21: { name: "沛納海 Submersible (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            22: { name: "歐米茄 海馬 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            23: { name: "勞力士 Explorer II (白面橘針)", desc: "探險家II，兩地時區。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            24: { name: "勞力士 Day-Date (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            25: { name: "愛彼 皇家橡樹 (玫瑰金黑面皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            26: { name: "愛彼 皇家橡樹 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            27: { name: "勞力士 Datejust (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            28: { name: "沛納海 Luminor Marina (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            29: { name: "勞力士 黑水鬼", desc: "黑水鬼經典款，保值首選。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            30: { name: "沛納海 Luminor (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            31: { name: "勞力士 海使型 Deepsea (漸變藍)", desc: "深潛王者，霸氣外露。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            32: { name: "勞力士 GMT-Master II (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            33: { name: "勞力士 Datejust (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            40: { name: "百達翡麗 Aquanaut (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            41: { name: "勞力士 Daytona (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            42: { name: "百達翡麗 Aquanaut (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            43: { name: "歐米茄 海馬 Planet Ocean (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            44: { name: "百達翡麗 鸚鵡螺 (藍面)", desc: "經典藍色橫紋面盤，鋼款鸚鵡螺。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            45: { name: "歐米茄 海馬 Planet Ocean (藍面)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            46: { name: "百達翡麗 Aquanaut (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            47: { name: "百達翡麗 Aquanaut (黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            48: { name: "勞力士 Datejust (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            49: { name: "歐米茄 海馬 300 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            50: { name: "勞力士 Yacht-Master (玫瑰金黑面)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
-            51: { name: "勞力士 Daytona (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
-            52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人綠黑圈，搭配五珠鍊帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" }
+            1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", img: "images/1.jpg" },
+            2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", img: "images/2.jpg" },
+            3: { name: "歐米茄 海馬 300 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", img: "images/3.jpg" },
+            4: { name: "愛彼 皇家橡樹 (玫瑰金黑面)", desc: "霸氣玫瑰金，Tapisserie 格紋面盤。", img: "images/4.jpg" },
+            5: { name: "沛納海 Luminor Marina (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", img: "images/5.jpg" },
+            6: { name: "愛彼 皇家橡樹 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", img: "images/6.jpg" },
+            7: { name: "勞力士 水鬼 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", img: "images/7.jpg" },
+            8: { name: "勞力士 Datejust (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", img: "images/8.jpg" },
+            9: { name: "勞力士 Air-King", desc: "航空傳奇，獨特黑面數字時標。", img: "images/9.jpg" },
+            10: { name: "勞力士 Yacht-Master (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", img: "images/10.jpg" },
+            11: { name: "歐米茄 海馬 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", img: "images/11.jpg" },
+            12: { name: "沛納海 Luminor Marina (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", img: "images/12.jpg" },
+            13: { name: "勞力士 綠水鬼", desc: "超人氣綠水鬼，一錶難求。", img: "images/13.jpg" },
+            14: { name: "勞力士 水鬼 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", img: "images/14.jpg" },
+            15: { name: "勞力士 Day-Date (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", img: "images/15.jpg" },
+            16: { name: "勞力士 GMT-Master II (百事圈)", desc: "紅藍百事圈，超人氣款。", img: "images/16.jpg" },
+            17: { name: "勞力士 蠔式恒動 (彩色慶典面盤)", desc: "活潑亮眼的慶典面盤。", img: "images/17.jpg" },
+            18: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", img: "images/18.jpg" },
+            19: { name: "歐米茄 海馬 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", img: "images/19.jpg" },
+            20: { name: "沛納海 Luminor (全黑陶瓷)", desc: "全黑面盤，黑色皮帶，低調神秘。", img: "images/20.jpg" },
+            21: { name: "沛納海 Submersible (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", img: "images/21.jpg" },
+            22: { name: "歐米茄 海馬 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", img: "images/22.jpg" },
+            23: { name: "勞力士 Explorer II (白面橘針)", desc: "探險家II，兩地時區。", img: "images/23.jpg" },
+            24: { name: "勞力士 Day-Date (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", img: "images/24.jpg" },
+            // 剩下的用備用圖 (你可以自行繼續新增)
+            25: { name: "百達翡麗 Aquanaut", desc: "經典黑面，橡膠錶帶。", img: "https://placehold.co/400x400/1a1a1a/d4af37?text=PP" },
+            26: { name: "歐米茄 海馬 300", desc: "白色波浪紋面盤。", img: "https://placehold.co/400x400/1a1a1a/d4af37?text=Omega" },
+            27: { name: "愛彼 皇家橡樹", desc: "經典銀白格紋面盤。", img: "https://placehold.co/400x400/1a1a1a/d4af37?text=AP" },
+            28: { name: "勞力士 Datejust", desc: "半金材質，三角坑紋錶圈。", img: "https://placehold.co/400x400/1a1a1a/d4af37?text=Datejust" },
+            29: { name: "勞力士 黑水鬼", desc: "黑水鬼經典款，保值首選。", img: "https://placehold.co/400x400/1a1a1a/d4af37?text=Submariner" }
         };
 
         let currentCategory = '全部';
         let currentSearch = '';
 
+        // 記錄點擊商品
+        async function trackProductClick(productName) {
+            try {
+                const { data, error } = await supabase.from('product_clicks').select('id, click_count').eq('product_name', productName);
+                if (error) throw error;
+
+                if (data && data.length > 0) {
+                    await supabase.from('product_clicks').update({ click_count: data[0].click_count + 1 }).eq('id', data[0].id);
+                } else {
+                    await supabase.from('product_clicks').insert([{ product_name: productName, click_count: 1 }]);
+                }
+            } catch (err) {
+                console.error('記錄點擊失敗：', err);
+            }
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = '';
             
-            for (let i = 1; i <= 52; i++) {
+            for (let i = 1; i <= 29; i++) { // 目前設定 29 款
                 const watch = watchData[i];
                 if (!watch) continue;
                 if (currentCategory !== '全部' && !watch.name.includes(currentCategory)) continue;
@@ -373,17 +414,17 @@
 
                 grid.innerHTML += `
                     <div class="product-card">
-                        <div class="product-image-wrapper">
+                        <div class="product-image-wrapper" onclick="trackProductClick('${watch.name}')">
                             <div class="image-number-badge">${i}</div>
-                            <img src="${watch.img}" loading="lazy">
+                            <img src="${watch.img}" loading="lazy" onerror="this.src='https://placehold.co/400x400/1a1a1a/d4af37?text=No+Image'">
                         </div>
                         <div class="product-info">
                             <h3>${watch.name}</h3>
                             <div class="price-tag">專屬價：$6,000 - $19,999</div>
                             <p>${watch.desc}</p>
                             <div class="card-trust-tags"><span>🛡️ 7天退換</span><span>🚚 貨到付款</span></div>
-                            <button class="claim-btn" onclick="openOrderModal('${watch.name}')">👉 獲取專屬報價</button>
-                            <button class="chat-product-btn" onclick="askAboutProduct('${watch.name}')">💬 立即諮詢此款</button>
+                            <button class="claim-btn" onclick="trackProductClick('${watch.name}'); addToCart('${watch.name}')">🛒 加入選購清單</button>
+                            <button class="chat-product-btn" onclick="trackProductClick('${watch.name}'); askAboutProduct('${watch.name}')">💬 立即諮詢此款</button>
                         </div>
                     </div>
                 `;
@@ -397,16 +438,62 @@
         function toggleFaq(el) { const item = el.parentElement; item.classList.toggle('active'); el.querySelector('span').innerText = item.classList.contains('active') ? '▲' : '▼'; }
         function selectBudget(btn, budget) { document.querySelectorAll('.budget-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedBudget = budget; }
 
+        // 購物車邏輯
+        function toggleCart() {
+            cartWidgetOpen = !cartWidgetOpen;
+            document.getElementById('cartWidget').classList.toggle('active', cartWidgetOpen);
+            if (cartWidgetOpen) renderCart();
+        }
+
+        function addToCart(name) {
+            if (!cart.includes(name)) {
+                cart.push(name);
+                updateCartBadge();
+                alert(`✅ 已將「${name}」加入選購清單！`);
+            } else {
+                alert(`「${name}」已經在清單中囉！`);
+            }
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item !== name);
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            badge.style.display = cart.length > 0 ? 'flex' : 'none';
+            badge.innerText = cart.length;
+        }
+
+        function renderCart() {
+            const body = document.getElementById('cartBody');
+            if (cart.length === 0) {
+                body.innerHTML = '<div style="color:#888; text-align:center; margin-top:20px;">尚未加入商品</div>';
+                return;
+            }
+            body.innerHTML = '';
+            cart.forEach(item => {
+                body.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-name">${item}</div>
+                        <button class="cart-item-del" onclick="removeFromCart('${item}')">🗑️</button>
+                    </div>
+                `;
+            });
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) return alert('請先加入商品！');
+            document.getElementById('modalProductName').innerHTML = cart.join('<br>');
+            document.getElementById('orderModal').classList.add('active');
+        }
+
         function askAboutProduct(name) {
             if (!chatWidgetOpen) toggleChat();
             document.getElementById('chatInput').value = `我想詢問「${name}」的細節與優惠`;
             document.getElementById('chatInput').focus();
-        }
-
-        function openOrderModal(name) {
-            currentProductForOrder = name;
-            document.getElementById('modalProductName').innerText = name;
-            document.getElementById('orderModal').classList.add('active');
         }
 
         function toggleChat() {
@@ -498,7 +585,7 @@
             const address = document.getElementById('custAddress').value.trim();
             if (!name || !phone || !address) return alert('請填寫完整資訊！');
 
-            const productNameWithBudget = `${currentProductForOrder} (預算: ${selectedBudget})`;
+            const productNameWithBudget = cart.map(item => `${item} (預算: ${selectedBudget})`).join('、');
             const orderText = `📦 【新訂單通知】\n客戶：${name}\n電話：${phone}\n地址：${address}\n商品：${productNameWithBudget}`;
             
             await supabase.from('orders').insert([{ customer_name: name, customer_phone: phone, customer_address: address, product_name: productNameWithBudget, product_id: 0 }]);
@@ -506,6 +593,9 @@
 
             alert('✅ 訂單已送出！');
             document.getElementById('orderModal').classList.remove('active');
+            cart = [];
+            updateCartBadge();
+            if (cartWidgetOpen) toggleCart();
             if (!chatWidgetOpen) toggleChat();
             if (!error && data) {
                 appendMsg(data[0].message, data[0].sender, data[0].created_at);
