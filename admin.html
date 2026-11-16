@@ -539,14 +539,12 @@
                     const btnClass = isShipped ? 'status-shipped' : 'status-pending';
                     const btnText = isShipped ? '✅ 已出貨' : '🟡 待處理';
 
-                    // 檢查是否為多商品訂單 (購物車)
                     let productDisplay = order.product_name || '-';
                     if (Array.isArray(order.items) && order.items.length > 1) {
                         const itemsHtml = order.items.map(i => `• ${i.name} x${i.qty} (${i.budget})`).join('<br>');
                         productDisplay = `🛒 多項商品<br><div class="order-items-detail">${itemsHtml}</div>`;
                     }
 
-                    // 安全處理字串 (防止單引號出錯)
                     const safeName = (order.customer_name || '').replace(/'/g, "\\'");
                     const safeAddress = (order.customer_address || '').replace(/'/g, "\\'");
                     const safeProduct = (order.product_name || '').replace(/'/g, "\\'");
@@ -785,7 +783,6 @@
                             allChatSessions[sid] = { lastMessage: '', lastTime: new Date(0), unread: 0 };
                         }
                         
-                        // 顯示 [圖片] 或是文字
                         allChatSessions[sid].lastMessage = (msg.msg_type === 'image') ? '[圖片]' : msg.message;
                         allChatSessions[sid].lastTime = new Date(msg.created_at || Date.now());
 
