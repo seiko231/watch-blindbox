@@ -46,6 +46,7 @@
         .bar-fill.pc { background: linear-gradient(90deg, #00bcd4, #4dd0e1); }
         .bar-fill.ios { background: linear-gradient(90deg, #fff, #e0e0e0); }
         .bar-fill.android { background: linear-gradient(90deg, #00c800, #69f0ae); }
+        .bar-fill.linux { background: linear-gradient(90deg, #e0e0e0, #fff); }
         .bar-fill.other { background: linear-gradient(90deg, #9c27b0, #ce93d8); }
         .bar-count { width: 50px; font-size: 16px; font-weight: bold; text-align: right; color: #fff; }
 
@@ -200,6 +201,11 @@
                         <div class="bar-count" id="v-android">0</div>
                     </div>
                     <div class="bar-row">
+                        <div class="bar-label">🐧 Linux 系統</div>
+                        <div class="bar-track"><div class="bar-fill linux" id="bar-linux" style="width: 0%;"></div></div>
+                        <div class="bar-count" id="v-linux">0</div>
+                    </div>
+                    <div class="bar-row">
                         <div class="bar-label">🌐 其他系統</div>
                         <div class="bar-track"><div class="bar-fill other" id="bar-other" style="width: 0%;"></div></div>
                         <div class="bar-count" id="v-other">0</div>
@@ -344,7 +350,7 @@
                         } else if (deviceName.includes('Android')) {
                             liIcon = '🤖';
                         } else if (deviceName.includes('Linux')) {
-                            liIcon = '🌐';
+                            liIcon = '🐧';
                         }
 
                         const li = document.createElement('li');
@@ -396,30 +402,34 @@
 
         async function loadSystemClicks() {
             try {
-                const { data, error } = await supabase.from('site_stats').select('pc_count, ios_count, android_count, other_count').eq('id', 1).single();
+                const { data, error } = await supabase.from('site_stats').select('pc_count, ios_count, android_count, linux_count, other_count').eq('id', 1).single();
                 if (error) throw error;
 
                 const pc = data.pc_count || 0;
                 const ios = data.ios_count || 0;
                 const android = data.android_count || 0;
+                const linux = data.linux_count || 0;
                 const other = data.other_count || 0;
-                const total = pc + ios + android + other;
+                const total = pc + ios + android + linux + other;
 
                 document.getElementById('total-click-num').innerText = total;
                 document.getElementById('v-pc').innerText = pc;
                 document.getElementById('v-ios').innerText = ios;
                 document.getElementById('v-android').innerText = android;
+                document.getElementById('v-linux').innerText = linux;
                 document.getElementById('v-other').innerText = other;
 
                 if (total > 0) {
                     document.getElementById('bar-pc').style.width = `${(pc / total) * 100}%`;
                     document.getElementById('bar-ios').style.width = `${(ios / total) * 100}%`;
                     document.getElementById('bar-android').style.width = `${(android / total) * 100}%`;
+                    document.getElementById('bar-linux').style.width = `${(linux / total) * 100}%`;
                     document.getElementById('bar-other').style.width = `${(other / total) * 100}%`;
                 } else {
                     document.getElementById('bar-pc').style.width = '0%';
                     document.getElementById('bar-ios').style.width = '0%';
                     document.getElementById('bar-android').style.width = '0%';
+                    document.getElementById('bar-linux').style.width = '0%';
                     document.getElementById('bar-other').style.width = '0%';
                 }
             } catch (err) {
