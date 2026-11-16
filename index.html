@@ -101,6 +101,8 @@
 
         .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-info h3 { color: var(--gold); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; }
+        /* 🌟 新增價格標籤 */
+        .price-tag { color: #00c800; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
         .product-info p { color: #888; margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
         .card-trust-tags { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #999; }
         .card-trust-tags span { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
@@ -130,6 +132,7 @@
         .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333; border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; outline: none; }
         .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
 
+        /* 🌟 柔化的提醒文字 */
         .form-warning { background: rgba(212, 175, 55, 0.08); border: 1px dashed rgba(212, 175, 55, 0.4); color: #d4af37; font-size: 12px; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.5; }
         .form-privacy-text { font-size: 11px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
         .form-privacy-text span { color: var(--gold); font-size: 14px; }
@@ -156,9 +159,19 @@
         .float-btn:hover { transform: translateY(-5px); }
         .btn-line { background: #00c800; color: #fff; font-size: 28px; text-decoration: none; }
         .btn-top { background: #333; color: var(--gold); border: 1px solid var(--gold); font-size: 24px; display: none; }
+        
+        /* 🌟 新增：懸浮客服對話按鈕 */
+        .btn-chat { background: #00bcd4; color: #fff; font-size: 28px; }
+
+        /* 🌟 信任區塊 (好評與實拍) */
+        .trust-section { width: 100%; max-width: 1000px; margin: 40px auto 20px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .trust-card { flex: 1; min-width: 300px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: center; }
+        .trust-card h3 { color: var(--gold); margin-top: 0; font-size: 18px; }
+        .trust-card p { color: #aaa; font-size: 14px; line-height: 1.6; }
+        .trust-card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 1px solid #444; }
 
         /* 品牌 FAQ 區塊 */
-        .faq-section { width: 100%; max-width: 800px; margin: 40px auto; text-align: left; }
+        .faq-section { width: 100%; max-width: 800px; margin: 20px auto; text-align: left; }
         .faq-section h2 { text-align: center; color: var(--gold); margin-bottom: 20px; }
         .faq-item { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
         .faq-question { padding: 15px; cursor: pointer; font-weight: bold; color: #ddd; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
@@ -174,7 +187,20 @@
         .purchase-toast .text { font-size: 13px; color: #ccc; }
         .purchase-toast .text strong { color: var(--gold); }
         .purchase-toast .text span { color: #888; font-size: 11px; }
-        
+
+        /* 🌟 聊天室 UI 樣式 */
+        .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .chat-widget.active { display: flex; }
+        .chat-header { background: #222; padding: 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
+        .chat-close { cursor: pointer; font-size: 20px; color: #888; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.4; }
+        .msg.user { align-self: flex-end; background: #00c800; color: #000; border-bottom-right-radius: 0; }
+        .msg.admin { align-self: flex-start; background: #333; color: #fff; border-bottom-left-radius: 0; }
+        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; }
+        .chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
+        .chat-input-area button { padding: 10px 15px; border-radius: 20px; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; }
+
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .product-image-wrapper { height: 150px; }
@@ -188,6 +214,8 @@
             .purchase-toast.show { transform: translateY(0); }
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
+            .trust-section { flex-direction: column; }
+            .chat-widget { width: 90%; right: 5%; bottom: 80px; }
         }
     </style>
 </head>
@@ -256,10 +284,24 @@
 
     <div class="product-grid" id="productGrid"></div>
 
+    <!-- 🌟 新增：客戶真實好評與出貨實拍 -->
+    <div class="trust-section">
+        <div class="trust-card">
+            <h3>⭐ 買家真實好評</h3>
+            <p>「收到實體真的很有質感！包裝很用心，貨到付款讓人很放心，下次還會回購！」<br><span style="color:#d4af37; font-size:12px;">— 台北 林先生</span></p>
+            <p>「客服回覆很快，出貨也迅速，手錶戴起來很霸氣，朋友都問我哪裡買的。」<br><span style="color:#d4af37; font-size:12px;">— 台中 王小姐</span></p>
+        </div>
+        <div class="trust-card">
+            <h3>📦 出貨實拍保證</h3>
+            <p>每支手錶皆附贈精美錶盒，出貨前專人嚴格品檢，超商寄件單號皆可查詢。</p>
+            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=600&auto=format&fit=crop" alt="精美包裝" onerror="this.src='https://via.placeholder.com/600x200?text=Package'">
+        </div>
+    </div>
+
     <div class="faq-section">
         <h2>💡 常見問題 (FAQ)</h2>
         <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Q1: 請問是原廠公司貨嗎？有保固嗎？ <span>▼</span></div>
+            <div class="faq-question" onclick="toggleFaq(this)">Q1: 請問品質有保固嗎？ <span>▼</span></div>
             <div class="faq-answer">我們所有商品皆為嚴選品質保證，並提供 7 天鑑賞期。若收到商品有任何非人為瑕疵，均可聯繫客服辦理退換貨。</div>
         </div>
         <div class="faq-item">
@@ -304,7 +346,7 @@
                     </div>
 
                     <div class="form-warning">
-                        ✦ 貼心提醒：本服務為「貨到付款」，若無故拒收，將依《民法》追究相關運費損失。
+                        ✦ 安心貨到付款，收到商品確認沒問題再付款即可 😊
                     </div>
                     
                     <div class="form-privacy-text">
@@ -346,9 +388,26 @@
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
+    <!-- 🌟 懸浮按鈕：對話、LINE、回到頂部 -->
     <div class="floating-btns">
-        <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="聯絡客服">💬</a>
+        <button class="float-btn btn-chat" title="線上客服" onclick="toggleChat()">💬</button>
+        <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
+    </div>
+
+    <!-- 🌟 聊天室 UI -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div><span style="color:#00c800;">●</span> 線上客服</div>
+            <div class="chat-close" onclick="toggleChat()">&times;</div>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="msg admin">您好！我是尊享腕錶客服，請問想看哪一款手錶呢？有專屬優惠喔！</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()">送出</button>
+        </div>
     </div>
 
     <script>
@@ -455,6 +514,7 @@
                 const mainImgSrc = watch.images[0];
                 const showHotBadge = hotItems.includes(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
                 const stockText = Math.random() > 0.7 ? `<div style="font-size:11px; color:#ff4757; margin-bottom:8px;">⚠️ 庫存僅剩 ${Math.floor(Math.random() * 3) + 1} 支</div>` : '';
+                const priceText = `<div class="price-tag">專屬價：$6,000 - $19,999</div>`;
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -470,6 +530,7 @@
                     </div>
                     <div class="product-info">
                         <h3>${watch.name}</h3>
+                        ${priceText}
                         <p>${watch.desc}</p>
                         ${stockText}
                         <div class="card-trust-tags">
@@ -527,7 +588,6 @@
             const watch = watchData[imgNum];
             if (!watch) return;
             
-            // 🌟 記錄客人點擊了這款手錶
             try {
                 supabase.rpc('increment_product_click', { 
                     p_id: imgNum, 
@@ -700,7 +760,6 @@
                     online_at: new Date().toISOString()
                 });
                 
-                // 🌟 計算瀏覽量與系統分類點擊
                 try {
                     const { data, error: fetchError } = await supabase.from('site_stats').select('*').eq('id', 1).single();
                     if (fetchError) throw fetchError;
@@ -715,7 +774,7 @@
                     } else if (deviceInfo.includes('Windows')) {
                         updateData.pc_count = (data?.pc_count || 0) + 1;
                     } else if (deviceInfo.includes('Linux')) {
-                        updateData.linux_count = (data?.linux_count || 0) + 1; // 🌟 獨立判斷 Linux
+                        updateData.linux_count = (data?.linux_count || 0) + 1;
                     } else {
                         updateData.other_count = (data?.other_count || 0) + 1;
                     }
@@ -726,6 +785,68 @@
                 }
             }
         });
+
+        // ================= 聊天室邏輯 =================
+        let chatChannel = null;
+        const chatSessionId = localStorage.getItem('visitor_session_id') || Math.random().toString(36).substring(2, 15);
+
+        function toggleChat() {
+            const widget = document.getElementById('chatWidget');
+            widget.classList.toggle('active');
+            if (widget.classList.contains('active')) {
+                document.getElementById('chatInput').focus();
+                loadChatMessages();
+                if (!chatChannel) {
+                    chatChannel = supabase.channel('chat-room')
+                        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${chatSessionId}` }, payload => {
+                            const msg = payload.new;
+                            if (msg.sender === 'admin') {
+                                appendChatMessage(msg.message, 'admin');
+                            }
+                        }).subscribe();
+                }
+            }
+        }
+
+        async function loadChatMessages() {
+            const { data, error } = await supabase
+                .from('chat_messages')
+                .select('*')
+                .eq('session_id', chatSessionId)
+                .order('created_at', { ascending: true });
+            
+            if (data) {
+                const chatBody = document.getElementById('chatBody');
+                chatBody.innerHTML = '<div class="msg admin">您好！我是尊享腕錶客服，請問想看哪一款手錶呢？有專屬優惠喔！</div>';
+                data.forEach(msg => {
+                    appendChatMessage(msg.message, msg.sender);
+                });
+            }
+        }
+
+        function appendChatMessage(text, sender) {
+            const chatBody = document.getElementById('chatBody');
+            const div = document.createElement('div');
+            div.className = `msg ${sender}`;
+            div.innerText = text;
+            chatBody.appendChild(div);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            appendChatMessage(text, 'user');
+
+            await supabase.from('chat_messages').insert([{
+                session_id: chatSessionId,
+                sender: 'user',
+                message: text
+            }]);
+        }
     </script>
 </body>
 </html>
