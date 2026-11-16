@@ -88,6 +88,10 @@
         .chat-product-btn { margin-top: 8px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .chat-product-btn:hover { background: rgba(212, 175, 55, 0.15); transform: translateY(-2px); }
 
+        /* ===== 購物車按鈕 ===== */
+        .cart-add-btn { margin-top: 8px; background: transparent; border: 1px solid #00bcd4; color: #00bcd4; border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .cart-add-btn:hover { background: rgba(0,188,212,0.15); transform: translateY(-2px); }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; }
@@ -169,10 +173,39 @@
         .msg.user { align-self: flex-end; background: #00c800; color: #000; border-bottom-right-radius: 0; }
         .msg.admin { align-self: flex-start; background: #333; color: #fff; border-bottom-left-radius: 0; }
         .msg-time { font-size: 10px; color: #888; margin-top: 3px; }
-        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; }
+        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; align-items: center; }
         .chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
         .chat-input-area button { padding: 10px 15px; border-radius: 20px; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; }
         .chat-welcome { text-align: center; color: #888; font-size: 12px; padding: 10px; }
+        .chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid rgba(255,255,255,0.15); }
+        .msg.user .chat-img { margin-left: auto; }
+
+        /* ===== 購物車抽屜 ===== */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2900; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .cart-overlay.active { opacity: 1; visibility: visible; }
+        .cart-drawer { position: fixed; top: 0; right: 0; width: 380px; max-width: 100%; height: 100%; background: #1a1a1a; border-left: 1px solid var(--gold); z-index: 2950; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,0.8); }
+        .cart-drawer.active { transform: translateX(0); }
+        .cart-header { padding: 15px 20px; background: #222; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h3 { color: var(--gold); margin: 0; font-size: 17px; }
+        .cart-close { color: #888; font-size: 26px; cursor: pointer; line-height: 1; }
+        .cart-close:hover { color: #fff; }
+        .cart-body { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .cart-empty { color: #666; text-align: center; margin-top: 60px; font-size: 14px; }
+        .cart-item { display: flex; gap: 12px; background: #222; border: 1px solid #333; border-radius: 10px; padding: 10px; }
+        .cart-item img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #333; }
+        .cart-item-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .cart-item-name { color: var(--gold); font-size: 13px; font-weight: bold; line-height: 1.3; }
+        .cart-item-row { display: flex; align-items: center; gap: 8px; justify-content: space-between; flex-wrap: wrap; }
+        .cart-budget-select { background: #111; border: 1px solid #444; color: #ccc; border-radius: 5px; padding: 4px 6px; font-size: 12px; }
+        .qty-ctrl { display: flex; align-items: center; gap: 6px; }
+        .qty-ctrl button { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #444; background: #111; color: var(--gold); cursor: pointer; font-size: 14px; line-height: 1; }
+        .qty-ctrl span { min-width: 20px; text-align: center; font-size: 14px; }
+        .cart-item-del { background: transparent; border: none; color: #ff4757; cursor: pointer; font-size: 16px; }
+        .cart-footer { padding: 15px 20px; border-top: 1px solid #333; background: #222; }
+        .cart-total { color: #ccc; font-size: 14px; margin-bottom: 10px; text-align: center; }
+        .cart-total span { color: var(--gold); font-weight: bold; font-size: 16px; }
+        .cart-checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #111; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .cart-checkout-btn:hover { filter: brightness(1.1); }
 
         .site-footer { width: 100%; max-width: 1200px; text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #333; color: #666; font-size: 13px; }
         .site-footer a { color: #aaa; text-decoration: none; margin: 0 10px; transition: 0.3s; cursor: pointer; }
@@ -197,6 +230,7 @@
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
             .trust-section { flex-direction: column; }
             .chat-widget { width: 90%; right: 5%; bottom: 80px; }
+            .cart-drawer { width: 100%; }
         }
     </style>
 </head>
@@ -325,7 +359,9 @@
                     </div>
                 </div>
 
-                <div style="text-align: left; margin-bottom: 15px;">
+                <div id="modalCartSummary" style="display:none; background:#111; border:1px solid #333; border-radius:8px; padding:10px; margin:8px 0 12px; font-size:13px; color:#ccc; text-align:left; line-height:1.7;"></div>
+
+                <div id="budgetSelectorWrap" style="text-align: left; margin-bottom: 15px;">
                     <p style="color: #aaa; font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
                     <div class="budget-selector">
                         <button type="button" class="budget-btn active" onclick="selectBudget(this, '基礎')">基礎</button>
@@ -389,11 +425,31 @@
     </div>
 
     <div class="floating-btns">
+        <button class="float-btn" id="cartFloatBtn" onclick="toggleCart()" title="購物車"
+                style="background:#00bcd4; color:#fff; font-size:24px;">🛒
+            <span class="chat-badge" id="cartBadge">0</span>
+        </button>
         <button class="float-btn btn-chat" title="線上客服" onclick="toggleChat()">💬
             <span class="chat-badge" id="chatBadge">0</span>
         </button>
         <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
+    </div>
+
+    <!-- 購物車抽屜 -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>🛒 我的購物車</h3>
+            <span class="cart-close" onclick="toggleCart()">&times;</span>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="cart-empty">購物車是空的</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">共 <span id="cartTotalCount">0</span> 件商品</div>
+            <button class="cart-checkout-btn" onclick="openCartCheckout()">前往結帳（貨到付款）</button>
+        </div>
     </div>
 
     <div class="chat-widget" id="chatWidget">
@@ -405,6 +461,10 @@
             <div class="chat-welcome">👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？</div>
         </div>
         <div class="chat-input-area">
+            <input type="file" id="chatFileInput" accept="image/*" hidden onchange="handleChatImage(this)">
+            <button onclick="document.getElementById('chatFileInput').click()"
+                    style="padding:10px; border-radius:50%; background:#333; color:#00bcd4; border:none; cursor:pointer; font-size:16px;"
+                    title="傳送圖片">📷</button>
             <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
             <button onclick="sendChatMessage()">送出</button>
         </div>
@@ -539,6 +599,7 @@
                         </div>
                         <button class="claim-btn" data-id="${i}">👉 加 LINE 獲取專屬報價</button>
                         <button class="chat-product-btn" data-id="${i}">💬 立即諮詢此款</button>
+                        <button class="cart-add-btn" data-id="${i}">🛒 加入購物車</button>
                     </div>
                 `;
                 productGrid.appendChild(card);
@@ -587,6 +648,11 @@
                 }
                 return;
             }
+            const cartBtn = e.target.closest('.cart-add-btn');
+            if (cartBtn) {
+                addToCart(parseInt(cartBtn.dataset.id, 10));
+                return;
+            }
             const imgWrapper = e.target.closest('.product-image-wrapper');
             if (imgWrapper && imgWrapper.dataset.images) {
                 try { openLightbox(JSON.parse(imgWrapper.dataset.images)); } catch (err) {}
@@ -620,7 +686,13 @@
 
             modalProductName.innerText = watch.name;
             modal.classList.add('active');
-            document.getElementById('shippingForm').dataset.imgNum = imgNum;
+            const form = document.getElementById('shippingForm');
+            form.dataset.imgNum = imgNum;
+            form.dataset.mode = 'single';
+
+            document.getElementById('modalCartSummary').style.display = 'none';
+            document.getElementById('budgetSelectorWrap').style.display = 'block';
+
             formContainer.style.display = 'block';
             successContainer.style.display = 'none';
         }
@@ -656,6 +728,9 @@
         }
         checkDeviceForLine();
 
+        // ============================================================
+        // ===== 送出訂單（支援單品 / 購物車） =====
+        // ============================================================
         let isSubmitting = false;
         submitBtn.addEventListener('click', async function () {
             if (isSubmitting) return;
@@ -665,37 +740,55 @@
             const confirmSubmit = confirm("✦ 貼心提醒：\n送出後將為您保留商品並安排「貨到付款」。\n若無故拒收，將依《民法》追究相關運費損失。\n\n確認資料無誤並同意送出嗎？");
             if (!confirmSubmit) return;
 
-            isSubmitting = true;
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const address = document.getElementById('custAddress').value.trim();
-            const imgNum = form.dataset.imgNum;
-            const watch = watchData[imgNum];
+            const mode = form.dataset.mode || 'single';
 
+            let items = [];
+            let productName = '';
+            let firstProductId = 0;
+
+            if (mode === 'cart') {
+                if (cart.length === 0) { alert('購物車是空的'); return; }
+                items = cart.map(c => ({ id: c.id, name: c.name, qty: c.qty, budget: c.budget }));
+                productName = items.map(i => `${i.name} x${i.qty} (${i.budget})`).join('、');
+                firstProductId = items[0].id;
+            } else {
+                const imgNum = form.dataset.imgNum;
+                const watch = watchData[imgNum];
+                if (!watch) return;
+                items = [{ id: parseInt(imgNum, 10), name: watch.name, qty: 1, budget: selectedBudget }];
+                productName = `${watch.name} (預算: ${selectedBudget})`;
+                firstProductId = parseInt(imgNum, 10);
+            }
+
+            isSubmitting = true;
             submitBtn.innerText = '處理中，請稍候...';
             submitBtn.disabled = true;
 
             try {
-                const productNameWithBudget = `${watch.name} (預算: ${selectedBudget})`;
-
                 const { error } = await supabase.from('orders').insert([{
                     customer_name: name,
                     customer_phone: phone,
                     customer_address: address,
-                    product_name: productNameWithBudget,
-                    product_id: parseInt(imgNum, 10)
+                    product_name: productName,
+                    product_id: firstProductId,
+                    items: items
                 }]);
                 if (error) throw error;
+
+                if (mode === 'cart') { cart = []; saveCart(); }
 
                 formContainer.style.display = 'none';
                 successContainer.style.display = 'block';
             } catch (err) {
                 console.error('送出失敗:', err);
                 alert('送出失敗，請稍後再試。');
-                submitBtn.innerText = '🔒 確認送出，加 LINE 獲取報價';
-                submitBtn.disabled = false;
             } finally {
                 isSubmitting = false;
+                submitBtn.innerText = '🔒 確認送出，加 LINE 獲取報價';
+                submitBtn.disabled = false;
             }
         });
 
@@ -741,9 +834,8 @@
         }, 5000);
 
         // ============================================================
-        // ========== 前端客服：與後台雙向即時對接 ==========
+        // ===== 在線統計 / 系統點擊統計 =====
         // ============================================================
-
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
             sessionId = Math.random().toString(36).substring(2, 15);
@@ -796,179 +888,253 @@
                         updateData.ios_count = (data?.ios_count || 0) + 1;
                     } else if (deviceInfo.includes('Android')) {
                         updateData.android_count = (data?.android_count || 0) + 1;
-                    } else if (deviceInfo.includes('Windows')) {
-                        updateData.pc_count = (data?.pc_count || 0) + 1;
                     } else if (deviceInfo.includes('Linux')) {
                         updateData.linux_count = (data?.linux_count || 0) + 1;
+                    } else if (deviceInfo.includes('Windows') || deviceInfo.includes('電腦')) {
+                        updateData.pc_count = (data?.pc_count || 0) + 1;
                     } else {
                         updateData.other_count = (data?.other_count || 0) + 1;
                     }
 
-                    await supabase.from('site_stats').update(updateData).eq('id', 1);
+                    const { error: updateError } = await supabase.from('site_stats').update(updateData).eq('id', 1);
+                    if (updateError) console.error('更新統計失敗:', updateError);
                 } catch (err) {
-                    console.error('❌ 瀏覽量統計失敗:', err);
+                    console.error('讀取或更新統計失敗', err);
                 }
             }
         });
 
-        // ===== 前端聊天室 =====
-        let chatChannel = null;
-        let chatWidgetOpen = false;
-        let unreadCount = 0;
-        let renderedMessageIds = new Set();
+        // ============================================================
+        // ===== 前端聊天：與後台雙向即時對接（含圖片） =====
+        // ============================================================
+        function escapeHtmlF(s) {
+            return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+        }
 
         function toggleChat() {
             const widget = document.getElementById('chatWidget');
             widget.classList.toggle('active');
-            chatWidgetOpen = widget.classList.contains('active');
-
-            if (chatWidgetOpen) {
-                document.getElementById('chatInput').focus();
-                loadChatMessages();
-                unreadCount = 0;
-                updateChatBadge();
-                if (!chatChannel) {
-                    initChatChannel();
+            if (widget.classList.contains('active')) {
+                if (!widget.dataset.loaded) {
+                    widget.dataset.loaded = '1';
+                    loadChatHistory();
                 }
-            }
-        }
-
-        function initChatChannel() {
-            chatChannel = supabase.channel('frontend-chat-' + sessionId)
-                .on('postgres_changes', {
-                    event: 'INSERT',
-                    schema: 'public',
-                    table: 'chat_messages',
-                    filter: `session_id=eq.${sessionId}`
-                }, payload => {
-                    const msg = payload.new;
-                    if (msg.sender === 'admin') {
-                        appendChatMessage(msg.message, 'admin', msg.created_at);
-                        if (!chatWidgetOpen) {
-                            unreadCount++;
-                            updateChatBadge();
-                        }
-                    }
-                }).subscribe();
-        }
-
-        function updateChatBadge() {
-            const badge = document.getElementById('chatBadge');
-            if (unreadCount > 0) {
-                badge.style.display = 'flex';
-                badge.innerText = unreadCount > 9 ? '9+' : unreadCount;
-            } else {
+                const badge = document.getElementById('chatBadge');
                 badge.style.display = 'none';
+                badge.textContent = '0';
+                setTimeout(() => document.getElementById('chatInput').focus(), 100);
             }
         }
 
-        async function loadChatMessages() {
-            const chatBody = document.getElementById('chatBody');
+        function appendChatMessage(text, sender, createdAt, imageUrl, msgType) {
+            const body = document.getElementById('chatBody');
+            const div = document.createElement('div');
+            div.className = `msg ${sender}`;
+            const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
+            if (msgType === 'image' || imageUrl) {
+                div.innerHTML = `<img src="${imageUrl}" class="chat-img" onclick="window.open(this.src,'_blank')" alt="圖片"><div class="msg-time">${timeStr}</div>`;
+            } else {
+                div.innerHTML = `${escapeHtmlF(text)}<div class="msg-time">${timeStr}</div>`;
+            }
+            body.appendChild(div);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        async function loadChatHistory() {
             const { data, error } = await supabase
                 .from('chat_messages')
                 .select('*')
                 .eq('session_id', sessionId)
                 .order('created_at', { ascending: true });
-
-            if (error) {
-                console.error('載入聊天記錄失敗', error);
-                return;
-            }
-
-            chatBody.innerHTML = '<div class="chat-welcome">👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？</div>';
-            renderedMessageIds.clear();
-
-            if (data && data.length > 0) {
-                data.forEach(msg => {
-                    appendChatMessage(msg.message, msg.sender, msg.created_at);
-                });
-            }
-        }
-
-        function appendChatMessage(text, sender, createdAt) {
-            const chatBody = document.getElementById('chatBody');
-            const welcome = chatBody.querySelector('.chat-welcome');
-            if (welcome) welcome.remove();
-
-            const div = document.createElement('div');
-            div.className = `msg ${sender}`;
-
-            const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
-            div.innerHTML = `${escapeHtml(text)}<div class="msg-time">${timeStr}</div>`;
-
-            chatBody.appendChild(div);
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
-
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+            if (error || !data) return;
+            data.forEach(m => appendChatMessage(m.message, m.sender, m.created_at, m.image_url, m.msg_type));
         }
 
         async function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             if (!text) return;
-
             input.value = '';
 
             const { error } = await supabase.from('chat_messages').insert([{
                 session_id: sessionId,
                 sender: 'user',
-                message: text
+                message: text,
+                msg_type: 'text'
             }]);
+            if (error) { alert('訊息送出失敗：' + error.message); input.value = text; return; }
+            appendChatMessage(text, 'user', new Date().toISOString(), null, 'text');
+        }
 
-            if (error) {
-                alert('訊息送出失敗，請稍後再試。');
+        async function handleChatImage(inputEl) {
+            const file = inputEl.files[0];
+            inputEl.value = '';
+            if (!file) return;
+            if (!file.type.startsWith('image/')) { alert('請選擇圖片檔'); return; }
+            if (file.size > 5 * 1024 * 1024) { alert('圖片大小請小於 5MB'); return; }
+
+            const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+            const path = `${sessionId}/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+            const body = document.getElementById('chatBody');
+            const loading = document.createElement('div');
+            loading.className = 'msg user';
+            loading.textContent = '📤 圖片上傳中...';
+            body.appendChild(loading);
+            body.scrollTop = body.scrollHeight;
+
+            const { error: upErr } = await supabase.storage
+                .from('chat-images')
+                .upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type || 'image/jpeg' });
+
+            loading.remove();
+            if (upErr) { alert('圖片上傳失敗：' + upErr.message); return; }
+
+            const { data: pub } = supabase.storage.from('chat-images').getPublicUrl(path);
+            const url = pub.publicUrl;
+
+            const { error } = await supabase.from('chat_messages').insert([{
+                session_id: sessionId,
+                sender: 'user',
+                message: '[圖片]',
+                image_url: url,
+                msg_type: 'image'
+            }]);
+            if (error) { alert('訊息送出失敗：' + error.message); return; }
+
+            appendChatMessage('[圖片]', 'user', new Date().toISOString(), url, 'image');
+        }
+
+        // 訂閱這條 session 的訊息（接收後台回覆與圖片）
+        supabase.channel('front-chat-' + sessionId)
+            .on('postgres_changes',
+                { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
+                payload => {
+                    const msg = payload.new;
+                    if (msg.sender === 'user') return;
+                    const widget = document.getElementById('chatWidget');
+                    if (!widget.dataset.loaded) return;
+                    appendChatMessage(msg.message, 'admin', msg.created_at, msg.image_url, msg.msg_type);
+                    if (!widget.classList.contains('active')) {
+                        const badge = document.getElementById('chatBadge');
+                        badge.style.display = 'flex';
+                        badge.textContent = String((parseInt(badge.textContent, 10) || 0) + 1);
+                    }
+                })
+            .subscribe();
+
+        // ============================================================
+        // ===== 購物車 =====
+        // ============================================================
+        let cart = [];
+        try { cart = JSON.parse(localStorage.getItem('cart_items') || '[]'); } catch (e) { cart = []; }
+        const BUDGET_OPTIONS = ['基礎', '高端', '定制'];
+
+        function saveCart() {
+            localStorage.setItem('cart_items', JSON.stringify(cart));
+            updateCartBadge();
+            renderCart();
+        }
+
+        function addToCart(id) {
+            const w = watchData[id];
+            if (!w) return;
+            const exist = cart.find(c => c.id === id);
+            if (exist) exist.qty += 1;
+            else cart.push({ id, name: w.name, image: w.images[0], qty: 1, budget: '基礎' });
+            saveCart();
+            const btn = document.getElementById('cartFloatBtn');
+            btn.style.transform = 'scale(1.25)';
+            setTimeout(() => btn.style.transform = '', 200);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            saveCart();
+        }
+
+        function changeQty(id, delta) {
+            const c = cart.find(x => x.id === id);
+            if (!c) return;
+            c.qty = Math.max(1, c.qty + delta);
+            saveCart();
+        }
+
+        function changeBudget(id, val) {
+            const c = cart.find(x => x.id === id);
+            if (!c) return;
+            c.budget = val;
+            saveCart();
+        }
+
+        function updateCartBadge() {
+            const total = cart.reduce((s, c) => s + c.qty, 0);
+            const badge = document.getElementById('cartBadge');
+            if (!badge) return;
+            if (total > 0) { badge.style.display = 'flex'; badge.textContent = total; }
+            else badge.style.display = 'none';
+        }
+
+        function renderCart() {
+            const body = document.getElementById('cartBody');
+            const totalEl = document.getElementById('cartTotalCount');
+            if (!body) return;
+
+            const total = cart.reduce((s, c) => s + c.qty, 0);
+            if (totalEl) totalEl.textContent = total;
+
+            if (cart.length === 0) {
+                body.innerHTML = '<div class="cart-empty">購物車是空的</div>';
                 return;
             }
-
-            appendChatMessage(text, 'user', new Date().toISOString());
+            body.innerHTML = cart.map(c => `
+                <div class="cart-item">
+                    <img src="${c.image}" onerror="this.src='${fallbackImg}'" alt="">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${c.name}</div>
+                        <div class="cart-item-row">
+                            <select class="cart-budget-select" onchange="changeBudget(${c.id}, this.value)">
+                                ${BUDGET_OPTIONS.map(b => `<option value="${b}" ${c.budget === b ? 'selected' : ''}>${b}</option>`).join('')}
+                            </select>
+                            <div class="qty-ctrl">
+                                <button onclick="changeQty(${c.id}, -1)">−</button>
+                                <span>${c.qty}</span>
+                                <button onclick="changeQty(${c.id}, 1)">＋</button>
+                            </div>
+                            <button class="cart-item-del" onclick="removeFromCart(${c.id})" title="移除">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        const legalContents = {
-            'privacy': `
-                <h2>隱私權政策</h2>
-                <p>歡迎使用「尊享腕錶」。我們非常重視您的個人隱私與資料安全。本政策說明我們如何收集、使用及保護您的個人資料。</p>
-                <h3>1. 資料收集</h3>
-                <p>當您使用本網站填寫預約表單時，我們會收集您的姓名、電話號碼及收件地址，僅用於「貨到付款」之物流配送。</p>
-                <h3>2. 資料使用與保護</h3>
-                <p>您的資料受嚴格的加密保護，絕不會販售、交換或洩漏給任何第三方機構（物流公司除外）。</p>
-                <h3>3. 聯絡我們</h3>
-                <p>若您對隱私權政策有任何疑問，歡迎透過官方 LINE 與我們聯繫。</p>
-            `,
-            'terms': `
-                <h2>服務條款</h2>
-                <p>使用本網站服務即代表您同意以下條款：</p>
-                <h3>1. 商品性質</h3>
-                <p>本網站販售之腕錶均為嚴選品質之商品，並非原廠公司貨。我們保證商品出貨前皆經過嚴格品檢。</p>
-                <h3>2. 交易方式</h3>
-                <p>本網站一律採用「貨到付款」方式。您收到商品並確認無誤後，再將款項交給物流司機即可。</p>
-                <h3>3. 防範詐騙</h3>
-                <p>本公司絕對不會要求您前往 ATM 操作，也不會致電要求您提供信用卡密碼或銀行帳戶資訊。</p>
-            `,
-            'return': `
-                <h2>退換貨政策</h2>
-                <p>為了保障您的權益，我們提供完善的售後服務：</p>
-                <h3>1. 7天鑑賞期</h3>
-                <p>您享有商品貨到後 7 天內的無條件退貨權益。退回之商品必須保持全新、未使用狀態，且包裝完整。</p>
-                <h3>2. 瑕疵處理</h3>
-                <p>若您收到的商品有任何非人為損壞或瑕疵，請立即透過 LINE 聯繫客服，我們將免費為您辦理換貨。</p>
-                <h3>3. 退貨流程</h3>
-                <p>請於 7 天內聯繫客服，我們將安排物流前往收件。退款金額將於收到退貨商品確認無誤後處理。</p>
-            `
-        };
+        function toggleCart() {
+            document.getElementById('cartDrawer').classList.toggle('active');
+            document.getElementById('cartOverlay').classList.toggle('active');
+        }
 
-        function openLegal(type) {
-            const modal = document.getElementById('legalModal');
-            const content = document.getElementById('legalContent');
-            content.innerHTML = legalContents[type];
+        function openCartCheckout() {
+            if (cart.length === 0) { alert('購物車是空的，請先加入商品'); return; }
+            const form = document.getElementById('shippingForm');
+            form.dataset.mode = 'cart';
+
+            const total = cart.reduce((s, c) => s + c.qty, 0);
+            modalProductName.innerText = `購物車結帳（共 ${total} 件）`;
+            const summary = document.getElementById('modalCartSummary');
+            summary.style.display = 'block';
+            summary.innerHTML = cart.map(c => `• ${c.name} × ${c.qty}（${c.budget}）`).join('<br>');
+
+            document.getElementById('budgetSelectorWrap').style.display = 'none';
+            document.getElementById('randomViewerCount').innerText = Math.floor(Math.random() * 20) + 10;
+
+            formContainer.style.display = 'block';
+            successContainer.style.display = 'none';
             modal.classList.add('active');
+            toggleCart();
         }
+
+        updateCartBadge();
+        renderCart();
     </script>
 </body>
 </html>
