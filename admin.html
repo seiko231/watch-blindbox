@@ -214,7 +214,6 @@
 
         <div class="panel-section">
             <h2>📈 累計系統點擊佔比</h2>
-
             <div class="visitor-overview">
                 <div class="overview-total">
                     <div class="num" id="total-click-num">0</div>
@@ -259,10 +258,13 @@
 
         <!-- ===== 後台獨立客服對話 ===== -->
         <div class="panel-section">
-            <h2>💬 即時客服對話（每位訪客獨立）</h2>
+            <h2>
+                💬 即時客服對話（每位訪客獨立）
+                <button onclick="refreshChatSessionList()" style="padding: 4px 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37; border-radius: 4px; cursor: pointer; margin-left: 10px;">🔄 重新整理</button>
+            </h2>
             <div class="admin-chat-container">
                 <ul class="admin-chat-list" id="admin-chat-list">
-                    <li style="color: #666; text-align: center; cursor: default;">尚無對話</li>
+                    <li style="color: #666; text-align: center; cursor: default;">載入中...</li>
                 </ul>
                 <div class="admin-chat-window">
                     <div class="admin-chat-header">
@@ -272,7 +274,6 @@
                     <div class="admin-chat-body" id="admin-chat-body">
                         <div class="chat-empty">尚未選擇對話</div>
                     </div>
-                    <!-- 這裡加入圖片傳送按鈕 -->
                     <div class="admin-chat-input-area">
                         <input type="file" id="admin-chat-file" accept="image/*" hidden onchange="handleAdminChatImage(this)">
                         <button class="admin-chat-img-btn" id="admin-chat-img-btn" onclick="document.getElementById('admin-chat-file').click()" disabled title="傳送圖片">📷</button>
@@ -803,12 +804,18 @@
         }
 
         async function refreshChatSessionList() {
+            const listEl = document.getElementById('admin-chat-list');
+            listEl.innerHTML = '<li style="color: #888; text-align: center; cursor: default;">載入中...</li>';
+
             const { data, error } = await supabase
                 .from('chat_messages')
                 .select('session_id, message, sender, created_at, image_url, msg_type')
                 .order('created_at', { ascending: false });
 
-            if (error || !data) return;
+            if (error || !data) {
+                listEl.innerHTML = `<li style="color: #ff4757; text-align: center; padding: 10px;">載入失敗: ${error?.message || '未知錯誤'}</li>`;
+                return;
+            }
 
             allChatSessions = {};
             sessionMessages = {};
