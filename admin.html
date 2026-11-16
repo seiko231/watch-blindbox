@@ -108,13 +108,15 @@
         .admin-chat-window { flex: 1; display: flex; flex-direction: column; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; }
         .admin-chat-header { padding: 12px 15px; background: #222; border-bottom: 1px solid #333; border-radius: 8px 8px 0 0; color: #888; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
         .admin-chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .admin-chat-input { padding: 10px; border-top: 1px solid #333; display: flex; gap: 10px; }
-        .admin-chat-input input { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
-        .admin-chat-input input:disabled { background: #1a1a1a; color: #555; }
-        .admin-chat-input button { padding: 10px 20px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .admin-chat-input button:disabled { background: #333; color: #666; cursor: not-allowed; }
+        .admin-chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; align-items: center; }
+        .admin-chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
+        .admin-chat-input-area input[type="text"]:disabled { background: #1a1a1a; color: #555; }
+        .admin-chat-input-area button { padding: 10px 20px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .admin-chat-input-area button:disabled { background: #333; color: #666; cursor: not-allowed; }
+        .admin-chat-img-btn { padding: 10px; border-radius: 50%; background: #333; color: #d4af37; border: none; cursor: pointer; font-size: 16px; }
+        .admin-chat-img-btn:disabled { background: #1a1a1a; color: #444; cursor: not-allowed; }
 
-        .chat-msg { padding: 10px 14px; border-radius: 8px; max-width: 80%; font-size: 14px; line-height: 1.4; }
+        .chat-msg { padding: 10px 14px; border-radius: 8px; max-width: 80%; font-size: 14px; line-height: 1.4; word-break: break-word; }
         .chat-msg.admin { align-self: flex-end; background: #d4af37; color: #000; }
         .chat-msg.user { align-self: flex-start; background: #333; color: #fff; }
         .chat-msg .chat-msg-time { font-size: 10px; color: rgba(0,0,0,0.5); margin-top: 3px; }
@@ -270,7 +272,10 @@
                     <div class="admin-chat-body" id="admin-chat-body">
                         <div class="chat-empty">尚未選擇對話</div>
                     </div>
-                    <div class="admin-chat-input">
+                    <!-- 這裡加入圖片傳送按鈕 -->
+                    <div class="admin-chat-input-area">
+                        <input type="file" id="admin-chat-file" accept="image/*" hidden onchange="handleAdminChatImage(this)">
+                        <button class="admin-chat-img-btn" id="admin-chat-img-btn" onclick="document.getElementById('admin-chat-file').click()" disabled title="傳送圖片">📷</button>
                         <input type="text" id="admin-chat-input" placeholder="請先選擇左側訪客..." disabled onkeypress="if(event.key === 'Enter') sendAdminReply()">
                         <button id="admin-chat-send-btn" onclick="sendAdminReply()" disabled>送出</button>
                     </div>
@@ -879,6 +884,7 @@
 
             document.getElementById('admin-chat-input').disabled = false;
             document.getElementById('admin-chat-send-btn').disabled = false;
+            document.getElementById('admin-chat-img-btn').disabled = false;
 
             const body = document.getElementById('admin-chat-body');
             body.innerHTML = '<div class="chat-empty">載入中...</div>';
@@ -951,6 +957,54 @@
                 allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
             }
             allChatSessions[currentChatSession].lastMessage = text;
+            allChatSessions[currentChatSession].lastTime = new Date();
+            renderChatSessionList();
+        }
+
+        // ===== 後台傳送圖片功能 =====
+        async function handleAdminChatImage(inputEl) {
+            if (!currentChatSession) return;
+            const file = inputEl.files[0];
+            inputEl.value = '';
+            if (!file) return;
+            if (!file.type.startsWith('image/')) { alert('請選擇圖片檔'); return; }
+            if (file.size > 5 * 1024 * 1024) { alert('圖片大小請小於 5MB'); return; }
+
+            const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+            const path = `${currentChatSession}/${Date.now()}_admin.${ext}`;
+
+            const body = document.getElementById('admin-chat-body');
+            const loading = document.createElement('div');
+            loading.className = 'chat-msg admin';
+            loading.textContent = '📤 圖片上傳中...';
+            body.appendChild(loading);
+            body.scrollTop = body.scrollHeight;
+
+            const { error: upErr } = await supabase.storage
+                .from('chat-images')
+                .upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type || 'image/jpeg' });
+
+            loading.remove();
+            if (upErr) { alert('圖片上傳失敗：' + upErr.message); return; }
+
+            const { data: pub } = supabase.storage.from('chat-images').getPublicUrl(path);
+            const url = pub.publicUrl;
+
+            const { error } = await supabase.from('chat_messages').insert([{
+                session_id: currentChatSession,
+                sender: 'admin',
+                message: '[圖片]',
+                image_url: url,
+                msg_type: 'image'
+            }]);
+            if (error) { alert('訊息送出失敗：' + error.message); return; }
+
+            appendAdminChatMessage('[圖片]', 'admin', new Date().toISOString(), url, 'image');
+
+            if (!allChatSessions[currentChatSession]) {
+                allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
+            }
+            allChatSessions[currentChatSession].lastMessage = '[圖片]';
             allChatSessions[currentChatSession].lastTime = new Date();
             renderChatSessionList();
         }
