@@ -4,19 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>尊享腕錶 精品展示</title>
-
-    <meta property="og:title" content="尊享腕錶 精品展示 | 嚴選高質感腕錶">
-    <meta property="og:description" content="精選 52 款經典腕錶，全台貨到付款、7天鑑賞期。立即加入 LINE 獲取專屬報價！">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
-    <meta property="og:type" content="website">
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0f0f0f">
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
-
     <style>
         :root { --gold: #d4af37; --bg-dark: #0f0f0f; }
         body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%); color: #fff; font-family: 'Microsoft JhengHei', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
@@ -25,7 +13,7 @@
         @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         body { padding-top: 55px; }
 
-        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
+        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; }
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
@@ -94,11 +82,7 @@
         .price-display-box { background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
         .price-display-box p { color: #aaa; font-size: 12px; margin: 0 0 5px 0; }
         .price-display-box h3 { color: #fff; font-size: 18px; margin: 0 0 10px 0; }
-        .unlock-price { color: #ff4757; font-size: 16px; font-weight: bold; margin: 0; display: flex; align-items: center; gap: 5px; }
-
-        .viewer-count { color: #aaa; font-size: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: flex-start; }
-        .viewer-count span { color: #ff4757; font-weight: bold; }
-
+        
         .budget-selector { display: flex; gap: 10px; margin-bottom: 15px; }
         .budget-btn { flex: 1; padding: 10px 5px; background: #222; border: 1px solid #444; border-radius: 8px; color: #aaa; font-size: 13px; cursor: pointer; transition: 0.3s; }
         .budget-btn.active { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); color: var(--gold); font-weight: bold; }
@@ -109,23 +93,10 @@
         .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
 
         .form-warning { background: rgba(212, 175, 55, 0.08); border: 1px dashed rgba(212, 175, 55, 0.4); color: #d4af37; font-size: 12px; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.5; }
-        .form-privacy-text { font-size: 11px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
-        .form-privacy-text span { color: var(--gold); font-size: 14px; }
-
         .submit-btn { width: 100%; padding: 16px; background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%); color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
         .submit-btn:hover { border-color: var(--gold); transform: translateY(-2px); background: linear-gradient(180deg, #333 0%, #1a1a1a 100%); }
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
-
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 2500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
-        .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s; }
-        .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(255, 255, 255, 0.2); }
-        .gallery-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; width: 95vw; height: 85vh; gap: 20px; padding: 0 20px; align-items: center; }
-        .gallery-track::-webkit-scrollbar { display: none; }
-        .gallery-track img { flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1); transform: scale(0.95) rotateX(2deg); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; will-change: transform; }
-        .gallery-track img:hover, .gallery-track img:active { transform: scale(1) rotateX(0deg); box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2); cursor: zoom-in; }
-        .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px; }
 
         .floating-btns { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1500; }
         .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; transition: 0.3s; border: none; outline: none; position: relative; }
@@ -150,14 +121,7 @@
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
         .faq-item.active .faq-question { color: var(--gold); }
 
-        .purchase-toast { position: fixed; bottom: 20px; left: 20px; background: rgba(30, 30, 30, 0.95); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.8); z-index: 2000; transform: translateX(-150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .purchase-toast.show { transform: translateX(0); }
-        .purchase-toast img { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; border: 1px solid #444; }
-        .purchase-toast .text { font-size: 13px; color: #ccc; }
-        .purchase-toast .text strong { color: var(--gold); }
-        .purchase-toast .text span { color: #888; font-size: 11px; }
-
-        .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 480px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .chat-widget.active { display: flex; }
         .chat-header { background: #222; padding: 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
         .chat-close { cursor: pointer; font-size: 20px; color: #888; }
@@ -165,32 +129,27 @@
         .msg { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.4; word-break: break-word; }
         .msg.user { align-self: flex-end; background: #00c800; color: #000; border-bottom-right-radius: 0; }
         .msg.admin { align-self: flex-start; background: #333; color: #fff; border-bottom-left-radius: 0; }
+        .msg.system { align-self: center; background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold); color: var(--gold); font-size: 13px; text-align: center; max-width: 95%; border-radius: 8px; padding: 10px; }
+        .msg img { max-width: 100%; border-radius: 5px; margin-top: 5px; cursor: pointer; display: block; }
         .msg-time { font-size: 10px; color: #888; margin-top: 3px; }
-        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; }
-        .chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
-        .chat-input-area button { padding: 10px 15px; border-radius: 20px; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; }
-        .chat-welcome { text-align: center; color: #888; font-size: 12px; padding: 10px; }
-        .debug-info { font-size: 10px; color: #555; padding: 4px 10px; border-top: 1px solid #222; word-break: break-all; }
+        
+        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; align-items: center; background: #222; border-radius: 0 0 12px 12px; }
+        .chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #111; color: #fff; outline: none; font-size: 14px; }
+        .chat-input-area button { padding: 8px; border-radius: 50%; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; font-size: 16px; }
+        .upload-btn { background: #444; color: #fff; cursor: pointer; display: flex; justify-content: center; align-items: center; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; }
+        #imageUpload { display: none; }
 
         .site-footer { width: 100%; max-width: 1200px; text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #333; color: #666; font-size: 13px; }
         .site-footer a { color: #aaa; text-decoration: none; margin: 0 10px; transition: 0.3s; cursor: pointer; }
         .site-footer a:hover { color: var(--gold); }
-        .legal-modal .modal-content { text-align: left; }
-        .legal-modal h2 { text-align: center; margin-bottom: 20px; }
-        .legal-modal h3 { color: #ccc; font-size: 15px; margin-top: 20px; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 10px; }
-        .legal-modal p { color: #888; font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
 
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .product-image-wrapper { height: 150px; }
-            .image-number-badge { font-size: 16px; padding: 3px 8px; }
-            .stock-badge { font-size: 10px; padding: 3px 8px; bottom: 5px; right: 5px; }
             .product-info h3 { font-size: 14px; }
             .product-info p { display: none; }
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; }
-            .purchase-toast { bottom: 90px; left: 10px; right: 10px; transform: translateY(150%); }
-            .purchase-toast.show { transform: translateY(0); }
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
             .trust-section { flex-direction: column; }
@@ -200,25 +159,9 @@
 </head>
 <body>
 
-    <div class="marquee-container">
-        <div class="marquee-text">
-            🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
-        </div>
-    </div>
+    <div class="marquee-container"><div class="marquee-text">🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚</div></div>
 
-    <div class="purchase-toast" id="purchaseToast">
-        <img src="" id="toastImg" alt="product">
-        <div class="text">
-            <strong id="toastName">王先生</strong> 剛剛預約了<br>
-            <span id="toastProduct">勞力士黑水鬼</span><br>
-            <span id="toastTime">1 分鐘前</span>
-        </div>
-    </div>
-
-    <div class="live-counter">
-        <div class="live-dot"></div>
-        目前線上 <span id="frontend-online-count" style="font-size: 15px; margin: 0 2px;">0</span> 人
-    </div>
+    <div class="live-counter"><div class="live-dot"></div>目前線上 <span id="frontend-online-count">1</span> 人</div>
 
     <div class="trust-bar">
         <div class="trust-item">🛡️ <span>7天鑑賞期</span></div>
@@ -232,18 +175,18 @@
 
         <div class="line-contact-banner" id="customerAvatarBanner">
             <div class="online-dot"></div>
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="客服專員" class="avatar" id="customerAvatarImg">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="客服專員" class="avatar">
             <div class="line-text">
                 <h3>📱 客服專員：小美 為您服務</h3>
                 <p>真人一對一在線回覆，安心有保障<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
-                <p style="font-size: 12px; color: #aaa; margin-top: 6px;">👉 點擊頭像或此處立即諮詢</p>
+                <p style="font-size: 12px; color: #aaa; margin-top: 6px;">👉 點擊此處立即諮詢</p>
             </div>
         </div>
 
         <div class="legal-banner">
             <strong>【交易與售後說明】</strong><br>
-            本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益（商品需保持全新未使用狀態）。<br>
-            為防範詐騙，本公司不會要求您前往 ATM 操作或提供信用卡密碼。如有疑慮請直接透過官方 LINE 與我們聯繫。
+            本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益。<br>
+            為防範詐騙，本公司不會要求您前往 ATM 操作或提供信用卡密碼。
         </div>
     </div>
 
@@ -272,7 +215,7 @@
         <div class="trust-card">
             <h3>📦 出貨實拍保證</h3>
             <p>每支手錶皆附贈精美錶盒，出貨前專人嚴格品檢，超商寄件單號皆可查詢。</p>
-            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=600&auto=format&fit=crop" alt="精美包裝" onerror="this.src='https://via.placeholder.com/600x200?text=Package'">
+            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=600&auto=format&fit=crop" alt="精美包裝">
         </div>
     </div>
 
@@ -293,105 +236,13 @@
     </div>
 
     <div class="site-footer">
-        <div style="margin-bottom: 15px;">
-            <a onclick="openLegal('privacy')">隱私權政策</a> |
-            <a onclick="openLegal('terms')">服務條款</a> |
-            <a onclick="openLegal('return')">退換貨政策</a>
-        </div>
         <div>&copy; 2026 尊享腕錶 精品展示. All rights reserved.</div>
-        <div style="font-size: 11px; margin-top: 10px; color: #555;">本網站商品均為嚴選品質，非原廠公司貨。</div>
-    </div>
-
-    <div class="modal-overlay legal-modal" id="legalModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="document.getElementById('legalModal').classList.remove('active')">&times;</span>
-            <div id="legalContent"></div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="infoModal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModalBtn">&times;</span>
-
-            <div id="formContainer">
-                <h2>確認商品與填寫資訊</h2>
-                <div class="price-display-box">
-                    <p>您選擇的商品：</p>
-                    <h3 id="modalProductName">手錶名稱</h3>
-                    <div class="viewer-count">
-                        🔥 今日已有 <span id="randomViewerCount">15</span> 人查看此商品
-                    </div>
-                </div>
-
-                <div style="text-align: left; margin-bottom: 15px;">
-                    <p style="color: #aaa; font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
-                    <div class="budget-selector">
-                        <button type="button" class="budget-btn active" onclick="selectBudget(this, '基礎')">基礎</button>
-                        <button type="button" class="budget-btn" onclick="selectBudget(this, '高端')">高端</button>
-                        <button type="button" class="budget-btn" onclick="selectBudget(this, '定制')">定制</button>
-                    </div>
-                </div>
-
-                <form id="shippingForm" onsubmit="event.preventDefault();">
-                    <div class="input-group" data-icon="👤">
-                        <input type="text" id="custName" placeholder="請輸入收件人姓名" maxlength="30" required>
-                    </div>
-                    <div class="input-group" data-icon="📞">
-                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="10" title="請輸入 09 開頭的 10 碼手機號碼" required>
-                    </div>
-                    <div class="input-group" data-icon="📍">
-                        <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" maxlength="100" required>
-                    </div>
-
-                    <div class="form-warning">
-                        ✦ 安心貨到付款，收到商品確認沒問題再付款即可 😊
-                    </div>
-
-                    <div class="form-privacy-text">
-                        <span>🔒</span>
-                        <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
-                    </div>
-
-                    <button type="button" class="submit-btn" id="submitBtn">
-                        🔒 確認送出，加 LINE 獲取報價
-                    </button>
-                </form>
-            </div>
-
-            <div id="successContainer" style="display: none;">
-                <h2 style="color: #00c800; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
-                <p style="color: #ddd; margin-bottom: 20px; font-size: 14px;">請點擊下方按鈕加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
-
-                <a id="mobile-line-btn" href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: none; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4); text-align: center;">
-                    📱 點此加入 LINE 獲取報價
-                </a>
-
-                <div id="desktop-line-box" style="display: none; padding: 10px 0;">
-                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0,200,0,0.3);">
-                        <img src="images/line-qr.jpg" alt="LINE QR Code" style="width: 150px; height: 150px; display: block; border-radius: 5px;" onerror="this.src='https://via.placeholder.com/150x150?text=QR+Code'">
-                    </div>
-                    <p style="color: #fff; font-size: 14px; margin: 0;">📷 請用手機 LINE 掃描上方 QR Code</p>
-                </div>
-
-                <div style="font-size: 12px; color: #aaa; line-height: 1.6; margin-top: 15px;">
-                    💡 若未自動開啟，請點擊右上角選擇「在瀏覽器中開啟」
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
-        <div class="gallery-track" id="galleryTrack"></div>
-        <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
     <div class="floating-btns">
-        <button class="float-btn btn-chat" title="線上客服" onclick="toggleChat()">💬
-            <span class="chat-badge" id="chatBadge">0</span>
-        </button>
-        <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
-        <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
+        <button class="float-btn btn-chat" onclick="toggleChat()">💬<span class="chat-badge" id="chatBadge">0</span></button>
+        <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line">📱</a>
+        <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️</button>
     </div>
 
     <div class="chat-widget" id="chatWidget">
@@ -400,490 +251,214 @@
             <div class="chat-close" onclick="toggleChat()">&times;</div>
         </div>
         <div class="chat-body" id="chatBody">
-            <div class="chat-welcome">👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？</div>
+            <div class="msg admin">您好！我是尊享腕錶客服，請問想看哪一款手錶呢？</div>
         </div>
         <div class="chat-input-area">
+            <label class="upload-btn">📷<input type="file" id="imageUpload" accept="image/*" onchange="uploadImage(this)"></label>
             <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()">送出</button>
+            <button onclick="sendChatMessage()">➤</button>
         </div>
-        <div class="debug-info" id="debugInfo">Session: --</div>
+    </div>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="document.getElementById('orderModal').classList.remove('active')">&times;</span>
+            <h2>確認商品與填寫資訊</h2>
+            <div class="price-display-box">
+                <p>您選擇的商品：</p>
+                <h3 id="modalProductName">手錶名稱</h3>
+            </div>
+            <div style="text-align: left; margin-bottom: 15px;">
+                <p style="color: #aaa; font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
+                <div class="budget-selector">
+                    <button type="button" class="budget-btn active" onclick="selectBudget(this, '基礎')">基礎</button>
+                    <button type="button" class="budget-btn" onclick="selectBudget(this, '高端')">高端</button>
+                    <button type="button" class="budget-btn" onclick="selectBudget(this, '定制')">定制</button>
+                </div>
+            </div>
+            <form id="shippingForm" onsubmit="event.preventDefault();">
+                <div class="input-group" data-icon="👤"><input type="text" id="custName" placeholder="請輸入收件人姓名" required></div>
+                <div class="input-group" data-icon="📞"><input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="10" required></div>
+                <div class="input-group" data-icon="📍"><input type="text" id="custAddress" placeholder="請輸入詳細收件地址" required></div>
+                <div class="form-warning">✦ 安心貨到付款，收到商品確認沒問題再付款即可 😊</div>
+                <button type="button" class="submit-btn" id="submitBtn" onclick="submitOrder()">🔒 確認送出並帶入聊天室</button>
+            </form>
+        </div>
     </div>
 
     <script>
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
-
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
-        });
-
-        const productGrid = document.getElementById('productGrid');
-        const modal = document.getElementById('infoModal');
-        const closeBtn = document.getElementById('closeModalBtn');
-        const lightbox = document.getElementById('lightbox');
-        const galleryTrack = document.getElementById('galleryTrack');
-        const submitBtn = document.getElementById('submitBtn');
-        const formContainer = document.getElementById('formContainer');
-        const successContainer = document.getElementById('successContainer');
-        const modalProductName = document.getElementById('modalProductName');
-
-        let selectedBudget = '基礎';
-
-        function selectBudget(btn, budget) {
-            document.querySelectorAll('.budget-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedBudget = budget;
-        }
-
-        const watchData = {
-            1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
-            2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
-            3: { name: "歐米茄 海馬 300 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", images: ["images/3.webp"] },
-            4: { name: "愛彼 皇家橡樹 (玫瑰金黑面)", desc: "霸氣玫瑰金，Tapisserie 格紋面盤。", images: ["images/4.webp"] },
-            5: { name: "沛納海 Luminor Marina (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", images: ["images/5.webp"] },
-            6: { name: "愛彼 皇家橡樹 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", images: ["images/6.webp"] },
-            7: { name: "勞力士 水鬼 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", images: ["images/7.webp"] },
-            8: { name: "勞力士 Datejust (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", images: ["images/8.webp"] },
-            9: { name: "勞力士 Air-King", desc: "航空傳奇，獨特黑面數字時標。", images: ["images/9.webp"] },
-            10: { name: "勞力士 Yacht-Master (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", images: ["images/10.webp"] },
-            11: { name: "歐米茄 海馬 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", images: ["images/11.webp"] },
-            12: { name: "沛納海 Luminor Marina (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", images: ["images/12.webp"] },
-            13: { name: "勞力士 綠水鬼", desc: "超人氣綠水鬼，一錶難求。", images: ["images/13.webp"] },
-            14: { name: "勞力士 水鬼 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", images: ["images/14.webp"] },
-            15: { name: "勞力士 Day-Date (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", images: ["images/15.webp"] },
-            16: { name: "勞力士 GMT-Master II (百事圈)", desc: "紅藍百事圈，超人氣款。", images: ["images/16.webp"] },
-            17: { name: "勞力士 蠔式恒動 (彩色慶典面盤)", desc: "活潑亮眼的慶典面盤。", images: ["images/17.webp"] },
-            18: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", images: ["images/18.webp"] },
-            19: { name: "歐米茄 海馬 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", images: ["images/19.webp"] },
-            20: { name: "沛納海 Luminor (全黑陶瓷)", desc: "全黑面盤，黑色皮帶，低調神秘。", images: ["images/20.webp"] },
-            21: { name: "沛納海 Submersible (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", images: ["images/21.webp"] },
-            22: { name: "歐米茄 海馬 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", images: ["images/22.webp"] },
-            23: { name: "勞力士 Explorer II (白面橘針)", desc: "探險家II，兩地時區。", images: ["images/23.webp"] },
-            24: { name: "勞力士 Day-Date (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", images: ["images/24.webp"] },
-            25: { name: "愛彼 皇家橡樹 (玫瑰金黑面皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", images: ["images/25.webp"] },
-            26: { name: "愛彼 皇家橡樹 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", images: ["images/26.webp"] },
-            27: { name: "勞力士 Datejust (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", images: ["images/27.webp"] },
-            28: { name: "沛納海 Luminor Marina (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", images: ["images/28.webp"] },
-            29: { name: "勞力士 黑水鬼", desc: "黑水鬼經典款，保值首選。", images: ["images/29.webp"] },
-            30: { name: "沛納海 Luminor (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", images: ["images/30.webp"] },
-            31: { name: "勞力士 海使型 Deepsea (漸變藍)", desc: "深潛王者，霸氣外露。", images: ["images/31.webp"] },
-            32: { name: "勞力士 GMT-Master II (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", images: ["images/32.webp"] },
-            33: { name: "勞力士 Datejust (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", images: ["images/33.webp"] },
-            34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
-            35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
-            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
-            37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
-            38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
-            39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
-            40: { name: "百達翡麗 Aquanaut (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", images: ["images/40.webp"] },
-            41: { name: "勞力士 Daytona (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", images: ["images/41.webp"] },
-            42: { name: "百達翡麗 Aquanaut (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", images: ["images/42.webp"] },
-            43: { name: "歐米茄 海馬 Planet Ocean (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", images: ["images/43.webp"] },
-            44: { name: "百達翡麗 鸚鵡螺 (藍面)", desc: "經典藍色橫紋面盤，鋼款鸚鵡螺。", images: ["images/44.webp"] },
-            45: { name: "歐米茄 海馬 Planet Ocean (藍面)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", images: ["images/45.webp"] },
-            46: { name: "百達翡麗 Aquanaut (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", images: ["images/46.webp"] },
-            47: { name: "百達翡麗 Aquanaut (黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", images: ["images/47.webp"] },
-            48: { name: "勞力士 Datejust (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", images: ["images/48.webp"] },
-            49: { name: "歐米茄 海馬 300 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/49.webp"] },
-            50: { name: "勞力士 Yacht-Master (玫瑰金黑面)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", images: ["images/50.webp"] },
-            51: { name: "勞力士 Daytona (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", images: ["images/51.webp"] },
-            52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
-        };
-
-        let allIds = Array.from({length: 52}, (_, i) => i + 1);
-        for (let i = allIds.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [allIds[i], allIds[j]] = [allIds[j], allIds[i]];
-        }
-        const hotItems = allIds.slice(0, 20);
-
-        let currentCategory = '全部';
-        let currentSearch = '';
-        const fallbackImg = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400&auto=format&fit=crop';
-
-        function renderProducts() {
-            productGrid.innerHTML = '';
-            for (let i = 1; i <= 52; i++) {
-                const watch = watchData[i];
-                if (!watch) continue;
-
-                if (currentCategory !== '全部' && !watch.name.includes(currentCategory)) continue;
-                if (currentSearch && !watch.name.toLowerCase().includes(currentSearch.toLowerCase())) continue;
-
-                const mainImgSrc = watch.images[0];
-                const showHotBadge = hotItems.includes(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
-                const stockText = Math.random() > 0.7 ? `<div style="font-size:11px; color:#ff4757; margin-bottom:8px;">⚠️ 庫存僅剩 ${Math.floor(Math.random() * 3) + 1} 支</div>` : '';
-                const priceText = `<div class="price-tag">專屬價：$6,000 - $19,999</div>`;
-
-                const card = document.createElement('div');
-                card.className = 'product-card';
-
-                card.innerHTML = `
-                    <div class="product-image-wrapper" data-images='${JSON.stringify(watch.images)}'>
-                        <div class="loader" id="loader-${i}"></div>
-                        <div class="image-number-badge">${i}</div>
-                        ${showHotBadge}
-                        <img src="${mainImgSrc}" loading="lazy"
-                             onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';"
-                             onerror="this.onerror=null; this.src='${fallbackImg}'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
-                    </div>
-                    <div class="product-info">
-                        <h3>${watch.name}</h3>
-                        ${priceText}
-                        <p>${watch.desc}</p>
-                        ${stockText}
-                        <div class="card-trust-tags">
-                            <span>🛡️ 7天退換</span>
-                            <span>🚚 貨到付款</span>
-                        </div>
-                        <button class="claim-btn" data-id="${i}">👉 加 LINE 獲取專屬報價</button>
-                        <button class="chat-product-btn" data-id="${i}">💬 立即諮詢此款</button>
-                    </div>
-                `;
-                productGrid.appendChild(card);
-            }
-        }
-
-        renderProducts();
-
-        function filterProducts() {
-            currentSearch = document.getElementById('searchInput').value;
-            renderProducts();
-        }
-
-        function setCategory(cat, btn) {
-            currentCategory = cat;
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts();
-        }
-
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            item.classList.toggle('active');
-            const icon = element.querySelector('span');
-            icon.innerText = item.classList.contains('active') ? '▲' : '▼';
-        }
-
-        productGrid.addEventListener('click', function (e) {
-            const claimBtn = e.target.closest('.claim-btn');
-            if (claimBtn) {
-                openModal(parseInt(claimBtn.dataset.id, 10));
-                return;
-            }
-            const chatBtn = e.target.closest('.chat-product-btn');
-            if (chatBtn) {
-                const productId = parseInt(chatBtn.dataset.id, 10);
-                const product = watchData[productId];
-                if (product) {
-                    const widget = document.getElementById('chatWidget');
-                    if (!widget.classList.contains('active')) {
-                        toggleChat();
-                    }
-                    const chatInput = document.getElementById('chatInput');
-                    chatInput.value = `我想詢問「${product.name}」的細節與優惠`;
-                    chatInput.focus();
-                }
-                return;
-            }
-            const imgWrapper = e.target.closest('.product-image-wrapper');
-            if (imgWrapper && imgWrapper.dataset.images) {
-                try { openLightbox(JSON.parse(imgWrapper.dataset.images)); } catch (err) {}
-            }
-        });
-
-        document.getElementById('customerAvatarBanner').addEventListener('click', function(e) {
-            const widget = document.getElementById('chatWidget');
-            if (!widget.classList.contains('active')) {
-                toggleChat();
-            } else {
-                document.getElementById('chatInput').focus();
-            }
-        });
-
-        function openModal(imgNum) {
-            const watch = watchData[imgNum];
-            if (!watch) return;
-
-            try {
-                supabase.rpc('increment_product_click', {
-                    p_id: imgNum,
-                    p_name: watch.name
-                }).then(({ error }) => {
-                    if (error) console.error('記錄點擊失敗', error);
-                });
-            } catch (err) {}
-
-            const randomViewers = Math.floor(Math.random() * 20) + 10;
-            document.getElementById('randomViewerCount').innerText = randomViewers;
-
-            modalProductName.innerText = watch.name;
-            modal.classList.add('active');
-            document.getElementById('shippingForm').dataset.imgNum = imgNum;
-            formContainer.style.display = 'block';
-            successContainer.style.display = 'none';
-        }
-
-        closeBtn.addEventListener('click', function () { modal.classList.remove('active'); });
-        window.addEventListener('click', function (event) { if (event.target === modal) modal.classList.remove('active'); });
-
-        function openLightbox(imagesArray) {
-            galleryTrack.innerHTML = '';
-            imagesArray.forEach(src => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.onerror = function () { this.onerror = null; this.src = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop'; };
-                galleryTrack.appendChild(img);
-            });
-            lightbox.classList.add('active');
-            galleryTrack.scrollLeft = 0;
-        }
-        function closeLightbox() { lightbox.classList.remove('active'); }
-        lightbox.addEventListener('click', function (event) {
-            if (event.target === lightbox || event.target.classList.contains('gallery-track')) closeLightbox();
-        });
-
-        function checkDeviceForLine() {
-            const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-            if (isMobile) {
-                document.getElementById('mobile-line-btn').style.display = 'block';
-                document.getElementById('desktop-line-box').style.display = 'none';
-            } else {
-                document.getElementById('mobile-line-btn').style.display = 'none';
-                document.getElementById('desktop-line-box').style.display = 'block';
-            }
-        }
-        checkDeviceForLine();
-
-        let isSubmitting = false;
-        submitBtn.addEventListener('click', async function () {
-            if (isSubmitting) return;
-            const form = document.getElementById('shippingForm');
-            if (!form.checkValidity()) { form.reportValidity(); return; }
-
-            const confirmSubmit = confirm("✦ 貼心提醒：\n送出後將為您保留商品並安排「貨到付款」。\n若無故拒收，將依《民法》追究相關運費損失。\n\n確認資料無誤並同意送出嗎？");
-            if (!confirmSubmit) return;
-
-            isSubmitting = true;
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
-            const imgNum = form.dataset.imgNum;
-            const watch = watchData[imgNum];
-
-            submitBtn.innerText = '處理中，請稍候...';
-            submitBtn.disabled = true;
-
-            try {
-                const productNameWithBudget = `${watch.name} (預算: ${selectedBudget})`;
-
-                const { error } = await supabase.from('orders').insert([{
-                    customer_name: name,
-                    customer_phone: phone,
-                    customer_address: address,
-                    product_name: productNameWithBudget,
-                    product_id: parseInt(imgNum, 10)
-                }]);
-                if (error) throw error;
-
-                formContainer.style.display = 'none';
-                successContainer.style.display = 'block';
-            } catch (err) {
-                console.error('送出失敗:', err);
-                alert('送出失敗，請稍後再試。');
-                submitBtn.innerText = '🔒 確認送出，加 LINE 獲取報價';
-                submitBtn.disabled = false;
-            } finally {
-                isSubmitting = false;
-            }
-        });
-
-        window.addEventListener('scroll', function() {
-            const btn = document.getElementById('backToTopBtn');
-            if (window.scrollY > 300) btn.style.display = 'flex';
-            else btn.style.display = 'none';
-        });
-
-        const fakeData = [
-            { name: '王先生', product: '勞力士 綠水鬼', img: 'images/13.webp' },
-            { name: '李小姐', product: '歐米茄 海馬 300', img: 'images/3.webp' },
-            { name: '陳先生', product: '愛彼 皇家橡樹', img: 'images/4.webp' },
-            { name: '林小姐', product: '百達翡麗 鸚鵡螺', img: 'images/44.webp' },
-            { name: '張先生', product: '勞力士 黑水鬼', img: 'images/29.webp' },
-            { name: '劉小姐', product: '勞力士 沙士圈', img: 'images/1.webp' },
-            { name: '黃先生', product: '沛納海 Luminor Marina', img: 'images/2.webp' }
-        ];
-
-        function showPurchaseToast() {
-            const randomData = fakeData[Math.floor(Math.random() * fakeData.length)];
-            const time = Math.floor(Math.random() * 15) + 1;
-
-            document.getElementById('toastName').innerText = randomData.name;
-            document.getElementById('toastProduct').innerText = randomData.product;
-            document.getElementById('toastTime').innerText = `${time} 分鐘前`;
-
-            const imgElement = document.getElementById('toastImg');
-            imgElement.onerror = function() {
-                this.onerror = null;
-                this.src = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=100&auto=format&fit=crop';
-            };
-            imgElement.src = randomData.img;
-
-            const toast = document.getElementById('purchaseToast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 5000);
-        }
-
-        setTimeout(function loop() {
-            showPurchaseToast();
-            setTimeout(loop, Math.floor(Math.random() * 15000) + 15000);
-        }, 5000);
-
-        // ============================================================
-        // ========== 前端客服：與後台雙向即時對接 ==========
-        // ============================================================
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
             sessionId = 'user_' + Math.random().toString(36).substring(2, 12) + '_' + Date.now();
             localStorage.setItem('visitor_session_id', sessionId);
         }
-        document.getElementById('debugInfo').innerText = 'Session: ' + sessionId;
 
-        function getDeviceInfo() {
-            const ua = navigator.userAgent;
-            let browser = "未知瀏覽器", os = "未知系統", device = "電腦";
-            if (ua.indexOf("Edg") !== -1) browser = "Edge";
-            else if (ua.indexOf("Chrome") !== -1) browser = "Chrome";
-            else if (ua.indexOf("Safari") !== -1) browser = "Safari";
-            else if (ua.indexOf("Firefox") !== -1) browser = "Firefox";
-            if (ua.indexOf("Win") !== -1) os = "Windows";
-            if (ua.indexOf("Mac") !== -1) os = "Mac";
-            if (ua.indexOf("Android") !== -1) os = "Android";
-            if (ua.indexOf("like Mac") !== -1) os = "iOS";
-            if (ua.indexOf("Linux") !== -1) os = "Linux";
-            if (/Mobi|Android|iPhone/i.test(ua)) device = "手機";
-            if (/iPad|Tablet/i.test(ua)) device = "平板";
-            return `${browser} | ${os} | ${device}`;
-        }
-
-        const channel = supabase.channel('online-users', {
-            config: { presence: { key: sessionId } },
-        });
-
-        channel.on('presence', { event: 'sync' }, () => {
-            const state = channel.presenceState();
-            const onlineCount = Object.keys(state).length;
-            const displayElement = document.getElementById('frontend-online-count');
-            if (displayElement) displayElement.innerText = onlineCount;
-        });
-
-        channel.subscribe(async (status) => {
-            if (status === 'SUBSCRIBED') {
-                await channel.track({
-                    device: getDeviceInfo(),
-                    online_at: new Date().toISOString()
-                });
-
-                try {
-                    const { data, error: fetchError } = await supabase.from('site_stats').select('*').eq('id', 1).single();
-                    if (fetchError) throw fetchError;
-
-                    const deviceInfo = getDeviceInfo();
-                    let updateData = { view_count: (data?.view_count || 0) + 1 };
-
-                    if (deviceInfo.includes('iOS') || deviceInfo.includes('iPhone') || deviceInfo.includes('iPad') || deviceInfo.includes('Mac')) {
-                        updateData.ios_count = (data?.ios_count || 0) + 1;
-                    } else if (deviceInfo.includes('Android')) {
-                        updateData.android_count = (data?.android_count || 0) + 1;
-                    } else if (deviceInfo.includes('Windows')) {
-                        updateData.pc_count = (data?.pc_count || 0) + 1;
-                    } else if (deviceInfo.includes('Linux')) {
-                        updateData.linux_count = (data?.linux_count || 0) + 1;
-                    } else {
-                        updateData.other_count = (data?.other_count || 0) + 1;
-                    }
-
-                    await supabase.from('site_stats').update(updateData).eq('id', 1);
-                } catch (err) {
-                    console.error('❌ 瀏覽量統計失敗:', err);
-                }
-            }
-        });
-
-        // ===== 前端聊天室 =====
         let chatWidgetOpen = false;
         let unreadCount = 0;
         let renderedIds = new Set();
-        let realtimeOk = false;
-        let realtimeChannel = null;
-        let pollTimer = null;
+        let currentProductForOrder = "";
+        let selectedBudget = '基礎';
+
+        const watchData = {
+            1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            3: { name: "歐米茄 海馬 300 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            4: { name: "愛彼 皇家橡樹 (玫瑰金黑面)", desc: "霸氣玫瑰金，Tapisserie 格紋面盤。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            5: { name: "沛納海 Luminor Marina (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            6: { name: "愛彼 皇家橡樹 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            7: { name: "勞力士 水鬼 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            8: { name: "勞力士 Datejust (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            9: { name: "勞力士 Air-King", desc: "航空傳奇，獨特黑面數字時標。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            10: { name: "勞力士 Yacht-Master (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            11: { name: "歐米茄 海馬 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            12: { name: "沛納海 Luminor Marina (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            13: { name: "勞力士 綠水鬼", desc: "超人氣綠水鬼，一錶難求。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            14: { name: "勞力士 水鬼 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            15: { name: "勞力士 Day-Date (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            16: { name: "勞力士 GMT-Master II (百事圈)", desc: "紅藍百事圈，超人氣款。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            17: { name: "勞力士 蠔式恒動 (彩色慶典面盤)", desc: "活潑亮眼的慶典面盤。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            18: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            19: { name: "歐米茄 海馬 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            20: { name: "沛納海 Luminor (全黑陶瓷)", desc: "全黑面盤，黑色皮帶，低調神秘。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            21: { name: "沛納海 Submersible (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            22: { name: "歐米茄 海馬 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            23: { name: "勞力士 Explorer II (白面橘針)", desc: "探險家II，兩地時區。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            24: { name: "勞力士 Day-Date (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            25: { name: "愛彼 皇家橡樹 (玫瑰金黑面皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            26: { name: "愛彼 皇家橡樹 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            27: { name: "勞力士 Datejust (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            28: { name: "沛納海 Luminor Marina (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            29: { name: "勞力士 黑水鬼", desc: "黑水鬼經典款，保值首選。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            30: { name: "沛納海 Luminor (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            31: { name: "勞力士 海使型 Deepsea (漸變藍)", desc: "深潛王者，霸氣外露。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            32: { name: "勞力士 GMT-Master II (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            33: { name: "勞力士 Datejust (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            40: { name: "百達翡麗 Aquanaut (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            41: { name: "勞力士 Daytona (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            42: { name: "百達翡麗 Aquanaut (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            43: { name: "歐米茄 海馬 Planet Ocean (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            44: { name: "百達翡麗 鸚鵡螺 (藍面)", desc: "經典藍色橫紋面盤，鋼款鸚鵡螺。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            45: { name: "歐米茄 海馬 Planet Ocean (藍面)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            46: { name: "百達翡麗 Aquanaut (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            47: { name: "百達翡麗 Aquanaut (黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            48: { name: "勞力士 Datejust (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            49: { name: "歐米茄 海馬 300 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            50: { name: "勞力士 Yacht-Master (玫瑰金黑面)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" },
+            51: { name: "勞力士 Daytona (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" },
+            52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人綠黑圈，搭配五珠鍊帶。", img: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" }
+        };
+
+        let currentCategory = '全部';
+        let currentSearch = '';
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 1; i <= 52; i++) {
+                const watch = watchData[i];
+                if (!watch) continue;
+                if (currentCategory !== '全部' && !watch.name.includes(currentCategory)) continue;
+                if (currentSearch && !watch.name.toLowerCase().includes(currentSearch.toLowerCase())) continue;
+
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-image-wrapper">
+                            <div class="image-number-badge">${i}</div>
+                            <img src="${watch.img}" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <h3>${watch.name}</h3>
+                            <div class="price-tag">專屬價：$6,000 - $19,999</div>
+                            <p>${watch.desc}</p>
+                            <div class="card-trust-tags"><span>🛡️ 7天退換</span><span>🚚 貨到付款</span></div>
+                            <button class="claim-btn" onclick="openOrderModal('${watch.name}')">👉 獲取專屬報價</button>
+                            <button class="chat-product-btn" onclick="askAboutProduct('${watch.name}')">💬 立即諮詢此款</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        renderProducts();
+
+        function filterProducts() { currentSearch = document.getElementById('searchInput').value; renderProducts(); }
+        function setCategory(cat, btn) { currentCategory = cat; document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderProducts(); }
+        function toggleFaq(el) { const item = el.parentElement; item.classList.toggle('active'); el.querySelector('span').innerText = item.classList.contains('active') ? '▲' : '▼'; }
+        function selectBudget(btn, budget) { document.querySelectorAll('.budget-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedBudget = budget; }
+
+        function askAboutProduct(name) {
+            if (!chatWidgetOpen) toggleChat();
+            document.getElementById('chatInput').value = `我想詢問「${name}」的細節與優惠`;
+            document.getElementById('chatInput').focus();
+        }
+
+        function openOrderModal(name) {
+            currentProductForOrder = name;
+            document.getElementById('modalProductName').innerText = name;
+            document.getElementById('orderModal').classList.add('active');
+        }
 
         function toggleChat() {
             const widget = document.getElementById('chatWidget');
-            widget.classList.toggle('active');
-            chatWidgetOpen = widget.classList.contains('active');
-
+            chatWidgetOpen = !chatWidgetOpen;
+            widget.classList.toggle('active', chatWidgetOpen);
             if (chatWidgetOpen) {
-                document.getElementById('chatInput').focus();
                 loadChatMessages();
-                unreadCount = 0;
-                updateChatBadge();
+                unreadCount = 0; updateChatBadge();
                 startRealtime();
-                startPolling();
-            } else {
-                stopPolling();
             }
         }
 
         function updateChatBadge() {
             const badge = document.getElementById('chatBadge');
-            if (unreadCount > 0) {
-                badge.style.display = 'flex';
-                badge.innerText = unreadCount > 9 ? '9+' : unreadCount;
-            } else {
-                badge.style.display = 'none';
-            }
+            badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+            badge.innerText = unreadCount > 9 ? '9+' : unreadCount;
         }
 
         async function loadChatMessages() {
-            const chatBody = document.getElementById('chatBody');
-            const { data, error } = await supabase
-                .from('chat_messages')
-                .select('*')
-                .eq('session_id', sessionId)
-                .order('created_at', { ascending: true });
-
-            if (error) {
-                console.error('[前端] 載入聊天記錄失敗:', error);
-                chatBody.innerHTML = `<div class="chat-welcome" style="color:#ff4757;">載入失敗：${error.message}</div>`;
-                return;
-            }
-
-            chatBody.innerHTML = '<div class="chat-welcome">👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？</div>';
+            const body = document.getElementById('chatBody');
+            const { data, error } = await supabase.from('chat_messages').select('*').eq('session_id', sessionId).order('created_at', { ascending: true });
+            if (error) return console.error(error);
+            
+            body.innerHTML = '<div class="msg admin">您好！我是尊享腕錶客服，請問想看哪一款手錶呢？</div>';
             renderedIds.clear();
-
-            if (data && data.length > 0) {
+            if (data) {
                 data.forEach(msg => {
                     if (!renderedIds.has(msg.id)) {
-                        appendChatMessage(msg.message, msg.sender, msg.created_at);
+                        appendMsg(msg.message, msg.sender, msg.created_at);
                         renderedIds.add(msg.id);
                     }
                 });
             }
         }
 
-        function appendChatMessage(text, sender, createdAt) {
-            const chatBody = document.getElementById('chatBody');
-            const welcome = chatBody.querySelector('.chat-welcome');
-            if (welcome) welcome.remove();
-
+        function appendMsg(text, sender, time) {
+            const body = document.getElementById('chatBody');
             const div = document.createElement('div');
             div.className = `msg ${sender}`;
-            const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
-            div.innerHTML = `${escapeHtml(text)}<div class="msg-time">${timeStr}</div>`;
-            chatBody.appendChild(div);
-            chatBody.scrollTop = chatBody.scrollHeight;
+            const timeStr = time ? new Date(time).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
+
+            if (text.includes('📦 【新訂單通知】')) {
+                div.className = 'msg system';
+                div.innerHTML = `${text.replace(/\n/g, '<br>')}<div class="msg-time">${timeStr}</div>`;
+            } else if (text.startsWith('http') && (text.includes('chat-images') || text.match(/\.(jpeg|jpg|png|webp)/i))) {
+                div.innerHTML = `<img src="${text}" onclick="window.open('${text}')"><div class="msg-time">${timeStr}</div>`;
+            } else {
+                div.innerHTML = `${text.replace(/\n/g, '<br>')}<div class="msg-time">${timeStr}</div>`;
+            }
+            body.appendChild(div);
+            body.scrollTop = body.scrollHeight;
         }
 
         async function sendChatMessage() {
@@ -891,124 +466,74 @@
             const text = input.value.trim();
             if (!text) return;
             input.value = '';
-
-            const { data, error } = await supabase.from('chat_messages').insert([{
-                session_id: sessionId,
-                sender: 'user',
-                message: text
-            }]).select();
-
-            if (error) {
-                console.error('[前端] 訊息送出失敗:', error);
-                alert('訊息送出失敗：' + error.message);
-                return;
-            }
-
-            if (data && data[0] && !renderedIds.has(data[0].id)) {
-                appendChatMessage(data[0].message, data[0].sender, data[0].created_at);
+            
+            const { data, error } = await supabase.from('chat_messages').insert([{ session_id: sessionId, sender: 'user', message: text }]).select();
+            if (!error && data) {
+                appendMsg(data[0].message, data[0].sender, data[0].created_at);
                 renderedIds.add(data[0].id);
             }
         }
 
+        async function uploadImage(input) {
+            if (!input.files || input.files.length === 0) return;
+            const file = input.files[0];
+            const fileName = `${sessionId}_${Date.now()}.${file.name.split('.').pop()}`;
+            
+            const { error } = await supabase.storage.from('chat-images').upload(fileName, file);
+            if (error) return alert('圖片上傳失敗，請確認 Supabase 權限。\n' + error.message);
+            
+            const { data: { publicUrl } } = supabase.storage.from('chat-images').getPublicUrl(fileName);
+            const { data, error: msgError } = await supabase.from('chat_messages').insert([{ session_id: sessionId, sender: 'user', message: publicUrl }]).select();
+            
+            if (!msgError && data) {
+                appendMsg(data[0].message, data[0].sender, data[0].created_at);
+                renderedIds.add(data[0].id);
+            }
+            input.value = '';
+        }
+
+        async function submitOrder() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+            if (!name || !phone || !address) return alert('請填寫完整資訊！');
+
+            const productNameWithBudget = `${currentProductForOrder} (預算: ${selectedBudget})`;
+            const orderText = `📦 【新訂單通知】\n客戶：${name}\n電話：${phone}\n地址：${address}\n商品：${productNameWithBudget}`;
+            
+            await supabase.from('orders').insert([{ customer_name: name, customer_phone: phone, customer_address: address, product_name: productNameWithBudget, product_id: 0 }]);
+            const { data, error } = await supabase.from('chat_messages').insert([{ session_id: sessionId, sender: 'user', message: orderText }]).select();
+
+            alert('✅ 訂單已送出！');
+            document.getElementById('orderModal').classList.remove('active');
+            if (!chatWidgetOpen) toggleChat();
+            if (!error && data) {
+                appendMsg(data[0].message, data[0].sender, data[0].created_at);
+                renderedIds.add(data[0].id);
+            }
+        }
+
+        let realtimeChannel = null;
         function startRealtime() {
             if (realtimeChannel) return;
             realtimeChannel = supabase.channel('frontend-chat-' + sessionId)
-                .on('postgres_changes',
-                    { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
-                    payload => {
-                        const msg = payload.new;
-                        if (renderedIds.has(msg.id)) return;
-                        if (msg.sender === 'admin') {
-                            appendChatMessage(msg.message, 'admin', msg.created_at);
-                            if (!chatWidgetOpen) {
-                                unreadCount++;
-                                updateChatBadge();
-                            }
-                        } else if (msg.sender === 'user') {
-                            appendChatMessage(msg.message, 'user', msg.created_at);
-                        }
-                        renderedIds.add(msg.id);
-                    })
-                .subscribe((status) => {
-                    console.log('[前端 Realtime]', status);
-                    realtimeOk = (status === 'SUBSCRIBED');
-                    if (realtimeOk) stopPolling();
-                });
-        }
-
-        function startPolling() {
-            if (pollTimer) return;
-            pollTimer = setInterval(async () => {
-                if (realtimeOk) return;
-                const { data, error } = await supabase
-                    .from('chat_messages')
-                    .select('*')
-                    .eq('session_id', sessionId)
-                    .order('created_at', { ascending: true });
-                if (error || !data) return;
-                data.forEach(msg => {
-                    if (!renderedIds.has(msg.id)) {
-                        appendChatMessage(msg.message, msg.sender, msg.created_at);
-                        renderedIds.add(msg.id);
-                        if (msg.sender === 'admin' && !chatWidgetOpen) {
-                            unreadCount++;
-                            updateChatBadge();
-                        }
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` }, payload => {
+                    const msg = payload.new;
+                    if (renderedIds.has(msg.id)) return;
+                    if (msg.sender === 'admin') {
+                        appendMsg(msg.message, msg.sender, msg.created_at);
+                        if (!chatWidgetOpen) { unreadCount++; updateChatBadge(); }
                     }
-                });
-            }, 3000);
+                    renderedIds.add(msg.id);
+                }).subscribe();
         }
 
-        function stopPolling() {
-            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
-        }
-
-        function escapeHtml(str) {
-            return String(str)
-                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-        }
-
-        // 法務內容
-        const legalContents = {
-            'privacy': `
-                <h2>隱私權政策</h2>
-                <p>歡迎使用「尊享腕錶」。我們非常重視您的個人隱私與資料安全。本政策說明我們如何收集、使用及保護您的個人資料。</p>
-                <h3>1. 資料收集</h3>
-                <p>當您使用本網站填寫預約表單時，我們會收集您的姓名、電話號碼及收件地址，僅用於「貨到付款」之物流配送。</p>
-                <h3>2. 資料使用與保護</h3>
-                <p>您的資料受嚴格的加密保護，絕不會販售、交換或洩漏給任何第三方機構（物流公司除外）。</p>
-                <h3>3. 聯絡我們</h3>
-                <p>若您對隱私權政策有任何疑問，歡迎透過官方 LINE 與我們聯繫。</p>
-            `,
-            'terms': `
-                <h2>服務條款</h2>
-                <p>使用本網站服務即代表您同意以下條款：</p>
-                <h3>1. 商品性質</h3>
-                <p>本網站販售之腕錶均為嚴選品質之商品，並非原廠公司貨。我們保證商品出貨前皆經過嚴格品檢。</p>
-                <h3>2. 交易方式</h3>
-                <p>本網站一律採用「貨到付款」方式。您收到商品並確認無誤後，再將款項交給物流司機即可。</p>
-                <h3>3. 防範詐騙</h3>
-                <p>本公司絕對不會要求您前往 ATM 操作，也不會致電要求您提供信用卡密碼或銀行帳戶資訊。</p>
-            `,
-            'return': `
-                <h2>退換貨政策</h2>
-                <p>為了保障您的權益，我們提供完善的售後服務：</p>
-                <h3>1. 7天鑑賞期</h3>
-                <p>您享有商品貨到後 7 天內的無條件退貨權益。退回之商品必須保持全新、未使用狀態，且包裝完整。</p>
-                <h3>2. 瑕疵處理</h3>
-                <p>若您收到的商品有任何非人為損壞或瑕疵，請立即透過 LINE 聯繫客服，我們將免費為您辦理換貨。</p>
-                <h3>3. 退貨流程</h3>
-                <p>請於 7 天內聯繫客服，我們將安排物流前往收件。退款金額將於收到退貨商品確認無誤後處理。</p>
-            `
-        };
-
-        function openLegal(type) {
-            const modal = document.getElementById('legalModal');
-            const content = document.getElementById('legalContent');
-            content.innerHTML = legalContents[type];
-            modal.classList.add('active');
-        }
+        document.getElementById('customerAvatarBanner').onclick = toggleChat;
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('backToTopBtn');
+            if (window.scrollY > 300) btn.style.display = 'flex';
+            else btn.style.display = 'none';
+        });
     </script>
 </body>
 </html>
