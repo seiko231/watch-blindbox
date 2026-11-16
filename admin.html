@@ -1,3 +1,6 @@
+<!-- ============================================================ -->
+<!-- 後台頁面 (admin.html)                                        -->
+<!-- ============================================================ -->
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -6,10 +9,10 @@
     <title>管理員後台 - 數據分析</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <style>
         body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        
+
         #login-screen { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 320px; }
         #login-screen h2 { color: #d4af37; margin-top: 0; }
         #login-screen input { width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box; border: 1px solid #555; border-radius: 5px; background: #333; color: #fff; font-size: 15px; }
@@ -24,7 +27,7 @@
         .box h1 { color: #d4af37; margin-top: 0; font-size: 20px; }
         .number { font-size: 70px; font-weight: bold; color: #00c800; margin: 10px 0; text-shadow: 0 0 20px rgba(0, 200, 0, 0.5); }
         .status { font-size: 13px; color: #888; }
-        
+
         .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .chart-box { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; }
         .chart-box h3 { color: #d4af37; margin-top: 0; font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: center;}
@@ -32,12 +35,12 @@
 
         .panel-section { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
         .panel-section h2 { color: #d4af37; font-size: 18px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        
+
         .visitor-overview { display: flex; align-items: center; gap: 30px; background: #1a1a1a; padding: 20px 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 15px; }
         .overview-total { text-align: center; padding-right: 30px; border-right: 1px solid #333; }
         .overview-total .num { font-size: 50px; font-weight: bold; color: #00bcd4; line-height: 1; }
         .overview-total .label { font-size: 14px; color: #888; margin-top: 8px; }
-        
+
         .overview-bars { flex: 1; display: flex; flex-direction: column; gap: 15px; }
         .bar-row { display: flex; align-items: center; gap: 15px; }
         .bar-label { width: 100px; font-size: 15px; color: #ccc; text-align: left; }
@@ -54,7 +57,7 @@
         .visitor-list li { border-bottom: 1px solid #2a2a2a; padding-bottom: 5px; display: flex; justify-content: space-between; }
         .visitor-list li:last-child { border-bottom: none; }
         .device-icon { margin-right: 5px; }
-        
+
         .toolbar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; background: #1a1a1a; padding: 15px; border-radius: 8px; }
         .toolbar input { padding: 8px 12px; border-radius: 5px; border: 1px solid #555; background: #333; color: #fff; font-size: 13px; }
         .toolbar button { padding: 8px 15px; background: #d4af37; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
@@ -79,7 +82,7 @@
 
         .logout-btn { padding: 8px 20px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 13px; margin-top: 10px; transition: 0.3s; }
         .logout-btn:hover { color: #fff; border-color: #fff; }
-        
+
         .toast { position: fixed; top: 20px; right: 20px; background: #00c800; color: #fff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-weight: bold; z-index: 9999; transform: translateX(150%); transition: transform 0.3s; }
         .toast.show { transform: translateX(0); }
 
@@ -93,31 +96,45 @@
         .btn-save { background: #d4af37; color: #000; }
         .btn-cancel { background: #555; color: #fff; }
 
-        /* 🌟 聊天室樣式 */
-        .admin-chat-container { display: flex; gap: 20px; height: 400px; }
-        .admin-chat-list { width: 30%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow-y: auto; list-style: none; padding: 0; margin: 0; }
-        .admin-chat-list li { padding: 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; }
+        /* ===== 獨立客服對話樣式 ===== */
+        .admin-chat-container { display: flex; gap: 20px; height: 420px; }
+        .admin-chat-list { width: 32%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow-y: auto; list-style: none; padding: 0; margin: 0; }
+        .admin-chat-list li { padding: 12px 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; font-size: 13px; }
         .admin-chat-list li:hover { background: rgba(212, 175, 55, 0.1); }
+        .admin-chat-list li.active { background: rgba(212, 175, 55, 0.2); border-left: 3px solid #d4af37; }
+        .admin-chat-list .chat-session-id { font-weight: bold; color: #d4af37; }
+        .admin-chat-list .chat-last-msg { font-size: 12px; color: #888; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .admin-chat-list .chat-unread { display: inline-block; background: #ff4757; color: #fff; border-radius: 10px; font-size: 10px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
+
         .admin-chat-window { flex: 1; display: flex; flex-direction: column; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; }
-        .admin-chat-header { padding: 10px 15px; background: #222; border-bottom: 1px solid #333; border-radius: 8px 8px 0 0; color: #888; }
+        .admin-chat-header { padding: 12px 15px; background: #222; border-bottom: 1px solid #333; border-radius: 8px 8px 0 0; color: #888; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
         .admin-chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .admin-chat-input { padding: 10px; border-top: 1px solid #333; display: flex; gap: 10px; }
         .admin-chat-input input { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
+        .admin-chat-input input:disabled { background: #1a1a1a; color: #555; }
         .admin-chat-input button { padding: 10px 20px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .admin-chat-input button:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+        .chat-msg { padding: 10px 14px; border-radius: 8px; max-width: 80%; font-size: 14px; line-height: 1.4; }
+        .chat-msg.admin { align-self: flex-end; background: #d4af37; color: #000; }
+        .chat-msg.user { align-self: flex-start; background: #333; color: #fff; }
+        .chat-msg .chat-msg-time { font-size: 10px; color: rgba(0,0,0,0.5); margin-top: 3px; }
+        .chat-msg.user .chat-msg-time { color: #888; }
+        .chat-empty { color: #666; text-align: center; margin-top: 50px; }
 
         @media (max-width: 900px) {
             .charts-container { grid-template-columns: 1fr; }
             .visitor-overview { flex-direction: column; gap: 20px; padding: 20px; }
             .overview-total { border-right: none; border-bottom: 1px solid #333; padding-right: 0; padding-bottom: 20px; width: 100%; }
             .admin-chat-container { flex-direction: column; height: auto; }
-            .admin-chat-list { width: 100%; height: 150px; }
-            .admin-chat-window { height: 300px; }
+            .admin-chat-list { width: 100%; height: 200px; }
+            .admin-chat-window { height: 350px; }
         }
         @media (max-width: 768px) {
             .dashboard { grid-template-columns: 1fr; }
             .toolbar { flex-direction: column; align-items: stretch; }
             .toolbar input, .toolbar button { width: 100%; }
-            
+
             .order-table thead { display: none; }
             .order-table, .order-table tbody, .order-table tr, .order-table td { display: block; width: 100%; }
             .order-table tr { margin-bottom: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 10px; }
@@ -125,7 +142,7 @@
             .order-table td:last-child { border-bottom: none; text-align: center; padding-left: 10px; margin-top: 10px;}
             .order-table td::before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; color: #d4af37; text-align: left; }
             .btn-group { justify-content: center; flex-wrap: wrap; }
-            
+
             .bar-label { width: 80px; font-size: 13px; }
         }
     </style>
@@ -193,7 +210,7 @@
 
         <div class="panel-section">
             <h2>📈 累計系統點擊佔比</h2>
-            
+
             <div class="visitor-overview">
                 <div class="overview-total">
                     <div class="num" id="total-click-num">0</div>
@@ -236,19 +253,24 @@
             </ul>
         </div>
 
-        <!-- 🌟 後台即時客服區塊 -->
+        <!-- ===== 後台獨立客服對話 ===== -->
         <div class="panel-section">
-            <h2>💬 即時客服對話</h2>
+            <h2>💬 即時客服對話（每位訪客獨立）</h2>
             <div class="admin-chat-container">
                 <ul class="admin-chat-list" id="admin-chat-list">
                     <li style="color: #666; text-align: center; cursor: default;">尚無對話</li>
                 </ul>
                 <div class="admin-chat-window">
-                    <div class="admin-chat-header" id="admin-chat-header">請選擇左側對話</div>
-                    <div class="admin-chat-body" id="admin-chat-body"></div>
+                    <div class="admin-chat-header">
+                        <span id="admin-chat-header">請從左側選擇一位訪客</span>
+                        <span id="admin-chat-session-label" style="font-size:12px;"></span>
+                    </div>
+                    <div class="admin-chat-body" id="admin-chat-body">
+                        <div class="chat-empty">尚未選擇對話</div>
+                    </div>
                     <div class="admin-chat-input">
-                        <input type="text" id="admin-chat-input" placeholder="輸入回覆訊息..." onkeypress="if(event.key === 'Enter') sendAdminReply()">
-                        <button onclick="sendAdminReply()">送出</button>
+                        <input type="text" id="admin-chat-input" placeholder="請先選擇左側訪客..." disabled onkeypress="if(event.key === 'Enter') sendAdminReply()">
+                        <button id="admin-chat-send-btn" onclick="sendAdminReply()" disabled>送出</button>
                     </div>
                 </div>
             </div>
@@ -263,7 +285,7 @@
                 <input type="date" id="end-date">
                 <button onclick="loadOrders()">查詢</button>
                 <button onclick="resetFilter()" style="background:transparent; border:1px solid #d4af37; color:#d4af37;">重置</button>
-                
+
                 <div style="margin-left: auto; display: flex; gap: 10px;">
                     <button style="background: #00c800; color: #fff;" onclick="exportCSV()">📥 匯出報表</button>
                     <button style="background: #9c27b0; color: #fff;" onclick="document.getElementById('addOrderModal').classList.add('active')">➕ 手動補單</button>
@@ -302,16 +324,21 @@
             auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
         });
 
-        let presenceChannel = null; 
-        let orderChannel = null; 
+        let presenceChannel = null;
+        let orderChannel = null;
         let adminChatChannel = null;
         let isAdminPanelLoaded = false;
         let topProductsChartInstance = null;
         let brandPieChartInstance = null;
-        let currentOrdersData = []; 
-        let currentChatSession = null;
+        let currentOrdersData = [];
 
-        const AVERAGE_PRICE = 3000; 
+        // ===== 客服對話狀態 =====
+        let currentChatSession = null;
+        let allChatSessions = {};              // { session_id: { lastMessage, lastTime, unread } }
+        let sessionMessages = {};              // { session_id: [messages...] }
+        let renderedMsgIds = new Set();
+
+        const AVERAGE_PRICE = 3000;
 
         const watchNames = ["勞力士 GMT-Master II", "沛納海 Luminor Marina", "歐米茄 海馬 300", "愛彼 皇家橡樹", "沛納海 Luminor", "勞力士 水鬼", "勞力士 Datejust", "勞力士 Air-King", "勞力士 Yacht-Master", "百達翡麗 Aquanaut", "百達翡麗 鸚鵡螺", "勞力士 Daytona"];
 
@@ -372,13 +399,13 @@
                     const state = presenceChannel.presenceState();
                     const visitorList = document.getElementById('visitor-list');
                     visitorList.innerHTML = '';
-                    
+
                     let totalCount = 0;
                     for (const key in state) {
                         totalCount++;
                         const user = state[key][0];
                         const deviceName = user.device || '未知設備';
-                        
+
                         let liIcon = '💻';
                         if (deviceName.includes('iOS') || deviceName.includes('iPhone') || deviceName.includes('iPad') || deviceName.includes('Mac')) {
                             liIcon = '🍎';
@@ -416,14 +443,14 @@
                         const toast = document.getElementById('toast');
                         toast.classList.add('show');
                         setTimeout(() => toast.classList.remove('show'), 4000);
-                        loadOrders(); 
+                        loadOrders();
                     }).subscribe();
             }
 
             loadOrders();
             loadViewCount();
             loadSystemClicks();
-            initAdminChat(); // 🌟 初始化客服聊天室
+            initAdminChat();
         }
 
         async function loadViewCount() {
@@ -476,7 +503,7 @@
         async function loadOrders() {
             const tbody = document.getElementById('order-list');
             tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#666;">載入中...</td></tr>';
-            
+
             const searchText = document.getElementById('search-input').value.trim();
             const startDate = document.getElementById('start-date').value;
             const endDate = document.getElementById('end-date').value;
@@ -488,10 +515,10 @@
                 if (startDate) query = query.gte('created_at', `${startDate}T00:00:00Z`);
                 if (endDate) query = query.lte('created_at', `${endDate}T23:59:59Z`);
 
-                const { data, error } = await query.limit(200); 
+                const { data, error } = await query.limit(200);
                 if (error) throw error;
 
-                currentOrdersData = data; 
+                currentOrdersData = data;
 
                 document.getElementById('order-count-text').innerText = `目前顯示 ${data.length} 筆訂單`;
                 document.getElementById('revenue').innerText = `$ ${(data.length * AVERAGE_PRICE).toLocaleString()}`;
@@ -507,11 +534,11 @@
                 data.forEach(order => {
                     const tr = document.createElement('tr');
                     const time = order.created_at ? new Date(order.created_at).toLocaleString('zh-TW', { hour12: false }) : '-';
-                    
+
                     const isShipped = order.status === 'shipped';
                     const btnClass = isShipped ? 'status-shipped' : 'status-pending';
                     const btnText = isShipped ? '✅ 已出貨' : '🟡 待處理';
-                    
+
                     tr.innerHTML = `
                         <td data-label="時間" style="white-space: nowrap;">${time}</td>
                         <td data-label="商品">${order.product_name || '-'}</td>
@@ -536,7 +563,6 @@
         }
 
         async function updateCharts(ordersData) {
-            // 1. 熱門商品 TOP 5
             try {
                 const { data: clicksData, error } = await supabase
                     .from('product_clicks')
@@ -548,7 +574,7 @@
 
                 if (topProductsChartInstance) topProductsChartInstance.destroy();
                 const ctxProd = document.getElementById('topProductsChart').getContext('2d');
-                
+
                 const labels = clicksData && clicksData.length > 0 ? clicksData.map(d => d.product_name) : ['暫無數據'];
                 const values = clicksData && clicksData.length > 0 ? clicksData.map(d => d.click_count) : [0];
 
@@ -568,7 +594,6 @@
                 console.error('載入點擊圖表失敗', err);
             }
 
-            // 2. 各品牌預約佔比
             const brandCounts = { '勞力士': 0, '歐米茄': 0, '愛彼': 0, '沛納海': 0, '百達翡麗': 0, '其他': 0 };
             ordersData.forEach(o => {
                 if (!o.product_name) return;
@@ -643,7 +668,7 @@
                 document.getElementById('addName').value = '';
                 document.getElementById('addPhone').value = '';
                 document.getElementById('addAddress').value = '';
-                loadOrders(); 
+                loadOrders();
             } catch (err) {
                 console.error('補登失敗:', err);
                 alert('補登失敗：' + err.message);
@@ -700,7 +725,7 @@
             try {
                 const { error } = await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
                 if (error) throw error;
-                loadOrders(); 
+                loadOrders();
             } catch (err) {
                 console.error('更新狀態失敗:', err);
                 alert('更新失敗。');
@@ -727,87 +752,198 @@
             location.reload();
         }
 
-        // ================= 後台客服對話邏輯 =================
-        function initAdminChat() {
-            // 載入所有不重複的對話 session
-            supabase.from('chat_messages').select('session_id, message, created_at').order('created_at', { ascending: false }).then(({data}) => {
-                if (!data) return;
-                const sessions = [...new Set(data.map(d => d.session_id))];
-                const list = document.getElementById('admin-chat-list');
-                list.innerHTML = '';
-                if (sessions.length === 0) {
-                    list.innerHTML = '<li style="color: #666; text-align: center; cursor: default;">尚無對話</li>';
-                }
-                sessions.forEach(sid => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `👤 訪客 <span style="font-size:12px; color:#888;">(${sid.substring(0, 6)}...)</span>`;
-                    li.onclick = () => selectChatSession(sid);
-                    list.appendChild(li);
-                });
-            });
+        // ============================================================
+        // ========== 後台客服：與前端雙向即時對接 ==========
+        // ============================================================
 
-            // 監聽新訊息 (包括新客戶與管理員回覆)
+        async function initAdminChat() {
+            await refreshChatSessionList();
+
             if (!adminChatChannel) {
                 adminChatChannel = supabase.channel('admin-chat-room')
                     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages' }, payload => {
                         const msg = payload.new;
-                        // 如果正看著這個對話，直接加進來
-                        if (msg.session_id === currentChatSession) {
-                            appendAdminChatMessage(msg.message, msg.sender);
+                        const sid = msg.session_id;
+
+                        if (!sessionMessages[sid]) sessionMessages[sid] = [];
+                        sessionMessages[sid].push(msg);
+
+                        if (!allChatSessions[sid]) {
+                            allChatSessions[sid] = { lastMessage: '', lastTime: new Date(0), unread: 0 };
                         }
-                        // 重新整理左側列表
-                        initAdminChat();
+                        allChatSessions[sid].lastMessage = msg.message;
+                        allChatSessions[sid].lastTime = new Date(msg.created_at || Date.now());
+
+                        if (sid === currentChatSession) {
+                            appendAdminChatMessage(msg.message, msg.sender, msg.created_at);
+                        } else {
+                            allChatSessions[sid].unread = (allChatSessions[sid].unread || 0) + 1;
+                        }
+
+                        renderChatSessionList();
                     }).subscribe();
             }
         }
 
-        async function selectChatSession(sessionId) {
-            currentChatSession = sessionId;
-            document.getElementById('admin-chat-header').innerText = `正在與訪客 ${sessionId.substring(0,6)}... 對話`;
-            const body = document.getElementById('admin-chat-body');
-            body.innerHTML = '';
-            
-            const { data } = await supabase.from('chat_messages').select('*').eq('session_id', sessionId).order('created_at', { ascending: true });
-            if (data) {
-                data.forEach(msg => appendAdminChatMessage(msg.message, msg.sender));
-            }
+        async function refreshChatSessionList() {
+            const { data, error } = await supabase
+                .from('chat_messages')
+                .select('session_id, message, sender, created_at')
+                .order('created_at', { ascending: false });
+
+            if (error || !data) return;
+
+            allChatSessions = {};
+            sessionMessages = {};
+
+            data.forEach(msg => {
+                const sid = msg.session_id;
+                if (!sessionMessages[sid]) sessionMessages[sid] = [];
+                sessionMessages[sid].unshift(msg);
+
+                if (!allChatSessions[sid]) {
+                    allChatSessions[sid] = {
+                        lastMessage: msg.message,
+                        lastTime: new Date(msg.created_at),
+                        unread: 0
+                    };
+                }
+            });
+
+            renderChatSessionList();
         }
 
-        function appendAdminChatMessage(text, sender) {
-            const body = document.getElementById('admin-chat-body');
-            const div = document.createElement('div');
-            div.className = `msg ${sender}`;
-            div.innerText = text;
-            // 管理員訊息靠右、金色背景
-            if (sender === 'admin') {
-                div.style.alignSelf = 'flex-end';
-                div.style.background = '#d4af37';
-                div.style.color = '#000';
-            } else {
-                div.style.alignSelf = 'flex-start';
-                div.style.background = '#333';
-                div.style.color = '#fff';
+        function renderChatSessionList() {
+            const list = document.getElementById('admin-chat-list');
+            list.innerHTML = '';
+
+            const sessions = Object.keys(allChatSessions);
+            if (sessions.length === 0) {
+                list.innerHTML = '<li style="color: #666; text-align: center; cursor: default;">尚無對話</li>';
+                return;
             }
-            div.style.padding = '10px 14px';
-            div.style.borderRadius = '8px';
-            div.style.maxWidth = '80%';
-            div.style.marginBottom = '10px';
+
+            sessions.sort((a, b) => allChatSessions[b].lastTime - allChatSessions[a].lastTime);
+
+            sessions.forEach(sid => {
+                const info = allChatSessions[sid];
+                const li = document.createElement('li');
+                li.dataset.sessionId = sid;
+                if (sid === currentChatSession) li.classList.add('active');
+
+                const shortId = sid.substring(0, 8);
+                const timeStr = info.lastTime ? info.lastTime.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
+
+                li.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="chat-session-id">👤 訪客 ${shortId}...</span>
+                        <span style="font-size:11px; color:#888;">${timeStr}</span>
+                    </div>
+                    <div class="chat-last-msg">
+                        ${info.unread > 0 ? `<span class="chat-unread">${info.unread}</span>` : ''}
+                        ${escapeHtml(info.lastMessage)}
+                    </div>
+                `;
+
+                li.onclick = () => selectChatSession(sid);
+                list.appendChild(li);
+            });
+        }
+
+        async function selectChatSession(sessionId) {
+            currentChatSession = sessionId;
+            renderedMsgIds.clear();
+
+            if (allChatSessions[sessionId]) {
+                allChatSessions[sessionId].unread = 0;
+            }
+            renderChatSessionList();
+
+            document.getElementById('admin-chat-header').innerText = `正在與訪客 ${sessionId.substring(0,8)}... 對話`;
+            document.getElementById('admin-chat-session-label').innerText = `Session: ${sessionId}`;
+
+            document.getElementById('admin-chat-input').disabled = false;
+            document.getElementById('admin-chat-send-btn').disabled = false;
+
+            const body = document.getElementById('admin-chat-body');
+            body.innerHTML = '<div class="chat-empty">載入中...</div>';
+
+            const { data, error } = await supabase
+                .from('chat_messages')
+                .select('*')
+                .eq('session_id', sessionId)
+                .order('created_at', { ascending: true });
+
+            if (error) {
+                body.innerHTML = `<div class="chat-empty" style="color:#ff4757;">載入失敗：${error.message}</div>`;
+                return;
+            }
+
+            sessionMessages[sessionId] = data || [];
+
+            body.innerHTML = '';
+            if (data.length === 0) {
+                body.innerHTML = '<div class="chat-empty">此訪客尚無訊息</div>';
+                return;
+            }
+            data.forEach(msg => appendAdminChatMessage(msg.message, msg.sender, msg.created_at));
+        }
+
+        function appendAdminChatMessage(text, sender, createdAt) {
+            const body = document.getElementById('admin-chat-body');
+
+            const empty = body.querySelector('.chat-empty');
+            if (empty) empty.remove();
+
+            const div = document.createElement('div');
+            div.className = `chat-msg ${sender}`;
+
+            const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
+            div.innerHTML = `${escapeHtml(text)}<div class="chat-msg-time">${timeStr}</div>`;
+
             body.appendChild(div);
             body.scrollTop = body.scrollHeight;
         }
 
         async function sendAdminReply() {
-            if (!currentChatSession) return alert('請先選擇一個對話');
+            if (!currentChatSession) {
+                alert('請先從左側選擇一位訪客');
+                return;
+            }
             const input = document.getElementById('admin-chat-input');
             const text = input.value.trim();
             if (!text) return;
 
             input.value = '';
-            await supabase.from('chat_messages').insert([{
+
+            const { error } = await supabase.from('chat_messages').insert([{
                 session_id: currentChatSession,
                 sender: 'admin',
                 message: text
             }]);
+
+            if (error) {
+                alert('送出失敗：' + error.message);
+                return;
+            }
+
+            appendAdminChatMessage(text, 'admin', new Date().toISOString());
+
+            if (!allChatSessions[currentChatSession]) {
+                allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
+            }
+            allChatSessions[currentChatSession].lastMessage = text;
+            allChatSessions[currentChatSession].lastTime = new Date();
+            renderChatSessionList();
+        }
+
+        function escapeHtml(unsafe) {
+            return String(unsafe)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
     </script>
 </body>
