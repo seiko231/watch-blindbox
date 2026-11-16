@@ -527,7 +527,7 @@
             const watch = watchData[imgNum];
             if (!watch) return;
             
-            // 🌟 這裡就是「點進去就算一次數據」的核心！
+            // 🌟 記錄客人點擊了這款手錶
             try {
                 supabase.rpc('increment_product_click', { 
                     p_id: imgNum, 
@@ -535,9 +535,7 @@
                 }).then(({ error }) => {
                     if (error) console.error('記錄點擊失敗', error);
                 });
-            } catch (err) {
-                console.error(err);
-            }
+            } catch (err) {}
 
             modalProductName.innerText = watch.name;
             modal.classList.add('active');
@@ -702,6 +700,7 @@
                     online_at: new Date().toISOString()
                 });
                 
+                // 🌟 計算瀏覽量與系統分類點擊
                 try {
                     const { data, error: fetchError } = await supabase.from('site_stats').select('*').eq('id', 1).single();
                     if (fetchError) throw fetchError;
@@ -715,6 +714,8 @@
                         updateData.android_count = (data?.android_count || 0) + 1;
                     } else if (deviceInfo.includes('Windows')) {
                         updateData.pc_count = (data?.pc_count || 0) + 1;
+                    } else if (deviceInfo.includes('Linux')) {
+                        updateData.linux_count = (data?.linux_count || 0) + 1; // 🌟 獨立判斷 Linux
                     } else {
                         updateData.other_count = (data?.other_count || 0) + 1;
                     }
