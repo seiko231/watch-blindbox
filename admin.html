@@ -97,13 +97,17 @@
         /* ===== 獨立客服對話樣式 ===== */
         .admin-chat-container { display: flex; gap: 20px; height: 420px; }
         .admin-chat-list { width: 32%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow-y: auto; list-style: none; padding: 0; margin: 0; }
-        .admin-chat-list li { padding: 12px 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; font-size: 13px; }
+        .admin-chat-list li { padding: 12px 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; font-size: 13px; position: relative; }
         .admin-chat-list li:hover { background: rgba(212, 175, 55, 0.1); }
         .admin-chat-list li.active { background: rgba(212, 175, 55, 0.2); border-left: 3px solid #d4af37; }
         .admin-chat-list .chat-session-id { font-weight: bold; color: #d4af37; }
-        .admin-chat-list .chat-last-msg { font-size: 12px; color: #888; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .admin-chat-list .chat-last-msg { font-size: 12px; color: #888; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 20px; }
         .admin-chat-list .chat-last-msg .is-img { color: #00bcd4; font-weight: bold; }
         .admin-chat-list .chat-unread { display: inline-block; background: #ff4757; color: #fff; border-radius: 10px; font-size: 10px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
+        
+        /* 刪除對話按鈕 */
+        .chat-del-icon { position: absolute; right: 10px; bottom: 12px; color: #ff4757; font-size: 14px; opacity: 0.5; transition: 0.2s; }
+        .chat-del-icon:hover { opacity: 1; transform: scale(1.1); }
 
         .admin-chat-window { flex: 1; display: flex; flex-direction: column; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; }
         .admin-chat-header { padding: 12px 15px; background: #222; border-bottom: 1px solid #333; border-radius: 8px 8px 0 0; color: #888; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
@@ -770,7 +774,7 @@
         }
 
         // ============================================================
-        // ========== 後台客服：與前端雙向即時對接（含圖片） ==========
+        // ========== 後台客服：與前端雙向即時對接（含圖片與刪除） ==========
         // ============================================================
 
         async function initAdminChat() {
@@ -865,17 +869,54 @@
                 li.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span class="chat-session-id">👤 訪客 ${shortId}...</span>
-                        <span style="font-size:11px; color:#888;">${timeStr}</span>
+                        <span style="font-size:11px; color:#888; margin-right:15px;">${timeStr}</span>
                     </div>
                     <div class="chat-last-msg">
                         ${info.unread > 0 ? `<span class="chat-unread">${info.unread}</span>` : ''}
                         ${lastMsgHtml}
                     </div>
+                    <div class="chat-del-icon" title="刪除此對話" onclick="deleteChatSession(event, '${sid}')">🗑️</div>
                 `;
 
                 li.onclick = () => selectChatSession(sid);
                 list.appendChild(li);
             });
+        }
+
+        // 刪除對話功能
+        async function deleteChatSession(event, sessionId) {
+            event.stopPropagation(); // 阻止點擊事件傳遞到 li 元素 (避免選中該對話)
+            if (!confirm(`⚠️ 確定要刪除「訪客 ${sessionId.substring(0,8)}...」的所有對話記錄嗎？\n刪除後將無法復原！`)) return;
+
+            try {
+                // 從資料庫刪除該 session_id 的所有訊息
+                const { error } = await supabase
+                    .from('chat_messages')
+                    .delete()
+                    .eq('session_id', sessionId);
+
+                if (error) throw error;
+
+                // 如果刪除的是當前正在查看的對話，清空右側視窗
+                if (currentChatSession === sessionId) {
+                    currentChatSession = null;
+                    document.getElementById('admin-chat-header').innerText = '請從左側選擇一位訪客';
+                    document.getElementById('admin-chat-session-label').innerText = '';
+                    document.getElementById('admin-chat-input').disabled = true;
+                    document.getElementById('admin-chat-send-btn').disabled = true;
+                    document.getElementById('admin-chat-img-btn').disabled = true;
+                    document.getElementById('admin-chat-body').innerHTML = '<div class="chat-empty">尚未選擇對話</div>';
+                }
+
+                // 從前端記憶體與列表中移除
+                delete allChatSessions[sessionId];
+                delete sessionMessages[sessionId];
+                renderChatSessionList();
+
+            } catch (err) {
+                console.error('刪除對話失敗:', err);
+                alert('刪除失敗：' + err.message);
+            }
         }
 
         async function selectChatSession(sessionId) {
