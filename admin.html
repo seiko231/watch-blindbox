@@ -1,3 +1,4 @@
+!-- =============================================.txt
 <!-- ============================================================ -->
 <!-- 後台頁面 (admin.html)                                        -->
 <!-- ============================================================ -->
@@ -104,7 +105,6 @@
         .admin-chat-list li.active { background: rgba(212, 175, 55, 0.2); border-left: 3px solid #d4af37; }
         .admin-chat-list .chat-session-id { font-weight: bold; color: #d4af37; }
         .admin-chat-list .chat-last-msg { font-size: 12px; color: #888; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .admin-chat-list .chat-last-msg .is-img { color: #00bcd4; font-weight: bold; }
         .admin-chat-list .chat-unread { display: inline-block; background: #ff4757; color: #fff; border-radius: 10px; font-size: 10px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
 
         .admin-chat-window { flex: 1; display: flex; flex-direction: column; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; }
@@ -122,9 +122,6 @@
         .chat-msg .chat-msg-time { font-size: 10px; color: rgba(0,0,0,0.5); margin-top: 3px; }
         .chat-msg.user .chat-msg-time { color: #888; }
         .chat-empty { color: #666; text-align: center; margin-top: 50px; }
-
-        .admin-chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid rgba(255,255,255,0.15); }
-        .chat-msg.admin .chat-img { margin-left: auto; }
 
         @media (max-width: 900px) {
             .charts-container { grid-template-columns: 1fr; }
@@ -338,8 +335,8 @@
 
         // ===== 客服對話狀態 =====
         let currentChatSession = null;
-        let allChatSessions = {};
-        let sessionMessages = {};
+        let allChatSessions = {};              // { session_id: { lastMessage, lastTime, unread } }
+        let sessionMessages = {};              // { session_id: [messages...] }
         let renderedMsgIds = new Set();
 
         const AVERAGE_PRICE = 3000;
@@ -543,24 +540,18 @@
                     const btnClass = isShipped ? 'status-shipped' : 'status-pending';
                     const btnText = isShipped ? '✅ 已出貨' : '🟡 待處理';
 
-                    // 若有 items 則顯示展開提示
-                    let productDisplay = order.product_name || '-';
-                    if (Array.isArray(order.items) && order.items.length > 1) {
-                        productDisplay = `🛒 ${order.items.length} 項 - ${order.product_name}`;
-                    }
-
                     tr.innerHTML = `
                         <td data-label="時間" style="white-space: nowrap;">${time}</td>
-                        <td data-label="商品">${productDisplay}</td>
+                        <td data-label="商品">${order.product_name || '-'}</td>
                         <td data-label="姓名">${order.customer_name || '-'}</td>
                         <td data-label="電話" style="color: #00c800; font-weight: bold;">${order.customer_phone || '-'}</td>
                         <td data-label="地址">${order.customer_address || '-'}</td>
                         <td data-label="操作">
                             <div class="btn-group">
                                 <button class="status-btn ${btnClass}" onclick="toggleStatus(${order.id}, '${order.status || 'pending'}')">${btnText}</button>
-                                <button class="action-btn copy-btn" onclick="copyInfo('${(order.customer_name||'').replace(/'/g,"\\'")}', '${order.customer_phone}', '${(order.customer_address||'').replace(/'/g,"\\'")}', '${(order.product_name||'').replace(/'/g,"\\'")}')" title="複製收件資訊">📋</button>
-                                <button class="action-btn print-btn" onclick="printOrder('${time}', '${(order.customer_name||'').replace(/'/g,"\\'")}', '${order.customer_phone}', '${(order.customer_address||'').replace(/'/g,"\\'")}', '${(order.product_name||'').replace(/'/g,"\\'")}')" title="列印出貨單">🖨️</button>
-                                <button class="action-btn del-btn" onclick="deleteOrder(${order.id}, '${(order.customer_name||'').replace(/'/g,"\\'")}')" title="刪除訂單">🗑️</button>
+                                <button class="action-btn copy-btn" onclick="copyInfo('${order.customer_name}', '${order.customer_phone}', '${order.customer_address}', '${order.product_name}')" title="複製收件資訊">📋</button>
+                                <button class="action-btn print-btn" onclick="printOrder('${time}', '${order.customer_name}', '${order.customer_phone}', '${order.customer_address}', '${order.product_name}')" title="列印出貨單">🖨️</button>
+                                <button class="action-btn del-btn" onclick="deleteOrder(${order.id}, '${order.customer_name}')" title="刪除訂單">🗑️</button>
                             </div>
                         </td>
                     `;
@@ -670,8 +661,7 @@
             if (!name || !phone || !address) { alert('請填寫完整資訊！'); return; }
             try {
                 const { error } = await supabase.from('orders').insert([{
-                    customer_name: name, customer_phone: phone, customer_address: address, product_name: product, product_id: 0,
-                    items: [{ id: 0, name: product, qty: 1, budget: '基礎' }]
+                    customer_name: name, customer_phone: phone, customer_address: address, product_name: product, product_id: 0
                 }]);
                 if (error) throw error;
                 alert('✅ 手動訂單已成功補登！');
@@ -764,7 +754,7 @@
         }
 
         // ============================================================
-        // ========== 後台客服：與前端雙向即時對接（含圖片） ==========
+        // ========== 後台客服：與前端雙向即時對接 ==========
         // ============================================================
 
         async function initAdminChat() {
@@ -782,11 +772,11 @@
                         if (!allChatSessions[sid]) {
                             allChatSessions[sid] = { lastMessage: '', lastTime: new Date(0), unread: 0 };
                         }
-                        allChatSessions[sid].lastMessage = (msg.msg_type === 'image') ? '[圖片]' : msg.message;
+                        allChatSessions[sid].lastMessage = msg.message;
                         allChatSessions[sid].lastTime = new Date(msg.created_at || Date.now());
 
                         if (sid === currentChatSession) {
-                            appendAdminChatMessage(msg.message, msg.sender, msg.created_at, msg.image_url, msg.msg_type);
+                            appendAdminChatMessage(msg.message, msg.sender, msg.created_at);
                         } else {
                             allChatSessions[sid].unread = (allChatSessions[sid].unread || 0) + 1;
                         }
@@ -799,7 +789,7 @@
         async function refreshChatSessionList() {
             const { data, error } = await supabase
                 .from('chat_messages')
-                .select('session_id, message, sender, created_at, image_url, msg_type')
+                .select('session_id, message, sender, created_at')
                 .order('created_at', { ascending: false });
 
             if (error || !data) return;
@@ -814,7 +804,7 @@
 
                 if (!allChatSessions[sid]) {
                     allChatSessions[sid] = {
-                        lastMessage: (msg.msg_type === 'image') ? '[圖片]' : msg.message,
+                        lastMessage: msg.message,
                         lastTime: new Date(msg.created_at),
                         unread: 0
                     };
@@ -845,10 +835,6 @@
                 const shortId = sid.substring(0, 8);
                 const timeStr = info.lastTime ? info.lastTime.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
 
-                const lastMsgHtml = info.lastMessage === '[圖片]'
-                    ? '<span class="is-img">🖼️ [圖片]</span>'
-                    : escapeHtml(info.lastMessage);
-
                 li.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span class="chat-session-id">👤 訪客 ${shortId}...</span>
@@ -856,7 +842,7 @@
                     </div>
                     <div class="chat-last-msg">
                         ${info.unread > 0 ? `<span class="chat-unread">${info.unread}</span>` : ''}
-                        ${lastMsgHtml}
+                        ${escapeHtml(info.lastMessage)}
                     </div>
                 `;
 
@@ -901,23 +887,21 @@
                 body.innerHTML = '<div class="chat-empty">此訪客尚無訊息</div>';
                 return;
             }
-            data.forEach(msg => appendAdminChatMessage(msg.message, msg.sender, msg.created_at, msg.image_url, msg.msg_type));
+            data.forEach(msg => appendAdminChatMessage(msg.message, msg.sender, msg.created_at));
         }
 
-        function appendAdminChatMessage(text, sender, createdAt, imageUrl, msgType) {
+        function appendAdminChatMessage(text, sender, createdAt) {
             const body = document.getElementById('admin-chat-body');
+
             const empty = body.querySelector('.chat-empty');
             if (empty) empty.remove();
 
             const div = document.createElement('div');
             div.className = `chat-msg ${sender}`;
-            const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
 
-            if (msgType === 'image' || imageUrl) {
-                div.innerHTML = `<img src="${imageUrl}" class="chat-img" onclick="window.open(this.src,'_blank')" alt="圖片"><div class="chat-msg-time">${timeStr}</div>`;
-            } else {
-                div.innerHTML = `${escapeHtml(text)}<div class="chat-msg-time">${timeStr}</div>`;
-            }
+            const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
+            div.innerHTML = `${escapeHtml(text)}<div class="chat-msg-time">${timeStr}</div>`;
+
             body.appendChild(div);
             body.scrollTop = body.scrollHeight;
         }
@@ -936,8 +920,7 @@
             const { error } = await supabase.from('chat_messages').insert([{
                 session_id: currentChatSession,
                 sender: 'admin',
-                message: text,
-                msg_type: 'text'
+                message: text
             }]);
 
             if (error) {
@@ -945,7 +928,7 @@
                 return;
             }
 
-            appendAdminChatMessage(text, 'admin', new Date().toISOString(), null, 'text');
+            appendAdminChatMessage(text, 'admin', new Date().toISOString());
 
             if (!allChatSessions[currentChatSession]) {
                 allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
