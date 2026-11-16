@@ -21,8 +21,10 @@
     <style>
         :root { --gold: #d4af37; --bg-dark: #0f0f0f; }
         body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%); color: #fff; font-family: 'Microsoft JhengHei', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
+        
+        /* 頂部跑馬燈 */
         .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .marquee-text { white-space: nowrap; animation: scrollText 15s linear infinite; padding-left: 100%; }
+        .marquee-text { white-space: nowrap; animation: scrollText 20s linear infinite; padding-left: 100%; }
         @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         body { padding-top: 55px; }
 
@@ -141,6 +143,17 @@
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
+        /* 選擇預算彈窗 */
+        .budget-modal-content { background: #222; padding: 25px 20px; border-radius: 15px; border: 1px solid var(--gold); width: 90%; max-width: 340px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .budget-modal-content h3 { color: var(--gold); margin-top: 0; font-size: 18px; margin-bottom: 5px; }
+        .budget-modal-content p { color: #aaa; font-size: 13px; margin-bottom: 20px; line-height: 1.4; }
+        .budget-modal-btns { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .budget-modal-btn { padding: 14px; background: #1a1a1a; border: 1px solid #444; color: #ddd; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .budget-modal-btn:hover { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+        .budget-modal-btn span.price { font-size: 13px; color: #888; font-weight: normal; }
+        .budget-modal-cancel { padding: 10px; background: transparent; border: none; color: #888; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
+        .budget-modal-cancel:hover { color: #fff; }
+
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 2500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
         .lightbox.active { opacity: 1; visibility: visible; }
         .lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s; }
@@ -174,13 +187,7 @@
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
         .faq-item.active .faq-question { color: var(--gold); }
 
-        .purchase-toast { position: fixed; bottom: 20px; left: 20px; background: rgba(30, 30, 30, 0.95); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.8); z-index: 2000; transform: translateX(-150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .purchase-toast.show { transform: translateX(0); }
-        .purchase-toast img { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; border: 1px solid #444; }
-        .purchase-toast .text { font-size: 13px; color: #ccc; }
-        .purchase-toast .text strong { color: var(--gold); }
-        .purchase-toast .text span { color: #888; font-size: 11px; }
-
+        /* ===== 聊天室完美適配 ===== */
         .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .chat-widget.active { display: flex; }
         .chat-header { background: #222; padding: 12px 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
@@ -190,18 +197,19 @@
         .chat-header-name { font-size: 14px; color: #fff; }
         .chat-header-status { font-size: 11px; color: #00c800; font-weight: normal; display: flex; align-items: center; gap: 4px; }
         .chat-header-status::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #00c800; border-radius: 50%; animation: blink 1.5s infinite; }
-        .chat-close { cursor: pointer; font-size: 20px; color: #888; }
-        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-close { cursor: pointer; font-size: 20px; color: #888; padding: 5px; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
         .msg { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.4; word-break: break-word; }
         .msg.user { align-self: flex-end; background: #00c800; color: #000; border-bottom-right-radius: 0; }
         .msg.admin { align-self: flex-start; background: #333; color: #fff; border-bottom-left-radius: 0; }
         .msg-time { font-size: 10px; color: #888; margin-top: 3px; }
-        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; align-items: center; }
-        .chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
-        .chat-input-area button { padding: 10px 15px; border-radius: 20px; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; }
+        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; align-items: center; background: #1a1a1a; border-radius: 0 0 12px 12px; }
+        .chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #222; color: #fff; outline: none; font-size: 14px; }
+        .chat-input-area button { padding: 10px 15px; border-radius: 20px; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; white-space: nowrap; }
         .chat-welcome { text-align: center; color: #888; font-size: 12px; padding: 10px; }
         .chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid rgba(255,255,255,0.15); }
-        .msg.user .chat-img { margin-left: auto; }
+        .chat-body .chat-video { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; background: #000; border: 1px solid rgba(255,255,255,0.15); }
+        .msg.user .chat-img, .msg.user .chat-video { margin-left: auto; }
 
         .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2900; opacity: 0; visibility: hidden; transition: 0.3s; }
         .cart-overlay.active { opacity: 1; visibility: visible; }
@@ -252,30 +260,24 @@
             .product-info p { display: none; }
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; padding: 15px; }
-            .purchase-toast { bottom: 90px; left: 10px; right: 10px; transform: translateY(150%); }
-            .purchase-toast.show { transform: translateY(0); }
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
             .trust-section { flex-direction: column; }
-            .chat-widget { width: 90%; right: 5%; bottom: 80px; }
             .cart-drawer { width: 100%; }
+            
+            /* 聊天室手機端滿版且不被鍵盤遮擋 */
+            .chat-widget { width: 100%; height: 100%; height: 100dvh; max-height: 100vh; right: 0; bottom: 0; border-radius: 0; border: none; z-index: 99999; }
+            .chat-header { border-radius: 0; }
+            .chat-input-area { border-radius: 0; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
         }
     </style>
 </head>
 <body>
 
+    <!-- 頂部跑馬燈 (假購買整合在此) -->
     <div class="marquee-container">
-        <div class="marquee-text">
+        <div class="marquee-text" id="marqueeText">
             🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
-        </div>
-    </div>
-
-    <div class="purchase-toast" id="purchaseToast">
-        <img src="" id="toastImg" alt="product">
-        <div class="text">
-            <strong id="toastName">王先生</strong> 剛剛預約了<br>
-            <span id="toastProduct">勞力士黑水鬼</span><br>
-            <span id="toastTime">1 分鐘前</span>
         </div>
     </div>
 
@@ -460,10 +462,10 @@
 
             <div id="successContainer" style="display: none;">
                 <h2 style="color: #00c800; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
-                <p style="color: #ddd; margin-bottom: 20px; font-size: 14px;">請點擊下方按鈕加入客服 LINE<br>我們將立刻為您提供「專屬優惠價格」。</p>
+                <p style="color: #ddd; margin-bottom: 20px; font-size: 14px;">系統已收到您的資料！<br>正在為您跳轉至 LINE 客服為您報價...</p>
 
                 <a id="mobile-line-btn" href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: none; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4); text-align: center;">
-                    📱 點此加入 LINE 獲取報價
+                    📱 若未自動跳轉，點此加入 LINE
                 </a>
 
                 <div id="desktop-line-box" style="display: none; padding: 10px 0;">
@@ -472,11 +474,27 @@
                     </div>
                     <p style="color: #fff; font-size: 14px; margin: 0;">📷 請用手機 LINE 掃描上方 QR Code</p>
                 </div>
-
-                <div style="font-size: 12px; color: #aaa; line-height: 1.6; margin-top: 15px;">
-                    💡 若未自動開啟，請點擊右上角選擇「在瀏覽器中開啟」
-                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 選擇預算彈窗 -->
+    <div class="modal-overlay" id="budgetSelectModal" style="z-index: 4000;">
+        <div class="budget-modal-content">
+            <h3>請選擇您的預算區間</h3>
+            <p id="budgetModalProductName" style="color:#fff; font-weight:bold; font-size:14px;"></p>
+            <div class="budget-modal-btns">
+                <button class="budget-modal-btn" onclick="confirmAddToCart('基礎')">
+                    <div>💎 基礎款</div><span class="price">約 $6,000</span>
+                </button>
+                <button class="budget-modal-btn" onclick="confirmAddToCart('高端')">
+                    <div>👑 高端款</div><span class="price">約 $12,000</span>
+                </button>
+                <button class="budget-modal-btn" onclick="confirmAddToCart('定制')">
+                    <div>✨ 尊榮定制</div><span class="price">約 $19,999</span>
+                </button>
+            </div>
+            <button class="budget-modal-cancel" onclick="closeBudgetModal()">取消</button>
         </div>
     </div>
 
@@ -529,9 +547,11 @@
         </div>
         <div class="chat-input-area">
             <input type="file" id="chatFileInput" accept="image/*" hidden onchange="handleChatImage(this)">
-            <button onclick="document.getElementById('chatFileInput').click()"
-                    style="padding:10px; border-radius:50%; background:#333; color:#00bcd4; border:none; cursor:pointer; font-size:16px;"
-                    title="傳送圖片">📷</button>
+            <button onclick="document.getElementById('chatFileInput').click()" style="padding:10px; border-radius:50%; background:#333; color:#00bcd4; border:none; cursor:pointer; font-size:16px;" title="傳送圖片">📷</button>
+            
+            <input type="file" id="chatVideoInput" accept="video/*" hidden onchange="handleChatVideo(this)">
+            <button onclick="document.getElementById('chatVideoInput').click()" style="padding:10px; border-radius:50%; background:#333; color:#ff4757; border:none; cursor:pointer; font-size:16px;" title="傳送影片">📹</button>
+
             <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
             <button onclick="sendChatMessage()">送出</button>
         </div>
@@ -545,6 +565,7 @@
     <script>
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
+        const LINE_ID = 'vCEhGhnT9Z'; // 你的 LINE 官方帳號 ID
 
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
@@ -665,7 +686,6 @@
                         ${priceText}
                         <p>${watch.desc}</p>
                         ${stockText}
-                        <!-- 第三層：商品卡強力承諾標籤 -->
                         <div class="card-trust-tags">
                             <span class="highlight">📦 支持開箱驗貨</span>
                             <span class="highlight">🙈 隱密包裝</span>
@@ -725,7 +745,7 @@
             }
             const cartBtn = e.target.closest('.cart-add-btn');
             if (cartBtn) {
-                addToCart(parseInt(cartBtn.dataset.id, 10));
+                openBudgetModal(parseInt(cartBtn.dataset.id, 10));
                 return;
             }
             const imgWrapper = e.target.closest('.product-image-wrapper');
@@ -854,6 +874,18 @@
 
                 formContainer.style.display = 'none';
                 successContainer.style.display = 'block';
+
+                // 🌟 自動跳轉 LINE 邏輯 🌟
+                const encodedText = encodeURIComponent(`您好，我想購買「${productName}」，我已填寫收件資料，請協助我確認訂單！`);
+                const lineUrl = `https://line.me/R/ti/p/${LINE_ID}?openExternalBrowser=1&text=${encodedText}`;
+                const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+                
+                if (isMobile) {
+                    setTimeout(() => {
+                        window.location.href = lineUrl;
+                    }, 1500); // 延遲 1.5 秒讓客人看到成功畫面
+                }
+                
             } catch (err) {
                 console.error('送出失敗:', err);
                 alert('送出失敗，請稍後再試。');
@@ -870,40 +902,49 @@
             else btn.style.display = 'none';
         });
 
-        const fakeData = [
-            { name: '王先生', product: '勞力士 綠水鬼', img: 'images/13.webp' },
-            { name: '李小姐', product: '歐米茄 海馬 300', img: 'images/3.webp' },
-            { name: '陳先生', product: '愛彼 皇家橡樹', img: 'images/4.webp' },
-            { name: '林小姐', product: '百達翡麗 鸚鵡螺', img: 'images/44.webp' },
-            { name: '張先生', product: '勞力士 黑水鬼', img: 'images/29.webp' },
-            { name: '劉小姐', product: '勞力士 沙士圈', img: 'images/1.webp' },
-            { name: '黃先生', product: '沛納海 Luminor Marina', img: 'images/2.webp' }
-        ];
+        // ============================================================
+        // ===== 流動性真實購買播報 (整合至頂部跑馬燈) =====
+        // ============================================================
+        const surnames = ['王', '李', '張', '劉', '陳', '楊', '黃', '趙', '吳', '周', '徐', '孫', '馬', '朱', '胡', '林'];
+        const titles = ['先生', '小姐', '老闆', '哥', '姐'];
+        const cities = ['台北市', '新北市', '桃園市', '台中市', '台南市', '高雄市', '新竹市', '基隆市', '彰化縣', '屏東縣', '宜蘭縣', '花蓮縣'];
 
-        function showPurchaseToast() {
-            const randomData = fakeData[Math.floor(Math.random() * fakeData.length)];
-            const time = Math.floor(Math.random() * 15) + 1;
-
-            document.getElementById('toastName').innerText = randomData.name;
-            document.getElementById('toastProduct').innerText = randomData.product;
-            document.getElementById('toastTime').innerText = `${time} 分鐘前`;
-
-            const imgElement = document.getElementById('toastImg');
-            imgElement.onerror = function() {
-                this.onerror = null;
-                this.src = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=100&auto=format&fit=crop';
-            };
-            imgElement.src = randomData.img;
-
-            const toast = document.getElementById('purchaseToast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 5000);
+        function generateMarqueeText() {
+            const city = cities[Math.floor(Math.random() * cities.length)];
+            const surname = surnames[Math.floor(Math.random() * surnames.length)];
+            const title = titles[Math.floor(Math.random() * titles.length)];
+            const randomWatchId = Math.floor(Math.random() * 52) + 1;
+            const watch = watchData[randomWatchId];
+            
+            // 隨機選擇一種播報風格
+            const templates = [
+                `🔥 剛剛 ${city} ${surname}${title} 購買了「${watch.name}」！全館免運中 🎁`,
+                `🎉 恭喜 ${city} ${surname}${title} 搶到最後現貨「${watch.name}」！🚚`,
+                `⚡ 來自 ${city} 的 ${surname}${title} 剛剛預約了「${watch.name}」！立即加入 LINE 享專屬價 💎`,
+                `🛒 ${city} ${surname}${title} 已成功下單「${watch.name}」！7天鑑賞期最安心 🛡️`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         }
 
-        setTimeout(function loop() {
-            showPurchaseToast();
-            setTimeout(loop, Math.floor(Math.random() * 15000) + 15000);
-        }, 5000);
+        function startMarqueeLoop() {
+            const marqueeEl = document.getElementById('marqueeText');
+            // 隨機選擇一個促銷或購買播報
+            if (Math.random() > 0.3) {
+                // 70% 機率顯示購買播報
+                marqueeEl.innerText = generateMarqueeText();
+            } else {
+                // 30% 機率顯示促銷
+                marqueeEl.innerText = "🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚";
+            }
+
+            // 強制重新觸發 CSS 動畫，讓文字重新從右邊滑進來
+            marqueeEl.style.animation = 'none';
+            marqueeEl.offsetHeight; // 觸發 reflow
+            marqueeEl.style.animation = 'scrollText 20s linear infinite';
+        }
+
+        // 每 25 秒更新一次跑馬燈文字（因為跑馬燈動畫為 20 秒，這樣剛好跑完一輪換下一輪）
+        setInterval(startMarqueeLoop, 25000);
 
         // ============================================================
         // ===== 第二層：真實數據串接 =====
@@ -914,7 +955,6 @@
             localStorage.setItem('visitor_session_id', sessionId);
         }
 
-        // 獲取真實訂單數量並加上基礎值
         async function fetchRealStats() {
             try {
                 const { count, error } = await supabase
@@ -922,7 +962,6 @@
                     .select('*', { count: 'exact', head: true });
                 
                 if (!error) {
-                    // 基礎值 12500 + 真實訂單數
                     const baseCount = 12500;
                     const total = baseCount + (count || 0);
                     document.getElementById('realOrderCount').innerText = total.toLocaleString();
@@ -996,7 +1035,7 @@
         });
 
         // ============================================================
-        // ===== 前端聊天：與後台雙向即時對接（含圖片） =====
+        // ===== 前端聊天：與後台雙向即時對接（含圖片與影片） =====
         // ============================================================
         function escapeHtmlF(s) {
             return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
@@ -1013,7 +1052,12 @@
                 const badge = document.getElementById('chatBadge');
                 badge.style.display = 'none';
                 badge.textContent = '0';
-                setTimeout(() => document.getElementById('chatInput').focus(), 100);
+                setTimeout(() => {
+                    const input = document.getElementById('chatInput');
+                    if(input) input.focus();
+                    const body = document.getElementById('chatBody');
+                    if(body) body.scrollTop = body.scrollHeight;
+                }, 300);
             }
         }
 
@@ -1029,13 +1073,16 @@
             setTimeout(() => { document.getElementById('lightboxImg').src = ''; }, 300);
         }
 
-        function appendChatMessage(text, sender, createdAt, imageUrl, msgType) {
+        function appendChatMessage(text, sender, createdAt, mediaUrl, msgType) {
             const body = document.getElementById('chatBody');
             const div = document.createElement('div');
             div.className = `msg ${sender}`;
             const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
-            if (msgType === 'image' || imageUrl) {
-                div.innerHTML = `<img src="${imageUrl}" class="chat-img" onclick="openImageLightbox(this.src)" alt="圖片"><div class="msg-time">${timeStr}</div>`;
+            
+            if (msgType === 'image') {
+                div.innerHTML = `<img src="${mediaUrl}" class="chat-img" onclick="openImageLightbox(this.src)" alt="圖片"><div class="msg-time">${timeStr}</div>`;
+            } else if (msgType === 'video') {
+                div.innerHTML = `<video src="${mediaUrl}" class="chat-video" controls playsinline webkit-playsinline preload="metadata"></video><div class="msg-time">${timeStr}</div>`;
             } else {
                 div.innerHTML = `${escapeHtmlF(text)}<div class="msg-time">${timeStr}</div>`;
             }
@@ -1108,6 +1155,45 @@
             appendChatMessage('[圖片]', 'user', new Date().toISOString(), url, 'image');
         }
 
+        async function handleChatVideo(inputEl) {
+            const file = inputEl.files[0];
+            inputEl.value = '';
+            if (!file) return;
+            if (!file.type.startsWith('video/')) { alert('請選擇影片檔'); return; }
+            if (file.size > 20 * 1024 * 1024) { alert('影片大小請小於 20MB！建議使用 MP4 格式。'); return; }
+
+            const ext = (file.name.split('.').pop() || 'mp4').toLowerCase();
+            const path = `${sessionId}/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+            const body = document.getElementById('chatBody');
+            const loading = document.createElement('div');
+            loading.className = 'msg user';
+            loading.innerHTML = `<span style="display:flex; align-items:center; gap:5px;"><span class="loader" style="position:static; width:15px; height:15px; border-width:2px; margin:0;"></span> 影片上傳中...</span>`;
+            body.appendChild(loading);
+            body.scrollTop = body.scrollHeight;
+
+            const { error: upErr } = await supabase.storage
+                .from('chat-images')
+                .upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type });
+
+            loading.remove();
+            if (upErr) { alert('影片上傳失敗：' + upErr.message); return; }
+
+            const { data: pub } = supabase.storage.from('chat-images').getPublicUrl(path);
+            const url = pub.publicUrl;
+
+            const { error } = await supabase.from('chat_messages').insert([{
+                session_id: sessionId,
+                sender: 'user',
+                message: '[影片]',
+                image_url: url,
+                msg_type: 'video'
+            }]);
+            if (error) { alert('訊息送出失敗：' + error.message); return; }
+
+            appendChatMessage('[影片]', 'user', new Date().toISOString(), url, 'video');
+        }
+
         supabase.channel('front-chat-' + sessionId)
             .on('postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
@@ -1126,11 +1212,12 @@
             .subscribe();
 
         // ============================================================
-        // ===== 購物車 =====
+        // ===== 購物車邏輯 (包含預算選擇彈窗) =====
         // ============================================================
         let cart = [];
         try { cart = JSON.parse(localStorage.getItem('cart_items') || '[]'); } catch (e) { cart = []; }
         const BUDGET_OPTIONS = ['基礎', '高端', '定制'];
+        let pendingCartItemId = null;
 
         function saveCart() {
             localStorage.setItem('cart_items', JSON.stringify(cart));
@@ -1138,13 +1225,41 @@
             renderCart();
         }
 
-        function addToCart(id) {
+        // 點擊加入購物車時，打開選擇預算彈窗
+        function openBudgetModal(id) {
             const w = watchData[id];
             if (!w) return;
-            const exist = cart.find(c => c.id === id);
-            if (exist) exist.qty += 1;
-            else cart.push({ id, name: w.name, image: w.images[0], qty: 1, budget: '基礎' });
-            saveCart();
+            
+            pendingCartItemId = id;
+            document.getElementById('budgetModalProductName').innerText = `「${w.name}」`;
+            document.getElementById('budgetSelectModal').classList.add('active');
+        }
+
+        // 關閉預算彈窗
+        function closeBudgetModal() {
+            document.getElementById('budgetSelectModal').classList.remove('active');
+            pendingCartItemId = null;
+        }
+
+        // 確認選擇預算並加入購物車
+        function confirmAddToCart(selectedBudget) {
+            if (!pendingCartItemId) return;
+            const w = watchData[pendingCartItemId];
+            const exist = cart.find(c => c.id === pendingCartItemId);
+            
+            if (exist) {
+                // 如果購物車已經有這款，數量+1，並更新為剛剛選的預算
+                exist.qty += 1;
+                exist.budget = selectedBudget;
+            } else {
+                // 如果是新加入的商品，使用客人剛剛選的預算
+                cart.push({ id: pendingCartItemId, name: w.name, image: w.images[0], qty: 1, budget: selectedBudget });
+            }
+            
+            saveCart(); // 存檔並更新畫面
+            closeBudgetModal(); // 關閉彈窗
+            
+            // 給購物車按鈕一個放大的動畫反饋
             const btn = document.getElementById('cartFloatBtn');
             btn.style.transform = 'scale(1.25)';
             setTimeout(() => btn.style.transform = '', 200);
@@ -1238,7 +1353,6 @@
         updateCartBadge();
         renderCart();
 
-        // 第三層：無腦退換貨政策
         const legalContents = {
             'privacy': `
                 <h2>隱私權政策</h2>
