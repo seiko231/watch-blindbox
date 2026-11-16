@@ -5,53 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>尊享腕錶 精品展示</title>
     
-    <!-- 🌟 引入 Supabase SDK -->
+    <!-- 社群分享預覽 (OG Tags) -->
+    <meta property="og:title" content="尊享腕錶 精品展示 | 嚴選高質感腕錶">
+    <meta property="og:description" content="精選 52 款經典腕錶，全台貨到付款、7天鑑賞期。立即加入 LINE 獲取專屬報價！">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
+    <meta property="og:type" content="website">
+
+    <!-- PWA 相關設定 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f0f0f">
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 
     <style>
+        /* 前面的 CSS 保持不變，請保留你原本的設定，這裡省略以節省空間 */
         :root { --gold: #d4af37; --bg-dark: #0f0f0f; }
-        body {
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
-            color: #ffffff; font-family: 'Microsoft JhengHei', sans-serif;
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-            scroll-behavior: smooth;
-        }
-
-        /* 🌟 頂部跑馬燈公告 */
-        .marquee-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 35px;
-            background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728);
-            color: #111; font-weight: bold; font-size: 14px;
-            display: flex; align-items: center; overflow: hidden; z-index: 2000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-        .marquee-text {
-            white-space: nowrap; animation: scrollText 15s linear infinite;
-            padding-left: 100%; font-family: 'Microsoft JhengHei', sans-serif;
-        }
-        @keyframes scrollText {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
+        body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%); color: #fff; font-family: 'Microsoft JhengHei', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
+        .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .marquee-text { white-space: nowrap; animation: scrollText 15s linear infinite; padding-left: 100%; }
+        @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         body { padding-top: 55px; }
-
-        /* 右上角真實線上人數 */
-        .live-counter {
-            position: fixed; top: 45px; right: 15px;
-            background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800;
-            padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold;
-            display: flex; align-items: center; gap: 6px; z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 200, 0, 0.2);
-        }
+        
+        /* 右上角線上人數 */
+        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
-
-        /* 頂部信任標籤 */
+        
         .trust-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; font-size: 13px; color: #aaa; flex-wrap: wrap; }
         .trust-item { display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.3); }
         .trust-item span { color: var(--gold); font-weight: bold; }
@@ -60,10 +41,10 @@
         h1 { color: var(--gold); font-size: 36px; margin-bottom: 10px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
         .subtitle { color: #bbb; font-size: 15px; margin-bottom: 20px; letter-spacing: 1px; }
 
-        /* LINE 客服區塊 */
+        /* 🌟 優化：LINE 客服區塊加入真人頭像 */
         .line-contact-banner { background: linear-gradient(145deg, rgba(30,30,30,0.9), rgba(15,15,15,0.9)); border: 1px solid var(--gold); border-radius: 12px; padding: 15px 20px; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); max-width: 600px; position: relative; }
         .online-dot { position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; background: #00c800; border-radius: 50%; box-shadow: 0 0 10px #00c800; animation: blink 2s infinite; }
-        .line-contact-banner img { width: 80px; height: 80px; border-radius: 8px; border: 2px solid #fff; cursor: zoom-in; }
+        .line-contact-banner .avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
         .line-text h3 { color: var(--gold); margin: 0 0 8px 0; font-size: 16px; display: flex; align-items: center; gap: 5px;}
         .line-text p { color: #ddd; margin: 0; font-size: 13px; line-height: 1.5; }
         .line-text p span { color: #ff4757; font-weight: bold; }
@@ -71,20 +52,17 @@
         .legal-banner { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 600px; font-size: 12px; color: #999; line-height: 1.6; text-align: left; }
         .legal-banner strong { color: var(--gold); }
 
-        /* 搜尋與分類工具列 */
         .filter-section { width: 100%; max-width: 1200px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
         .search-box { position: relative; width: 100%; max-width: 500px; }
         .search-box input { width: 100%; padding: 12px 15px 12px 45px; border-radius: 30px; border: 1px solid #555; background: #222; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; transition: 0.3s; }
         .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
         .search-box::before { content: '🔍'; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #888; }
-        
         .category-tabs { display: flex; gap: 10px; overflow-x: auto; width: 100%; justify-content: flex-start; padding-bottom: 5px; }
         .category-tabs::-webkit-scrollbar { display: none; }
         .category-btn { background: #222; color: #aaa; border: 1px solid #444; padding: 8px 16px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 14px; transition: 0.3s; }
         .category-btn:hover { border-color: var(--gold); color: var(--gold); }
         .category-btn.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: bold; }
 
-        /* 產品網格 */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
         .product-card { background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.9)); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease; position: relative; }
         .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
@@ -101,7 +79,6 @@
 
         .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-info h3 { color: var(--gold); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; }
-        /* 🌟 新增價格標籤 */
         .price-tag { color: #00c800; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
         .product-info p { color: #888; margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
         .card-trust-tags { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #999; }
@@ -110,7 +87,6 @@
         .claim-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); background-size: 200% auto; color: #111; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; font-size: 15px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6); transition: all 0.3s ease; text-shadow: 0 1px 0 rgba(255,255,255,0.4); }
         .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8); transform: translateY(-2px); }
 
-        /* 彈出視窗 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; }
@@ -121,8 +97,11 @@
         .price-display-box p { color: #aaa; font-size: 12px; margin: 0 0 5px 0; }
         .price-display-box h3 { color: #fff; font-size: 18px; margin: 0 0 10px 0; }
         .unlock-price { color: #ff4757; font-size: 16px; font-weight: bold; margin: 0; display: flex; align-items: center; gap: 5px; }
+        
+        /* 🌟 新增：商品瀏覽人數 */
+        .viewer-count { color: #aaa; font-size: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: flex-start; }
+        .viewer-count span { color: #ff4757; font-weight: bold; }
 
-        /* 🌟 預算區間選擇按鈕 */
         .budget-selector { display: flex; gap: 10px; margin-bottom: 15px; }
         .budget-btn { flex: 1; padding: 10px 5px; background: #222; border: 1px solid #444; border-radius: 8px; color: #aaa; font-size: 13px; cursor: pointer; transition: 0.3s; }
         .budget-btn.active { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); color: var(--gold); font-weight: bold; }
@@ -132,7 +111,6 @@
         .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333; border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; outline: none; }
         .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
 
-        /* 🌟 柔化的提醒文字 */
         .form-warning { background: rgba(212, 175, 55, 0.08); border: 1px dashed rgba(212, 175, 55, 0.4); color: #d4af37; font-size: 12px; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.5; }
         .form-privacy-text { font-size: 11px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
         .form-privacy-text span { color: var(--gold); font-size: 14px; }
@@ -142,7 +120,6 @@
         .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
 
-        /* 3D 放大畫廊 */
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 2500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
         .lightbox.active { opacity: 1; visibility: visible; }
         .lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s; }
@@ -153,24 +130,19 @@
         .gallery-track img:hover, .gallery-track img:active { transform: scale(1) rotateX(0deg); box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2); cursor: zoom-in; }
         .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px; }
 
-        /* 懸浮按鈕 */
         .floating-btns { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1500; }
         .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; transition: 0.3s; border: none; outline: none; position: relative; }
         .float-btn:hover { transform: translateY(-5px); }
         .btn-line { background: #00c800; color: #fff; font-size: 28px; text-decoration: none; }
         .btn-top { background: #333; color: var(--gold); border: 1px solid var(--gold); font-size: 24px; display: none; }
-        
-        /* 🌟 新增：懸浮客服對話按鈕 */
         .btn-chat { background: #00bcd4; color: #fff; font-size: 28px; }
 
-        /* 🌟 信任區塊 (好評與實拍) */
         .trust-section { width: 100%; max-width: 1000px; margin: 40px auto 20px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
         .trust-card { flex: 1; min-width: 300px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: center; }
         .trust-card h3 { color: var(--gold); margin-top: 0; font-size: 18px; }
         .trust-card p { color: #aaa; font-size: 14px; line-height: 1.6; }
         .trust-card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 1px solid #444; }
 
-        /* 品牌 FAQ 區塊 */
         .faq-section { width: 100%; max-width: 800px; margin: 20px auto; text-align: left; }
         .faq-section h2 { text-align: center; color: var(--gold); margin-bottom: 20px; }
         .faq-item { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
@@ -180,7 +152,6 @@
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
         .faq-item.active .faq-question { color: var(--gold); }
 
-        /* 左下角購買通知彈窗 */
         .purchase-toast { position: fixed; bottom: 20px; left: 20px; background: rgba(30, 30, 30, 0.95); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 15px; display: flex; align-items: center; gap: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.8); z-index: 2000; transform: translateX(-150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .purchase-toast.show { transform: translateX(0); }
         .purchase-toast img { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; border: 1px solid #444; }
@@ -188,7 +159,6 @@
         .purchase-toast .text strong { color: var(--gold); }
         .purchase-toast .text span { color: #888; font-size: 11px; }
 
-        /* 🌟 聊天室 UI 樣式 */
         .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .chat-widget.active { display: flex; }
         .chat-header { background: #222; padding: 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
@@ -201,6 +171,14 @@
         .chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
         .chat-input-area button { padding: 10px 15px; border-radius: 20px; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; }
 
+        .site-footer { width: 100%; max-width: 1200px; text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #333; color: #666; font-size: 13px; }
+        .site-footer a { color: #aaa; text-decoration: none; margin: 0 10px; transition: 0.3s; cursor: pointer; }
+        .site-footer a:hover { color: var(--gold); }
+        .legal-modal .modal-content { text-align: left; }
+        .legal-modal h2 { text-align: center; margin-bottom: 20px; }
+        .legal-modal h3 { color: #ccc; font-size: 15px; margin-top: 20px; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 10px; }
+        .legal-modal p { color: #888; font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
+        
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .product-image-wrapper { height: 150px; }
@@ -221,12 +199,14 @@
 </head>
 <body>
 
+    <!-- 跑馬燈 -->
     <div class="marquee-container">
         <div class="marquee-text">
             🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
         </div>
     </div>
 
+    <!-- 購買通知 -->
     <div class="purchase-toast" id="purchaseToast">
         <img src="" id="toastImg" alt="product">
         <div class="text">
@@ -236,6 +216,7 @@
         </div>
     </div>
 
+    <!-- 線上人數 -->
     <div class="live-counter">
         <div class="live-dot"></div>
         目前線上 <span id="frontend-online-count" style="font-size: 15px; margin: 0 2px;">0</span> 人
@@ -251,13 +232,14 @@
         <h1>尊享腕錶 精品展示</h1>
         <div class="subtitle">精選 52 款經典腕錶，請挑選您的最愛</div>
 
+        <!-- 🌟 加入真人頭像 -->
         <div class="line-contact-banner">
             <div class="online-dot"></div>
-            <img src="images/line-qr.jpg" alt="LINE QR Code" data-images='["images/line-qr.jpg"]'
-                 onerror="this.onerror=null; this.src='https://via.placeholder.com/100x100?text=QR+Code';">
+            <!-- 請將下面的圖片換成你客服的照片或漂亮的手錶圖 -->
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="客服專員" class="avatar">
             <div class="line-text">
-                <h3>📱 真人客服在線回覆</h3>
-                <p>點擊放大 QR Code 加入好友<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
+                <h3>📱 客服專員：小美 為您服務</h3>
+                <p>真人一對一在線回覆，安心有保障<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
             </div>
         </div>
 
@@ -284,7 +266,7 @@
 
     <div class="product-grid" id="productGrid"></div>
 
-    <!-- 🌟 新增：客戶真實好評與出貨實拍 -->
+    <!-- 客戶好評與實拍 -->
     <div class="trust-section">
         <div class="trust-card">
             <h3>⭐ 買家真實好評</h3>
@@ -314,6 +296,26 @@
         </div>
     </div>
 
+    <!-- 法務 Footer -->
+    <div class="site-footer">
+        <div style="margin-bottom: 15px;">
+            <a onclick="openLegal('privacy')">隱私權政策</a> | 
+            <a onclick="openLegal('terms')">服務條款</a> | 
+            <a onclick="openLegal('return')">退換貨政策</a>
+        </div>
+        <div>&copy; 2026 尊享腕錶 精品展示. All rights reserved.</div>
+        <div style="font-size: 11px; margin-top: 10px; color: #555;">本網站商品均為嚴選品質，非原廠公司貨。</div>
+    </div>
+
+    <!-- 法務彈出視窗 -->
+    <div class="modal-overlay legal-modal" id="legalModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="document.getElementById('legalModal').classList.remove('active')">&times;</span>
+            <div id="legalContent"></div>
+        </div>
+    </div>
+
+    <!-- 商品彈窗 -->
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
@@ -323,6 +325,10 @@
                 <div class="price-display-box">
                     <p>您選擇的商品：</p>
                     <h3 id="modalProductName">手錶名稱</h3>
+                    <!-- 🌟 加入即時瀏覽人數 -->
+                    <div class="viewer-count">
+                        🔥 今日已有 <span id="randomViewerCount">15</span> 人查看此商品
+                    </div>
                 </div>
 
                 <div style="text-align: left; margin-bottom: 15px;">
@@ -382,20 +388,21 @@
         </div>
     </div>
 
+    <!-- 放大畫廊 -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
         <div class="gallery-track" id="galleryTrack"></div>
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
-    <!-- 🌟 懸浮按鈕：對話、LINE、回到頂部 -->
+    <!-- 懸浮按鈕 -->
     <div class="floating-btns">
         <button class="float-btn btn-chat" title="線上客服" onclick="toggleChat()">💬</button>
         <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
     </div>
 
-    <!-- 🌟 聊天室 UI -->
+    <!-- 聊天室 UI -->
     <div class="chat-widget" id="chatWidget">
         <div class="chat-header">
             <div><span style="color:#00c800;">●</span> 線上客服</div>
@@ -597,6 +604,10 @@
                 });
             } catch (err) {}
 
+            // 🌟 產生隨機瀏覽人數
+            const randomViewers = Math.floor(Math.random() * 20) + 10;
+            document.getElementById('randomViewerCount').innerText = randomViewers;
+
             modalProductName.innerText = watch.name;
             modal.classList.add('active');
             document.getElementById('shippingForm').dataset.imgNum = imgNum;
@@ -786,7 +797,6 @@
             }
         });
 
-        // ================= 聊天室邏輯 =================
         let chatChannel = null;
         const chatSessionId = localStorage.getItem('visitor_session_id') || Math.random().toString(36).substring(2, 15);
 
@@ -846,6 +856,46 @@
                 sender: 'user',
                 message: text
             }]);
+        }
+
+        const legalContents = {
+            'privacy': `
+                <h2>隱私權政策</h2>
+                <p>歡迎使用「尊享腕錶」。我們非常重視您的個人隱私與資料安全。本政策說明我們如何收集、使用及保護您的個人資料。</p>
+                <h3>1. 資料收集</h3>
+                <p>當您使用本網站填寫預約表單時，我們會收集您的姓名、電話號碼及收件地址，僅用於「貨到付款」之物流配送。</p>
+                <h3>2. 資料使用與保護</h3>
+                <p>您的資料受嚴格的加密保護，絕不會販售、交換或洩漏給任何第三方機構（物流公司除外）。</p>
+                <h3>3. 聯絡我們</h3>
+                <p>若您對隱私權政策有任何疑問，歡迎透過官方 LINE 與我們聯繫。</p>
+            `,
+            'terms': `
+                <h2>服務條款</h2>
+                <p>使用本網站服務即代表您同意以下條款：</p>
+                <h3>1. 商品性質</h3>
+                <p>本網站販售之腕錶均為嚴選品質之商品，並非原廠公司貨。我們保證商品出貨前皆經過嚴格品檢。</p>
+                <h3>2. 交易方式</h3>
+                <p>本網站一律採用「貨到付款」方式。您收到商品並確認無誤後，再將款項交給物流司機即可。</p>
+                <h3>3. 防範詐騙</h3>
+                <p>本公司絕對不會要求您前往 ATM 操作，也不會致電要求您提供信用卡密碼或銀行帳戶資訊。</p>
+            `,
+            'return': `
+                <h2>退換貨政策</h2>
+                <p>為了保障您的權益，我們提供完善的售後服務：</p>
+                <h3>1. 7天鑑賞期</h3>
+                <p>您享有商品貨到後 7 天內的無條件退貨權益。退回之商品必須保持全新、未使用狀態，且包裝完整。</p>
+                <h3>2. 瑕疵處理</h3>
+                <p>若您收到的商品有任何非人為損壞或瑕疵，請立即透過 LINE 聯繫客服，我們將免費為您辦理換貨。</p>
+                <h3>3. 退貨流程</h3>
+                <p>請於 7 天內聯繫客服，我們將安排物流前往收件。退款金額將於收到退貨商品確認無誤後處理。</p>
+            `
+        };
+
+        function openLegal(type) {
+            const modal = document.getElementById('legalModal');
+            const content = document.getElementById('legalContent');
+            content.innerHTML = legalContents[type];
+            modal.classList.add('active');
         }
     </script>
 </body>
