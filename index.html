@@ -782,7 +782,10 @@
                 const showHotBadge = isHot(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
                 const stockText = (typeof watch.stock === 'number' && watch.stock > 0 && watch.stock <= 3)
                     ? `<div style="font-size:11px; color:#ff4757; margin-bottom:8px;">⚠️ 庫存僅剩 ${watch.stock} 支</div>` : '';
-                                const priceText = `<div class="price-tag">專屬價：$${Number(price.base).toLocaleString()}</div>`;
+                                                const price = watch.price || { base: 6000, custom: 19999 };
+                               const priceText = `<div class="price-tag">專屬價：$${Number(price.base).toLocaleString()}</div>`;
+                const imagesJson = escapeHtmlF(JSON.stringify(watch.images || []));
+
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
