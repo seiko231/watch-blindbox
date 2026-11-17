@@ -2037,5 +2037,94 @@
     })();
     </script>
     <!-- ==================== 多語系切換結束 ==================== -->
+<script>
+/* ============================================================
+   全站單一價格覆寫
+   - 移除所有預算級別介面
+   - 一律以「基礎價 price_base」計價
+   - 加入購物車不再詢問級別
+   貼在 </body> 之前即可，原檔不需修改
+   ============================================================ */
+(function () {
+    'use strict';
+
+    /* 取基礎價 */
+    function basePrice(id) {
+        var w = null;
+        try { w = (typeof watchData !== 'undefined' && watchData[id]) || null; } catch (e) { }
+        if (!w || !w.price) return 6000;
+        return Number(w.price.base) || 6000;
+    }
+
+    /* 覆寫單價計算：忽略 budget */
+    window.priceOf = function (id) {
+        return basePrice(id);
+    };
+
+    /* 覆寫購物車單價 */
+    window.cartPriceOf = function (c) {
+        if (!c) return 0;
+        if (c.price && typeof c.price === 'object' && typeof c.price.base !== 'undefined') {
+            return Number(c.price.base) || basePrice(c.id);
+        }
+        return basePrice(c.id);
+    };
+
+    /* 覆寫「加入購物車」：不再跳預算框，直接加入 */
+    window.openBudgetModal = function (id) {
+        var w = null;
+        try { w = watchData[id]; } catch (e) { }
+        if (!w) return;
+
+        try {
+            var exist = cart.find(function (c) { return c.id === id; });
+            if (exist) {
+                exist.qty += 1;
+            } else {
+                cart.push({
+                    id: id,
+                    name: w.name,
+                    image: (w.images && w.images[0]) || fallbackImg,
+                    qty: 1,
+                    budget: '基礎',
+                    price: w.price,
+                    category: w.category
+                });
+            }
+            saveCart();
+            if (typeof renderCart === 'function') renderCart();
+            if (typeof updateCartBadge === 'function') updateCartBadge();
+        } catch (err) {
+            console.error('[單一價格] 加入購物車失敗：', err);
+        }
+
+        var btn = document.getElementById('cartFloatBtn');
+        if (btn) {
+            btn.style.transform = 'scale(1.25)';
+            setTimeout(function () { btn.style.transform = ''; }, 200);
+        }
+    };
+
+    /* 隱藏所有預算級別介面 */
+    var css = document.createElement('style');
+    css.textContent =
+        '#budgetSelectorWrap,' +
+        '#budgetSelectModal,' +
+        '.cart-budget-select{display:none !important;}';
+    document.head.appendChild(css);
+
+    /* 購物車結帳摘要：移除（預算）字樣 */
+    var tidy = function () {
+        var box = document.getElementById('modalCartSummary');
+        if (!box) return;
+        box.innerHTML = box.innerHTML.replace(/（(基礎|高端|定制)）/g, '');
+    };
+    var mo = new MutationObserver(tidy);
+    var tryBind = setInterval(function () {
+        var box = document.getElementById('modalCartSummary');
+        if (box) { mo.observe(box, { childList: true, subtree: true }); clearInterval(tryBind); tidy(); }
+    }, 400);
+})();
+</script>
 </body>
 </html>
