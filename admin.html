@@ -1,1773 +1,1477 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理員後台 - 數據分析</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>尊享腕錶 後台管理</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://ncebylvmcnrrayqbwtog.supabase.co" crossorigin>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
+<style>
+:root{
+  --gold:#d4af37; --gold-dark:#b38728; --bg:#0f0f10; --panel:#18181b;
+  --panel2:#202024; --line:#2a2a30; --text:#e8e8ea; --muted:#8b8b93;
+  --green:#06c755; --red:#ff4757; --radius:12px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.6; font-size:14px;
+}
+img{max-width:100%; display:block;}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit;}
+input,select,textarea{font-family:inherit;}
+a{color:var(--gold); text-decoration:none;}
+.muted{color:var(--muted); font-size:12.5px;}
 
-    <style>
-        body { background-color: #111; color: #fff; font-family: 'Microsoft JhengHei', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+/* ===== 登入 ===== */
+.login-wrap{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at 50% 0%,#1c1c22 0%,#0f0f10 60%);
+  padding:20px;
+}
+.login-card{
+  width:min(380px,100%); background:var(--panel); border:1px solid var(--line);
+  border-radius:18px; padding:34px 28px; text-align:center;
+}
+.login-logo{font-size:22px; font-weight:700; letter-spacing:2px;}
+.login-logo span{display:block; font-size:9px; letter-spacing:5px; color:var(--gold); font-weight:500;}
+.login-card h2{font-size:15px; font-weight:500; color:var(--muted); margin:22px 0 18px;}
+.login-card input{
+  width:100%; padding:12px 14px; margin-bottom:10px; border-radius:10px;
+  border:1px solid var(--line); background:#111114; color:var(--text);
+  font-size:14px; outline:none;
+}
+.login-card input:focus{border-color:var(--gold);}
+.login-card button{
+  width:100%; padding:13px; border-radius:10px; background:var(--gold);
+  color:#000; font-weight:700; font-size:15px; margin-top:6px;
+}
+.login-card button:disabled{opacity:.6;}
+.login-error{color:var(--red); font-size:12.5px; min-height:18px; margin-top:10px;}
 
-        #login-screen { background: #222; padding: 40px; border-radius: 15px; border: 2px solid #d4af37; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); width: 320px; }
-        #login-screen h2 { color: #d4af37; margin-top: 0; }
-        #login-screen input { width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box; border: 1px solid #555; border-radius: 5px; background: #333; color: #fff; font-size: 15px; }
-        #login-screen button { width: 100%; padding: 12px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        #login-screen button:hover { background: #fcf6ba; }
-        .error-msg { color: #ff4757; font-size: 13px; height: 20px; margin-top: 10px; }
-        .success-msg { color: #00c800; font-size: 13px; height: 20px; margin-top: 10px; }
+/* ===== 版面 ===== */
+.app{display:flex; min-height:100vh;}
+.sidebar{
+  width:210px; flex:0 0 210px; background:var(--panel); border-right:1px solid var(--line);
+  display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
+}
+.sb-logo{padding:20px 18px; font-size:17px; font-weight:700; letter-spacing:2px; border-bottom:1px solid var(--line);}
+.sb-logo span{display:block; font-size:8px; letter-spacing:4px; color:var(--gold); font-weight:500;}
+.sidebar nav{padding:12px 8px; display:flex; flex-direction:column; gap:4px; flex:1;}
+.nav-btn{
+  text-align:left; padding:11px 14px; border-radius:10px; font-size:13.5px;
+  color:var(--muted); display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+.nav-btn:hover{background:var(--panel2); color:var(--text);}
+.nav-btn.active{background:rgba(212,175,55,.14); color:var(--gold); font-weight:600;}
+.nav-badge{
+  min-width:18px; height:18px; border-radius:9px; background:var(--red); color:#fff;
+  font-size:11px; display:flex; align-items:center; justify-content:center; padding:0 5px;
+}
+.sb-foot{padding:14px; border-top:1px solid var(--line); font-size:12px;}
+.sb-email{display:block; color:var(--muted); margin-bottom:8px; word-break:break-all;}
+.sb-logout{width:100%; padding:9px; border-radius:8px; border:1px solid var(--line); font-size:12.5px;}
+.sb-logout:hover{border-color:var(--red); color:var(--red);}
 
-        #admin-panel { display: none; width: 100%; max-width: 1200px; }
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 20px; }
-        .box { background: #222; padding: 30px; border-radius: 15px; border: 2px solid #d4af37; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center; }
-        .box h1 { color: #d4af37; margin-top: 0; font-size: 20px; }
-        .number { font-size: 70px; font-weight: bold; color: #00c800; margin: 10px 0; text-shadow: 0 0 20px rgba(0, 200, 0, 0.5); }
-        .status { font-size: 13px; color: #888; }
+.main{flex:1; min-width:0; padding:22px 24px 40px;}
+.tab{display:none;}
+.tab.active{display:block;}
+.page-head{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;}
+.page-head h1{font-size:21px;}
+.head-actions{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+.btn{padding:9px 16px; border-radius:9px; font-size:13px; font-weight:600; border:1px solid transparent;}
+.btn.gold{background:var(--gold); color:#000;}
+.btn.ghost{border-color:var(--line); color:var(--text); background:var(--panel);}
+.btn.ghost:hover{border-color:var(--gold); color:var(--gold);}
+.btn.sm{padding:6px 11px; font-size:12px;}
+.btn.danger{color:var(--red); border-color:rgba(255,71,87,.4);}
+.btn.danger:hover{background:rgba(255,71,87,.12);}
 
-        .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-        .chart-box { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; }
-        .chart-box h3 { color: #d4af37; margin-top: 0; font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: center;}
-        .canvas-wrapper { position: relative; height: 250px; width: 100%; }
+/* ===== 篩選 ===== */
+.filters{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px;}
+.filters input[type=text]{
+  flex:1; min-width:180px; max-width:340px; padding:10px 14px; border-radius:9px;
+  border:1px solid var(--line); background:var(--panel); color:var(--text); outline:none;
+}
+.filters input[type=text]:focus{border-color:var(--gold);}
+.filters select,.head-actions select{
+  padding:10px 12px; border-radius:9px; border:1px solid var(--line);
+  background:var(--panel); color:var(--text); outline:none; font-size:13px;
+}
 
-        .panel-section { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
-        .panel-section h2 { color: #d4af37; font-size: 18px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .panel-hint { font-size: 12px; color: #888; margin-bottom: 10px; line-height: 1.6; }
+/* ===== 表格 ===== */
+.table-wrap{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:auto;}
+table{width:100%; border-collapse:collapse; min-width:760px;}
+thead th{
+  text-align:left; padding:11px 12px; font-size:12px; font-weight:600;
+  color:var(--muted); border-bottom:1px solid var(--line); white-space:nowrap;
+  background:var(--panel2);
+}
+tbody td{padding:10px 12px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.02);}
+.t-thumb{width:44px; height:44px; object-fit:cover; border-radius:7px; background:#26262b;}
+.t-name{font-weight:600; max-width:220px;}
+.t-sub{font-size:11.5px; color:var(--muted);}
+.pill{display:inline-block; padding:3px 10px; border-radius:20px; font-size:11.5px;}
+.pill.on{background:rgba(6,199,85,.16); color:var(--green);}
+.pill.off{background:rgba(255,71,87,.14); color:var(--red);}
+.pill.gray{background:#2a2a30; color:#aaa;}
+.row-actions{display:flex; gap:6px; flex-wrap:wrap;}
+.icon-act{
+  width:30px; height:30px; border-radius:8px; border:1px solid var(--line);
+  display:inline-flex; align-items:center; justify-content:center; font-size:14px;
+}
+.icon-act:hover{border-color:var(--gold); background:rgba(212,175,55,.1);}
+.pager{display:flex; gap:6px; justify-content:center; align-items:center; margin-top:14px; flex-wrap:wrap;}
+.pager button{
+  min-width:34px; height:34px; border-radius:8px; border:1px solid var(--line);
+  font-size:13px; padding:0 10px;
+}
+.pager button.active{background:var(--gold); color:#000; border-color:var(--gold); font-weight:700;}
+.pager span{color:var(--muted); font-size:12.5px;}
 
-        .visitor-overview { display: flex; align-items: center; gap: 30px; background: #1a1a1a; padding: 20px 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 15px; }
-        .overview-total { text-align: center; padding-right: 30px; border-right: 1px solid #333; }
-        .overview-total .num { font-size: 50px; font-weight: bold; color: #00bcd4; line-height: 1; }
-        .overview-total .label { font-size: 14px; color: #888; margin-top: 8px; }
+/* ===== 彈窗 ===== */
+.overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:500;
+  opacity:0; visibility:hidden; transition:.25s;
+}
+.overlay.active{opacity:1; visibility:visible;}
+.modal{
+  position:fixed; left:50%; top:50%; transform:translate(-50%,-46%);
+  width:min(620px,94vw); max-height:90vh; overflow-y:auto;
+  background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  z-index:600; opacity:0; visibility:hidden; transition:.25s;
+}
+.modal.active{opacity:1; visibility:visible; transform:translate(-50%,-50%);}
+.modal-head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:15px 20px; border-bottom:1px solid var(--line);
+  position:sticky; top:0; background:var(--panel); z-index:2;
+}
+.modal-head h3{font-size:16px;}
+.modal-close{font-size:24px; color:var(--muted); line-height:1;}
+.modal-body{padding:18px 20px;}
+.modal-foot{padding:0 20px 20px; display:flex; gap:10px; justify-content:flex-end;}
 
-        .overview-bars { flex: 1; display: flex; flex-direction: column; gap: 15px; }
-        .bar-row { display: flex; align-items: center; gap: 15px; }
-        .bar-label { width: 100px; font-size: 15px; color: #ccc; text-align: left; }
-        .bar-track { flex: 1; height: 16px; background: #222; border-radius: 8px; overflow: hidden; }
-        .bar-fill { height: 100%; border-radius: 8px; transition: width 0.5s ease; }
-        .bar-fill.pc { background: linear-gradient(90deg, #00bcd4, #4dd0e1); }
-        .bar-fill.ios { background: linear-gradient(90deg, #fff, #e0e0e0); }
-        .bar-fill.android { background: linear-gradient(90deg, #00c800, #69f0ae); }
-        .bar-fill.linux { background: linear-gradient(90deg, #e0e0e0, #fff); }
-        .bar-fill.other { background: linear-gradient(90deg, #9c27b0, #ce93d8); }
-        .bar-count { width: 50px; font-size: 16px; font-weight: bold; text-align: right; color: #fff; }
+/* ===== 表單 ===== */
+.field{margin-bottom:13px;}
+.field label{display:block; font-size:12.5px; font-weight:600; margin-bottom:6px; color:#cfcfd4;}
+.field input,.field select,.field textarea{
+  width:100%; padding:10px 12px; border-radius:9px; border:1px solid var(--line);
+  background:#111114; color:var(--text); font-size:13.5px; outline:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
+.field textarea{resize:vertical; min-height:80px;}
+.field-row{display:flex; gap:12px; flex-wrap:wrap;}
+.field-row .field{flex:1; min-width:140px;}
+.hint{font-size:11.5px; color:var(--muted); margin-top:5px;}
+.switch{display:flex; align-items:center; gap:8px; font-size:13px;}
 
-        .visitor-list { list-style: none; padding: 0; margin: 0; line-height: 2; max-height: 200px; overflow-y: auto; font-size: 14px; background: #1a1a1a; border-radius: 8px; padding: 10px; border: 1px solid #333; }
-        .visitor-list li { border-bottom: 1px solid #2a2a2a; padding-bottom: 5px; display: flex; justify-content: space-between; }
-        .visitor-list li:last-child { border-bottom: none; }
-        .device-icon { margin-right: 5px; }
+/* 圖片管理 */
+.img-grid{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;}
+.img-item{position:relative; width:74px; height:74px; border-radius:9px; overflow:hidden; border:1px solid var(--line);}
+.img-item img{width:100%; height:100%; object-fit:cover;}
+.img-item button{
+  position:absolute; top:2px; right:2px; width:20px; height:20px; border-radius:50%;
+  background:rgba(0,0,0,.75); color:#fff; font-size:12px; line-height:1;
+  display:flex; align-items:center; justify-content:center;
+}
+.img-add{
+  width:74px; height:74px; border-radius:9px; border:1px dashed var(--line);
+  display:flex; align-items:center; justify-content:center; font-size:22px; color:var(--muted);
+}
+.img-add:hover{border-color:var(--gold); color:var(--gold);}
 
-        .toolbar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; background: #1a1a1a; padding: 15px; border-radius: 8px; }
-        .toolbar input { padding: 8px 12px; border-radius: 5px; border: 1px solid #555; background: #333; color: #fff; font-size: 13px; }
-        .toolbar button { padding: 8px 15px; background: #d4af37; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .toolbar button:hover { background: #fcf6ba; }
+/* ===== 聊天 ===== */
+.chat-tab.active{display:flex; gap:16px; height:calc(100vh - 92px);}
+.chat-list{
+  width:280px; flex:0 0 280px; background:var(--panel); border:1px solid var(--line);
+  border-radius:var(--radius); display:flex; flex-direction:column; overflow:hidden;
+}
+.chat-list-head{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 14px; border-bottom:1px solid var(--line);
+}
+.chat-list-head h2{font-size:14px;}
+.chat-sessions{flex:1; overflow-y:auto;}
+.session-item{padding:11px 14px; border-bottom:1px solid var(--line); cursor:pointer;}
+.session-item:hover{background:var(--panel2);}
+.session-item.active{background:rgba(212,175,55,.14); border-left:3px solid var(--gold);}
+.session-name{font-size:13px; font-weight:600; display:flex; justify-content:space-between; gap:8px;}
+.session-time{font-size:10.5px; color:var(--muted); font-weight:400; flex:0 0 auto;}
+.session-last{font-size:12px; color:var(--muted); margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.session-unread{background:var(--red); color:#fff; font-size:10.5px; border-radius:9px; padding:1px 6px; margin-left:6px;}
+.chat-main{
+  flex:1; min-width:0; background:var(--panel); border:1px solid var(--line);
+  border-radius:var(--radius); display:flex; flex-direction:column; overflow:hidden;
+}
+.admin-chat-header{padding:12px 16px; border-bottom:1px solid var(--line); font-size:13.5px; font-weight:600;}
+.admin-chat-header .muted{font-weight:400;}
+.admin-chat-body{
+  flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px;
+  background:#141417;
+}
+.chat-empty{color:#666; text-align:center; margin-top:60px; font-size:13px;}
+.chat-msg{max-width:74%; padding:10px 13px; border-radius:10px; font-size:13.5px; line-height:1.5; word-break:break-word;}
+.chat-msg.user{align-self:flex-start; background:#2a2a31; color:#eee;}
+.chat-msg.admin{align-self:flex-end; background:var(--gold); color:#000;}
+.chat-msg-time{font-size:10px; opacity:.65; margin-top:4px; text-align:right;}
+.admin-chat-body .chat-img{
+  max-width:200px; max-height:200px; border-radius:8px; display:block;
+  cursor:zoom-in; border:1px solid rgba(255,255,255,.15);
+}
+.chat-msg.admin .chat-img{margin-left:auto;}
+.admin-chat-body .chat-video{max-width:220px; border-radius:8px; display:block; background:#000;}
+.admin-chat-input-area{
+  display:flex; gap:8px; align-items:center; padding:11px;
+  border-top:1px solid var(--line); background:var(--panel);
+}
+.admin-chat-input-area input[type=text]{
+  flex:1; min-width:0; padding:10px 14px; border-radius:20px;
+  border:1px solid var(--line); background:#111114; color:var(--text); outline:none; font-size:13.5px;
+}
+.admin-chat-input-area input[type=text]:focus{border-color:var(--gold);}
+.admin-chat-input-area input[type=text]:disabled{color:#555;}
+.admin-chat-input-area button{
+  padding:10px 18px; background:var(--gold); color:#000; border-radius:20px;
+  font-weight:700; font-size:13px;
+}
+.admin-chat-input-area button:disabled{background:#2a2a30; color:#666; cursor:not-allowed;}
+.admin-chat-img-btn{
+  padding:0 !important; width:38px; height:38px; border-radius:50% !important;
+  background:#2a2a30 !important; color:var(--gold) !important;
+  display:flex; align-items:center; justify-content:center; font-size:16px; flex:0 0 auto;
+}
+.admin-chat-img-btn:disabled{background:#1c1c20 !important; color:#444 !important; cursor:not-allowed;}
 
-        .order-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .order-table th, .order-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; }
-        .order-table th { color: #d4af37; background: #1a1a1a; }
-        .order-table tr:hover { background: rgba(212, 175, 55, 0.05); }
-        .order-items-detail { font-size: 12px; color: #00bcd4; margin-top: 5px; line-height: 1.4; }
+/* ===== 燈箱 ===== */
+.image-lightbox{
+  position:fixed; inset:0; background:rgba(0,0,0,.9); z-index:99999;
+  display:flex; justify-content:center; align-items:center;
+  opacity:0; visibility:hidden; transition:.25s;
+}
+.image-lightbox.active{opacity:1; visibility:visible;}
+.image-lightbox img{max-width:92%; max-height:92%; border-radius:8px; object-fit:contain;}
+.image-lightbox .close-icon{position:absolute; top:16px; right:26px; color:#fff; font-size:40px; line-height:1;}
 
-        .btn-group { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
-        .status-btn { padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; border: none; transition: 0.3s; white-space: nowrap;}
-        .status-pending { background: #ffc107; color: #000; }
-        .status-shipped { background: #00c800; color: #fff; }
-        .action-btn { padding: 6px 10px; border-radius: 4px; border: none; cursor: pointer; font-size: 12px; transition: 0.3s; }
-        .copy-btn { background: #00bcd4; color: #fff; }
-        .copy-btn:hover { background: #26c6da; }
-        .print-btn { background: #9c27b0; color: #fff; }
-        .print-btn:hover { background: #ab47bc; }
-        .del-btn { background: #ff4757; color: #fff; }
-        .del-btn:hover { background: #ff6b81; }
-        .call-btn { background: #ff9800; color: #fff; text-decoration: none; display: inline-flex; align-items: center; }
-        .call-btn:hover { background: #fb8c00; }
+/* ===== Toast ===== */
+.toast{
+  position:fixed; left:50%; bottom:28px; transform:translate(-50%,16px);
+  background:rgba(40,40,46,.98); color:#fff; border:1px solid var(--line);
+  padding:11px 20px; border-radius:24px; font-size:13px; z-index:99998;
+  opacity:0; visibility:hidden; transition:.25s; max-width:88vw; text-align:center;
+}
+.toast.show{opacity:1; visibility:visible; transform:translate(-50%,0);}
+.toast.err{border-color:rgba(255,71,87,.6); color:#ffb3b9;}
 
-        .logout-btn { padding: 8px 20px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 13px; margin-top: 10px; transition: 0.3s; }
-        .logout-btn:hover { color: #fff; border-color: #fff; }
-
-        .toast { position: fixed; top: 20px; right: 20px; background: #00c800; color: #fff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-weight: bold; z-index: 9999; transform: translateX(150%); transition: transform 0.3s; }
-        .toast.show { transform: translateX(0); }
-
-        .add-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .add-modal.active { display: flex; }
-        .add-modal-content { background: #222; padding: 25px; border-radius: 15px; border: 1px solid #d4af37; width: 90%; max-width: 400px; }
-        .add-modal-content h3 { color: #d4af37; margin-top: 0; text-align: center; }
-        .add-modal-content input, .add-modal-content select { width: 100%; padding: 10px; margin-bottom: 10px; background: #333; border: 1px solid #555; color: #fff; border-radius: 5px; box-sizing: border-box; }
-        .add-modal-btns { display: flex; gap: 10px; margin-top: 15px; }
-        .add-modal-btns button { flex: 1; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; border: none; }
-        .btn-save { background: #d4af37; color: #000; }
-        .btn-cancel { background: #555; color: #fff; }
-
-        /* ===== 獨立客服對話樣式 ===== */
-        .admin-chat-container { display: flex; gap: 20px; height: 420px; }
-        .admin-chat-list { width: 32%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow-y: auto; list-style: none; padding: 0; margin: 0; }
-        .admin-chat-list li { padding: 12px 15px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; font-size: 13px; position: relative; }
-        .admin-chat-list li:hover { background: rgba(212, 175, 55, 0.1); }
-        .admin-chat-list li.active { background: rgba(212, 175, 55, 0.2); border-left: 3px solid #d4af37; }
-        .admin-chat-list .chat-session-id { font-weight: bold; color: #d4af37; }
-        .admin-chat-list .chat-last-msg { font-size: 12px; color: #888; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 20px; }
-        .admin-chat-list .chat-last-msg .is-img { color: #00bcd4; font-weight: bold; }
-        .admin-chat-list .chat-unread { display: inline-block; background: #ff4757; color: #fff; border-radius: 10px; font-size: 10px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
-        
-        .chat-del-icon { position: absolute; right: 10px; bottom: 12px; color: #ff4757; font-size: 14px; opacity: 0.5; transition: 0.2s; }
-        .chat-del-icon:hover { opacity: 1; transform: scale(1.1); }
-
-        .admin-chat-window { flex: 1; display: flex; flex-direction: column; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; }
-        .admin-chat-header { padding: 12px 15px; background: #222; border-bottom: 1px solid #333; border-radius: 8px 8px 0 0; color: #888; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-        .admin-chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .admin-chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; align-items: center; }
-        .admin-chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: #fff; outline: none; }
-        .admin-chat-input-area input[type="text"]:disabled { background: #1a1a1a; color: #555; }
-        .admin-chat-input-area button { padding: 10px 20px; background: #d4af37; color: #000; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .admin-chat-input-area button:disabled { background: #333; color: #666; cursor: not-allowed; }
-        .admin-chat-img-btn { padding: 10px; border-radius: 50%; background: #333; color: #d4af37; border: none; cursor: pointer; font-size: 16px; }
-        .admin-chat-img-btn:disabled { background: #1a1a1a; color: #444; cursor: not-allowed; }
-
-        .chat-msg { padding: 10px 14px; border-radius: 8px; max-width: 80%; font-size: 14px; line-height: 1.4; word-break: break-word; }
-        .chat-msg.admin { align-self: flex-end; background: #d4af37; color: #000; }
-        .chat-msg.user { align-self: flex-start; background: #333; color: #fff; }
-        .chat-msg .chat-msg-time { font-size: 10px; color: rgba(0,0,0,0.5); margin-top: 3px; }
-        .chat-msg.user .chat-msg-time { color: #888; }
-        .chat-empty { color: #666; text-align: center; margin-top: 50px; }
-
-        .admin-chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid rgba(255,255,255,0.15); }
-        .chat-msg.admin .chat-img { margin-left: auto; }
-
-        .image-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; visibility: hidden; transition: 0.3s; }
-        .image-lightbox.active { opacity: 1; visibility: visible; }
-        .image-lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
-        .image-lightbox .close-icon { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .image-lightbox .close-icon:hover { color: #ff4757; transform: scale(1.1); }
-
-        /* ===== 商品管理 ===== */
-        .prod-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .prod-table th, .prod-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; vertical-align: middle; }
-        .prod-table th { color: #d4af37; background: #1a1a1a; white-space: nowrap; }
-        .prod-table tr:hover { background: rgba(212, 175, 55, 0.05); }
-        .prod-thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; border: 1px solid #444; background: #000; cursor: zoom-in; }
-        .prod-toggle { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; }
-        .prod-toggle input { opacity: 0; width: 0; height: 0; }
-        .prod-toggle span { position: absolute; inset: 0; background: #555; border-radius: 24px; cursor: pointer; transition: .3s; }
-        .prod-toggle span::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .3s; }
-        .prod-toggle input:checked + span { background: #00c800; }
-        .prod-toggle input:checked + span::before { transform: translateX(20px); }
-        .prod-modal .add-modal-content { max-width: 620px; max-height: 90vh; overflow-y: auto; }
-        .prod-modal label { font-size: 12px; color: #999; display: block; margin: 8px 0 4px; }
-        .prod-modal textarea { width: 100%; min-height: 80px; padding: 10px; background: #333; border: 1px solid #555; color: #fff; border-radius: 5px; box-sizing: border-box; font-family: inherit; font-size: 13px; resize: vertical; }
-        .prod-modal .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .prod-modal .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .prod-modal .add-modal-content input { margin-bottom: 0; }
-        .prod-img-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-        .prod-img-preview img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; border: 1px solid #444; }
-        .panel-h2-actions { margin-left: auto; display: flex; gap: 8px; }
-        .panel-h2-actions button { padding: 6px 12px; font-size: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; border: none; }
-
-        @media (max-width: 900px) {
-            .charts-container { grid-template-columns: 1fr; }
-            .visitor-overview { flex-direction: column; gap: 20px; padding: 20px; }
-            .overview-total { border-right: none; border-bottom: 1px solid #333; padding-right: 0; padding-bottom: 20px; width: 100%; }
-            .admin-chat-container { flex-direction: column; height: auto; }
-            .admin-chat-list { width: 100%; height: 200px; }
-            .admin-chat-window { height: 350px; }
-        }
-        @media (max-width: 768px) {
-            .dashboard { grid-template-columns: 1fr; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .toolbar input, .toolbar button { width: 100%; }
-
-            .order-table thead { display: none; }
-            .order-table, .order-table tbody, .order-table tr, .order-table td { display: block; width: 100%; }
-            .order-table tr { margin-bottom: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 10px; }
-            .order-table td { text-align: right; padding: 8px 10px; border-bottom: 1px dashed #333; position: relative; padding-left: 50%; }
-            .order-table td:last-child { border-bottom: none; text-align: center; padding-left: 10px; margin-top: 10px;}
-            .order-table td::before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; color: #d4af37; text-align: left; }
-            .btn-group { justify-content: center; flex-wrap: wrap; }
-
-            .bar-label { width: 80px; font-size: 13px; }
-
-            .prod-table thead { display: none; }
-            .prod-table, .prod-table tbody, .prod-table tr, .prod-table td { display: block; width: 100%; }
-            .prod-table tr { margin-bottom: 15px; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 10px; }
-            .prod-table td { text-align: right; padding: 8px 10px; border-bottom: 1px dashed #333; position: relative; padding-left: 45%; }
-            .prod-table td::before { content: attr(data-label); position: absolute; left: 10px; font-weight: bold; color: #d4af37; text-align: left; }
-        }
-    </style>
+@media(max-width:900px){
+  .sidebar{width:64px; flex:0 0 64px;}
+  .sb-logo{font-size:0; padding:16px 8px; text-align:center;}
+  .sb-logo::before{content:"尊"; font-size:18px;}
+  .nav-btn{justify-content:center; padding:12px 0; font-size:0;}
+  .nav-btn::first-line{font-size:0;}
+  .nav-btn{font-size:16px;}
+  .nav-btn span.nav-badge{position:absolute; transform:translate(14px,-10px);}
+  .sb-foot{display:none;}
+  .main{padding:16px 12px 30px;}
+  .chat-tab.active{flex-direction:column; height:auto;}
+  .chat-list{width:100%; flex:0 0 auto; max-height:200px;}
+  .chat-main{height:calc(100vh - 300px); min-height:380px;}
+}
+</style>
 </head>
 <body>
 
-    <div id="toast" class="toast">🔔 收到新訂單！</div>
+<!-- ============ 登入 ============ -->
+<div class="login-wrap" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">尊享腕錶<span>ADMIN</span></div>
+    <h2>請登入管理後台</h2>
+    <input type="email" id="loginEmail" placeholder="管理員 Email" autocomplete="username">
+    <input type="password" id="loginPassword" placeholder="密碼" autocomplete="current-password"
+           onkeypress="if(event.key==='Enter') doLogin()">
+    <button id="loginBtn" onclick="doLogin()">登入</button>
+    <p class="login-error" id="loginError"></p>
+  </div>
+</div>
 
-    <!-- 手動補單彈窗 -->
-    <div class="add-modal" id="addOrderModal">
-        <div class="add-modal-content">
-            <h3>➕ 手動補登訂單</h3>
-            <input type="text" id="addName" placeholder="收件人姓名">
-            <input type="tel" id="addPhone" placeholder="聯絡電話 (09...)">
-            <input type="text" id="addAddress" placeholder="詳細收件地址">
-            <select id="addProduct"></select>
-            <div class="add-modal-btns">
-                <button class="btn-cancel" onclick="document.getElementById('addOrderModal').classList.remove('active')">取消</button>
-                <button class="btn-save" onclick="submitManualOrder()">確認新增</button>
-            </div>
+<!-- ============ 主畫面 ============ -->
+<div class="app" id="app" style="display:none">
+
+  <aside class="sidebar">
+    <div class="sb-logo">尊享腕錶<span>ADMIN</span></div>
+    <nav>
+      <button class="nav-btn active" data-tab="products" onclick="switchTab('products')">📦 <span>商品管理</span></button>
+      <button class="nav-btn" data-tab="orders" onclick="switchTab('orders')">🧾 <span>訂單管理</span></button>
+      <button class="nav-btn" data-tab="chat" onclick="switchTab('chat')">
+        💬 <span>客服聊天</span>
+        <span class="nav-badge" id="chatNavBadge" style="display:none">0</span>
+      </button>
+    </nav>
+    <div class="sb-foot">
+      <span class="sb-email" id="adminEmail"></span>
+      <button class="sb-logout" onclick="doLogout()">登出</button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ---------- 商品管理 ---------- -->
+    <section class="tab active" id="tab-products">
+      <div class="page-head">
+        <h1>商品管理</h1>
+        <div class="head-actions">
+          <button class="btn ghost" onclick="openCsvModal()">📄 CSV 匯入</button>
+          <button class="btn gold" onclick="openProductModal()">＋ 新增商品</button>
         </div>
+      </div>
+
+      <div class="filters">
+        <input type="text" id="prodSearch" placeholder="搜尋名稱 / 品牌" oninput="onAdminSearch()">
+        <select id="prodCat" onchange="loadAdminProducts(true)">
+          <option value="">全部分類</option>
+        </select>
+        <select id="prodStatus" onchange="loadAdminProducts(true)">
+          <option value="">全部狀態</option>
+          <option value="1">上架中</option>
+          <option value="0">已下架</option>
+        </select>
+        <span class="muted" id="prodInfo"></span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:60px">圖</th>
+              <th>名稱</th>
+              <th>分類</th>
+              <th>品牌</th>
+              <th>價格</th>
+              <th>庫存</th>
+              <th>狀態</th>
+              <th style="width:210px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="productTableBody"></tbody>
+        </table>
+      </div>
+      <div class="pager" id="prodPager"></div>
+    </section>
+
+    <!-- ---------- 訂單管理 ---------- -->
+    <section class="tab" id="tab-orders">
+      <div class="page-head">
+        <h1>訂單管理</h1>
+        <div class="head-actions">
+          <select id="orderStatusFilter" onchange="loadOrders()">
+            <option value="">全部狀態</option>
+            <option value="pending">待處理</option>
+            <option value="confirmed">已確認</option>
+            <option value="shipped">已出貨</option>
+            <option value="done">已完成</option>
+            <option value="cancelled">已取消</option>
+          </select>
+          <button class="btn ghost" onclick="loadOrders()">↻ 重新整理</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:120px">時間</th>
+              <th>客戶</th>
+              <th>電話</th>
+              <th>商品</th>
+              <th>金額</th>
+              <th style="width:110px">狀態</th>
+              <th style="width:200px">操作</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody"></tbody>
+        </table>
+      </div>
+      <div class="pager" id="orderPager"></div>
+    </section>
+
+    <!-- ---------- 客服聊天 ---------- -->
+    <section class="tab chat-tab" id="tab-chat">
+      <aside class="chat-list">
+        <div class="chat-list-head">
+          <h2>對話列表</h2>
+          <button class="btn ghost sm" onclick="refreshChatSessionList()">↻</button>
+        </div>
+        <div class="chat-sessions" id="chatSessionList"></div>
+      </aside>
+
+      <div class="chat-main">
+        <div class="admin-chat-header">
+          <div id="admin-chat-header">尚未選擇對話</div>
+          <span class="muted" id="admin-chat-session-label"></span>
+        </div>
+
+        <div class="admin-chat-body" id="admin-chat-body">
+          <div class="chat-empty">尚未選擇對話</div>
+        </div>
+
+        <div class="admin-chat-input-area">
+          <input type="file" id="admin-chat-file" accept="image/*" hidden onchange="handleAdminChatImage(this)">
+          <button class="admin-chat-img-btn" id="admin-chat-img-btn" disabled
+                  onclick="document.getElementById('admin-chat-file').click()" title="傳送圖片">📷</button>
+          <input type="text" id="admin-chat-input" placeholder="請先選擇左側訪客..." disabled
+                 onkeypress="if(event.key==='Enter'){event.preventDefault();sendAdminReply();}">
+          <button id="admin-chat-send-btn" onclick="sendAdminReply()" disabled>送出</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ 商品編輯 ============ -->
+<div class="overlay" id="productOverlay" onclick="closeProductModal()"></div>
+<div class="modal" id="productModal">
+  <div class="modal-head">
+    <h3 id="productModalTitle">新增商品</h3>
+    <button class="modal-close" onclick="closeProductModal()">&times;</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="pId">
+
+    <div class="field">
+      <label>商品名稱 *</label>
+      <input type="text" id="pName" maxlength="120">
     </div>
 
-    <!-- 商品新增／編輯彈窗 -->
-    <div class="add-modal prod-modal" id="productModal">
-        <div class="add-modal-content">
-            <h3 id="productModalTitle">➕ 新增商品</h3>
-
-            <label>商品名稱 *</label>
-            <input type="text" id="pf-name" placeholder="例：41mm 經典黑面腕錶">
-
-            <label>簡短描述（前台卡片灰字）</label>
-            <textarea id="pf-desc" placeholder="例：黑色面盤，鋼帶，三針日期。"></textarea>
-
-            <div class="row2">
-                <div>
-                    <label>分類</label>
-                    <select id="pf-category">
-                        <option value="經典款">經典款</option>
-                        <option value="運動款">運動款</option>
-                        <option value="奢華款">奢華款</option>
-                        <option value="潛水款">潛水款</option>
-                        <option value="計時款">計時款</option>
-                    </select>
-                </div>
-                <div>
-                    <label>庫存（留空 = 不顯示庫存警示）</label>
-                    <input type="number" id="pf-stock" placeholder="留空表示不限">
-                </div>
-            </div>
-
-            <div class="row3">
-                <div><label>基礎價</label><input type="number" id="pf-base" value="6000"></div>
-                <div><label>高端價</label><input type="number" id="pf-mid" value="12000"></div>
-                <div><label>定製價</label><input type="number" id="pf-custom" value="19999"></div>
-            </div>
-
-            <label>商品圖片網址（一行一個，第一張是封面）</label>
-            <textarea id="pf-images" oninput="updateProdPreview()" placeholder="https://xxx.supabase.co/storage/v1/object/public/products/1.webp&#10;https://xxx.supabase.co/storage/v1/object/public/products/1-2.webp"></textarea>
-            <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
-                <input type="file" id="pf-file" accept="image/*" multiple hidden onchange="uploadProductImages(this)">
-                <button type="button" class="btn-cancel" style="padding:8px 12px; font-size:12px; flex:none;" onclick="document.getElementById('pf-file').click()">📤 上傳圖片</button>
-                <span id="pf-upload-status" style="font-size:12px; color:#888;"></span>
-            </div>
-            <div class="prod-img-preview" id="pf-preview"></div>
-
-            <div class="row2" style="margin-top:12px;">
-                <div><label>排序（數字小的排前面）</label><input type="number" id="pf-sort" value="1"></div>
-                <div>
-                    <label>上架狀態</label>
-                    <select id="pf-active">
-                        <option value="true">上架（前台顯示）</option>
-                        <option value="false">下架（前台隱藏）</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="add-modal-btns">
-                <button class="btn-cancel" onclick="closeProductModal()">取消</button>
-                <button class="btn-save" id="pf-save-btn" onclick="saveProduct()">儲存</button>
-            </div>
-        </div>
+    <div class="field">
+      <label>商品描述</label>
+      <textarea id="pDesc" maxlength="2000"></textarea>
     </div>
 
-    <div id="login-screen">
-        <h2>👑 管理員登入</h2>
-        <input type="email" id="email-input" placeholder="請輸入管理員 Email">
-        <input type="password" id="password-input" placeholder="請輸入密碼">
-        <button id="login-btn" onclick="handleLogin()">登入系統</button>
-        <div class="error-msg" id="error-msg"></div>
-        <div class="success-msg" id="success-msg"></div>
+    <div class="field-row">
+      <div class="field">
+        <label>分類</label>
+        <input type="text" id="pCategory" list="catList" maxlength="60">
+        <datalist id="catList"></datalist>
+      </div>
+      <div class="field">
+        <label>品牌</label>
+        <input type="text" id="pBrand" maxlength="60">
+      </div>
     </div>
 
-    <div id="admin-panel">
-        <div class="dashboard">
-            <div class="box">
-                <h1>📊 目前線上人數</h1>
-                <div class="number" id="online-count">--</div>
-                <div class="status" id="status-text">等待連線...</div>
-            </div>
-            <div class="box">
-                <h1>👁️ 累計總瀏覽量</h1>
-                <div class="number" id="view-count" style="color: #00bcd4;">--</div>
-                <div class="status">從開站至今的總點擊</div>
-            </div>
-            <div class="box">
-                <h1>💰 區間總營業額</h1>
-                <div class="number" id="revenue" style="color: #d4af37; font-size: 50px;">$ 0</div>
-                <div class="status" id="order-count-text">目前顯示 0 筆訂單</div>
-            </div>
-        </div>
-
-        <div class="charts-container">
-            <div class="chart-box">
-                <h3>🏆 熱門商品 TOP 5 (點擊數)</h3>
-                <div class="canvas-wrapper">
-                    <canvas id="topProductsChart"></canvas>
-                </div>
-            </div>
-            <div class="chart-box">
-                <h3>📊 各品牌預約佔比</h3>
-                <div class="canvas-wrapper">
-                    <canvas id="brandPieChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel-section">
-            <h2>📈 累計系統點擊佔比</h2>
-            <div class="visitor-overview">
-                <div class="overview-total">
-                    <div class="num" id="total-click-num">0</div>
-                    <div class="label">總累計點擊</div>
-                </div>
-                <div class="overview-bars">
-                    <div class="bar-row">
-                        <div class="bar-label">💻 電腦版</div>
-                        <div class="bar-track"><div class="bar-fill pc" id="bar-pc" style="width: 0%;"></div></div>
-                        <div class="bar-count" id="v-pc">0</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">🍎 蘋果 iOS</div>
-                        <div class="bar-track"><div class="bar-fill ios" id="bar-ios" style="width: 0%;"></div></div>
-                        <div class="bar-count" id="v-ios">0</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">🤖 安卓 Android</div>
-                        <div class="bar-track"><div class="bar-fill android" id="bar-android" style="width: 0%;"></div></div>
-                        <div class="bar-count" id="v-android">0</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">🐧 Linux 系統</div>
-                        <div class="bar-track"><div class="bar-fill linux" id="bar-linux" style="width: 0%;"></div></div>
-                        <div class="bar-count" id="v-linux">0</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">🌐 其他系統</div>
-                        <div class="bar-track"><div class="bar-fill other" id="bar-other" style="width: 0%;"></div></div>
-                        <div class="bar-count" id="v-other">0</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel-section">
-            <h2>👥 即時線上訪客</h2>
-            <ul class="visitor-list" id="visitor-list">
-                <li style="color:#666;">等待訪客連線...</li>
-            </ul>
-        </div>
-
-        <!-- ===== 後台獨立客服對話 ===== -->
-        <div class="panel-section">
-            <h2>
-                💬 即時客服對話（每位訪客獨立）
-                <button onclick="refreshChatSessionList()" style="padding: 4px 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37; border-radius: 4px; cursor: pointer; margin-left: 10px;">🔄 重新整理</button>
-            </h2>
-            <div class="panel-hint">
-                ⚠️ 這裡的訊息只在客人「頁面開著」時才會即時送達；若客人已關頁，訊息會等他下次打開網站才看到。
-            </div>
-            <div class="admin-chat-container">
-                <ul class="admin-chat-list" id="admin-chat-list">
-                    <li style="color: #666; text-align: center; cursor: default;">載入中...</li>
-                </ul>
-                <div class="admin-chat-window">
-                    <div class="admin-chat-header">
-                        <span id="admin-chat-header">請從左側選擇一位訪客</span>
-                        <span id="admin-chat-session-label" style="font-size:12px;"></span>
-                    </div>
-                    <div class="admin-chat-body" id="admin-chat-body">
-                        <div class="chat-empty">尚未選擇對話</div>
-                    </div>
-                    <div class="admin-chat-input-area">
-                        <input type="file" id="admin-chat-file" accept="image/*" hidden onchange="handleAdminChatImage(this)">
-                        <button class="admin-chat-img-btn" id="admin-chat-img-btn" onclick="document.getElementById('admin-chat-file').click()" disabled title="傳送圖片">📷</button>
-                        <input type="text" id="admin-chat-input" placeholder="請先選擇左側訪客..." disabled onkeypress="if(event.key === 'Enter') sendAdminReply()">
-                        <button id="admin-chat-send-btn" onclick="sendAdminReply()" disabled>送出</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== 商品管理 ===== -->
-        <div class="panel-section">
-            <h2>
-                🛍️ 商品管理
-                <span id="prod-count-label" style="font-size:12px; color:#888; font-weight:normal; margin-left:8px;">共 0 筆</span>
-                <span class="panel-h2-actions">
-                    <button onclick="loadAdminProducts(adminPage)" style="background:transparent; border:1px solid #d4af37; color:#d4af37;">🔄 重新整理</button>
-                    <button onclick="openProductModal()" style="background:#00c800; color:#fff;">➕ 新增商品</button>
-                </span>
-            </h2>
-            <div class="panel-hint">
-                這裡改的東西會直接生效在前台首頁；「上架」關掉＝前台立刻看不到。大量上架請用下方工具列的「📄 CSV 大量匯入」。
-            </div>
-            <div style="overflow-x: auto;" id="prodTableBox">
-                <table class="prod-table">
-                    <thead>
-                        <tr>
-                            <th>預覽</th><th>排序</th><th>商品名稱</th><th>分類</th><th>價格區間</th><th>庫存</th><th>上架</th><th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="prod-list">
-                        <tr><td colspan="8" style="text-align:center; color:#666;">載入中...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="panel-section">
-            <h2>📋 訂單管理</h2>
-            <div class="panel-hint">
-                💡 客人關閉網頁後收不到站內訊息通知：重要事項請用 <b style="color:#ff9800;">📞</b> 直接撥號，或請客人加 LINE。
-            </div>
-            <div class="toolbar">
-                <input type="text" id="search-input" placeholder="🔍 搜尋姓名或電話...">
-                <input type="date" id="start-date">
-                <span style="color:#888;">至</span>
-                <input type="date" id="end-date">
-                <button onclick="loadOrders()">查詢</button>
-                <button onclick="resetFilter()" style="background:transparent; border:1px solid #d4af37; color:#d4af37;">重置</button>
-
-                <div style="margin-left: auto; display: flex; gap: 10px;">
-                    <button style="background: #00c800; color: #fff;" onclick="exportCSV()">📥 匯出報表</button>
-                    <button style="background: #9c27b0; color: #fff;" onclick="document.getElementById('addOrderModal').classList.add('active')">➕ 手動補單</button>
-                </div>
-            </div>
-
-            <div style="overflow-x: auto;">
-                <table class="order-table" id="order-table">
-                    <thead>
-                        <tr>
-                            <th>時間</th>
-                            <th>商品</th>
-                            <th>姓名</th>
-                            <th>電話</th>
-                            <th>地址</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="order-list">
-                        <tr><td colspan="6" style="text-align:center; color:#666;">載入中...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div style="text-align: center;">
-            <button class="logout-btn" onclick="logout()">登出系統</button>
-        </div>
+    <div class="field-row">
+      <div class="field">
+        <label>價格起（基礎）</label>
+        <input type="number" id="pBase" min="0" step="1" value="0">
+      </div>
+      <div class="field">
+        <label>價格中（高端）</label>
+        <input type="number" id="pMid" min="0" step="1" value="0">
+      </div>
+      <div class="field">
+        <label>價格高（定制）</label>
+        <input type="number" id="pCustom" min="0" step="1" value="0">
+      </div>
     </div>
 
-    <!-- 圖片放大檢視器 -->
-    <div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()">
-        <span class="close-icon" onclick="closeImageLightbox()">&times;</span>
-        <img src="" id="lightboxImg" onclick="event.stopPropagation()">
+    <div class="field-row">
+      <div class="field">
+        <label>庫存</label>
+        <input type="number" id="pStock" min="0" step="1" value="10">
+      </div>
+      <div class="field">
+        <label>排序（越小越前）</label>
+        <input type="number" id="pSort" step="1" value="0">
+      </div>
+      <div class="field">
+        <label>上架狀態</label>
+        <select id="pActive">
+          <option value="1">上架中</option>
+          <option value="0">已下架</option>
+        </select>
+      </div>
     </div>
 
-    <script>
-        const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
+    <div class="field">
+      <label>商品圖片</label>
+      <div class="img-grid" id="pImages"></div>
+      <input type="file" id="pFileInput" accept="image/*" multiple hidden onchange="onPickProductImages(this)">
+      <button class="btn ghost sm" onclick="document.getElementById('pFileInput').click()">📤 上傳圖片</button>
+      <div class="hint">第一張為封面圖；可上傳多張，單張請小於 5MB。</div>
+    </div>
 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-            auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
-        });
+    <div class="field">
+      <label>多語名稱（選填，JSON）</label>
+      <textarea id="pNameI18n" style="min-height:60px;"
+        placeholder='{"en":"Submariner","ja":"サブマリーナ","ko":"서브마리너"}'></textarea>
+    </div>
 
-        let presenceChannel = null;
-        let orderChannel = null;
-        let adminChatChannel = null;
-        let isAdminPanelLoaded = false;
-        let topProductsChartInstance = null;
-        let brandPieChartInstance = null;
-        let currentOrdersData = [];
+    <div class="field">
+      <label>多語描述（選填，JSON）</label>
+      <textarea id="pDescI18n" style="min-height:60px;"
+        placeholder='{"en":"Stainless steel, automatic."}'></textarea>
+      <div class="hint">留空即沿用中文；前台會依語系自動取用。</div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn ghost" onclick="closeProductModal()">取消</button>
+    <button class="btn gold" id="saveProductBtn" onclick="saveProduct()">儲存</button>
+  </div>
+</div>
 
-        let currentChatSession = null;
-        let allChatSessions = {};
-        let sessionMessages = {};
-        let orderSessionMap = {};   // session_id -> { name, phone }
+<!-- ============ CSV 匯入 ============ -->
+<div class="overlay" id="csvOverlay" onclick="closeCsvModal()"></div>
+<div class="modal" id="csvModal">
+  <div class="modal-head">
+    <h3>CSV 大量匯入</h3>
+    <button class="modal-close" onclick="closeCsvModal()">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="field">
+      <label>格式</label>
+      <div class="hint" style="margin:0;">
+        名稱,描述,分類,價格起,價格迄,圖片網址(多個用 | 分隔),庫存<br>
+        第一列可為標題列，會自動略過。每 100 筆分批寫入。
+      </div>
+    </div>
+    <div class="field">
+      <label>貼上 CSV</label>
+      <textarea id="csvText" style="min-height:160px;" placeholder="名稱,描述,分類,價格起,價格迄,圖片網址,庫存"></textarea>
+    </div>
+    <div class="field">
+      <label>或選擇檔案</label>
+      <input type="file" id="csvFile" accept=".csv,text/csv" onchange="onPickCsvFile(this)">
+    </div>
+    <p class="hint" id="csvResult"></p>
+  </div>
+  <div class="modal-foot">
+    <button class="btn ghost" onclick="closeCsvModal()">取消</button>
+    <button class="btn gold" id="csvImportBtn" onclick="importCsv()">開始匯入</button>
+  </div>
+</div>
 
-        const AVERAGE_PRICE = 3000;
+<!-- ============ 燈箱 / Toast ============ -->
+<div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()">
+  <span class="close-icon" onclick="closeImageLightbox()">&times;</span>
+  <img src="" id="lightboxImg" onclick="event.stopPropagation()" alt="">
+</div>
 
-        window.onload = async function () {
-            await loadAddOrderProductOptions();
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) showAdminPanel(session.user.email);
+<div class="toast" id="toast"></div>
+
+<script>
+<script>
+/* ============================================================
+   0. 設定
+   ============================================================ */
+const SUPABASE_URL      = 'https://ncebylvmcnrrayqbwtog.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
+const ADMIN_PAGE_SIZE   = 50;
+const BUCKET_PRODUCTS   = 'products';
+const BUCKET_CHAT       = 'chat-images';
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* ============================================================
+   1. 狀態
+   ============================================================ */
+const st = {
+    tab: 'products',
+    prod: { page: 0, total: 0, keyword: '', cat: '', status: '', rows: [] },
+    orders: [],
+    orderSessionMap: {},
+    cats: new Set()
+};
+
+let currentChatSession = null;
+const allChatSessions = {};   // sid -> {lastMessage,lastTime,unread,name,phone}
+const sessionMessages = {};   // sid -> [rows]
+let chatChannel = null;
+let lastChatFetch = 0;
+
+/* ============================================================
+   2. 工具
+   ============================================================ */
+function esc(s) {
+    return String(s === null || s === undefined ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+function num(v) { const n = Number(v); return isNaN(n) ? 0 : n; }
+function money(v) { return '$' + num(v).toLocaleString('en-US'); }
+function fmtTime(d) {
+    if (!d) return '';
+    const t = new Date(d);
+    return t.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+}
+function fmtDateTime(d) {
+    if (!d) return '';
+    const t = new Date(d);
+    const pad = n => String(n).padStart(2, '0');
+    return `${pad(t.getMonth() + 1)}/${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())}`;
+}
+function toast(msg, isErr) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast show' + (isErr ? ' err' : '');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.className = 'toast'; }, 2600);
+}
+function firstImage(p) {
+    let imgs = p.images;
+    if (typeof imgs === 'string') { try { imgs = JSON.parse(imgs); } catch (e) { imgs = [imgs]; } }
+    if (Array.isArray(imgs) && imgs.length) return imgs[0];
+    return '';
+}
+function parseImages(p) {
+    let imgs = p.images;
+    if (typeof imgs === 'string') { try { imgs = JSON.parse(imgs); } catch (e) { imgs = [imgs]; } }
+    return Array.isArray(imgs) ? imgs.filter(Boolean) : [];
+}
+
+/* ============================================================
+   3. 登入 / 登出
+   ============================================================ */
+async function doLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pwd   = document.getElementById('loginPassword').value;
+    const btn   = document.getElementById('loginBtn');
+    const errEl = document.getElementById('loginError');
+
+    if (!email || !pwd) { errEl.textContent = '請輸入 Email 與密碼'; return; }
+
+    btn.disabled = true;
+    btn.textContent = '登入中...';
+    errEl.textContent = '';
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: pwd });
+
+    btn.disabled = false;
+    btn.textContent = '登入';
+
+    if (error) {
+        const map = {
+            'Invalid login credentials': 'Email 或密碼錯誤',
+            'Email not confirmed': 'Email 尚未驗證，請先到信箱點確認信',
+            'Too many requests': '嘗試次數過多，請稍後再試'
         };
-
-        document.getElementById('password-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') handleLogin();
-        });
-
-        async function handleLogin() {
-            const email = document.getElementById('email-input').value.trim();
-            const password = document.getElementById('password-input').value;
-            const btn = document.getElementById('login-btn');
-            const errorMsg = document.getElementById('error-msg');
-            const successMsg = document.getElementById('success-msg');
-
-            if (!email || !password) { errorMsg.innerText = '請填寫 Email 與密碼'; return; }
-
-            btn.innerText = '登入中...';
-            btn.disabled = true;
-            errorMsg.innerText = '';
-            successMsg.innerText = '';
-
-            const { data, error } = await supabase.auth.signInWithPassword({ email: email, password: password });
-
-            if (error) {
-                errorMsg.innerText = '登入失敗：' + error.message;
-                btn.innerText = '登入系統';
-                btn.disabled = false;
-            } else {
-                successMsg.innerText = '登入成功！載入後台中...';
-                setTimeout(() => showAdminPanel(data.user.email), 500);
-            }
-        }
-
-        async function showAdminPanel(email) {
-            if (isAdminPanelLoaded) return;
-            isAdminPanelLoaded = true;
-
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'block';
-            document.title = `後台 - ${email}`;
-
-            if (!presenceChannel) {
-                presenceChannel = supabase.channel('online-users');
-                presenceChannel.on('presence', { event: 'sync' }, () => {
-                    const state = presenceChannel.presenceState();
-                    const visitorList = document.getElementById('visitor-list');
-                    visitorList.innerHTML = '';
-
-                    let totalCount = 0;
-                    for (const key in state) {
-                        totalCount++;
-                        const user = state[key][0];
-                        const deviceName = user.device || '未知設備';
-
-                        let liIcon = '💻';
-                        if (deviceName.includes('iOS') || deviceName.includes('iPhone') || deviceName.includes('iPad') || deviceName.includes('Mac')) {
-                            liIcon = '🍎';
-                        } else if (deviceName.includes('Android')) {
-                            liIcon = '🤖';
-                        } else if (deviceName.includes('Linux')) {
-                            liIcon = '🐧';
-                        }
-
-                        const li = document.createElement('li');
-                        li.innerHTML = `<span><span class="device-icon">${liIcon}</span>${deviceName}</span> <span style="color:#00c800; font-size:11px;">(在線)</span>`;
-                        visitorList.appendChild(li);
-                    }
-
-                    if (totalCount === 0) {
-                        visitorList.innerHTML = '<li style="color:#666; justify-content:center;">目前無訪客</li>';
-                    }
-
-                    document.getElementById('online-count').innerText = totalCount;
-                    document.getElementById('status-text').innerText = `最後更新：${new Date().toLocaleTimeString()}`;
-                });
-
-                presenceChannel.subscribe(async (status) => {
-                    if (status === 'SUBSCRIBED') {
-                        document.getElementById('status-text').innerText = '已成功連線至即時系統';
-                        await presenceChannel.track({ device: '管理員 (Windows 電腦)' });
-                    }
-                });
-            }
-
-            if (!orderChannel) {
-                orderChannel = supabase.channel('custom-orders-channel')
-                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, payload => {
-                        try { new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play(); } catch(e) {}
-                        const toast = document.getElementById('toast');
-                        toast.classList.add('show');
-                        setTimeout(() => toast.classList.remove('show'), 4000);
-                        loadOrders();
-                    }).subscribe();
-            }
-
-            loadOrders();
-            loadViewCount();
-            loadSystemClicks();
-            initAdminChat();
-            loadAdminProducts(0);
-        }
-
-        async function loadViewCount() {
-            try {
-                const { data, error } = await supabase.from('site_stats').select('view_count').eq('id', 1).single();
-                if (error) throw error;
-                document.getElementById('view-count').innerText = data.view_count || 0;
-            } catch (err) {
-                document.getElementById('view-count').innerText = '0';
-            }
-        }
-
-        async function loadSystemClicks() {
-            try {
-                const { data, error } = await supabase.from('site_stats').select('pc_count, ios_count, android_count, linux_count, other_count').eq('id', 1).single();
-                if (error) throw error;
-
-                const pc = data.pc_count || 0;
-                const ios = data.ios_count || 0;
-                const android = data.android_count || 0;
-                const linux = data.linux_count || 0;
-                const other = data.other_count || 0;
-                const total = pc + ios + android + linux + other;
-
-                document.getElementById('total-click-num').innerText = total;
-                document.getElementById('v-pc').innerText = pc;
-                document.getElementById('v-ios').innerText = ios;
-                document.getElementById('v-android').innerText = android;
-                document.getElementById('v-linux').innerText = linux;
-                document.getElementById('v-other').innerText = other;
-
-                if (total > 0) {
-                    document.getElementById('bar-pc').style.width = `${(pc / total) * 100}%`;
-                    document.getElementById('bar-ios').style.width = `${(ios / total) * 100}%`;
-                    document.getElementById('bar-android').style.width = `${(android / total) * 100}%`;
-                    document.getElementById('bar-linux').style.width = `${(linux / total) * 100}%`;
-                    document.getElementById('bar-other').style.width = `${(other / total) * 100}%`;
-                } else {
-                    document.getElementById('bar-pc').style.width = '0%';
-                    document.getElementById('bar-ios').style.width = '0%';
-                    document.getElementById('bar-android').style.width = '0%';
-                    document.getElementById('bar-linux').style.width = '0%';
-                    document.getElementById('bar-other').style.width = '0%';
-                }
-            } catch (err) {
-                console.error('載入系統點擊失敗', err);
-            }
-        }
-
-        // ===== 訂單 ↔ 聊天室 對照 =====
-        async function loadOrderSessionMap() {
-            try {
-                const { data, error } = await supabase
-                    .from('orders')
-                    .select('session_id, customer_name, customer_phone, created_at')
-                    .not('session_id', 'is', null)
-                    .order('created_at', { ascending: false })
-                    .limit(500);
-                if (error) throw error;
-
-                orderSessionMap = {};
-                (data || []).forEach(o => {
-                    if (o.session_id && !orderSessionMap[o.session_id]) {
-                        orderSessionMap[o.session_id] = {
-                            name: o.customer_name || '客戶',
-                            phone: o.customer_phone || ''
-                        };
-                    }
-                });
-            } catch (err) {
-                console.warn('載入訂單客戶對應失敗', err);
-            }
-        }
-
-        // 從訂單列表點「💬」→ 跳到該客人的對話
-        async function openCustomerChat(sessionId) {
-            if (!sessionId) { alert('這筆訂單沒有聊天室紀錄（可能是改版前的舊訂單）'); return; }
-
-            await loadOrderSessionMap();
-            await refreshChatSessionList();
-            await selectChatSession(sessionId);
-
-            const body = document.getElementById('admin-chat-body');
-            const section = body ? body.closest('.panel-section') : null;
-            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            setTimeout(() => {
-                const input = document.getElementById('admin-chat-input');
-                if (input) input.focus();
-            }, 700);
-        }
-
-        async function loadOrders() {
-            const tbody = document.getElementById('order-list');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#666;">載入中...</td></tr>';
-
-            const searchText = document.getElementById('search-input').value.trim();
-            const startDate = document.getElementById('start-date').value;
-            const endDate = document.getElementById('end-date').value;
-
-            try {
-                let query = supabase.from('orders').select('*').order('created_at', { ascending: false });
-
-                if (searchText) query = query.or(`customer_name.ilike.%${searchText}%,customer_phone.ilike.%${searchText}%`);
-                if (startDate) query = query.gte('created_at', `${startDate}T00:00:00Z`);
-                if (endDate) query = query.lte('created_at', `${endDate}T23:59:59Z`);
-
-                const { data, error } = await query.limit(200);
-                if (error) throw error;
-
-                currentOrdersData = data;
-
-                document.getElementById('order-count-text').innerText = `目前顯示 ${data.length} 筆訂單`;
-                document.getElementById('revenue').innerText = `$ ${(data.length * AVERAGE_PRICE).toLocaleString()}`;
-
-                updateCharts(data);
-
-                if (data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#666;">查無符合條件的訂單</td></tr>';
-                    return;
-                }
-
-                tbody.innerHTML = '';
-                data.forEach(order => {
-                    const tr = document.createElement('tr');
-                    const time = order.created_at ? new Date(order.created_at).toLocaleString('zh-TW', { hour12: false }) : '-';
-
-                    const isShipped = order.status === 'shipped';
-                    const btnClass = isShipped ? 'status-shipped' : 'status-pending';
-                    const btnText = isShipped ? '✅ 已出貨' : '🟡 待處理';
-
-                    let productDisplay = order.product_name || '-';
-                    if (Array.isArray(order.items) && order.items.length > 1) {
-                        const itemsHtml = order.items.map(i => `• ${i.name} x${i.qty} (${i.budget})`).join('<br>');
-                        productDisplay = `🛒 多項商品<br><div class="order-items-detail">${itemsHtml}</div>`;
-                    }
-
-                    const safeName = (order.customer_name || '').replace(/'/g, "\\'");
-                    const safeAddress = (order.customer_address || '').replace(/'/g, "\\'");
-                    const safeProduct = (order.product_name || '').replace(/'/g, "\\'");
-                    const sid = order.session_id || '';
-                    const phone = order.customer_phone || '';
-
-                    tr.innerHTML = `
-                        <td data-label="時間" style="white-space: nowrap;">${time}</td>
-                        <td data-label="商品">${productDisplay}</td>
-                        <td data-label="姓名">${order.customer_name || '-'}</td>
-                        <td data-label="電話" style="color: #00c800; font-weight: bold;">${phone || '-'}</td>
-                        <td data-label="地址">${order.customer_address || '-'}</td>
-                        <td data-label="操作">
-                            <div class="btn-group">
-                                <button class="status-btn ${btnClass}" onclick="toggleStatus(${order.id}, '${order.status || 'pending'}')">${btnText}</button>
-                                ${sid ? `<button class="action-btn" style="background:#00c864; color:#fff;" onclick="openCustomerChat('${sid}')" title="與此客戶對話">💬</button>` : ''}
-                                ${phone ? `<a href="tel:${phone}" class="action-btn call-btn" title="直接撥打 ${phone}">📞</a>` : ''}
-                                <button class="action-btn copy-btn" onclick="copyInfo('${safeName}', '${order.customer_phone}', '${safeAddress}', '${safeProduct}')" title="複製收件資訊">📋</button>
-                                <button class="action-btn print-btn" onclick="printOrder('${time}', '${safeName}', '${order.customer_phone}', '${safeAddress}', '${safeProduct}')" title="列印出貨單">🖨️</button>
-                                <button class="action-btn del-btn" onclick="deleteOrder(${order.id}, '${safeName}')" title="刪除訂單">🗑️</button>
-                            </div>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } catch (err) {
-                console.error('載入訂單失敗:', err);
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#ff4757;">載入失敗：${err.message}</td></tr>`;
-            }
-        }
-
-        async function updateCharts(ordersData) {
-            try {
-                const { data: clicksData, error } = await supabase
-                    .from('product_clicks')
-                    .select('product_name, click_count')
-                    .order('click_count', { ascending: false })
-                    .limit(5);
-
-                if (error) throw error;
-
-                if (topProductsChartInstance) topProductsChartInstance.destroy();
-                const ctxProd = document.getElementById('topProductsChart').getContext('2d');
-
-                const labels = clicksData && clicksData.length > 0 ? clicksData.map(d => d.product_name) : ['暫無數據'];
-                const values = clicksData && clicksData.length > 0 ? clicksData.map(d => d.click_count) : [0];
-
-                topProductsChartInstance = new Chart(ctxProd, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{ label: '點擊次數', data: values, backgroundColor: '#d4af37', borderRadius: 5 }]
-                    },
-                    options: {
-                        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { x: { ticks: { color: '#888', stepSize: 1 }, grid: { color: '#333' } }, y: { ticks: { color: '#ccc', font: { size: 11 } }, grid: { display: false } } }
-                    }
-                });
-            } catch (err) {
-                console.error('載入點擊圖表失敗', err);
-            }
-
-            const brandCounts = { '勞力士': 0, '歐米茄': 0, '愛彼': 0, '沛納海': 0, '百達翡麗': 0, '其他': 0 };
-            ordersData.forEach(o => {
-                if (!o.product_name) return;
-                if (o.product_name.includes('勞力士')) brandCounts['勞力士']++;
-                else if (o.product_name.includes('歐米茄')) brandCounts['歐米茄']++;
-                else if (o.product_name.includes('愛彼')) brandCounts['愛彼']++;
-                else if (o.product_name.includes('沛納海')) brandCounts['沛納海']++;
-                else if (o.product_name.includes('百達翡麗')) brandCounts['百達翡麗']++;
-                else brandCounts['其他']++;
-            });
-
-            const filteredBrands = Object.entries(brandCounts).filter(b => b[1] > 0);
-
-            if (brandPieChartInstance) brandPieChartInstance.destroy();
-            const ctxBrand = document.getElementById('brandPieChart').getContext('2d');
-            brandPieChartInstance = new Chart(ctxBrand, {
-                type: 'doughnut',
-                data: {
-                    labels: filteredBrands.map(b => b[0]),
-                    datasets: [{
-                        data: filteredBrands.map(b => b[1]),
-                        backgroundColor: ['#d4af37', '#00c800', '#00bcd4', '#ff4757', '#9c27b0', '#ffc107'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'right', labels: { color: '#ccc' } } }
-                }
-            });
-        }
-
-        function exportCSV() {
-            if (currentOrdersData.length === 0) {
-                alert('目前沒有資料可以匯出！');
-                return;
-            }
-            let csvContent = "\uFEFF";
-            csvContent += "下單時間,商品名稱,收件人,電話,地址,出貨狀態\n";
-            currentOrdersData.forEach(order => {
-                const time = new Date(order.created_at).toLocaleString('zh-TW', { hour12: false });
-                const status = order.status === 'shipped' ? '已出貨' : '待處理';
-                const product = `"${order.product_name || ''}"`;
-                const name = `"${order.customer_name || ''}"`;
-                const phone = `"${order.customer_phone || ''}"`;
-                const address = `"${order.customer_address || ''}"`;
-                csvContent += `${time},${product},${name},${phone},${address},${status}\n`;
-            });
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", `手錶訂單報表_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        async function submitManualOrder() {
-            const name = document.getElementById('addName').value.trim();
-            const phone = document.getElementById('addPhone').value.trim();
-            const address = document.getElementById('addAddress').value.trim();
-            const product = document.getElementById('addProduct').value;
-            if (!name || !phone || !address) { alert('請填寫完整資訊！'); return; }
-            try {
-                const { error } = await supabase.from('orders').insert([{
-                    customer_name: name, customer_phone: phone, customer_address: address, product_name: product, product_id: 0,
-                    items: [{ id: 0, name: product, qty: 1, budget: '基礎' }]
-                }]);
-                if (error) throw error;
-                alert('✅ 手動訂單已成功補登！');
-                document.getElementById('addOrderModal').classList.remove('active');
-                document.getElementById('addName').value = '';
-                document.getElementById('addPhone').value = '';
-                document.getElementById('addAddress').value = '';
-                loadOrders();
-            } catch (err) {
-                console.error('補登失敗:', err);
-                alert('補登失敗：' + err.message);
-            }
-        }
-
-        function copyInfo(name, phone, address, product) {
-            const text = `收件人：${name}\n電話：${phone}\n地址：${address}\n商品：${product}`;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✅ 已複製收件資訊！');
-            });
-        }
-
-        function printOrder(time, name, phone, address, product) {
-            const printWindow = window.open('', '_blank', 'width=600,height=600');
-            printWindow.document.write(`
-                <html>
-                <head>
-                    <title>出貨單 - ${name}</title>
-                    <style>
-                        body { font-family: 'Microsoft JhengHei', sans-serif; padding: 20px; color: #000; }
-                        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
-                        .header h1 { margin: 0; font-size: 24px; }
-                        .info-row { font-size: 18px; margin-bottom: 15px; line-height: 1.5; }
-                        .info-row strong { display: inline-block; width: 80px; }
-                        .product-box { border: 2px dashed #000; padding: 15px; margin-top: 30px; font-size: 18px; text-align: center;}
-                        .footer { margin-top: 40px; text-align: right; font-size: 14px; color: #666; }
-                    </style>
-                </head>
-                <body>
-                    <div class="header"><h1>📦 尊享腕錶 - 出貨明細單</h1></div>
-                    <div class="info-row"><strong>下單時間：</strong>${time}</div>
-                    <div class="info-row"><strong>收件人：</strong>${name}</div>
-                    <div class="info-row"><strong>聯絡電話：</strong>${phone}</div>
-                    <div class="info-row"><strong>收件地址：</strong>${address}</div>
-                    <div class="product-box"><strong>出貨商品：</strong> ${product}</div>
-                    <div class="footer">列印時間：${new Date().toLocaleString('zh-TW')}</div>
-                    <script>window.onload = function() { window.print(); setTimeout(() => { window.close(); }, 1000); }<\/script>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-        }
-
-        function resetFilter() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('start-date').value = '';
-            document.getElementById('end-date').value = '';
-            loadOrders();
-        }
-
-        async function toggleStatus(orderId, currentStatus) {
-            const newStatus = currentStatus === 'pending' ? 'shipped' : 'pending';
-            try {
-                const { error } = await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
-                if (error) throw error;
-                loadOrders();
-            } catch (err) {
-                console.error('更新狀態失敗:', err);
-                alert('更新失敗。');
-            }
-        }
-
-        async function deleteOrder(orderId, customerName) {
-            if (!confirm(`⚠️ 確定要刪除「${customerName}」的這筆訂單嗎？\n刪除後將無法復原！`)) return;
-            try {
-                const { error } = await supabase.from('orders').delete().eq('id', orderId);
-                if (error) throw error;
-                loadOrders();
-            } catch (err) {
-                console.error('刪除失敗:', err);
-                alert('刪除失敗：' + err.message);
-            }
-        }
-
-        async function logout() {
-            await supabase.auth.signOut();
-            if (presenceChannel) supabase.removeChannel(presenceChannel);
-            if (orderChannel) supabase.removeChannel(orderChannel);
-            if (adminChatChannel) supabase.removeChannel(adminChatChannel);
-            location.reload();
-        }
-
-        // ============================================================
-        // ========== 後台客服 ==========
-        // ============================================================
-
-        async function initAdminChat() {
-            await refreshChatSessionList();
-
-            if (!adminChatChannel) {
-                adminChatChannel = supabase.channel('admin-chat-room')
-                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages' }, payload => {
-                        const msg = payload.new;
-                        const sid = msg.session_id;
-
-                        if (!sessionMessages[sid]) sessionMessages[sid] = [];
-                        sessionMessages[sid].push(msg);
-
-                        if (!allChatSessions[sid]) {
-                            allChatSessions[sid] = { lastMessage: '', lastTime: new Date(0), unread: 0 };
-                        }
-                        
-                        allChatSessions[sid].lastMessage = (msg.msg_type === 'image') ? '[圖片]' : msg.message;
-                        allChatSessions[sid].lastTime = new Date(msg.created_at || Date.now());
-
-                        if (sid === currentChatSession) {
-                            appendAdminChatMessage(msg.message, msg.sender, msg.created_at, msg.image_url, msg.msg_type);
-                        } else {
-                            allChatSessions[sid].unread = (allChatSessions[sid].unread || 0) + 1;
-                        }
-
-                        renderChatSessionList();
-                    }).subscribe();
-            }
-        }
-
-        async function refreshChatSessionList() {
-            const listEl = document.getElementById('admin-chat-list');
-            listEl.innerHTML = '<li style="color: #888; text-align: center; cursor: default;">載入中...</li>';
-
-            await loadOrderSessionMap();
-
-            const { data, error } = await supabase
-                .from('chat_messages')
-                .select('session_id, message, sender, created_at, image_url, msg_type')
-                .order('created_at', { ascending: false });
-
-            if (error || !data) {
-                listEl.innerHTML = `<li style="color: #ff4757; text-align: center; padding: 10px;">載入失敗: ${error?.message || '未知錯誤'}</li>`;
-                return;
-            }
-
-            allChatSessions = {};
-            sessionMessages = {};
-
-            data.forEach(msg => {
-                const sid = msg.session_id;
-                if (!sessionMessages[sid]) sessionMessages[sid] = [];
-                sessionMessages[sid].unshift(msg);
-
-                if (!allChatSessions[sid]) {
-                    allChatSessions[sid] = {
-                        lastMessage: (msg.msg_type === 'image') ? '[圖片]' : msg.message,
-                        lastTime: new Date(msg.created_at),
-                        unread: 0
-                    };
-                }
-            });
-
-            renderChatSessionList();
-        }
-
-        function renderChatSessionList() {
-            const list = document.getElementById('admin-chat-list');
-            list.innerHTML = '';
-
-            const sessions = Object.keys(allChatSessions);
-            if (sessions.length === 0) {
-                list.innerHTML = '<li style="color: #666; text-align: center; cursor: default;">尚無對話</li>';
-                return;
-            }
-
-            sessions.sort((a, b) => allChatSessions[b].lastTime - allChatSessions[a].lastTime);
-
-            sessions.forEach(sid => {
-                const info = allChatSessions[sid];
-                const li = document.createElement('li');
-                li.dataset.sessionId = sid;
-                if (sid === currentChatSession) li.classList.add('active');
-
-                const shortId = sid.substring(0, 8);
-                const timeStr = info.lastTime ? info.lastTime.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
-
-                const lastMsgHtml = info.lastMessage === '[圖片]'
-                    ? '<span class="is-img">🖼️ [圖片]</span>'
-                    : escapeHtml(info.lastMessage);
-
-                const cust = orderSessionMap[sid];
-                const titleHtml = cust
-                    ? `👤 ${escapeHtml(cust.name)} <span style="color:#00c864;font-size:11px;font-weight:normal;">${escapeHtml(cust.phone)}</span>`
-                    : `👤 訪客 ${shortId}...`;
-
-                li.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span class="chat-session-id">${titleHtml}</span>
-                        <span style="font-size:11px; color:#888; margin-right:15px;">${timeStr}</span>
-                    </div>
-                    <div class="chat-last-msg">
-                        ${info.unread > 0 ? `<span class="chat-unread">${info.unread}</span>` : ''}
-                        ${lastMsgHtml}
-                    </div>
-                    <div class="chat-del-icon" title="刪除此對話" onclick="deleteChatSession(event, '${sid}')">🗑️</div>
-                `;
-
-                li.onclick = () => selectChatSession(sid);
-                list.appendChild(li);
-            });
-        }
-
-        async function deleteChatSession(event, sessionId) {
-            event.stopPropagation();
-            if (!confirm(`⚠️ 確定要刪除「訪客 ${sessionId.substring(0,8)}...」的所有對話記錄嗎？\n刪除後將無法復原！`)) return;
-
-            try {
-                const { error } = await supabase
-                    .from('chat_messages')
-                    .delete()
-                    .eq('session_id', sessionId);
-
-                if (error) throw error;
-
-                if (currentChatSession === sessionId) {
-                    currentChatSession = null;
-                    document.getElementById('admin-chat-header').innerText = '請從左側選擇一位訪客';
-                    document.getElementById('admin-chat-session-label').innerText = '';
-                    document.getElementById('admin-chat-input').disabled = true;
-                    document.getElementById('admin-chat-send-btn').disabled = true;
-                    document.getElementById('admin-chat-img-btn').disabled = true;
-                    document.getElementById('admin-chat-body').innerHTML = '<div class="chat-empty">尚未選擇對話</div>';
-                }
-
-                delete allChatSessions[sessionId];
-                delete sessionMessages[sessionId];
-                renderChatSessionList();
-
-            } catch (err) {
-                console.error('刪除對話失敗:', err);
-                alert('刪除失敗：' + err.message);
-            }
-        }
-
-        async function selectChatSession(sessionId) {
-            currentChatSession = sessionId;
-
-            if (allChatSessions[sessionId]) {
-                allChatSessions[sessionId].unread = 0;
-            }
-            renderChatSessionList();
-
-            const cust = orderSessionMap[sessionId];
-            const who = cust ? `${cust.name} ${cust.phone}` : `訪客 ${sessionId.substring(0,8)}...`;
-            document.getElementById('admin-chat-header').innerText = `正在與 ${who} 對話`;
-            document.getElementById('admin-chat-session-label').innerText = `Session: ${sessionId.substring(0,8)}`;
-
-            document.getElementById('admin-chat-input').disabled = false;
-            document.getElementById('admin-chat-send-btn').disabled = false;
-            document.getElementById('admin-chat-img-btn').disabled = false;
-
-            const body = document.getElementById('admin-chat-body');
-            body.innerHTML = '<div class="chat-empty">載入中...</div>';
-
-            const { data, error } = await supabase
-                .from('chat_messages')
-                .select('*')
-                .eq('session_id', sessionId)
-                .order('created_at', { ascending: true });
-
-            if (error) {
-                body.innerHTML = `<div class="chat-empty" style="color:#ff4757;">載入失敗：${error.message}</div>`;
-                return;
-            }
-
-            sessionMessages[sessionId] = data || [];
-
-            body.innerHTML = '';
-            if (data.length === 0) {
-                body.innerHTML = '<div class="chat-empty">此訪客尚無訊息，可直接輸入開始對話</div>';
-                return;
-            }
-            data.forEach(msg => appendAdminChatMessage(msg.message, msg.sender, msg.created_at, msg.image_url, msg.msg_type));
-        }
-
-        function openImageLightbox(url) {
-            const lightbox = document.getElementById('imageLightbox');
-            document.getElementById('lightboxImg').src = url;
-            lightbox.classList.add('active');
-        }
-
-        function closeImageLightbox() {
-            const lightbox = document.getElementById('imageLightbox');
-            lightbox.classList.remove('active');
-            setTimeout(() => { document.getElementById('lightboxImg').src = ''; }, 300);
-        }
-
-        function appendAdminChatMessage(text, sender, createdAt, imageUrl, msgType) {
-            const body = document.getElementById('admin-chat-body');
-            const empty = body.querySelector('.chat-empty');
-            if (empty) empty.remove();
-
-            const div = document.createElement('div');
-            div.className = `chat-msg ${sender}`;
-            const timeStr = createdAt ? new Date(createdAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' }) : '';
-
-            if (msgType === 'image' || imageUrl) {
-                div.innerHTML = `<img src="${imageUrl}" class="chat-img" onclick="openImageLightbox(this.src)" alt="圖片"><div class="chat-msg-time">${timeStr}</div>`;
-            } else {
-                div.innerHTML = `${escapeHtml(text)}<div class="chat-msg-time">${timeStr}</div>`;
-            }
-            body.appendChild(div);
-            body.scrollTop = body.scrollHeight;
-        }
-
-        async function sendAdminReply() {
-            if (!currentChatSession) {
-                alert('請先從左側選擇一位訪客');
-                return;
-            }
-            const input = document.getElementById('admin-chat-input');
-            const text = input.value.trim();
-            if (!text) return;
-
-            input.value = '';
-
-            const { error } = await supabase.from('chat_messages').insert([{
-                session_id: currentChatSession,
-                sender: 'admin',
-                message: text,
-                msg_type: 'text'
-            }]);
-
-            if (error) {
-                alert('送出失敗：' + error.message);
-                return;
-            }
-
-            appendAdminChatMessage(text, 'admin', new Date().toISOString(), null, 'text');
-
-            if (!allChatSessions[currentChatSession]) {
-                allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
-            }
-            allChatSessions[currentChatSession].lastMessage = text;
-            allChatSessions[currentChatSession].lastTime = new Date();
-            renderChatSessionList();
-        }
-
-        async function handleAdminChatImage(inputEl) {
-            if (!currentChatSession) return;
-            const file = inputEl.files[0];
-            inputEl.value = '';
-            if (!file) return;
-            if (!file.type.startsWith('image/')) { alert('請選擇圖片檔'); return; }
-            if (file.size > 5 * 1024 * 1024) { alert('圖片大小請小於 5MB'); return; }
-
-            const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-            const path = `${currentChatSession}/${Date.now()}_admin.${ext}`;
-
-            const body = document.getElementById('admin-chat-body');
-            const loading = document.createElement('div');
-            loading.className = 'chat-msg admin';
-            loading.textContent = '📤 圖片上傳中...';
-            body.appendChild(loading);
-            body.scrollTop = body.scrollHeight;
-
-            const { error: upErr } = await supabase.storage
-                .from('chat-images')
-                .upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type || 'image/jpeg' });
-
-            loading.remove();
-            if (upErr) { alert('圖片上傳失敗：' + upErr.message); return; }
-
-            const { data: pub } = supabase.storage.from('chat-images').getPublicUrl(path);
-            const url = pub.publicUrl;
-
-            const { error } = await supabase.from('chat_messages').insert([{
-                session_id: currentChatSession,
-                sender: 'admin',
-                message: '[圖片]',
-                image_url: url,
-                msg_type: 'image'
-            }]);
-            if (error) { alert('訊息送出失敗：' + error.message); return; }
-
-            appendAdminChatMessage('[圖片]', 'admin', new Date().toISOString(), url, 'image');
-
-            if (!allChatSessions[currentChatSession]) {
-                allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
-            }
-            allChatSessions[currentChatSession].lastMessage = '[圖片]';
-            allChatSessions[currentChatSession].lastTime = new Date();
-            renderChatSessionList();
-        }
-
-        // ============================================================
-        // ===== 商品管理 =====
-        // ============================================================
-        const PRODUCT_IMG_BUCKET = 'products';
-        const ADMIN_PAGE_SIZE = 50;
-
-        let adminProducts = [];
-        let adminTotalCount = 0;
-        let adminPage = 0;
-        let adminSearch = '';
-        let adminCat = '';
-        let adminActive = '';
-        let editingProductId = null;
-
-        function inferCategory(name) {
-            if (name.includes('潛水') || name.includes('深潛')) return '潛水款';
-            if (name.includes('計時')) return '計時款';
-            if (name.includes('奢華') || name.includes('尊貴') || name.includes('鸚鵡螺') || name.includes('遊艇')) return '奢華款';
-            if (name.includes('運動') || name.includes('GMT') || name.includes('兩地') || name.includes('探險') || name.includes('飛行')) return '運動款';
-            return '經典款';
-        }
-
-        function normalizeImages(raw) {
-            if (!raw) return [];
-            if (Array.isArray(raw)) return raw.map(x => String(x).trim()).filter(Boolean);
-            if (typeof raw === 'string') {
-                let s = raw.trim();
-                if (!s) return [];
-                if (s.startsWith('[')) {
-                    try {
-                        const arr = JSON.parse(s);
-                        if (Array.isArray(arr)) return arr.map(x => String(x).trim()).filter(Boolean);
-                    } catch (e) {}
-                }
-                if (s.startsWith('{') && s.endsWith('}')) s = s.slice(1, -1);
-                return s.split(/[,\n]/).map(x => x.trim().replace(/^"|"$/g, '')).filter(Boolean);
-            }
-            return [];
-        }
-
-        function ensureProdToolbar() {
-            const tbody = document.getElementById('prod-list');
-            if (!tbody || document.getElementById('prodToolbar')) return;
-
-            const box = document.getElementById('prodTableBox');
-            if (!box) return;
-
-            const toolbar = document.createElement('div');
-            toolbar.id = 'prodToolbar';
-            toolbar.className = 'toolbar';
-            toolbar.innerHTML = `
-                <input type="text" id="prod-search" placeholder="🔍 搜尋商品名稱..." style="min-width:220px;">
-                <select id="prod-filter-cat" style="padding:8px 10px; border-radius:5px; border:1px solid #555; background:#333; color:#fff;">
-                    <option value="">全部分類</option>
-                    <option value="經典款">經典款</option>
-                    <option value="運動款">運動款</option>
-                    <option value="奢華款">奢華款</option>
-                    <option value="潛水款">潛水款</option>
-                    <option value="計時款">計時款</option>
-                </select>
-                <select id="prod-filter-active" style="padding:8px 10px; border-radius:5px; border:1px solid #555; background:#333; color:#fff;">
-                    <option value="">全部狀態</option>
-                    <option value="active">只顯示上架</option>
-                    <option value="inactive">只顯示下架</option>
-                </select>
-                <button onclick="loadAdminProducts(0)">查詢</button>
-                <button onclick="resetProdFilter()" style="background:transparent; border:1px solid #d4af37; color:#d4af37;">重置</button>
-                <button onclick="openCsvModal()" style="background:#00bcd4; color:#fff;">📄 CSV 大量匯入</button>
-            `;
-            box.parentElement.insertBefore(toolbar, box);
-
-            const pager = document.createElement('div');
-            pager.id = 'prodPager';
-            pager.style.cssText = 'display:flex; justify-content:center; align-items:center; gap:12px; margin-top:15px; font-size:13px; color:#888; flex-wrap:wrap;';
-            box.parentElement.insertBefore(pager, box.nextSibling);
-
-            const csvModal = document.createElement('div');
-            csvModal.className = 'add-modal';
-            csvModal.id = 'csvModal';
-            csvModal.innerHTML = `
-                <div class="add-modal-content" style="max-width:680px;">
-                    <h3>📄 CSV 大量匯入商品</h3>
-                    <div style="font-size:12px; color:#999; line-height:1.7; margin-bottom:10px; text-align:left;">
-                        一行一筆，欄位順序：<br>
-                        <b style="color:#d4af37;">名稱, 描述, 分類, 價格起, 價格迄, 圖片網址(多個用 | 分隔), 庫存</b><br>
-                        第一行可放標題（會自動略過）。空白欄位請留空。
-                    </div>
-                    <textarea id="csvText" style="width:100%; min-height:200px; padding:10px; background:#333; border:1px solid #555; color:#fff; border-radius:5px; box-sizing:border-box; font-family:inherit; font-size:13px;"></textarea>
-                    <div id="csvStatus" style="font-size:12px; color:#888; margin-top:8px; text-align:left;"></div>
-                    <div class="add-modal-btns">
-                        <button class="btn-cancel" onclick="document.getElementById('csvModal').classList.remove('active')">取消</button>
-                        <button class="btn-save" id="csvImportBtn" onclick="runCsvImport()">開始匯入</button>
-                    </div>
+        errEl.textContent = map[error.message] || error.message;
+        return;
+    }
+    showApp(data.user);
+}
+
+async function doLogout() {
+    await supabase.auth.signOut();
+    showLogin();
+}
+
+function showLogin() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('loginPassword').value = '';
+}
+
+function showApp(user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    document.getElementById('adminEmail').textContent = user ? user.email : '';
+    loadAdminProducts(true);
+    loadOrders();
+    loadCategories();
+    initChatRealtime();
+}
+
+/* ============================================================
+   4. 分頁切換
+   ============================================================ */
+function switchTab(tab) {
+    st.tab = tab;
+    document.querySelectorAll('.nav-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tab);
+    });
+    document.querySelectorAll('.tab').forEach(s => {
+        s.classList.toggle('active', s.id === 'tab-' + tab);
+    });
+    if (tab === 'products') loadAdminProducts(true);
+    if (tab === 'orders') loadOrders();
+    if (tab === 'chat') { refreshChatSessionList(); markNavBadge(0); }
+}
+
+/* ============================================================
+   5. 商品管理
+   ============================================================ */
+let adminSearchTimer = null;
+function onAdminSearch() {
+    clearTimeout(adminSearchTimer);
+    adminSearchTimer = setTimeout(() => {
+        st.prod.keyword = document.getElementById('prodSearch').value.trim();
+        loadAdminProducts(true);
+    }, 380);
+}
+
+async function loadAdminProducts(reset) {
+    const p = st.prod;
+    if (reset) p.page = 0;
+    p.keyword = document.getElementById('prodSearch').value.trim();
+    p.cat     = document.getElementById('prodCat').value;
+    p.status  = document.getElementById('prodStatus').value;
+
+    document.getElementById('productTableBody').innerHTML =
+        '<tr><td colspan="8" style="text-align:center;padding:40px;color:#777">載入中...</td></tr>';
+
+    let q = supabase.from('products').select('*', { count: 'exact' });
+
+    if (p.keyword) {
+        const k = p.keyword.replace(/[,()%_\\]/g, '');
+        if (k) q = q.or(`name.ilike.%${k}%,brand.ilike.%${k}%`);
+    }
+    if (p.cat) q = q.eq('category', p.cat);
+    if (p.status !== '') q = q.eq('is_active', p.status === '1');
+
+    const from = p.page * ADMIN_PAGE_SIZE;
+    const { data, error, count } = await q
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: false })
+        .range(from, from + ADMIN_PAGE_SIZE - 1);
+
+    if (error) {
+        document.getElementById('productTableBody').innerHTML =
+            `<tr><td colspan="8" style="text-align:center;padding:40px;color:#ff4757">載入失敗：${esc(error.message)}</td></tr>`;
+        return;
+    }
+
+    p.rows = data || [];
+    p.total = count === null || count === undefined ? p.rows.length : count;
+
+    renderProductRows(p.rows);
+    renderPager('prodPager', p.page, p.total, ADMIN_PAGE_SIZE, 'goProdPage');
+    document.getElementById('prodInfo').textContent = `共 ${p.total} 筆`;
+}
+
+function renderProductRows(rows) {
+    const tb = document.getElementById('productTableBody');
+    if (!rows.length) {
+        tb.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:44px;color:#777">沒有符合的商品</td></tr>';
+        return;
+    }
+    tb.innerHTML = rows.map(p => {
+        const img = firstImage(p);
+        return `
+        <tr>
+            <td>${img ? `<img src="${esc(img)}" class="t-thumb" loading="lazy" alt="">` : '<div class="t-thumb"></div>'}</td>
+            <td class="t-name">
+                ${esc(p.name)}
+                <div class="t-sub">ID ${p.id}${p.name_i18n ? ' · 多語 ✓' : ''}</div>
+            </td>
+            <td>${esc(p.category || '—')}</td>
+            <td>${esc(p.brand || '—')}</td>
+            <td>${money(p.price_base)}</td>
+            <td>${p.stock === null || p.stock === undefined ? '—' : num(p.stock)}</td>
+            <td><span class="pill ${p.is_active ? 'on' : 'off'}">${p.is_active ? '上架' : '下架'}</span></td>
+            <td>
+                <div class="row-actions">
+                    <button class="icon-act" title="編輯" onclick="openProductModal(${p.id})">✏️</button>
+                    <button class="icon-act" title="複製" onclick="duplicateProduct(${p.id})">⧉</button>
+                    <button class="icon-act" title="${p.is_active ? '下架' : '上架'}"
+                            onclick="toggleProductActive(${p.id}, ${p.is_active ? 'true' : 'false'})">
+                        ${p.is_active ? '🔻' : '🔺'}
+                    </button>
+                    <button class="icon-act" title="刪除" onclick="deleteProduct(${p.id})">🗑</button>
                 </div>
-            `;
-            document.body.appendChild(csvModal);
+            </td>
+        </tr>`;
+    }).join('');
+}
 
-            const s = document.getElementById('prod-search');
-            s.addEventListener('input', () => {
-                clearTimeout(window.__prodSearchTimer);
-                window.__prodSearchTimer = setTimeout(() => { adminSearch = s.value.trim(); loadAdminProducts(0); }, 300);
-            });
-            s.addEventListener('keypress', e => { if (e.key === 'Enter') { adminSearch = s.value.trim(); loadAdminProducts(0); } });
-            document.getElementById('prod-filter-cat').addEventListener('change', e => { adminCat = e.target.value; loadAdminProducts(0); });
-            document.getElementById('prod-filter-active').addEventListener('change', e => { adminActive = e.target.value; loadAdminProducts(0); });
+function renderPager(elId, page, total, size, fnName) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const pages = Math.max(1, Math.ceil(total / size));
+    if (pages <= 1) { el.innerHTML = ''; return; }
+
+    let html = `<button ${page === 0 ? 'disabled' : ''} onclick="${fnName}(${page - 1})">上一頁</button>`;
+    const start = Math.max(0, page - 2);
+    const end = Math.min(pages - 1, start + 4);
+    for (let i = start; i <= end; i++) {
+        html += `<button class="${i === page ? 'active' : ''}" onclick="${fnName}(${i})">${i + 1}</button>`;
+    }
+    html += `<button ${page >= pages - 1 ? 'disabled' : ''} onclick="${fnName}(${page + 1})">下一頁</button>`;
+    html += `<span>第 ${page + 1} / ${pages} 頁</span>`;
+    el.innerHTML = html;
+}
+
+function goProdPage(n) {
+    const pages = Math.max(1, Math.ceil(st.prod.total / ADMIN_PAGE_SIZE));
+    if (n < 0 || n >= pages) return;
+    st.prod.page = n;
+    loadAdminProducts(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function loadCategories() {
+    const { data } = await supabase.from('products').select('category').limit(1000);
+    const set = new Set();
+    (data || []).forEach(r => { if (r.category) set.add(r.category); });
+    st.cats = set;
+
+    const sel = document.getElementById('prodCat');
+    sel.innerHTML = '<option value="">全部分類</option>' +
+        Array.from(set).map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+
+    document.getElementById('catList').innerHTML =
+        Array.from(set).map(c => `<option value="${esc(c)}"></option>`).join('');
+}
+
+async function toggleProductActive(id, isActiveNow) {
+    const { error } = await supabase.from('products').update({ is_active: !isActiveNow }).eq('id', id);
+    if (error) { toast('更新失敗：' + error.message, true); return; }
+    toast(!isActiveNow ? '已上架' : '已下架');
+    loadAdminProducts(false);
+}
+
+async function deleteProduct(id) {
+    if (!confirm('確定刪除這個商品？此動作無法復原。')) return;
+    const { error } = await supabase.from('products').delete().eq('id', id);
+    if (error) { toast('刪除失敗：' + error.message, true); return; }
+    toast('已刪除');
+    loadAdminProducts(false);
+    loadCategories();
+}
+
+function duplicateProduct(id) {
+    const p = st.prod.rows.find(r => r.id === id);
+    if (!p) return;
+    openProductModal(null, p);
+}
+
+/* ---------- 商品編輯彈窗 ---------- */
+let editingImages = [];
+let editingRow = null;
+
+function openProductModal(id, copyFrom) {
+    const isEdit = !!id;
+    let p = null;
+    if (isEdit) p = st.prod.rows.find(r => r.id === id);
+    if (copyFrom) p = copyFrom;
+
+    editingRow = isEdit && p ? p : null;
+    editingImages = p ? parseImages(p) : [];
+
+    document.getElementById('productModalTitle').textContent =
+        isEdit ? '編輯商品' : (copyFrom ? '複製商品' : '新增商品');
+
+    document.getElementById('pId').value = isEdit ? p.id : '';
+    document.getElementById('pName').value = p ? (p.name || '') + (copyFrom && !isEdit ? '（複製）' : '') : '';
+    document.getElementById('pDesc').value = p ? (p.description || '') : '';
+    document.getElementById('pCategory').value = p ? (p.category || '') : '';
+    document.getElementById('pBrand').value = p ? (p.brand || '') : '';
+    document.getElementById('pBase').value = p ? num(p.price_base) : 0;
+    document.getElementById('pMid').value = p ? num(p.price_mid) : 0;
+    document.getElementById('pCustom').value = p ? num(p.price_custom) : 0;
+    document.getElementById('pStock').value = p && p.stock !== null && p.stock !== undefined ? num(p.stock) : 10;
+    document.getElementById('pSort').value = p ? num(p.sort_order) : 0;
+    document.getElementById('pActive').value = p && p.is_active === false ? '0' : '1';
+    document.getElementById('pNameI18n').value = p && p.name_i18n ? JSON.stringify(p.name_i18n, null, 0) : '';
+    document.getElementById('pDescI18n').value = p && p.desc_i18n ? JSON.stringify(p.desc_i18n, null, 0) : '';
+
+    renderEditImages();
+    openModal('productModal');
+}
+
+function renderEditImages() {
+    const box = document.getElementById('pImages');
+    box.innerHTML = editingImages.map((u, i) => `
+        <div class="img-item">
+            <img src="${esc(u)}" alt="">
+            <button type="button" title="移除" onclick="removeEditImage(${i})">×</button>
+        </div>`).join('') +
+        `<div class="img-add" title="上傳圖片"
+              onclick="document.getElementById('pFileInput').click()">＋</div>`;
+}
+
+function removeEditImage(i) {
+    editingImages.splice(i, 1);
+    renderEditImages();
+}
+
+async function onPickProductImages(input) {
+    const files = Array.from(input.files || []);
+    input.value = '';
+    if (!files.length) return;
+
+    for (const file of files) {
+        if (!file.type.startsWith('image/')) { toast('忽略非圖片檔：' + file.name, true); continue; }
+        if (file.size > 5 * 1024 * 1024) { toast('檔案超過 5MB：' + file.name, true); continue; }
+
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+        const path = `products/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+        const { error } = await supabase.storage
+            .from(BUCKET_PRODUCTS)
+            .upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type });
+        if (error) { toast('上傳失敗：' + error.message, true); continue; }
+
+        const { data } = supabase.storage.from(BUCKET_PRODUCTS).getPublicUrl(path);
+        editingImages.push(data.publicUrl);
+        renderEditImages();
+    }
+    toast('圖片已上傳');
+}
+
+async function saveProduct() {
+    const id = document.getElementById('pId').value;
+    const name = document.getElementById('pName').value.trim();
+    if (!name) { toast('請填寫商品名稱', true); return; }
+
+    const btn = document.getElementById('saveProductBtn');
+    btn.disabled = true;
+    btn.textContent = '儲存中...';
+
+    let nameI18n = null, descI18n = null;
+    const niRaw = document.getElementById('pNameI18n').value.trim();
+    const diRaw = document.getElementById('pDescI18n').value.trim();
+    try {
+        if (niRaw) nameI18n = JSON.parse(niRaw);
+        if (diRaw) descI18n = JSON.parse(diRaw);
+    } catch (e) {
+        btn.disabled = false; btn.textContent = '儲存';
+        toast('多語 JSON 格式錯誤：' + e.message, true);
+        return;
+    }
+
+    const payload = {
+        name: name,
+        description: document.getElementById('pDesc').value.trim() || null,
+        category: document.getElementById('pCategory').value.trim() || null,
+        brand: document.getElementById('pBrand').value.trim() || null,
+        price_base: num(document.getElementById('pBase').value),
+        price_mid: num(document.getElementById('pMid').value),
+        price_custom: num(document.getElementById('pCustom').value),
+        images: editingImages,
+        stock: num(document.getElementById('pStock').value),
+        sort_order: num(document.getElementById('pSort').value),
+        is_active: document.getElementById('pActive').value === '1'
+    };
+    if (nameI18n) payload.name_i18n = nameI18n;
+    if (descI18n) payload.desc_i18n = descI18n;
+
+    let error;
+    if (id) {
+        ({ error } = await supabase.from('products').update(payload).eq('id', id));
+    } else {
+        ({ error } = await supabase.from('products').insert([payload]));
+    }
+
+    btn.disabled = false;
+    btn.textContent = '儲存';
+
+    if (error) { toast('儲存失敗：' + error.message, true); return; }
+
+    toast(id ? '已更新商品' : '已新增商品');
+    closeProductModal();
+    loadAdminProducts(false);
+    loadCategories();
+}
+
+function closeProductModal() { closeModal('productModal'); }
+
+/* ---------- CSV 匯入 ---------- */
+function openCsvModal() {
+    document.getElementById('csvResult').textContent = '';
+    document.getElementById('csvText').value = '';
+    document.getElementById('csvFile').value = '';
+    openModal('csvModal');
+}
+function closeCsvModal() { closeModal('csvModal'); }
+
+function onPickCsvFile(input) {
+    const f = input.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => { document.getElementById('csvText').value = String(reader.result || ''); };
+    reader.readAsText(f, 'utf-8');
+}
+
+/* 支援引號的 CSV 解析 */
+function parseCsv(text) {
+    const rows = [];
+    let row = [], field = '', inQuote = false;
+    for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        if (inQuote) {
+            if (c === '"') {
+                if (text[i + 1] === '"') { field += '"'; i++; }
+                else inQuote = false;
+            } else field += c;
+        } else {
+            if (c === '"') inQuote = true;
+            else if (c === ',') { row.push(field); field = ''; }
+            else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+            else if (c === '\r') { /* 忽略 */ }
+            else field += c;
         }
+    }
+    if (field !== '' || row.length) { row.push(field); rows.push(row); }
+    return rows.map(r => r.map(x => String(x).trim())).filter(r => r.some(x => x !== ''));
+}
 
-        function resetProdFilter() {
-            adminSearch = ''; adminCat = ''; adminActive = '';
-            const s = document.getElementById('prod-search'); if (s) s.value = '';
-            const c = document.getElementById('prod-filter-cat'); if (c) c.value = '';
-            const a = document.getElementById('prod-filter-active'); if (a) a.value = '';
-            loadAdminProducts(0);
+async function importCsv() {
+    const text = document.getElementById('csvText').value.trim();
+    const btn = document.getElementById('csvImportBtn');
+    const resEl = document.getElementById('csvResult');
+
+    if (!text) { toast('請貼上或選擇 CSV 檔', true); return; }
+
+    let rows = parseCsv(text);
+    if (!rows.length) { toast('CSV 沒有資料', true); return; }
+
+    if (rows[0][0] && /名稱|name/i.test(rows[0][0])) rows.shift();
+
+    const records = rows.map(r => {
+        const imgs = (r[5] || '').split('|').map(s => s.trim()).filter(Boolean);
+        return {
+            name: r[0] || '未命名商品',
+            description: r[1] || null,
+            category: r[2] || null,
+            price_base: num(r[3]),
+            price_mid: num(r[4]) || num(r[3]),
+            price_custom: num(r[4]) || num(r[3]),
+            images: imgs,
+            stock: r[6] === '' || r[6] === undefined ? 10 : num(r[6]),
+            is_active: true,
+            sort_order: 0
+        };
+    });
+
+    if (!records.length) { toast('沒有可匯入的資料', true); return; }
+
+    btn.disabled = true;
+    let ok = 0, fail = 0;
+
+    for (let i = 0; i < records.length; i += 100) {
+        const batch = records.slice(i, i + 100);
+        resEl.textContent = `匯入中 ${Math.min(i + batch.length, records.length)} / ${records.length} ...`;
+        const { error } = await supabase.from('products').insert(batch);
+        if (error) { fail += batch.length; console.error(error); }
+        else ok += batch.length;
+    }
+
+    btn.disabled = false;
+    resEl.textContent = `完成：成功 ${ok} 筆${fail ? `，失敗 ${fail} 筆` : ''}`;
+    toast(`匯入完成：成功 ${ok} 筆`);
+    loadAdminProducts(true);
+    loadCategories();
+}
+
+/* ============================================================
+   6. 訂單管理
+   ============================================================ */
+async function loadOrders() {
+    const tb = document.getElementById('ordersTableBody');
+    tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#777">載入中...</td></tr>';
+
+    const status = document.getElementById('orderStatusFilter').value;
+    let q = supabase.from('orders').select('*');
+    if (status) q = q.eq('status', status);
+
+    const { data, error } = await q.order('created_at', { ascending: false }).limit(200);
+
+    if (error) {
+        tb.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:#ff4757">載入失敗：${esc(error.message)}</td></tr>`;
+        return;
+    }
+
+    st.orders = data || [];
+    st.orderSessionMap = {};
+    st.orders.forEach(o => {
+        if (o.session_id && !st.orderSessionMap[o.session_id]) {
+            st.orderSessionMap[o.session_id] = { name: o.customer_name || '', phone: o.customer_phone || '' };
         }
+    });
 
-        function openCsvModal() {
-            ensureProdToolbar();
-            document.getElementById('csvStatus').textContent = '';
-            document.getElementById('csvModal').classList.add('active');
+    if (!st.orders.length) {
+        tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:44px;color:#777">目前沒有訂單</td></tr>';
+        return;
+    }
+
+    const statusOptions = [
+        ['pending', '待處理'], ['confirmed', '已確認'], ['shipped', '已出貨'],
+        ['done', '已完成'], ['cancelled', '已取消']
+    ];
+
+    tb.innerHTML = st.orders.map(o => {
+        const opts = statusOptions.map(([v, l]) =>
+            `<option value="${v}" ${o.status === v ? 'selected' : ''}>${l}</option>`).join('');
+        return `
+        <tr>
+            <td class="t-sub">${esc(fmtDateTime(o.created_at))}</td>
+            <td>${esc(o.customer_name || '—')}</td>
+            <td>
+                ${o.customer_phone
+                    ? `<a href="tel:${esc(o.customer_phone)}" title="撥號">${esc(o.customer_phone)}</a>`
+                    : '—'}
+            </td>
+            <td class="t-name" title="${esc(o.product_name || '')}">
+                ${esc((o.product_name || '—').slice(0, 26))}
+                <div class="t-sub">${esc(o.customer_address || '')}</div>
+            </td>
+            <td>${money(o.total_amount)}</td>
+            <td>
+                <select onchange="updateOrderStatus(${o.id}, this.value)"
+                        style="padding:6px 8px;border-radius:7px;border:1px solid #2a2a30;background:#111114;color:#e8e8ea;font-size:12px;">
+                    ${opts}
+                </select>
+            </td>
+            <td>
+                <div class="row-actions">
+                    ${o.session_id ? `<button class="icon-act" title="聯絡客戶" onclick="openCustomerChat('${esc(o.session_id)}')">💬</button>` : ''}
+                    ${o.customer_phone ? `<a class="icon-act" href="tel:${esc(o.customer_phone)}" title="撥號">📞</a>` : ''}
+                    <button class="icon-act" title="複製訂單資訊" onclick="copyOrder(${o.id})">📋</button>
+                    <button class="icon-act" title="刪除" onclick="deleteOrder(${o.id})">🗑</button>
+                </div>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+async function updateOrderStatus(id, status) {
+    const { error } = await supabase.from('orders').update({ status }).eq('id', id);
+    if (error) { toast('更新失敗：' + error.message, true); return; }
+    toast('訂單狀態已更新');
+}
+
+function copyOrder(id) {
+    const o = st.orders.find(x => x.id === id);
+    if (!o) return;
+    const text =
+`【訂單 #${o.id}】
+客戶：${o.customer_name}
+電話：${o.customer_phone}
+地址：${o.customer_address}
+商品：${o.product_name}
+金額：${money(o.total_amount)}
+狀態：${o.status}
+時間：${fmtDateTime(o.created_at)}`;
+    navigator.clipboard.writeText(text)
+        .then(() => toast('已複製訂單資訊'))
+        .catch(() => toast('複製失敗，請手動選取', true));
+}
+
+async function deleteOrder(id) {
+    if (!confirm('確定刪除這筆訂單？')) return;
+    const { error } = await supabase.from('orders').delete().eq('id', id);
+    if (error) { toast('刪除失敗：' + error.message, true); return; }
+    toast('已刪除訂單');
+    loadOrders();
+}
+
+function openCustomerChat(sessionId) {
+    switchTab('chat');
+    setTimeout(() => selectChatSession(sessionId), 60);
+}
+
+/* ============================================================
+   7. 聊天
+   ============================================================ */
+function markNavBadge(n) {
+    const b = document.getElementById('chatNavBadge');
+    if (n > 0) { b.textContent = String(n); b.style.display = 'flex'; }
+    else { b.textContent = '0'; b.style.display = 'none'; }
+}
+
+async function refreshChatSessionList() {
+    const { data, error } = await supabase
+        .from('chat_messages')
+        .select('session_id,sender,message,msg_type,created_at')
+        .order('created_at', { ascending: false })
+        .limit(400);
+
+    if (error) { console.error(error); return; }
+
+    (data || []).forEach(m => {
+        const sid = m.session_id;
+        if (!sid) return;
+        if (!allChatSessions[sid]) {
+            allChatSessions[sid] = { lastMessage: '', lastTime: new Date(0), unread: 0 };
         }
-
-        function adminProductsQuery(from, to) {
-            let q = supabase.from('products').select('*', { count: 'exact' })
-                .order('sort_order', { ascending: true })
-                .order('id', { ascending: true })
-                .range(from, to);
-
-            const kw = String(adminSearch || '').replace(/[,()%*]/g, ' ').trim();
-            if (kw) q = q.or(`name.ilike.%${kw}%,description.ilike.%${kw}%`);
-            if (adminCat) q = q.eq('category', adminCat);
-            if (adminActive === 'active') q = q.eq('is_active', true);
-            if (adminActive === 'inactive') q = q.eq('is_active', false);
-
-            return q;
+        const s = allChatSessions[sid];
+        const t = new Date(m.created_at || Date.now());
+        if (t > s.lastTime) {
+            s.lastTime = t;
+            s.lastMessage = m.msg_type === 'image' ? '[圖片]'
+                          : m.msg_type === 'video' ? '[影片]'
+                          : (m.message || '');
         }
+    });
 
-        async function loadAdminProducts(page) {
-            ensureProdToolbar();
-            if (typeof page === 'number') adminPage = page;
-
-            const tbody = document.getElementById('prod-list');
-            if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#666;">載入中...</td></tr>';
-
-            const from = adminPage * ADMIN_PAGE_SIZE;
-
-            try {
-                const { data, error, count } = await adminProductsQuery(from, from + ADMIN_PAGE_SIZE - 1);
-                if (error) throw error;
-
-                adminProducts = data || [];
-                adminTotalCount = (typeof count === 'number') ? count : adminProducts.length;
-
-                renderAdminProducts();
-                renderProdPager();
-
-                const label = document.getElementById('prod-count-label');
-                if (label) label.textContent = `共 ${adminTotalCount} 筆`;
-            } catch (err) {
-                console.error('載入商品失敗', err);
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#ff4757;">載入失敗：${escapeHtml(err.message)}<br>請確認 products 表存在、且 RLS 允許登入管理員讀取</td></tr>`;
-            }
+    /* 有訂單但沒訊息的 session 也列出來 */
+    Object.keys(st.orderSessionMap || {}).forEach(sid => {
+        if (!allChatSessions[sid]) {
+            allChatSessions[sid] = { lastMessage: '（尚無訊息）', lastTime: new Date(0), unread: 0 };
         }
+    });
 
-        function renderAdminProducts() {
-            const tbody = document.getElementById('prod-list');
-            if (!tbody) return;
+    renderChatSessionList();
+}
 
-            if (!adminProducts.length) {
-                const filtered = (adminSearch || adminCat || adminActive);
-                tbody.innerHTML = filtered
-                    ? '<tr><td colspan="8" style="text-align:center;color:#666;">查無符合條件的商品</td></tr>'
-                    : '<tr><td colspan="8" style="text-align:center;color:#666;">尚無商品，可點右上方「➕ 新增商品」或工具列的「📄 CSV 大量匯入」</td></tr>';
-                return;
-            }
+function sessionLabel(sid) {
+    const o = st.orderSessionMap[sid];
+    if (o && (o.name || o.phone)) {
+        return (o.name || '客戶') + (o.phone ? ' ' + o.phone : '');
+    }
+    return '訪客 ' + sid.slice(0, 8);
+}
 
-            tbody.innerHTML = adminProducts.map(p => {
-                const imgs = normalizeImages(p.images);
-                const cover = imgs[0] || '';
-                const active = p.is_active !== false;
-                const coverHtml = cover
-                    ? `<img src="${escapeHtml(cover)}" class="prod-thumb" onclick="openImageLightbox(this.src)" onerror="this.style.opacity=0.2">`
-                    : '<span style="color:#666; font-size:11px;">無圖</span>';
-                return `
-                    <tr>
-                        <td data-label="預覽">${coverHtml}</td>
-                        <td data-label="排序" style="color:#888;">${p.sort_order == null ? 0 : p.sort_order}</td>
-                        <td data-label="名稱" style="color:#fff; font-weight:bold;">
-                            ${escapeHtml(p.name)}
-                            <div style="font-size:11px; color:#666; margin-top:3px;">ID: ${p.id} ・ ${imgs.length} 張圖</div>
-                        </td>
-                        <td data-label="分類"><span style="font-size:12px; padding:3px 8px; border:1px solid #d4af37; color:#d4af37; border-radius:10px;">${escapeHtml(p.category || '未分類')}</span></td>
-                        <td data-label="價格" style="white-space:nowrap; color:#00c800;">
-                            $${Number(p.price_base || 0).toLocaleString()}
-                            <br><span style="color:#666; font-size:11px;">~ $${Number(p.price_custom || 0).toLocaleString()}</span>
-                        </td>
-                        <td data-label="庫存">${p.stock == null ? '<span style="color:#666;">∞</span>' : p.stock}</td>
-                        <td data-label="上架">
-                            <label class="prod-toggle">
-                                <input type="checkbox" ${active ? 'checked' : ''} onchange="toggleProductActive(${p.id}, this.checked)">
-                                <span></span>
-                            </label>
-                        </td>
-                        <td data-label="操作">
-                            <div class="btn-group">
-                                <button class="action-btn copy-btn" onclick="openProductModal(${p.id})" title="編輯">✏️</button>
-                                <button class="action-btn print-btn" onclick="duplicateProduct(${p.id})" title="複製此商品">📑</button>
-                                <button class="action-btn del-btn" onclick="deleteProduct(${p.id})" title="刪除">🗑️</button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
+function renderChatSessionList() {
+    const box = document.getElementById('chatSessionList');
+    const list = Object.keys(allChatSessions)
+        .map(sid => ({ sid, ...allChatSessions[sid] }))
+        .sort((a, b) => new Date(b.lastTime) - new Date(a.lastTime));
 
-        function renderProdPager() {
-            const pager = document.getElementById('prodPager');
-            if (!pager) return;
+    if (!list.length) {
+        box.innerHTML = '<div class="chat-empty" style="margin-top:30px;">目前沒有對話</div>';
+        return;
+    }
 
-            if (adminTotalCount === 0) { pager.innerHTML = ''; return; }
+    box.innerHTML = list.map(s => `
+        <div class="session-item ${s.sid === currentChatSession ? 'active' : ''}"
+             onclick="selectChatSession('${esc(s.sid)}')">
+            <div class="session-name">
+                <span>${esc(sessionLabel(s.sid))}
+                    ${s.unread ? `<span class="session-unread">${s.unread}</span>` : ''}
+                </span>
+                <span class="session-time">${s.lastTime && s.lastTime.getTime() > 0 ? esc(fmtTime(s.lastTime)) : ''}</span>
+            </div>
+            <div class="session-last">${esc(s.lastMessage || '')}</div>
+        </div>`).join('');
+}
 
-            const pages = Math.max(1, Math.ceil(adminTotalCount / ADMIN_PAGE_SIZE));
-            const cur = adminPage + 1;
+async function selectChatSession(sessionId) {
+    currentChatSession = sessionId;
 
-            pager.innerHTML = `
-                <button class="action-btn" style="background:#333; color:#fff; padding:8px 14px; ${cur <= 1 ? 'opacity:.4;' : ''}"
-                    ${cur <= 1 ? 'disabled' : ''} onclick="loadAdminProducts(${cur - 2})">← 上一頁</button>
-                <span>第 <b style="color:#d4af37;">${cur}</b> / ${pages} 頁　（共 ${adminTotalCount} 筆）</span>
-                <button class="action-btn" style="background:#333; color:#fff; padding:8px 14px; ${cur >= pages ? 'opacity:.4;' : ''}"
-                    ${cur >= pages ? 'disabled' : ''} onclick="loadAdminProducts(${cur})">下一頁 →</button>
-            `;
-        }
+    if (allChatSessions[sessionId]) allChatSessions[sessionId].unread = 0;
+    renderChatSessionList();
 
-        function openProductModal(id) {
-            editingProductId = id ? Number(id) : null;
-            const p = id ? adminProducts.find(x => Number(x.id) === Number(id)) : null;
+    const label = sessionLabel(sessionId);
+    document.getElementById('admin-chat-header').innerText = `正在與 ${label} 對話`;
+    document.getElementById('admin-chat-session-label').innerText = `Session: ${sessionId}`;
 
-            document.getElementById('productModalTitle').textContent = p ? '✏️ 編輯商品' : '➕ 新增商品';
-            document.getElementById('pf-name').value = p ? (p.name || '') : '';
-            document.getElementById('pf-desc').value = p ? (p.description || '') : '';
-            document.getElementById('pf-category').value = p ? (p.category || inferCategory(p.name || '')) : '經典款';
-            document.getElementById('pf-stock').value = (p && p.stock != null) ? p.stock : '';
-            document.getElementById('pf-base').value = p ? (p.price_base == null ? 6000 : p.price_base) : 6000;
-            document.getElementById('pf-mid').value = p ? (p.price_mid == null ? 12000 : p.price_mid) : 12000;
-            document.getElementById('pf-custom').value = p ? (p.price_custom == null ? 19999 : p.price_custom) : 19999;
-            document.getElementById('pf-sort').value = p ? (p.sort_order == null ? 0 : p.sort_order) : (adminTotalCount + 1);
-            document.getElementById('pf-active').value = (p && p.is_active === false) ? 'false' : 'true';
-            document.getElementById('pf-images').value = p ? normalizeImages(p.images).join('\n') : '';
-            document.getElementById('pf-upload-status').textContent = '';
-            updateProdPreview();
-            document.getElementById('productModal').classList.add('active');
-        }
+    document.getElementById('admin-chat-input').disabled = false;
+    document.getElementById('admin-chat-send-btn').disabled = false;
+    document.getElementById('admin-chat-img-btn').disabled = false;
 
-        function closeProductModal() {
-            document.getElementById('productModal').classList.remove('active');
-            editingProductId = null;
-        }
+    const body = document.getElementById('admin-chat-body');
+    body.innerHTML = '<div class="chat-empty">載入中...</div>';
 
-        function updateProdPreview() {
-            const box = document.getElementById('pf-preview');
-            const list = document.getElementById('pf-images').value.split('\n').map(s => s.trim()).filter(Boolean);
-            box.innerHTML = list.map(src => `<img src="${escapeHtml(src)}" onerror="this.style.opacity=0.2">`).join('');
-        }
+    const { data, error } = await supabase
+        .from('chat_messages')
+        .select('*')
+        .eq('session_id', sessionId)
+        .order('created_at', { ascending: true });
 
-        async function uploadProductImages(input) {
-            const files = Array.from(input.files || []);
-            if (!files.length) return;
-            const status = document.getElementById('pf-upload-status');
-            const ta = document.getElementById('pf-images');
+    if (error) {
+        body.innerHTML = `<div class="chat-empty" style="color:#ff4757">載入失敗：${esc(error.message)}</div>`;
+        return;
+    }
 
-            for (let i = 0; i < files.length; i++) {
-                const f = files[i];
-                status.style.color = '#888';
-                status.textContent = `上傳中 ${i + 1}/${files.length}...`;
-                const ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
-                const path = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
-                const { error } = await supabase.storage
-                    .from(PRODUCT_IMG_BUCKET)
-                    .upload(path, f, { cacheControl: '3600', upsert: false });
+    sessionMessages[sessionId] = data || [];
+    body.innerHTML = '';
 
-                if (error) {
-                    status.style.color = '#ff4757';
-                    status.textContent = '上傳失敗：' + error.message;
-                    alert('上傳失敗：' + error.message + '\n（請確認 Storage 已建立 public bucket，名稱為 ' + PRODUCT_IMG_BUCKET + '）');
-                    break;
+    if (!data || data.length === 0) {
+        body.innerHTML = '<div class="chat-empty">此訪客尚無訊息</div>';
+        return;
+    }
+    data.forEach(m => appendAdminChatMessage(m.message, m.sender, m.created_at, m.image_url, m.msg_type));
+}
+
+function openImageLightbox(url) {
+    document.getElementById('lightboxImg').src = url;
+    document.getElementById('imageLightbox').classList.add('active');
+}
+function closeImageLightbox() {
+    document.getElementById('imageLightbox').classList.remove('active');
+    setTimeout(() => { document.getElementById('lightboxImg').src = ''; }, 250);
+}
+
+function appendAdminChatMessage(text, sender, createdAt, mediaUrl, msgType) {
+    const body = document.getElementById('admin-chat-body');
+    const empty = body.querySelector('.chat-empty');
+    if (empty) empty.remove();
+
+    const div = document.createElement('div');
+    div.className = `chat-msg ${sender === 'admin' ? 'admin' : 'user'}`;
+    const timeStr = createdAt ? fmtTime(createdAt) : '';
+
+    if (msgType === 'image' && mediaUrl) {
+        div.innerHTML = `<img src="${esc(mediaUrl)}" class="chat-img" alt="圖片"
+            onclick="openImageLightbox(this.src)"
+            onerror="this.outerHTML='<div style=&quot;color:#ff4757;font-size:12px;&quot;>⚠️ 圖片載入失敗</div>'">
+            <div class="chat-msg-time">${timeStr}</div>`;
+    } else if (msgType === 'video' && mediaUrl) {
+        div.innerHTML = `<video src="${esc(mediaUrl)}" class="chat-video" controls
+            playsinline webkit-playsinline preload="metadata"></video>
+            <div class="chat-msg-time">${timeStr}</div>`;
+    } else {
+        div.innerHTML = `${esc(text)}<div class="chat-msg-time">${timeStr}</div>`;
+    }
+
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+}
+
+async function sendAdminReply() {
+    const input = document.getElementById('admin-chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+    if (!currentChatSession) { toast('請先選擇對話', true); return; }
+
+    input.value = '';
+
+    const { error } = await supabase.from('chat_messages').insert([{
+        session_id: currentChatSession,
+        sender: 'admin',
+        message: text,
+        msg_type: 'text'
+    }]);
+
+    if (error) { alert('送出失敗：' + error.message); input.value = text; return; }
+
+    appendAdminChatMessage(text, 'admin', new Date().toISOString(), null, 'text');
+
+    if (!allChatSessions[currentChatSession]) {
+        allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
+    }
+    allChatSessions[currentChatSession].lastMessage = text;
+    allChatSessions[currentChatSession].lastTime = new Date();
+    renderChatSessionList();
+}
+
+async function handleAdminChatImage(inputEl) {
+    if (!currentChatSession) { toast('請先選擇對話', true); return; }
+
+    const file = inputEl.files[0];
+    inputEl.value = '';
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('請選擇圖片檔'); return; }
+    if (file.size > 5 * 1024 * 1024) { alert('圖片大小請小於 5MB'); return; }
+
+    const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+    const path = `${currentChatSession}/${Date.now()}_admin.${ext}`;
+
+    const body = document.getElementById('admin-chat-body');
+    const loading = document.createElement('div');
+    loading.className = 'chat-msg admin';
+    loading.textContent = '📤 圖片上傳中...';
+    body.appendChild(loading);
+    body.scrollTop = body.scrollHeight;
+
+    const { error: upErr } = await supabase.storage
+        .from(BUCKET_CHAT)
+        .upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type || 'image/jpeg' });
+
+    loading.remove();
+    if (upErr) { alert('圖片上傳失敗：' + upErr.message); return; }
+
+    const { data: pub } = supabase.storage.from(BUCKET_CHAT).getPublicUrl(path);
+    const url = pub.publicUrl;
+
+    const { error } = await supabase.from('chat_messages').insert([{
+        session_id: currentChatSession,
+        sender: 'admin',
+        message: '[圖片]',
+        image_url: url,
+        msg_type: 'image'
+    }]);
+
+    if (error) { alert('訊息送出失敗：' + error.message); return; }
+
+    appendAdminChatMessage('[圖片]', 'admin', new Date().toISOString(), url, 'image');
+
+    if (!allChatSessions[currentChatSession]) {
+        allChatSessions[currentChatSession] = { lastMessage: '', lastTime: new Date(), unread: 0 };
+    }
+    allChatSessions[currentChatSession].lastMessage = '[圖片]';
+    allChatSessions[currentChatSession].lastTime = new Date();
+    renderChatSessionList();
+}
+
+/* ---------- 即時接收前台訊息 ---------- */
+function initChatRealtime() {
+    if (chatChannel) return;
+
+    chatChannel = supabase.channel('admin-chat-realtime')
+        .on('postgres_changes',
+            { event: 'INSERT', schema: 'public', table: 'chat_messages' },
+            payload => {
+                const msg = payload.new;
+                if (!msg || !msg.session_id) return;
+
+                const sid = msg.session_id;
+                if (!allChatSessions[sid]) {
+                    allChatSessions[sid] = { lastMessage: '', lastTime: new Date(0), unread: 0 };
                 }
-                const { data } = supabase.storage.from(PRODUCT_IMG_BUCKET).getPublicUrl(path);
-                ta.value = (ta.value.trim() ? ta.value.trim() + '\n' : '') + data.publicUrl;
-            }
-            status.style.color = '#00c800';
-            status.textContent = '✅ 完成';
-            input.value = '';
-            updateProdPreview();
-        }
+                const s = allChatSessions[sid];
+                s.lastMessage = msg.msg_type === 'image' ? '[圖片]'
+                              : msg.msg_type === 'video' ? '[影片]'
+                              : (msg.message || '');
+                s.lastTime = new Date(msg.created_at || Date.now());
 
-        async function saveProduct() {
-            const name = document.getElementById('pf-name').value.trim();
-            if (!name) { alert('請填寫商品名稱'); return; }
-
-            const images = document.getElementById('pf-images').value.split('\n').map(s => s.trim()).filter(Boolean);
-            const stockRaw = document.getElementById('pf-stock').value.trim();
-
-            const payload = {
-                name: name,
-                description: document.getElementById('pf-desc').value.trim(),
-                category: document.getElementById('pf-category').value,
-                images: images,
-                price_base: Number(document.getElementById('pf-base').value) || 6000,
-                price_mid: Number(document.getElementById('pf-mid').value) || 12000,
-                price_custom: Number(document.getElementById('pf-custom').value) || 19999,
-                stock: stockRaw === '' ? null : Number(stockRaw),
-                sort_order: Number(document.getElementById('pf-sort').value) || 0,
-                is_active: document.getElementById('pf-active').value === 'true'
-            };
-
-            const btn = document.getElementById('pf-save-btn');
-            btn.disabled = true;
-            btn.textContent = '儲存中...';
-            const editing = editingProductId;
-            try {
-                let error;
-                if (editing) {
-                    const res = await supabase.from('products').update(payload).eq('id', editing);
-                    error = res.error;
-                } else {
-                    const res = await supabase.from('products').insert([payload]);
-                    error = res.error;
+                if (sid === currentChatSession) {
+                    appendAdminChatMessage(msg.message, msg.sender, msg.created_at, msg.image_url, msg.msg_type);
+                } else if (msg.sender === 'user') {
+                    s.unread = (s.unread || 0) + 1;
+                    const total = Object.values(allChatSessions).reduce((a, x) => a + (x.unread || 0), 0);
+                    markNavBadge(total);
+                    if (st.tab !== 'chat') toast(`新訊息：${sessionLabel(sid)}`);
                 }
-                if (error) throw error;
-                closeProductModal();
-                await loadAdminProducts(editing ? adminPage : 0);
-                await loadAddOrderProductOptions();
-            } catch (err) {
-                console.error(err);
-                alert('儲存失敗：' + err.message + '\n（請確認 RLS 有允許 authenticated 寫入 products，且 with check 條件正確）');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '儲存';
-            }
-        }
 
-        async function duplicateProduct(id) {
-            const p = adminProducts.find(x => Number(x.id) === Number(id));
-            if (!p) return;
-            const payload = {
-                name: `${p.name} (複製)`,
-                description: p.description || '',
-                category: p.category || '經典款',
-                images: normalizeImages(p.images),
-                price_base: p.price_base || 6000,
-                price_mid: p.price_mid || 12000,
-                price_custom: p.price_custom || 19999,
-                stock: p.stock,
-                sort_order: (p.sort_order || 0) + 1,
-                is_active: false
-            };
-            try {
-                const { error } = await supabase.from('products').insert([payload]);
-                if (error) throw error;
-                await loadAdminProducts(adminPage);
-            } catch (err) {
-                alert('複製失敗：' + err.message);
-            }
-        }
+                renderChatSessionList();
+            })
+        .subscribe();
+}
 
-        async function toggleProductActive(id, checked) {
-            try {
-                const { error } = await supabase.from('products').update({ is_active: checked }).eq('id', id);
-                if (error) throw error;
-                const local = adminProducts.find(x => Number(x.id) === Number(id));
-                if (local) local.is_active = checked;
-                await loadAddOrderProductOptions();
-            } catch (err) {
-                alert('更新失敗：' + err.message);
-                await loadAdminProducts(adminPage);
-            }
-        }
+/* 聊天清單定時刷新（保險用，30 秒） */
+setInterval(() => {
+    if (document.getElementById('app').style.display !== 'none' && st.tab === 'chat') {
+        refreshChatSessionList();
+    }
+}, 30000);
 
-        async function deleteProduct(id) {
-            const p = adminProducts.find(x => Number(x.id) === Number(id));
-            if (!confirm(`確定要刪除「${p ? p.name : id}」嗎？\n刪除後前台會立刻消失，且無法復原。`)) return;
-            try {
-                const { error } = await supabase.from('products').delete().eq('id', id);
-                if (error) throw error;
-                await loadAdminProducts(adminPage);
-                await loadAddOrderProductOptions();
-            } catch (err) {
-                alert('刪除失敗：' + err.message);
-            }
-        }
+/* ============================================================
+   8. 彈窗共用
+   ============================================================ */
+function openModal(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.add('active');
+    const ov = document.getElementById(id.replace('Modal', 'Overlay'));
+    if (ov) ov.classList.add('active');
+}
+function closeModal(id) {
+    const m = document.getElementById(id);
+    if (m) m.classList.remove('active');
+    const ov = document.getElementById(id.replace('Modal', 'Overlay'));
+    if (ov) ov.classList.remove('active');
+}
 
-        function parseCsvLine(line) {
-            const out = [];
-            let cur = '', inQuote = false;
-            for (let i = 0; i < line.length; i++) {
-                const ch = line[i];
-                if (inQuote) {
-                    if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; }
-                    else if (ch === '"') inQuote = false;
-                    else cur += ch;
-                } else {
-                    if (ch === '"') inQuote = true;
-                    else if (ch === ',') { out.push(cur); cur = ''; }
-                    else cur += ch;
-                }
-            }
-            out.push(cur);
-            return out.map(s => s.trim());
-        }
+/* ============================================================
+   9. 啟動
+   ============================================================ */
+boot();
 
-        async function runCsvImport() {
-            const raw = document.getElementById('csvText').value.trim();
-            const status = document.getElementById('csvStatus');
-            const btn = document.getElementById('csvImportBtn');
+async function boot() {
+    const { data } = await supabase.auth.getSession();
+    if (data && data.session) showApp(data.session.user);
+    else showLogin();
 
-            if (!raw) { alert('請先貼上 CSV 內容'); return; }
-
-            const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-            const rows = [];
-            let skipped = 0;
-            let seq = adminTotalCount;
-
-            lines.forEach((line, idx) => {
-                const c = parseCsvLine(line);
-                if (idx === 0 && (c[0] || '').includes('名稱')) return;
-
-                const name = (c[0] || '').trim();
-                if (!name) { skipped++; return; }
-
-                const desc = (c[1] || '').trim();
-                const category = (c[2] || '').trim() || inferCategory(name);
-                const priceBase = Number(String(c[3] || '').replace(/[^0-9]/g, '')) || 6000;
-                const priceCustom = Number(String(c[4] || '').replace(/[^0-9]/g, '')) || 19999;
-                const images = (c[5] || '').split('|').map(s => s.trim()).filter(Boolean);
-                const stockRaw = (c[6] || '').trim();
-                const stock = stockRaw === '' ? null : Number(stockRaw);
-
-                seq++;
-                rows.push({
-                    name: name,
-                    description: desc,
-                    category: category,
-                    price_base: priceBase,
-                    price_mid: Math.round(((priceBase + priceCustom) / 2) / 100) * 100,
-                    price_custom: priceCustom,
-                    images: images,
-                    stock: Number.isFinite(stock) ? stock : null,
-                    sort_order: seq,
-                    is_active: true
-                });
-            });
-
-            if (!rows.length) { alert('沒有可匯入的資料（請檢查格式）'); return; }
-
-            btn.disabled = true;
-            let done = 0;
-
-            try {
-                for (let i = 0; i < rows.length; i += 100) {
-                    const chunk = rows.slice(i, i + 100);
-                    const { error } = await supabase.from('products').insert(chunk);
-                    if (error) throw error;
-                    done += chunk.length;
-                    status.style.color = '#00c800';
-                    status.textContent = `已匯入 ${done} / ${rows.length} 筆...`;
-                }
-                status.textContent = `✅ 完成：成功匯入 ${done} 筆${skipped ? `，略過 ${skipped} 筆空白列` : ''}`;
-                await loadAdminProducts(0);
-                await loadAddOrderProductOptions();
-                setTimeout(() => document.getElementById('csvModal').classList.remove('active'), 1500);
-            } catch (err) {
-                console.error(err);
-                status.style.color = '#ff4757';
-                status.textContent = '匯入失敗：' + err.message;
-                alert('匯入失敗：' + err.message);
-            } finally {
-                btn.disabled = false;
-            }
-        }
-
-        async function loadAddOrderProductOptions() {
-            const select = document.getElementById('addProduct');
-            if (!select) return;
-            try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('name, is_active')
-                    .eq('is_active', true)
-                    .order('sort_order', { ascending: true })
-                    .limit(1000);
-                if (error) throw error;
-                select.innerHTML = '';
-                (data || []).forEach(p => {
-                    const opt = document.createElement('option');
-                    opt.value = p.name;
-                    opt.textContent = p.name;
-                    select.appendChild(opt);
-                });
-                if (!select.options.length) {
-                    const opt = document.createElement('option');
-                    opt.value = '';
-                    opt.textContent = '（尚無上架商品）';
-                    select.appendChild(opt);
-                }
-            } catch (err) {
-                console.error('載入手動補單商品選單失敗', err);
-            }
-        }
-
-        function escapeHtml(unsafe) {
-            return String(unsafe === null || unsafe === undefined ? '' : unsafe)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-    </script>
+    supabase.auth.onAuthStateChange((_event, session) => {
+        if (session) showApp(session.user);
+        else showLogin();
+    });
+}
+</script>
 </body>
 </html>
