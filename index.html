@@ -18,23 +18,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 
     <style>
-        :root { 
-            --gold: #d4af37; 
-            --gold-dark: #b38728;
-            --bg-light: #f8f9fa; 
-            --text-dark: #333333; 
-            --text-gray: #666666;
-            --card-bg: #ffffff;
-        }
-        body { 
-            background-color: var(--bg-light); 
-            background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
-            color: var(--text-dark); 
-            font-family: 'Microsoft JhengHei', sans-serif; 
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; 
-        }
-        
-        /* 頂部跑馬燈 */
+        :root { --gold: #d4af37; --gold-dark: #b38728; --bg-light: #f8f9fa; --text-dark: #333333; --text-gray: #666666; --card-bg: #ffffff; }
+        body { background-color: var(--bg-light); background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%); color: var(--text-dark); font-family: 'Microsoft JhengHei', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
+
         .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .marquee-text { white-space: nowrap; animation: scrollText 20s linear infinite; padding-left: 100%; }
         @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
@@ -44,7 +30,6 @@
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
-        /* ===== 第一層：視覺與背書 ===== */
         .trust-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; width: 100%; font-size: 13px; color: var(--text-gray); flex-wrap: wrap; }
         .trust-item { display: flex; align-items: center; gap: 5px; background: #ffffff; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.4); font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .trust-item span { color: var(--gold-dark); }
@@ -55,7 +40,6 @@
         h1 { color: var(--text-dark); font-size: 38px; margin-bottom: 10px; letter-spacing: 3px; font-weight: 900; }
         .subtitle { color: var(--text-gray); font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; }
 
-        /* ===== 第二層：真實數據與互動 ===== */
         .total-served { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 14px; color: var(--text-dark); background: #fff; padding: 10px 25px; border-radius: 30px; border: 1px dashed var(--gold); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1); }
         .total-served span { color: var(--gold-dark); font-size: 22px; font-weight: bold; font-family: Arial; }
 
@@ -70,7 +54,6 @@
         .legal-banner { background: #ffffff; border: 1px dashed #ccc; border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 650px; font-size: 13px; color: var(--text-gray); line-height: 1.6; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
         .legal-banner strong { color: var(--gold-dark); }
 
-        /* 買家實拍秀 */
         .buyer-show-section { width: 100%; max-width: 1000px; margin: 0 auto 30px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
         .buyer-show-title { color: var(--gold-dark); text-align: center; margin-top: 0; margin-bottom: 15px; font-size: 18px; }
         .buyer-show-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
@@ -113,13 +96,15 @@
         .empty-hint { grid-column: 1 / -1; text-align: center; color: #999; padding: 60px 20px; font-size: 15px; }
         .empty-hint span { display: block; font-size: 40px; margin-bottom: 12px; }
 
-        /* ===== 第三層：服務與隱私承諾 ===== */
         .card-trust-tags { display: flex; gap: 6px; margin-bottom: 12px; font-size: 11px; color: var(--text-gray); flex-wrap: wrap; }
         .card-trust-tags span { background: #f5f5f5; padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; border: 1px solid #eee; }
         .card-trust-tags span.highlight { color: var(--gold-dark); border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.05); font-weight: bold; }
 
         .claim-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); background-size: 200% auto; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); transition: all 0.3s ease; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); transform: translateY(-2px); }
+        a.claim-btn { display: block; box-sizing: border-box; text-decoration: none; text-align: center; }
+        .order-btn { width: 100%; margin-top: 8px; padding: 12px; background: #fff; border: 2px solid var(--text-dark); color: var(--text-dark); border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .order-btn:hover { background: var(--text-dark); color: #fff; transform: translateY(-2px); }
 
         .chat-product-btn { margin-top: 8px; background: transparent; border: 1px solid var(--gold-dark); color: var(--gold-dark); border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .chat-product-btn:hover { background: rgba(212, 175, 55, 0.1); transform: translateY(-2px); }
@@ -127,7 +112,6 @@
         .cart-add-btn { margin-top: 8px; background: transparent; border: 1px solid #00bcd4; color: #00bcd4; border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .cart-add-btn:hover { background: rgba(0,188,212,0.1); transform: translateY(-2px); }
 
-        /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: #ffffff; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
@@ -159,7 +143,6 @@
         .close-btn { position: absolute; top: 10px; right: 15px; color: #999; font-size: 24px; cursor: pointer; padding: 5px; }
         .close-btn:hover { color: var(--text-dark); }
 
-        /* 選擇預算彈窗 */
         .budget-modal-content { background: #fff; padding: 25px 20px; border-radius: 15px; border: 1px solid var(--gold); width: 90%; max-width: 340px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
         .budget-modal-content h3 { color: var(--gold-dark); margin-top: 0; font-size: 18px; margin-bottom: 5px; }
         .budget-modal-content p { color: var(--text-gray); font-size: 13px; margin-bottom: 20px; line-height: 1.4; }
@@ -203,7 +186,6 @@
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
         .faq-item.active .faq-question { color: var(--gold-dark); }
 
-        /* ===== 聊天室 ===== */
         .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #fff; border: 1px solid #eee; border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
         .chat-widget.active { display: flex; }
         .chat-header { background: #fff; padding: 12px 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--text-dark); font-weight: bold; border-bottom: 1px solid #eee; }
@@ -266,10 +248,13 @@
         .image-lightbox .close-icon { position: absolute; top: 20px; right: 30px; color: var(--text-dark); font-size: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .image-lightbox .close-icon:hover { color: #ff4757; transform: scale(1.1); }
 
-        /* ===== 多語系選單 ===== */
         #langSwitcher { position: fixed; top: 45px; left: 15px; z-index: 2600; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid rgba(212,175,55,.45); border-radius: 20px; padding: 5px 10px; box-shadow: 0 4px 14px rgba(0,0,0,.08); font-size: 13px; }
         #langSwitcher select { border: none; background: transparent; font-size: 13px; color: #b38728; font-weight: bold; outline: none; cursor: pointer; }
-        html[lang="en"] body, html[lang="ja"] body, html[lang="ko"] body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans TC', sans-serif !important; }
+        html[lang="en"] body, html[lang="ja"] body, html[lang="ko"] body,
+        html[lang="th"] body, html[lang="vi"] body, html[lang="id"] body,
+        html[lang="es"] body, html[lang="fr"] body, html[lang="de"] body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans TC', 'Noto Sans Thai', sans-serif !important;
+        }
 
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -278,7 +263,9 @@
             .stock-badge { font-size: 10px; padding: 3px 8px; bottom: 5px; right: 5px; }
             .product-info h3 { font-size: 14px; }
             .product-info p { display: none; }
-            .claim-btn { font-size: 14px; padding: 12px; }
+            .claim-btn { font-size: 13px; padding: 12px 6px; }
+            .order-btn { font-size: 13px; padding: 10px 6px; }
+            .chat-product-btn, .cart-add-btn { font-size: 12px; padding: 9px 4px; }
             .line-contact-banner { flex-direction: column; text-align: center; padding: 15px; }
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
@@ -294,14 +281,12 @@
 </head>
 <body>
 
-    <!-- 頂部跑馬燈 -->
     <div class="marquee-container">
         <div class="marquee-text" id="marqueeText">
             🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
         </div>
     </div>
 
-    <!-- 語言切換 -->
     <div id="langSwitcher">
         🌐
         <select id="langSelect" aria-label="Language">
@@ -310,6 +295,12 @@
             <option value="en">English</option>
             <option value="ja">日本語</option>
             <option value="ko">한국어</option>
+            <option value="th">ไทย</option>
+            <option value="vi">Tiếng Việt</option>
+            <option value="id">Bahasa Indonesia</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
         </select>
     </div>
 
@@ -318,7 +309,6 @@
         目前線上 <span id="frontend-online-count" style="font-size: 15px; margin: 0 2px;">0</span> 人
     </div>
 
-    <!-- 第一層：視覺與背書 -->
     <div class="trust-bar">
         <div class="trust-item">🛡️ <span>7天鑑賞期</span></div>
         <div class="trust-item verify">✅ <span>支持開箱驗貨</span></div>
@@ -351,7 +341,6 @@
         </div>
     </div>
 
-    <!-- 買家實拍 -->
     <div class="buyer-show-section">
         <h3 class="buyer-show-title">📸 真實買家實拍反饋 (點擊看大圖)</h3>
         <div class="buyer-show-scroll">
@@ -607,10 +596,8 @@
         <div class="chat-input-area">
             <input type="file" id="chatFileInput" accept="image/*" hidden onchange="handleChatImage(this)">
             <button onclick="document.getElementById('chatFileInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#00bcd4; border:none; cursor:pointer; font-size:16px;" title="傳送圖片">📷</button>
-            
             <input type="file" id="chatVideoInput" accept="video/*" hidden onchange="handleChatVideo(this)">
             <button onclick="document.getElementById('chatVideoInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#ff4757; border:none; cursor:pointer; font-size:16px;" title="傳送影片">📹</button>
-
             <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" style="background:var(--gold); color:#fff;">送出</button>
         </div>
@@ -641,8 +628,14 @@
         const modalProductName = document.getElementById('modalProductName');
 
         let selectedBudget = '基礎';
-
         const fallbackImg = 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400&auto=format&fit=crop';
+
+        // ★ 產生「帶商品資訊」的 LINE 連結
+        function lineAskUrl(watch) {
+            const priceFrom = Number((watch.price && watch.price.base) || 6000).toLocaleString();
+            const text = `您好，我想詢問「${watch.name}」（專屬價 $${priceFrom} 起）的細節與優惠，請問還有貨嗎？`;
+            return `https://line.me/ti/p/${LINE_ID}?openExternalBrowser=1&text=${encodeURIComponent(text)}`;
+        }
 
         function selectBudget(btn, budget) {
             document.querySelectorAll('.budget-btn').forEach(b => b.classList.remove('active'));
@@ -650,11 +643,7 @@
             selectedBudget = budget;
         }
 
-        // ============================================================
-        // ===== 商品資料：資料庫控制，支援任意數量（分頁＋伺服器搜尋） =====
-        // ============================================================
         const PAGE_SIZE = 24;
-
         let watchData = {};
         let currentSearch = '';
         let currentCategory = '全部';
@@ -710,9 +699,7 @@
             };
         }
 
-        function isHot(id) {
-            return (Number(id) * 7919) % 100 < 22;
-        }
+        function isHot(id) { return (Number(id) * 7919) % 100 < 22; }
 
         function productsQuery(from, to) {
             let q = supabase
@@ -828,7 +815,8 @@
                             <span>🛡️ 7天退換</span>
                             <span>🚚 貨到付款</span>
                         </div>
-                        <button class="claim-btn" data-id="${i}">👉 加 LINE 獲取專屬報價</button>
+                        <a class="claim-btn" href="${lineAskUrl(watch)}" target="_blank" rel="noopener">👉 加 LINE 獲取專屬報價</a>
+                        <button class="order-btn" data-id="${i}">📝 填寫訂單（貨到付款）</button>
                         <button class="chat-product-btn" data-id="${i}">💬 立即諮詢此款</button>
                         <button class="cart-add-btn" data-id="${i}">🛒 加入購物車</button>
                     </div>
@@ -866,24 +854,16 @@
             const hint = document.getElementById('loadMoreHint');
             if (!wrap || !btn || !hint) return;
 
-            if (totalMatches === 0 && !isLoadingPage) {
-                wrap.style.display = 'none';
-                return;
-            }
+            if (totalMatches === 0 && !isLoadingPage) { wrap.style.display = 'none'; return; }
             wrap.style.display = 'flex';
 
             if (isLoadingPage) {
-                btn.disabled = true;
-                btn.style.opacity = 0.6;
-                btn.textContent = '載入中...';
+                btn.disabled = true; btn.style.opacity = 0.6; btn.textContent = '載入中...';
             } else if (hasMore) {
-                btn.disabled = false;
-                btn.style.opacity = 1;
+                btn.disabled = false; btn.style.opacity = 1;
                 btn.textContent = `載入更多商品（還有 ${Math.max(totalMatches - currentIds.length, 0)} 筆）`;
             } else {
-                btn.disabled = true;
-                btn.style.opacity = 0.45;
-                btn.textContent = '已全部載入 ✓';
+                btn.disabled = true; btn.style.opacity = 0.45; btn.textContent = '已全部載入 ✓';
             }
             if (totalMatches > 0) hint.textContent = `已顯示 ${currentIds.length} / ${totalMatches} 筆`;
         }
@@ -935,10 +915,7 @@
                 .channel('realtime-products')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {
                     clearTimeout(realtimeTimer);
-                    realtimeTimer = setTimeout(() => {
-                        console.log('[即時] 商品資料變動，重新載入第一頁');
-                        loadProducts(false);
-                    }, 800);
+                    realtimeTimer = setTimeout(() => { loadProducts(false); }, 800);
                 })
                 .subscribe(status => {
                     if (status === 'SUBSCRIBED') console.log('[即時] 商品頻道已連線');
@@ -969,11 +946,10 @@
         }
 
         productGrid.addEventListener('click', function (e) {
-            const claimBtn = e.target.closest('.claim-btn');
-            if (claimBtn) {
-                openModal(parseInt(claimBtn.dataset.id, 10));
-                return;
-            }
+            // 「加 LINE」是 <a>，交給瀏覽器開新視窗，不攔截
+            const orderBtn = e.target.closest('.order-btn');
+            if (orderBtn) { openModal(parseInt(orderBtn.dataset.id, 10)); return; }
+
             const chatBtn = e.target.closest('.chat-product-btn');
             if (chatBtn) {
                 const productId = parseInt(chatBtn.dataset.id, 10);
@@ -987,11 +963,10 @@
                 }
                 return;
             }
+
             const cartBtn = e.target.closest('.cart-add-btn');
-            if (cartBtn) {
-                openBudgetModal(parseInt(cartBtn.dataset.id, 10));
-                return;
-            }
+            if (cartBtn) { openBudgetModal(parseInt(cartBtn.dataset.id, 10)); return; }
+
             const imgWrapper = e.target.closest('.product-image-wrapper');
             if (imgWrapper && imgWrapper.dataset.images) {
                 try { openLightbox(JSON.parse(imgWrapper.dataset.images)); } catch (err) {}
@@ -1008,12 +983,8 @@
             const watch = watchData[imgNum];
             if (!watch) return;
 
-            supabase.rpc('increment_product_click', {
-                p_id: imgNum,
-                p_name: watch.name
-            }).then(({ error }) => {
-                if (error) console.warn('記錄點擊失敗（請確認 DB 有 increment_product_click 函式）', error.message);
-            });
+            supabase.rpc('increment_product_click', { p_id: imgNum, p_name: watch.name })
+                .then(({ error }) => { if (error) console.warn('記錄點擊失敗', error.message); });
 
             document.getElementById('randomViewerCount').innerText = Math.floor(Math.random() * 20) + 10;
             modalProductName.innerText = watch.name;
@@ -1060,9 +1031,6 @@
         }
         checkDeviceForLine();
 
-        // ============================================================
-        // ===== 下單 =====
-        // ============================================================
         let isSubmitting = false;
         submitBtn.addEventListener('click', async function () {
             if (isSubmitting) return;
@@ -1084,12 +1052,8 @@
             if (mode === 'cart') {
                 if (cart.length === 0) { alert('購物車是空的'); return; }
                 items = cart.map(c => ({
-                    id: c.id,
-                    name: c.name,
-                    qty: c.qty,
-                    budget: c.budget,
-                    price: cartPriceOf(c),
-                    category: c.category || categoryOf(c.id)
+                    id: c.id, name: c.name, qty: c.qty, budget: c.budget,
+                    price: cartPriceOf(c), category: c.category || categoryOf(c.id)
                 }));
                 productName = items.map(i => `${i.name} x${i.qty} (${i.budget})`).join('、');
                 firstProductId = items[0].id;
@@ -1098,12 +1062,8 @@
                 const watch = watchData[imgNum];
                 if (!watch) { alert('商品資料讀取失敗，請重新整理'); return; }
                 items = [{
-                    id: imgNum,
-                    name: watch.name,
-                    qty: 1,
-                    budget: selectedBudget,
-                    price: priceOf(imgNum, selectedBudget),
-                    category: categoryOf(imgNum)
+                    id: imgNum, name: watch.name, qty: 1, budget: selectedBudget,
+                    price: priceOf(imgNum, selectedBudget), category: categoryOf(imgNum)
                 }];
                 productName = `${watch.name} (預算: ${selectedBudget})`;
                 firstProductId = imgNum;
@@ -1143,9 +1103,7 @@
                 if (qrLink) qrLink.href = lineUrl;
 
                 const chatW = document.getElementById('chatWidget');
-                if (chatW && !chatW.classList.contains('active')) {
-                    toggleChat();
-                }
+                if (chatW && !chatW.classList.contains('active')) toggleChat();
 
             } catch (err) {
                 console.error('送出失敗:', err);
@@ -1163,9 +1121,6 @@
             else btn.style.display = 'none';
         });
 
-        // ============================================================
-        // ===== 跑馬燈 =====
-        // ============================================================
         const surnames = ['王', '李', '張', '劉', '陳', '楊', '黃', '趙', '吳', '周', '徐', '孫', '馬', '朱', '胡', '林'];
         const titles = ['先生', '小姐', '老闆', '哥', '姐'];
         const cities = ['台北市', '新北市', '桃園市', '台中市', '台南市', '高雄市', '新竹市', '基隆市', '彰化縣', '屏東縣', '宜蘭縣', '花蓮縣'];
@@ -1198,9 +1153,6 @@
         }
         setInterval(startMarqueeLoop, 25000);
 
-        // ============================================================
-        // ===== 真實數據 =====
-        // ============================================================
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
             sessionId = (window.crypto && crypto.randomUUID)
@@ -1245,9 +1197,7 @@
             return 'other';
         }
 
-        const channel = supabase.channel('online-users', {
-            config: { presence: { key: sessionId } },
-        });
+        const channel = supabase.channel('online-users', { config: { presence: { key: sessionId } } });
 
         channel.on('presence', { event: 'sync' }, () => {
             const state = channel.presenceState();
@@ -1257,19 +1207,12 @@
 
         channel.subscribe(async (status) => {
             if (status === 'SUBSCRIBED') {
-                await channel.track({
-                    device: getDeviceInfo(),
-                    online_at: new Date().toISOString()
-                });
-
+                await channel.track({ device: getDeviceInfo(), online_at: new Date().toISOString() });
                 const { error } = await supabase.rpc('track_visit', { p_platform: platformKey() });
-                if (error) console.warn('瀏覽統計失敗（請確認 DB 有 track_visit 函式）:', error.message);
+                if (error) console.warn('瀏覽統計失敗', error.message);
             }
         });
 
-        // ============================================================
-        // ===== 新訊息提醒 =====
-        // ============================================================
         const ORIGINAL_TITLE = document.title;
         let titleFlashTimer = null;
         let audioCtx = null;
@@ -1319,11 +1262,7 @@
             if (Notification.permission !== 'granted') return;
             if (document.visibilityState === 'visible') return;
             try {
-                const n = new Notification('尊享腕錶客服', {
-                    body: text,
-                    icon: 'images/icon-192.png',
-                    tag: 'admin-chat'
-                });
+                const n = new Notification('尊享腕錶客服', { body: text, icon: 'images/icon-192.png', tag: 'admin-chat' });
                 n.onclick = () => {
                     window.focus();
                     const w = document.getElementById('chatWidget');
@@ -1332,9 +1271,6 @@
             } catch (e) {}
         }
 
-        // ============================================================
-        // ===== 聊天 =====
-        // ============================================================
         function escapeHtmlF(s) {
             return String(s === null || s === undefined ? '' : s)
                 .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -1345,10 +1281,7 @@
             const widget = document.getElementById('chatWidget');
             widget.classList.toggle('active');
             if (widget.classList.contains('active')) {
-                if (!widget.dataset.loaded) {
-                    widget.dataset.loaded = '1';
-                    loadChatHistory();
-                }
+                if (!widget.dataset.loaded) { widget.dataset.loaded = '1'; loadChatHistory(); }
                 const badge = document.getElementById('chatBadge');
                 badge.style.display = 'none';
                 badge.textContent = '0';
@@ -1394,8 +1327,7 @@
 
         async function loadChatHistory() {
             const { data, error } = await supabase
-                .from('chat_messages')
-                .select('*')
+                .from('chat_messages').select('*')
                 .eq('session_id', sessionId)
                 .order('created_at', { ascending: true });
             if (error || !data) return;
@@ -1409,10 +1341,7 @@
             input.value = '';
 
             const { error } = await supabase.from('chat_messages').insert([{
-                session_id: sessionId,
-                sender: 'user',
-                message: text,
-                msg_type: 'text'
+                session_id: sessionId, sender: 'user', message: text, msg_type: 'text'
             }]);
             if (error) { alert('訊息送出失敗：' + error.message); input.value = text; return; }
             appendChatMessage(text, 'user', new Date().toISOString(), null, 'text');
@@ -1446,11 +1375,7 @@
             const url = pub.publicUrl;
 
             const { error } = await supabase.from('chat_messages').insert([{
-                session_id: sessionId,
-                sender: 'user',
-                message: '[圖片]',
-                image_url: url,
-                msg_type: 'image'
+                session_id: sessionId, sender: 'user', message: '[圖片]', image_url: url, msg_type: 'image'
             }]);
             if (error) { alert('訊息送出失敗：' + error.message); return; }
             appendChatMessage('[圖片]', 'user', new Date().toISOString(), url, 'image');
@@ -1484,11 +1409,7 @@
             const url = pub.publicUrl;
 
             const { error } = await supabase.from('chat_messages').insert([{
-                session_id: sessionId,
-                sender: 'user',
-                message: '[影片]',
-                image_url: url,
-                msg_type: 'video'
+                session_id: sessionId, sender: 'user', message: '[影片]', image_url: url, msg_type: 'video'
             }]);
             if (error) { alert('訊息送出失敗：' + error.message); return; }
             appendChatMessage('[影片]', 'user', new Date().toISOString(), url, 'video');
@@ -1502,16 +1423,13 @@
                     if (msg.sender === 'user') return;
 
                     const widget = document.getElementById('chatWidget');
-
                     if (widget.dataset.loaded) {
                         appendChatMessage(msg.message, 'admin', msg.created_at, msg.image_url, msg.msg_type);
                     }
-
                     if (!widget.classList.contains('active')) {
                         const badge = document.getElementById('chatBadge');
                         badge.style.display = 'flex';
                         badge.textContent = String((parseInt(badge.textContent, 10) || 0) + 1);
-
                         playNotifySound();
                         startTitleFlash();
                         showDesktopNotification(msg.msg_type === 'image' ? '客服傳了一張圖片' : (msg.message || '客服有新訊息'));
@@ -1526,9 +1444,6 @@
             }
         });
 
-        // ============================================================
-        // ===== 購物車 =====
-        // ============================================================
         let cart = [];
         try { cart = JSON.parse(localStorage.getItem('cart_items') || '[]'); } catch (e) { cart = []; }
         const BUDGET_OPTIONS = ['基礎', '高端', '定制'];
@@ -1571,8 +1486,7 @@
                 cart.push({
                     id: pendingCartItemId, name: w.name,
                     image: (w.images && w.images[0]) || fallbackImg,
-                    qty: 1, budget: selected,
-                    price: w.price, category: w.category
+                    qty: 1, budget: selected, price: w.price, category: w.category
                 });
             }
 
@@ -1584,10 +1498,7 @@
             setTimeout(() => btn.style.transform = '', 200);
         }
 
-        function removeFromCart(id) {
-            cart = cart.filter(c => c.id !== id);
-            saveCart();
-        }
+        function removeFromCart(id) { cart = cart.filter(c => c.id !== id); saveCart(); }
 
         function changeQty(id, delta) {
             const c = cart.find(x => x.id === id);
@@ -1673,9 +1584,6 @@
         updateCartBadge();
         renderCart();
 
-        // ============================================================
-        // ===== 法務彈窗 =====
-        // ============================================================
         const legalContents = {
             'privacy': `
                 <h2>隱私權政策</h2>
@@ -1718,14 +1626,11 @@
             m.classList.add('active');
         }
 
-        // ============================================================
-        // ===== 啟動 =====
-        // ============================================================
         loadProducts(false);
         setupInfiniteScroll();
     </script>
 
-    <!-- ==================== 多語系切換 ==================== -->
+    <!-- ==================== 多語系切換（11 語） ==================== -->
     <script>
     (function () {
         'use strict';
@@ -1764,6 +1669,7 @@
             '計時款':                       { cn: '计时款', en: 'Chronograph', ja: 'クロノグラフ', ko: '크로노그래프' },
             '人氣爆款':                     { cn: '人气爆款', en: 'Bestseller', ja: '人気商品', ko: '인기 상품' },
             '👉 加 LINE 獲取專屬報價':       { cn: '👉 加 LINE 获取专属报价', en: '👉 Get price on LINE', ja: '👉 LINEで価格を問い合わせ', ko: '👉 LINE으로 가격 문의' },
+            '📝 填寫訂單（貨到付款）':       { cn: '📝 填写订单（货到付款）', en: '📝 Place order (COD)', ja: '📝 注文する（代引）', ko: '📝 주문하기 (착불)', th: '📝 สั่งซื้อ (เก็บปลายทาง)', vi: '📝 Đặt hàng (khi nhận)', id: '📝 Pesan (bayar di tempat)', es: '📝 Hacer pedido (contra reembolso)', fr: '📝 Commander (à la livraison)', de: '📝 Bestellen (Nachnahme)' },
             '💬 立即諮詢此款':              { cn: '💬 立即咨询此款', en: '💬 Ask about this', ja: '💬 この商品を相談', ko: '💬 이 상품 문의' },
             '🛒 加入購物車':                { cn: '🛒 加入购物车', en: '🛒 Add to cart', ja: '🛒 カートに入れる', ko: '🛒 장바구니 담기' },
             '📦 支持開箱驗貨':              { cn: '📦 支持开箱验货', en: '📦 Inspect on arrival', ja: '📦 開封確認OK', ko: '📦 개봉 확인 가능' },
@@ -1831,21 +1737,213 @@
             '購物車':                       { cn: '购物车', en: 'Cart', ja: 'カート', ko: '장바구니' }
         };
 
+        const EXTRA = {
+            th: {
+                '尊享腕錶 精品展示': 'ดูนาฬิกาพรีเมียม', '7天鑑賞期': 'คืนได้ภายใน 7 วัน', '支持開箱驗貨': 'เปิดตรวจก่อนจ่าย',
+                '嚴選品質保證': 'รับประกันคุณภาพ', '100% 隱密包裝': 'แพ็คปิดมิดชิด 100%', '全台累計服務突破': 'ให้บริการแล้วกว่า',
+                '人次，好評不斷！': 'ราย ได้รับคำชมมากมาย!', '搜尋手錶名稱或關鍵字...': 'ค้นหาชื่อนาฬิกาหรือคำสำคัญ...',
+                '全部': 'ทั้งหมด', '經典款': 'คลาสสิก', '運動款': 'สปอร์ต', '奢華款': 'หรูหรา', '潛水款': 'ดำน้ำ', '計時款': 'โครโนกราฟ',
+                '人氣爆款': 'ขายดี', '👉 加 LINE 獲取專屬報價': '👉 เพิ่ม LINE เพื่อรับราคาพิเศษ', '💬 立即諮詢此款': '💬 สอบถามรุ่นนี้',
+                '🛒 加入購物車': '🛒 เพิ่มลงตะกร้า', '📦 支持開箱驗貨': '📦 เปิดกล่องตรวจได้', '🙈 隱密包裝': '🙈 แพ็คปิดมิดชิด',
+                '🛡️ 7天退換': '🛡️ คืน/เปลี่ยน 7 วัน', '🚚 貨到付款': '🚚 เก็บเงินปลายทาง', '載入商品中...': 'กำลังโหลดสินค้า...',
+                '載入中...': 'กำลังโหลด...', '已全部載入 ✓': 'โหลดครบแล้ว ✓', '查無符合條件的商品': 'ไม่พบสินค้าที่ตรงเงื่อนไข',
+                '換個關鍵字或分類試試': 'ลองคำค้นหรือหมวดอื่น', '目前沒有上架中的商品': 'ยังไม่มีสินค้าเปิดขาย',
+                '請到後台「商品管理」新增': 'เพิ่มสินค้าในหน้าผู้ดูแล', '確認商品與填寫資訊': 'ยืนยันสินค้าและกรอกข้อมูล',
+                '您選擇的商品：': 'สินค้าที่คุณเลือก:', '人查看此商品': 'คนกำลังดู', '請選擇您的預算區間：': 'เลือกช่วงงบประมาณ:',
+                '基礎': 'พื้นฐาน', '高端': 'พรีเมียม', '定制': 'สั่งทำ', '請輸入收件人姓名': 'ชื่อผู้รับ',
+                '請輸入 10 碼手機號碼': 'เบอร์มือถือ', '請輸入詳細收件地址': 'ที่อยู่จัดส่ง',
+                '🔒 確認送出，加 LINE 獲取報價': '🔒 ส่งข้อมูลและรับราคาทาง LINE', '處理中，請稍候...': 'กำลังดำเนินการ...',
+                '✅ 已收到您的預約！': '✅ ได้รับข้อมูลแล้ว!', '系統已收到您的資料！': 'ระบบได้รับข้อมูลของคุณแล้ว',
+                '點下方按鈕直接聯繫客服，馬上為您報價。': 'กดปุ่มด้านล่างเพื่อติดต่อเจ้าหน้าที่', '💬 立即聯繫 LINE 客服': '💬 ติดต่อผ่าน LINE',
+                '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': '※ ปิดหน้าเว็บแล้วจะไม่ได้รับข้อความ แนะนำให้เพิ่ม LINE',
+                '尊享腕錶客服 - 小美': 'ฝ่ายบริการ - เหมย', '在線中，秒回覆': 'ออนไลน์ ตอบไว',
+                '👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？': '👋 สวัสดีค่ะ อยากดูนาฬิการุ่นไหนดีคะ?',
+                '⚠️ 關閉網頁後就收不到客服訊息了': '⚠️ ปิดหน้าเว็บแล้วจะไม่ได้รับข้อความ',
+                '建議先加入我們的 LINE 官方帳號 👇': 'แนะนำให้เพิ่ม LINE ทางการของเราก่อน 👇',
+                '📱 加入 LINE 官方帳號': '📱 เพิ่ม LINE ทางการ', '輸入訊息...': 'พิมพ์ข้อความ...', '送出': 'ส่ง',
+                '我的購物車': 'ตะกร้าของฉัน', '購物車是空的': 'ตะกร้าว่างเปล่า', '前往結帳（貨到付款）': 'ชำระเงิน (เก็บปลายทาง)',
+                '件商品': 'ชิ้น', '取消': 'ยกเลิก', '線上客服': 'แชทสด', '購物車': 'ตะกร้า', '回到頂部': 'กลับขึ้นบน',
+                '隱私權政策': 'นโยบายความเป็นส่วนตัว', '服務條款': 'ข้อกำหนดการใช้งาน', '退換貨政策': 'นโยบายคืนสินค้า'
+            },
+            vi: {
+                '尊享腕錶 精品展示': 'Bộ sưu tập đồng hồ cao cấp', '7天鑑賞期': 'Đổi trả trong 7 ngày',
+                '支持開箱驗貨': 'Kiểm tra trước khi trả tiền', '嚴選品質保證': 'Đảm bảo chất lượng',
+                '100% 隱密包裝': 'Đóng gói kín đáo 100%', '全台累計服務突破': 'Đã phục vụ hơn', '人次，好評不斷！': 'khách hàng!',
+                '搜尋手錶名稱或關鍵字...': 'Tìm tên đồng hồ hoặc từ khóa...', '全部': 'Tất cả', '經典款': 'Cổ điển', '運動款': 'Thể thao',
+                '奢華款': 'Sang trọng', '潛水款': 'Lặn', '計時款': 'Chronograph', '人氣爆款': 'Bán chạy',
+                '👉 加 LINE 獲取專屬報價': '👉 Nhắn LINE để nhận giá', '💬 立即諮詢此款': '💬 Hỏi về mẫu này',
+                '🛒 加入購物車': '🛒 Thêm vào giỏ', '📦 支持開箱驗貨': '📦 Mở kiểm tra khi nhận', '🙈 隱密包裝': '🙈 Gói kín đáo',
+                '🛡️ 7天退換': '🛡️ Đổi trả 7 ngày', '🚚 貨到付款': '🚚 Thanh toán khi nhận', '載入商品中...': 'Đang tải sản phẩm...',
+                '載入中...': 'Đang tải...', '已全部載入 ✓': 'Đã tải hết ✓', '查無符合條件的商品': 'Không tìm thấy sản phẩm phù hợp',
+                '換個關鍵字或分類試試': 'Thử từ khóa hoặc danh mục khác', '目前沒有上架中的商品': 'Hiện chưa có sản phẩm',
+                '請到後台「商品管理」新增': 'Thêm sản phẩm trong trang quản trị', '確認商品與填寫資訊': 'Xác nhận và điền thông tin',
+                '您選擇的商品：': 'Sản phẩm đã chọn:', '人查看此商品': 'người đã xem', '請選擇您的預算區間：': 'Chọn khoảng ngân sách:',
+                '基礎': 'Cơ bản', '高端': 'Cao cấp', '定制': 'Tùy chỉnh', '請輸入收件人姓名': 'Tên người nhận',
+                '請輸入 10 碼手機號碼': 'Số điện thoại', '請輸入詳細收件地址': 'Địa chỉ nhận hàng',
+                '🔒 確認送出，加 LINE 獲取報價': '🔒 Gửi & nhận giá qua LINE', '處理中，請稍候...': 'Đang xử lý...',
+                '✅ 已收到您的預約！': '✅ Đã nhận đơn của bạn!', '系統已收到您的資料！': 'Chúng tôi đã nhận thông tin của bạn',
+                '點下方按鈕直接聯繫客服，馬上為您報價。': 'Nhấn nút bên dưới để liên hệ', '💬 立即聯繫 LINE 客服': '💬 Liên hệ LINE',
+                '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': '※ Đóng trang sẽ không nhận tin nhắn, hãy thêm LINE',
+                '尊享腕錶客服 - 小美': 'Hỗ trợ - Mei', '在線中，秒回覆': 'Đang online, phản hồi nhanh',
+                '👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？': '👋 Xin chào! Bạn muốn xem mẫu nào?',
+                '⚠️ 關閉網頁後就收不到客服訊息了': '⚠️ Đóng trang sẽ không nhận được tin nhắn',
+                '建議先加入我們的 LINE 官方帳號 👇': 'Hãy thêm LINE chính thức của chúng tôi 👇',
+                '📱 加入 LINE 官方帳號': '📱 Thêm LINE chính thức', '輸入訊息...': 'Nhập tin nhắn...', '送出': 'Gửi',
+                '我的購物車': 'Giỏ hàng của tôi', '購物車是空的': 'Giỏ hàng trống', '前往結帳（貨到付款）': 'Thanh toán (khi nhận hàng)',
+                '件商品': 'sản phẩm', '取消': 'Hủy', '線上客服': 'Chat trực tuyến', '購物車': 'Giỏ hàng', '回到頂部': 'Lên đầu trang',
+                '隱私權政策': 'Chính sách bảo mật', '服務條款': 'Điều khoản dịch vụ', '退換貨政策': 'Chính sách đổi trả'
+            },
+            id: {
+                '尊享腕錶 精品展示': 'Galeri Jam Premium', '7天鑑賞期': 'Retur 7 hari', '支持開箱驗貨': 'Cek dulu baru bayar',
+                '嚴選品質保證': 'Jaminan kualitas', '100% 隱密包裝': 'Paket rahasia 100%', '全台累計服務突破': 'Melayani lebih dari',
+                '人次，好評不斷！': 'pelanggan!', '搜尋手錶名稱或關鍵字...': 'Cari nama jam atau kata kunci...',
+                '全部': 'Semua', '經典款': 'Klasik', '運動款': 'Sport', '奢華款': 'Mewah', '潛水款': 'Penyelam', '計時款': 'Kronograf',
+                '人氣爆款': 'Terlaris', '👉 加 LINE 獲取專屬報價': '👉 Hubungi LINE untuk harga', '💬 立即諮詢此款': '💬 Tanya model ini',
+                '🛒 加入購物車': '🛒 Tambah ke keranjang', '📦 支持開箱驗貨': '📦 Bisa dicek saat datang', '🙈 隱密包裝': '🙈 Paket rahasia',
+                '🛡️ 7天退換': '🛡️ Retur 7 hari', '🚚 貨到付款': '🚚 Bayar di tempat', '載入商品中...': 'Memuat produk...',
+                '載入中...': 'Memuat...', '已全部載入 ✓': 'Semua dimuat ✓', '查無符合條件的商品': 'Produk tidak ditemukan',
+                '換個關鍵字或分類試試': 'Coba kata kunci atau kategori lain', '目前沒有上架中的商品': 'Belum ada produk',
+                '請到後台「商品管理」新增': 'Tambah produk di panel admin', '確認商品與填寫資訊': 'Konfirmasi & isi data',
+                '您選擇的商品：': 'Produk dipilih:', '人查看此商品': 'orang melihat', '請選擇您的預算區間：': 'Pilih anggaran Anda:',
+                '基礎': 'Dasar', '高端': 'Premium', '定制': 'Kustom', '請輸入收件人姓名': 'Nama penerima',
+                '請輸入 10 碼手機號碼': 'Nomor HP', '請輸入詳細收件地址': 'Alamat pengiriman',
+                '🔒 確認送出，加 LINE 獲取報價': '🔒 Kirim & minta harga via LINE', '處理中，請稍候...': 'Memproses...',
+                '✅ 已收到您的預約！': '✅ Pesanan diterima!', '系統已收到您的資料！': 'Data Anda sudah kami terima',
+                '點下方按鈕直接聯繫客服，馬上為您報價。': 'Tekan tombol di bawah untuk menghubungi kami', '💬 立即聯繫 LINE 客服': '💬 Hubungi via LINE',
+                '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': '※ Setelah ditutup pesan tidak masuk, tambahkan LINE',
+                '尊享腕錶客服 - 小美': 'Layanan - Mei', '在線中，秒回覆': 'Online, balas cepat',
+                '👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？': '👋 Halo! Mau lihat model apa?',
+                '⚠️ 關閉網頁後就收不到客服訊息了': '⚠️ Pesan tidak masuk setelah halaman ditutup',
+                '建議先加入我們的 LINE 官方帳號 👇': 'Silakan tambah LINE resmi kami 👇',
+                '📱 加入 LINE 官方帳號': '📱 Tambah LINE resmi', '輸入訊息...': 'Tulis pesan...', '送出': 'Kirim',
+                '我的購物車': 'Keranjang saya', '購物車是空的': 'Keranjang kosong', '前往結帳（貨到付款）': 'Checkout (bayar di tempat)',
+                '件商品': 'item', '取消': 'Batal', '線上客服': 'Live chat', '購物車': 'Keranjang', '回到頂部': 'Ke atas',
+                '隱私權政策': 'Kebijakan privasi', '服務條款': 'Ketentuan layanan', '退換貨政策': 'Kebijakan retur'
+            },
+            es: {
+                '尊享腕錶 精品展示': 'Galería de Relojes Premium', '7天鑑賞期': 'Devolución 7 días',
+                '支持開箱驗貨': 'Revisar antes de pagar', '嚴選品質保證': 'Calidad garantizada',
+                '100% 隱密包裝': 'Embalaje discreto 100%', '全台累計服務突破': 'Más de', '人次，好評不斷！': 'clientes satisfechos!',
+                '搜尋手錶名稱或關鍵字...': 'Buscar reloj o palabra clave...', '全部': 'Todo', '經典款': 'Clásico', '運動款': 'Deportivo',
+                '奢華款': 'Lujo', '潛水款': 'Buceo', '計時款': 'Cronógrafo', '人氣爆款': 'Más vendido',
+                '👉 加 LINE 獲取專屬報價': '👉 Pide precio por LINE', '💬 立即諮詢此款': '💬 Preguntar por este',
+                '🛒 加入購物車': '🛒 Añadir al carrito', '📦 支持開箱驗貨': '📦 Revisar al recibir', '🙈 隱密包裝': '🙈 Embalaje discreto',
+                '🛡️ 7天退換': '🛡️ Devolución 7 días', '🚚 貨到付款': '🚚 Pago contra entrega', '載入商品中...': 'Cargando productos...',
+                '載入中...': 'Cargando...', '已全部載入 ✓': 'Todo cargado ✓', '查無符合條件的商品': 'No hay productos que coincidan',
+                '換個關鍵字或分類試試': 'Prueba otra palabra o categoría', '目前沒有上架中的商品': 'No hay productos disponibles',
+                '請到後台「商品管理」新增': 'Añade productos en el panel', '確認商品與填寫資訊': 'Confirma y completa tus datos',
+                '您選擇的商品：': 'Producto elegido:', '人查看此商品': 'personas vieron', '請選擇您的預算區間：': 'Elige tu presupuesto:',
+                '基礎': 'Básico', '高端': 'Premium', '定制': 'Personalizado', '請輸入收件人姓名': 'Nombre del destinatario',
+                '請輸入 10 碼手機號碼': 'Número de móvil', '請輸入詳細收件地址': 'Dirección de envío',
+                '🔒 確認送出，加 LINE 獲取報價': '🔒 Enviar y pedir precio por LINE', '處理中，請稍候...': 'Procesando...',
+                '✅ 已收到您的預約！': '✅ ¡Pedido recibido!', '系統已收到您的資料！': 'Hemos recibido tus datos',
+                '點下方按鈕直接聯繫客服，馬上為您報價。': 'Pulsa el botón para contactarnos', '💬 立即聯繫 LINE 客服': '💬 Contactar por LINE',
+                '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': '※ Al cerrar la página no recibirás mensajes, añade LINE',
+                '尊享腕錶客服 - 小美': 'Atención - Mei', '在線中，秒回覆': 'En línea, respuesta rápida',
+                '👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？': '👋 ¡Hola! ¿Qué reloj te interesa?',
+                '⚠️ 關閉網頁後就收不到客服訊息了': '⚠️ No recibirás mensajes tras cerrar',
+                '建議先加入我們的 LINE 官方帳號 👇': 'Añade nuestro LINE oficial 👇',
+                '📱 加入 LINE 官方帳號': '📱 Añadir LINE oficial', '輸入訊息...': 'Escribe un mensaje...', '送出': 'Enviar',
+                '我的購物車': 'Mi carrito', '購物車是空的': 'Tu carrito está vacío', '前往結帳（貨到付款）': 'Pagar (contra entrega)',
+                '件商品': 'artículos', '取消': 'Cancelar', '線上客服': 'Chat en vivo', '購物車': 'Carrito', '回到頂部': 'Volver arriba',
+                '隱私權政策': 'Política de privacidad', '服務條款': 'Términos del servicio', '退換貨政策': 'Política de devoluciones'
+            },
+            fr: {
+                '尊享腕錶 精品展示': 'Galerie de Montres Premium', '7天鑑賞期': 'Retour sous 7 jours',
+                '支持開箱驗貨': 'Vérifier avant de payer', '嚴選品質保證': 'Qualité garantie',
+                '100% 隱密包裝': 'Emballage discret 100%', '全台累計服務突破': 'Plus de', '人次，好評不斷！': 'clients satisfaits !',
+                '搜尋手錶名稱或關鍵字...': 'Rechercher une montre...', '全部': 'Tout', '經典款': 'Classique', '運動款': 'Sport',
+                '奢華款': 'Luxe', '潛水款': 'Plongée', '計時款': 'Chronographe', '人氣爆款': 'Best-seller',
+                '👉 加 LINE 獲取專屬報價': '👉 Demander un prix sur LINE', '💬 立即諮詢此款': '💬 Demander pour ce modèle',
+                '🛒 加入購物車': '🛒 Ajouter au panier', '📦 支持開箱驗貨': '📦 Vérification à réception', '🙈 隱密包裝': '🙈 Emballage discret',
+                '🛡️ 7天退換': '🛡️ Retour 7 jours', '🚚 貨到付款': '🚚 Paiement à la livraison', '載入商品中...': 'Chargement des produits...',
+                '載入中...': 'Chargement...', '已全部載入 ✓': 'Tout est chargé ✓', '查無符合條件的商品': 'Aucun produit correspondant',
+                '換個關鍵字或分類試試': 'Essayez un autre mot-clé', '目前沒有上架中的商品': 'Aucun produit disponible',
+                '請到後台「商品管理」新增': "Ajoutez des produits dans l'admin", '確認商品與填寫資訊': 'Confirmer et remplir',
+                '您選擇的商品：': 'Article choisi :', '人查看此商品': 'personnes ont vu', '請選擇您的預算區間：': 'Choisissez votre budget :',
+                '基礎': 'Basique', '高端': 'Premium', '定制': 'Personnalisé', '請輸入收件人姓名': 'Nom du destinataire',
+                '請輸入 10 碼手機號碼': 'Numéro de mobile', '請輸入詳細收件地址': 'Adresse de livraison',
+                '🔒 確認送出，加 LINE 獲取報價': '🔒 Envoyer et obtenir le prix sur LINE', '處理中，請稍候...': 'Traitement...',
+                '✅ 已收到您的預約！': '✅ Commande reçue !', '系統已收到您的資料！': 'Nous avons reçu vos informations',
+                '點下方按鈕直接聯繫客服，馬上為您報價。': 'Cliquez ci-dessous pour nous contacter', '💬 立即聯繫 LINE 客服': '💬 Contacter sur LINE',
+                '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': '※ Vous ne recevrez plus de messages après fermeture, ajoutez LINE',
+                '尊享腕錶客服 - 小美': 'Support - Mei', '在線中，秒回覆': 'En ligne, réponse rapide',
+                '👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？': '👋 Bonjour ! Quelle montre vous intéresse ?',
+                '⚠️ 關閉網頁後就收不到客服訊息了': '⚠️ Plus de messages après fermeture',
+                '建議先加入我們的 LINE 官方帳號 👇': 'Ajoutez notre LINE officiel 👇',
+                '📱 加入 LINE 官方帳號': '📱 Ajouter notre LINE', '輸入訊息...': 'Écrivez un message...', '送出': 'Envoyer',
+                '我的購物車': 'Mon panier', '購物車是空的': 'Votre panier est vide', '前往結帳（貨到付款）': 'Payer (à la livraison)',
+                '件商品': 'articles', '取消': 'Annuler', '線上客服': 'Chat en direct', '購物車': 'Panier', '回到頂部': 'Haut de page',
+                '隱私權政策': 'Politique de confidentialité', '服務條款': "Conditions d'utilisation", '退換貨政策': 'Politique de retour'
+            },
+            de: {
+                '尊享腕錶 精品展示': 'Premium-Uhrengalerie', '7天鑑賞期': '7 Tage Rückgabe', '支持開箱驗貨': 'Prüfen vor Zahlung',
+                '嚴選品質保證': 'Qualitätsgarantie', '100% 隱密包裝': '100% diskrete Verpackung', '全台累計服務突破': 'Über',
+                '人次，好評不斷！': 'zufriedene Kunden!', '搜尋手錶名稱或關鍵字...': 'Uhr oder Stichwort suchen...',
+                '全部': 'Alle', '經典款': 'Klassisch', '運動款': 'Sport', '奢華款': 'Luxus', '潛水款': 'Taucher', '計時款': 'Chronograph',
+                '人氣爆款': 'Bestseller', '👉 加 LINE 獲取專屬報價': '👉 Preis per LINE anfragen', '💬 立即諮詢此款': '💬 Zu diesem Modell fragen',
+                '🛒 加入購物車': '🛒 In den Warenkorb', '📦 支持開箱驗貨': '📦 Prüfung bei Lieferung', '🙈 隱密包裝': '🙈 Diskrete Verpackung',
+                '🛡️ 7天退換': '🛡️ 7 Tage Umtausch', '🚚 貨到付款': '🚚 Nachnahme', '載入商品中...': 'Produkte werden geladen...',
+                '載入中...': 'Laden...', '已全部載入 ✓': 'Alles geladen ✓', '查無符合條件的商品': 'Keine passenden Produkte',
+                '換個關鍵字或分類試試': 'Anderes Stichwort oder Kategorie testen', '目前沒有上架中的商品': 'Keine Produkte verfügbar',
+                '請到後台「商品管理」新增': 'Produkte im Admin hinzufügen', '確認商品與填寫資訊': 'Bestätigen und Daten eingeben',
+                '您選擇的商品：': 'Ausgewähltes Produkt:', '人查看此商品': 'Personen sahen', '請選擇您的預算區間：': 'Budget wählen:',
+                '基礎': 'Basis', '高端': 'Premium', '定制': 'Individuell', '請輸入收件人姓名': 'Empfängername',
+                '請輸入 10 碼手機號碼': 'Handynummer', '請輸入詳細收件地址': 'Lieferadresse',
+                '🔒 確認送出，加 LINE 獲取報價': '🔒 Senden & Preis per LINE', '處理中，請稍候...': 'Wird verarbeitet...',
+                '✅ 已收到您的預約！': '✅ Bestellung erhalten!', '系統已收到您的資料！': 'Wir haben Ihre Daten erhalten',
+                '點下方按鈕直接聯繫客服，馬上為您報價。': 'Unten klicken, um uns zu kontaktieren', '💬 立即聯繫 LINE 客服': '💬 Per LINE kontaktieren',
+                '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': '※ Nach dem Schließen keine Nachrichten mehr – bitte LINE hinzufügen',
+                '尊享腕錶客服 - 小美': 'Support - Mei', '在線中，秒回覆': 'Online, schnelle Antwort',
+                '👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？': '👋 Hallo! Welche Uhr interessiert Sie?',
+                '⚠️ 關閉網頁後就收不到客服訊息了': '⚠️ Nach dem Schließen keine Nachrichten mehr',
+                '建議先加入我們的 LINE 官方帳號 👇': 'Bitte zuerst unseren LINE hinzufügen 👇',
+                '📱 加入 LINE 官方帳號': '📱 LINE hinzufügen', '輸入訊息...': 'Nachricht eingeben...', '送出': 'Senden',
+                '我的購物車': 'Mein Warenkorb', '購物車是空的': 'Ihr Warenkorb ist leer', '前往結帳（貨到付款）': 'Zur Kasse (Nachnahme)',
+                '件商品': 'Artikel', '取消': 'Abbrechen', '線上客服': 'Live-Chat', '購物車': 'Warenkorb', '回到頂部': 'Nach oben',
+                '隱私權政策': 'Datenschutz', '服務條款': 'Nutzungsbedingungen', '退換貨政策': 'Rückgabebestimmungen'
+            }
+        };
+
+        Object.keys(EXTRA).forEach(lang => {
+            Object.keys(EXTRA[lang]).forEach(zh => {
+                if (!DICT[zh]) DICT[zh] = {};
+                DICT[zh][lang] = EXTRA[lang][zh];
+            });
+        });
+
         const RULES = [
-            { re: /^精選\s*(\d+)\s*款經典腕錶，請挑選您的最愛$/,
-              out: { cn: m => `精选 ${m[1]} 款经典腕表，请挑选您的最爱`, en: m => `${m[1]} watches selected for you`, ja: m => `厳選 ${m[1]} 点の腕時計`, ko: m => `엄선한 ${m[1]}개 시계` } },
-            { re: /^已顯示\s*(\d+)\s*\/\s*(\d+)\s*筆$/,
-              out: { cn: m => `已显示 ${m[1]} / ${m[2]} 笔`, en: m => `Showing ${m[1]} / ${m[2]}`, ja: m => `${m[1]} / ${m[2]} 件表示`, ko: m => `${m[1]} / ${m[2]} 표시` } },
-            { re: /^載入更多商品（還有\s*(\d+)\s*筆）$/,
-              out: { cn: m => `载入更多商品（还有 ${m[1]} 笔）`, en: m => `Load more (${m[1]} left)`, ja: m => `もっと見る（残り${m[1]}件）`, ko: m => `더 보기 (${m[1]}개 남음)` } },
-            { re: /^專屬價：(.+)$/,
-              out: { cn: m => `专属价：${m[1]}`, en: m => `Price: ${m[1]}`, ja: m => `価格：${m[1]}`, ko: m => `가격: ${m[1]}` } },
-            { re: /^共\s*(\d+)\s*件商品$/,
-              out: { cn: m => `共 ${m[1]} 件商品`, en: m => `${m[1]} items`, ja: m => `合計 ${m[1]} 点`, ko: m => `총 ${m[1]}개` } },
-            { re: /^約\s*(.+)$/,
-              out: { cn: m => `约 ${m[1]}`, en: m => `about ${m[1]}`, ja: m => `約 ${m[1]}`, ko: m => `약 ${m[1]}` } },
-            { re: /^⚠️ 庫存僅剩\s*(\d+)\s*支$/,
-              out: { cn: m => `⚠️ 库存仅剩 ${m[1]} 支`, en: m => `⚠️ Only ${m[1]} left`, ja: m => `⚠️ 残り${m[1]}点`, ko: m => `⚠️ ${m[1]}개 남음` } }
+            { re: /^精選\s*(\d+)\s*款經典腕錶，請挑選您的最愛$/, out: {
+                cn: m => `精选 ${m[1]} 款经典腕表，请挑选您的最爱`, en: m => `${m[1]} watches selected for you`,
+                ja: m => `厳選 ${m[1]} 点の腕時計`, ko: m => `엄선한 ${m[1]}개 시계`,
+                th: m => `คัดสรร ${m[1]} รุ่น`, vi: m => `${m[1]} mẫu đồng hồ`, id: m => `${m[1]} model jam`,
+                es: m => `${m[1]} relojes`, fr: m => `${m[1]} montres`, de: m => `${m[1]} Uhren` } },
+            { re: /^已顯示\s*(\d+)\s*\/\s*(\d+)\s*筆$/, out: {
+                cn: m => `已显示 ${m[1]} / ${m[2]} 笔`, en: m => `Showing ${m[1]} / ${m[2]}`,
+                ja: m => `${m[1]} / ${m[2]} 件表示`, ko: m => `${m[1]} / ${m[2]} 표시`,
+                th: m => `แสดง ${m[1]} / ${m[2]}`, vi: m => `Hiển thị ${m[1]} / ${m[2]}`, id: m => `Menampilkan ${m[1]} / ${m[2]}`,
+                es: m => `Mostrando ${m[1]} / ${m[2]}`, fr: m => `Affichage ${m[1]} / ${m[2]}`, de: m => `${m[1]} / ${m[2]} angezeigt` } },
+            { re: /^載入更多商品（還有\s*(\d+)\s*筆）$/, out: {
+                cn: m => `载入更多商品（还有 ${m[1]} 笔）`, en: m => `Load more (${m[1]} left)`,
+                ja: m => `もっと見る（残り${m[1]}件）`, ko: m => `더 보기 (${m[1]}개 남음)`,
+                th: m => `โหลดเพิ่ม (เหลือ ${m[1]})`, vi: m => `Tải thêm (còn ${m[1]})`, id: m => `Muat lagi (sisa ${m[1]})`,
+                es: m => `Cargar más (quedan ${m[1]})`, fr: m => `Voir plus (${m[1]} restants)`, de: m => `Mehr laden (${m[1]} übrig)` } },
+            { re: /^專屬價：(.+)$/, out: {
+                cn: m => `专属价：${m[1]}`, en: m => `Price: ${m[1]}`, ja: m => `価格：${m[1]}`, ko: m => `가격: ${m[1]}`,
+                th: m => `ราคา: ${m[1]}`, vi: m => `Giá: ${m[1]}`, id: m => `Harga: ${m[1]}`,
+                es: m => `Precio: ${m[1]}`, fr: m => `Prix : ${m[1]}`, de: m => `Preis: ${m[1]}` } },
+            { re: /^共\s*(\d+)\s*件商品$/, out: {
+                cn: m => `共 ${m[1]} 件商品`, en: m => `${m[1]} items`, ja: m => `合計 ${m[1]} 点`, ko: m => `총 ${m[1]}개`,
+                th: m => `รวม ${m[1]} ชิ้น`, vi: m => `${m[1]} sản phẩm`, id: m => `${m[1]} item`,
+                es: m => `${m[1]} artículos`, fr: m => `${m[1]} articles`, de: m => `${m[1]} Artikel` } },
+            { re: /^約\s*(.+)$/, out: {
+                cn: m => `约 ${m[1]}`, en: m => `about ${m[1]}`, ja: m => `約 ${m[1]}`, ko: m => `약 ${m[1]}`,
+                th: m => `ประมาณ ${m[1]}`, vi: m => `khoảng ${m[1]}`, id: m => `sekitar ${m[1]}`,
+                es: m => `aprox. ${m[1]}`, fr: m => `environ ${m[1]}`, de: m => `ca. ${m[1]}` } },
+            { re: /^⚠️ 庫存僅剩\s*(\d+)\s*支$/, out: {
+                cn: m => `⚠️ 库存仅剩 ${m[1]} 支`, en: m => `⚠️ Only ${m[1]} left`, ja: m => `⚠️ 残り${m[1]}点`, ko: m => `⚠️ ${m[1]}개 남음`,
+                th: m => `⚠️ เหลือ ${m[1]} ชิ้น`, vi: m => `⚠️ Còn ${m[1]} cái`, id: m => `⚠️ Sisa ${m[1]}`,
+                es: m => `⚠️ Quedan ${m[1]}`, fr: m => `⚠️ Plus que ${m[1]}`, de: m => `⚠️ Nur noch ${m[1]}` } }
         ];
 
         let LANG = localStorage.getItem('site_lang') || 'zh-TW';
@@ -1856,11 +1954,19 @@
             if (!raw) return null;
             const trimmed = raw.trim();
             if (!trimmed) return null;
+
             const entry = DICT[trimmed];
-            if (entry && entry[lang]) return raw.replace(trimmed, entry[lang]);
+            if (entry) {
+                const val = entry[lang] || entry.en;
+                if (val && val !== trimmed) return raw.replace(trimmed, val);
+            }
+
             for (const rule of RULES) {
                 const m = trimmed.match(rule.re);
-                if (m && rule.out[lang]) return raw.replace(trimmed, rule.out[lang](m));
+                if (m) {
+                    const fn = rule.out[lang] || rule.out.en;
+                    if (fn) return raw.replace(trimmed, fn(m));
+                }
             }
             return null;
         }
