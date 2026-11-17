@@ -13,76 +13,89 @@
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0f0f0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#ffffff">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 
     <style>
-        :root { --gold: #d4af37; --bg-dark: #0f0f0f; }
-        body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%); color: #fff; font-family: 'Microsoft JhengHei', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
+        :root { 
+            --gold: #d4af37; 
+            --gold-dark: #b38728;
+            --bg-light: #f8f9fa; 
+            --text-dark: #333333; 
+            --text-gray: #666666;
+            --card-bg: #ffffff;
+        }
+        body { 
+            background-color: var(--bg-light); 
+            background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+            color: var(--text-dark); 
+            font-family: 'Microsoft JhengHei', sans-serif; 
+            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; 
+        }
         
         /* 頂部跑馬燈 */
-        .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .marquee-text { white-space: nowrap; animation: scrollText 20s linear infinite; padding-left: 100%; }
         @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         body { padding-top: 55px; }
 
-        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.5); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
+        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.4); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
         /* ===== 第一層：視覺與背書 ===== */
-        .trust-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; width: 100%; font-size: 13px; color: #ccc; flex-wrap: wrap; }
-        .trust-item { display: flex; align-items: center; gap: 5px; background: rgba(212, 175, 55, 0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.4); font-weight: bold; }
-        .trust-item span { color: var(--gold); }
-        .trust-item.verify { color: #00c800; border-color: #00c800; background: rgba(0,200,0,0.1); }
-        .trust-item.verify span { color: #00c800; }
+        .trust-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; width: 100%; font-size: 13px; color: var(--text-gray); flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 5px; background: #ffffff; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.4); font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .trust-item span { color: var(--gold-dark); }
+        .trust-item.verify { color: #00a000; border-color: #00a000; background: #f0fff0; }
+        .trust-item.verify span { color: #00a000; }
 
         .header-section { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1000px; }
-        h1 { color: var(--gold); font-size: 38px; margin-bottom: 10px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); font-weight: 900; }
-        .subtitle { color: #ddd; font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; }
+        h1 { color: var(--text-dark); font-size: 38px; margin-bottom: 10px; letter-spacing: 3px; font-weight: 900; }
+        .subtitle { color: var(--text-gray); font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; }
 
         /* ===== 第二層：真實數據與互動 ===== */
-        .total-served { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 14px; color: #ddd; background: rgba(212, 175, 55, 0.15); padding: 10px 25px; border-radius: 30px; border: 1px dashed var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
-        .total-served span { color: var(--gold); font-size: 22px; font-weight: bold; font-family: Arial; }
+        .total-served { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 14px; color: var(--text-dark); background: #fff; padding: 10px 25px; border-radius: 30px; border: 1px dashed var(--gold); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1); }
+        .total-served span { color: var(--gold-dark); font-size: 22px; font-weight: bold; font-family: Arial; }
 
-        .line-contact-banner { background: linear-gradient(145deg, rgba(30,30,30,0.95), rgba(15,15,15,0.95)); border: 2px solid var(--gold); border-radius: 15px; padding: 18px 25px; margin: 0 auto 25px auto; display: flex; align-items: center; justify-content: center; gap: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(212,175,55,0.1); max-width: 650px; position: relative; cursor: pointer; transition: 0.3s; }
-        .line-contact-banner:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(212,175,55,0.2); }
+        .line-contact-banner { background: #ffffff; border: 2px solid var(--gold); border-radius: 15px; padding: 18px 25px; margin: 0 auto 25px auto; display: flex; align-items: center; justify-content: center; gap: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); max-width: 650px; position: relative; cursor: pointer; transition: 0.3s; }
+        .line-contact-banner:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15); }
         .online-dot { position: absolute; top: 15px; right: 15px; width: 12px; height: 12px; background: #00c800; border-radius: 50%; box-shadow: 0 0 12px #00c800; animation: blink 1.5s infinite; }
-        .line-contact-banner .avatar { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 15px rgba(212,175,55,0.5); }
-        .line-text h3 { color: var(--gold); margin: 0 0 8px 0; font-size: 18px; display: flex; align-items: center; gap: 5px; }
-        .line-text p { color: #ddd; margin: 0; font-size: 14px; line-height: 1.6; }
+        .line-contact-banner .avatar { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .line-text h3 { color: var(--gold-dark); margin: 0 0 8px 0; font-size: 18px; display: flex; align-items: center; gap: 5px; font-weight: bold;}
+        .line-text p { color: var(--text-dark); margin: 0; font-size: 14px; line-height: 1.6; }
         .line-text p span { color: #ff4757; font-weight: bold; background: rgba(255,71,87,0.1); padding: 2px 6px; border-radius: 4px; }
 
-        .legal-banner { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 650px; font-size: 13px; color: #999; line-height: 1.6; text-align: left; }
-        .legal-banner strong { color: var(--gold); }
+        .legal-banner { background: #ffffff; border: 1px dashed #ccc; border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 650px; font-size: 13px; color: var(--text-gray); line-height: 1.6; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .legal-banner strong { color: var(--gold-dark); }
 
         /* 買家實拍秀 */
-        .buyer-show-section { width: 100%; max-width: 1000px; margin: 0 auto 30px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .buyer-show-title { color: var(--gold); text-align: center; margin-top: 0; margin-bottom: 15px; font-size: 18px; }
+        .buyer-show-section { width: 100%; max-width: 1000px; margin: 0 auto 30px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .buyer-show-title { color: var(--gold-dark); text-align: center; margin-top: 0; margin-bottom: 15px; font-size: 18px; }
         .buyer-show-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .buyer-show-scroll::-webkit-scrollbar { display: none; }
-        .buyer-show-card { min-width: 260px; background: #222; border-radius: 8px; padding: 12px; border: 1px solid #444; }
-        .buyer-show-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 5px; border: 1px solid #333; }
-        .buyer-show-card p { color: #eee; font-size: 13px; margin: 10px 0 8px 0; line-height: 1.5; font-style: italic; }
-        .buyer-show-card span { color: var(--gold); font-size: 12px; display: block; text-align: right; }
+        .buyer-show-card { min-width: 260px; background: #fdfdfd; border-radius: 8px; padding: 12px; border: 1px solid #eee; }
+        .buyer-show-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 5px; }
+        .buyer-show-card p { color: var(--text-dark); font-size: 13px; margin: 10px 0 8px 0; line-height: 1.5; font-style: italic; }
+        .buyer-show-card span { color: var(--gold-dark); font-size: 12px; display: block; text-align: right; }
 
         .filter-section { width: 100%; max-width: 1200px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
         .search-box { position: relative; width: 100%; max-width: 500px; }
-        .search-box input { width: 100%; padding: 12px 15px 12px 45px; border-radius: 30px; border: 1px solid #555; background: #222; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; transition: 0.3s; }
-        .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
-        .search-box::before { content: '🔍'; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #888; }
+        .search-box input { width: 100%; padding: 12px 15px 12px 45px; border-radius: 30px; border: 1px solid #ddd; background: #fff; color: var(--text-dark); font-size: 15px; outline: none; box-sizing: border-box; transition: 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        .search-box::before { content: '🔍'; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #999; }
         .category-tabs { display: flex; gap: 10px; overflow-x: auto; width: 100%; justify-content: flex-start; padding-bottom: 5px; }
         .category-tabs::-webkit-scrollbar { display: none; }
-        .category-btn { background: #222; color: #aaa; border: 1px solid #444; padding: 8px 16px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 14px; transition: 0.3s; }
-        .category-btn:hover { border-color: var(--gold); color: var(--gold); }
-        .category-btn.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: bold; }
+        .category-btn { background: #fff; color: var(--text-gray); border: 1px solid #ddd; padding: 8px 16px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 14px; transition: 0.3s; }
+        .category-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
+        .category-btn.active { background: var(--gold); color: #fff; border-color: var(--gold); font-weight: bold; }
 
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .product-card { background: linear-gradient(145deg, rgba(30,30,30,0.8), rgba(15,15,15,0.9)); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease; position: relative; }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
-        .product-image-wrapper { position: relative; width: 100%; height: 220px; overflow: hidden; cursor: zoom-in; background-color: #1a1a1a; }
+        .product-card { background: #ffffff; border: 1px solid #eee; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15); }
+        .product-image-wrapper { position: relative; width: 100%; height: 220px; overflow: hidden; cursor: zoom-in; background-color: #f9f9f9; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s, opacity 0.4s; opacity: 0; }
         .product-image-wrapper img.loaded { opacity: 1; }
         .product-card:hover .product-image-wrapper img { transform: scale(1.08); }
@@ -90,165 +103,166 @@
         .loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border: 3px solid rgba(212, 175, 55, 0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; z-index: 1; }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        .image-number-badge { position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.85); color: var(--gold); font-size: 20px; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 2px solid var(--gold); z-index: 10; }
-        .stock-badge { position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81); color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px; z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.5); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .image-number-badge { position: absolute; top: 10px; left: 10px; background: rgba(255, 255, 255, 0.95); color: var(--gold-dark); font-size: 20px; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 2px solid var(--gold); z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .stock-badge { position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81); color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px; z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.3); border: 1px solid rgba(255, 255, 255, 0.5); }
 
         .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
-        .product-info h3 { color: var(--gold); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; }
-        .price-tag { color: #00c800; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
-        .product-info p { color: #888; margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
+        .product-info h3 { color: var(--text-dark); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; font-weight: bold;}
+        .price-tag { color: #00a000; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+        .product-info p { color: var(--text-gray); margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
         
         /* ===== 第三層：服務與隱私承諾 ===== */
-        .card-trust-tags { display: flex; gap: 6px; margin-bottom: 12px; font-size: 11px; color: #ccc; flex-wrap: wrap; }
-        .card-trust-tags span { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; border: 1px solid #333; }
-        .card-trust-tags span.highlight { color: var(--gold); border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.1); font-weight: bold; }
+        .card-trust-tags { display: flex; gap: 6px; margin-bottom: 12px; font-size: 11px; color: var(--text-gray); flex-wrap: wrap; }
+        .card-trust-tags span { background: #f5f5f5; padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; border: 1px solid #eee; }
+        .card-trust-tags span.highlight { color: var(--gold-dark); border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.05); font-weight: bold; }
 
-        .claim-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); background-size: 200% auto; color: #111; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; font-size: 15px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255,255,255,0.6); transition: all 0.3s ease; text-shadow: 0 1px 0 rgba(255,255,255,0.4); }
-        .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255,255,255,0.8); transform: translateY(-2px); }
+        .claim-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); background-size: 200% auto; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); transition: all 0.3s ease; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); transform: translateY(-2px); }
 
-        .chat-product-btn { margin-top: 8px; background: transparent; border: 1px solid var(--gold); color: var(--gold); border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .chat-product-btn:hover { background: rgba(212, 175, 55, 0.15); transform: translateY(-2px); }
+        .chat-product-btn { margin-top: 8px; background: transparent; border: 1px solid var(--gold-dark); color: var(--gold-dark); border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .chat-product-btn:hover { background: rgba(212, 175, 55, 0.1); transform: translateY(-2px); }
 
         .cart-add-btn { margin-top: 8px; background: transparent; border: 1px solid #00bcd4; color: #00bcd4; border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .cart-add-btn:hover { background: rgba(0,188,212,0.15); transform: translateY(-2px); }
+        .cart-add-btn:hover { background: rgba(0,188,212,0.1); transform: translateY(-2px); }
 
         /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
+        .modal-content { background: #ffffff; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
-        .modal-content h2 { color: var(--gold); font-size: 22px; margin-top: 0; margin-bottom: 20px; }
+        .modal-content h2 { color: var(--gold-dark); font-size: 22px; margin-top: 0; margin-bottom: 20px; }
 
-        .price-display-box { background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
-        .price-display-box p { color: #aaa; font-size: 12px; margin: 0 0 5px 0; }
-        .price-display-box h3 { color: #fff; font-size: 18px; margin: 0 0 10px 0; }
-        .viewer-count { color: #aaa; font-size: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: flex-start; }
+        .price-display-box { background: #f9f9f9; border: 1px dashed var(--gold); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
+        .price-display-box p { color: var(--text-gray); font-size: 12px; margin: 0 0 5px 0; }
+        .price-display-box h3 { color: var(--text-dark); font-size: 18px; margin: 0 0 10px 0; }
+        .viewer-count { color: var(--text-gray); font-size: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: flex-start; }
         .viewer-count span { color: #ff4757; font-weight: bold; }
 
         .budget-selector { display: flex; gap: 10px; margin-bottom: 15px; }
-        .budget-btn { flex: 1; padding: 10px 5px; background: #222; border: 1px solid #444; border-radius: 8px; color: #aaa; font-size: 13px; cursor: pointer; transition: 0.3s; }
-        .budget-btn.active { background: rgba(212, 175, 55, 0.2); border-color: var(--gold); color: var(--gold); font-weight: bold; }
+        .budget-btn { flex: 1; padding: 10px 5px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; color: var(--text-gray); font-size: 13px; cursor: pointer; transition: 0.3s; }
+        .budget-btn.active { background: #fff; border-color: var(--gold); color: var(--gold-dark); font-weight: bold; box-shadow: 0 2px 8px rgba(212,175,55,0.2); }
 
         .input-group { position: relative; margin-bottom: 15px; }
-        .input-group::before { content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #666; z-index: 2; }
-        .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #333; border-radius: 8px; background: #222; color: #fff; box-sizing: border-box; font-size: 16px; outline: none; }
-        .modal-content input:focus { border-color: var(--gold); background: #2a2a2a; }
+        .input-group::before { content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #999; z-index: 2; }
+        .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; color: var(--text-dark); box-sizing: border-box; font-size: 16px; outline: none; transition: 0.3s;}
+        .modal-content input:focus { border-color: var(--gold); background: #fff; box-shadow: 0 0 10px rgba(212,175,55,0.1);}
 
-        .form-warning { background: rgba(0, 200, 0, 0.08); border: 2px dashed #00c800; color: #00c800; font-size: 13px; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.8; font-weight: bold; }
-        .form-privacy-text { font-size: 12px; color: #777; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
-        .form-privacy-text span { color: var(--gold); font-size: 14px; }
+        .form-warning { background: #f0fff0; border: 2px dashed #00a000; color: #00a000; font-size: 13px; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.8; font-weight: bold; }
+        .form-privacy-text { font-size: 12px; color: #999; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
+        .form-privacy-text span { color: var(--gold-dark); font-size: 14px; }
 
-        .submit-btn { width: 100%; padding: 16px; background: linear-gradient(180deg, #2a2a2a 0%, #111111 100%); color: var(--gold); border: 2px solid rgba(212, 175, 55, 0.6); border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
-        .submit-btn:hover { border-color: var(--gold); transform: translateY(-2px); background: linear-gradient(180deg, #333 0%, #1a1a1a 100%); }
-        .submit-btn:disabled { background: #333; color: #666; border-color: #333; cursor: not-allowed; transform: none; }
-        .close-btn { position: absolute; top: 10px; right: 15px; color: #888; font-size: 24px; cursor: pointer; padding: 5px; }
+        .submit-btn { width: 100%; padding: 16px; background: var(--text-dark); color: var(--gold); border: 2px solid var(--text-dark); border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .submit-btn:hover { background: #000; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
+        .submit-btn:disabled { background: #ccc; color: #fff; border-color: #ccc; cursor: not-allowed; transform: none; }
+        .close-btn { position: absolute; top: 10px; right: 15px; color: #999; font-size: 24px; cursor: pointer; padding: 5px; }
+        .close-btn:hover { color: var(--text-dark); }
 
         /* 選擇預算彈窗 */
-        .budget-modal-content { background: #222; padding: 25px 20px; border-radius: 15px; border: 1px solid var(--gold); width: 90%; max-width: 340px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .budget-modal-content h3 { color: var(--gold); margin-top: 0; font-size: 18px; margin-bottom: 5px; }
-        .budget-modal-content p { color: #aaa; font-size: 13px; margin-bottom: 20px; line-height: 1.4; }
+        .budget-modal-content { background: #fff; padding: 25px 20px; border-radius: 15px; border: 1px solid var(--gold); width: 90%; max-width: 340px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .budget-modal-content h3 { color: var(--gold-dark); margin-top: 0; font-size: 18px; margin-bottom: 5px; }
+        .budget-modal-content p { color: var(--text-gray); font-size: 13px; margin-bottom: 20px; line-height: 1.4; }
         .budget-modal-btns { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        .budget-modal-btn { padding: 14px; background: #1a1a1a; border: 1px solid #444; color: #ddd; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
-        .budget-modal-btn:hover { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-        .budget-modal-btn span.price { font-size: 13px; color: #888; font-weight: normal; }
-        .budget-modal-cancel { padding: 10px; background: transparent; border: none; color: #888; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
-        .budget-modal-cancel:hover { color: #fff; }
+        .budget-modal-btn { padding: 14px; background: #f9f9f9; border: 1px solid #ddd; color: var(--text-dark); border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .budget-modal-btn:hover { background: #fff; border-color: var(--gold); color: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(212,175,55,0.15); }
+        .budget-modal-btn span.price { font-size: 13px; color: #999; font-weight: normal; }
+        .budget-modal-cancel { padding: 10px; background: transparent; border: none; color: #999; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
+        .budget-modal-cancel:hover { color: var(--text-dark); }
 
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 2500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 2500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; perspective: 1500px; }
         .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s; }
-        .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(255, 255, 255, 0.2); }
+        .lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(0, 0, 0, 0.05); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--text-dark); font-size: 24px; cursor: pointer; z-index: 1001; transition: 0.3s; }
+        .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(0, 0, 0, 0.1); }
         .gallery-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; width: 95vw; height: 85vh; gap: 20px; padding: 0 20px; align-items: center; }
         .gallery-track::-webkit-scrollbar { display: none; }
-        .gallery-track img { flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1); transform: scale(0.95) rotateX(2deg); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; will-change: transform; }
-        .gallery-track img:hover, .gallery-track img:active { transform: scale(1) rotateX(0deg); box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2); cursor: zoom-in; }
-        .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px; }
+        .gallery-track img { flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.1), 0 0 40px rgba(212, 175, 55, 0.1); transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; will-change: transform; }
+        .gallery-track img:hover, .gallery-track img:active { transform: scale(1); box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 0 50px rgba(212, 175, 55, 0.2); cursor: zoom-in; }
+        .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(0,0,0,0.5); font-size: 14px; pointer-events: none; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);}
 
         .floating-btns { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1500; }
-        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; transition: 0.3s; border: none; outline: none; position: relative; }
+        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; transition: 0.3s; border: none; outline: none; position: relative; }
         .float-btn:hover { transform: translateY(-5px); }
         .btn-line { background: #00c800; color: #fff; font-size: 28px; text-decoration: none; }
-        .btn-top { background: #333; color: var(--gold); border: 1px solid var(--gold); font-size: 24px; display: none; }
+        .btn-top { background: #fff; color: var(--gold-dark); border: 1px solid var(--gold); font-size: 24px; display: none; }
         .btn-chat { background: #00bcd4; color: #fff; font-size: 28px; }
-        .chat-badge { position: absolute; top: -5px; right: -5px; background: #ff4757; color: #fff; border-radius: 50%; font-size: 11px; font-weight: bold; min-width: 18px; height: 18px; display: none; justify-content: center; align-items: center; padding: 0 4px; border: 2px solid #111; }
+        .chat-badge { position: absolute; top: -5px; right: -5px; background: #ff4757; color: #fff; border-radius: 50%; font-size: 11px; font-weight: bold; min-width: 18px; height: 18px; display: none; justify-content: center; align-items: center; padding: 0 4px; border: 2px solid #fff; }
 
         .trust-section { width: 100%; max-width: 1000px; margin: 40px auto 20px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-        .trust-card { flex: 1; min-width: 300px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 20px; text-align: center; }
-        .trust-card h3 { color: var(--gold); margin-top: 0; font-size: 18px; }
-        .trust-card p { color: #aaa; font-size: 14px; line-height: 1.6; }
-        .trust-card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 1px solid #444; }
+        .trust-card { flex: 1; min-width: 300px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.02);}
+        .trust-card h3 { color: var(--gold-dark); margin-top: 0; font-size: 18px; }
+        .trust-card p { color: var(--text-gray); font-size: 14px; line-height: 1.6; }
+        .trust-card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 1px solid #eee; }
 
         .faq-section { width: 100%; max-width: 800px; margin: 20px auto; text-align: left; }
-        .faq-section h2 { text-align: center; color: var(--gold); margin-bottom: 20px; }
-        .faq-item { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
-        .faq-question { padding: 15px; cursor: pointer; font-weight: bold; color: #ddd; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .faq-question:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
-        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: #aaa; font-size: 14px; line-height: 1.6; }
+        .faq-section h2 { text-align: center; color: var(--gold-dark); margin-bottom: 20px; }
+        .faq-item { background: #fff; border: 1px solid #eee; border-radius: 8px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .faq-question { padding: 15px; cursor: pointer; font-weight: bold; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .faq-question:hover { background: rgba(212, 175, 55, 0.05); color: var(--gold-dark); }
+        .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-gray); font-size: 14px; line-height: 1.6; }
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
-        .faq-item.active .faq-question { color: var(--gold); }
+        .faq-item.active .faq-question { color: var(--gold-dark); }
 
         /* ===== 聊天室完美適配 ===== */
-        .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #1a1a1a; border: 1px solid var(--gold); border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #fff; border: 1px solid #eee; border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
         .chat-widget.active { display: flex; }
-        .chat-header { background: #222; padding: 12px 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-weight: bold; border-bottom: 1px solid #333; }
+        .chat-header { background: #fff; padding: 12px 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--text-dark); font-weight: bold; border-bottom: 1px solid #eee; }
         .chat-header-info { display: flex; align-items: center; gap: 10px; }
         .chat-header-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
         .chat-header-text { display: flex; flex-direction: column; }
-        .chat-header-name { font-size: 14px; color: #fff; }
-        .chat-header-status { font-size: 11px; color: #00c800; font-weight: normal; display: flex; align-items: center; gap: 4px; }
+        .chat-header-name { font-size: 14px; color: var(--text-dark); }
+        .chat-header-status { font-size: 11px; color: #00a000; font-weight: normal; display: flex; align-items: center; gap: 4px; }
         .chat-header-status::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #00c800; border-radius: 50%; animation: blink 1.5s infinite; }
-        .chat-close { cursor: pointer; font-size: 20px; color: #888; padding: 5px; }
-        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+        .chat-close { cursor: pointer; font-size: 20px; color: #999; padding: 5px; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; background: #fafafa;}
         .msg { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.4; word-break: break-word; }
-        .msg.user { align-self: flex-end; background: #00c800; color: #000; border-bottom-right-radius: 0; }
-        .msg.admin { align-self: flex-start; background: #333; color: #fff; border-bottom-left-radius: 0; }
-        .msg-time { font-size: 10px; color: #888; margin-top: 3px; }
-        .chat-input-area { padding: 10px; border-top: 1px solid #333; display: flex; gap: 8px; align-items: center; background: #1a1a1a; border-radius: 0 0 12px 12px; }
-        .chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #444; background: #222; color: #fff; outline: none; font-size: 14px; }
-        .chat-input-area button { padding: 10px 15px; border-radius: 20px; border: none; background: var(--gold); color: #000; font-weight: bold; cursor: pointer; white-space: nowrap; }
-        .chat-welcome { text-align: center; color: #888; font-size: 12px; padding: 10px; }
-        .chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid rgba(255,255,255,0.15); }
-        .chat-body .chat-video { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; background: #000; border: 1px solid rgba(255,255,255,0.15); }
+        .msg.user { align-self: flex-end; background: #d4af37; color: #fff; border-bottom-right-radius: 0; }
+        .msg.admin { align-self: flex-start; background: #fff; color: var(--text-dark); border-bottom-left-radius: 0; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
+        .msg-time { font-size: 10px; color: #aaa; margin-top: 3px; text-align: right; }
+        .chat-input-area { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 8px; align-items: center; background: #fff; border-radius: 0 0 12px 12px; }
+        .chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #ddd; background: #f9f9f9; color: var(--text-dark); outline: none; font-size: 14px; }
+        .chat-welcome { text-align: center; color: #aaa; font-size: 12px; padding: 10px; }
+        .chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid #eee; }
+        .chat-body .chat-video { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; background: #000; border: 1px solid #eee; }
         .msg.user .chat-img, .msg.user .chat-video { margin-left: auto; }
 
-        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2900; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2900; opacity: 0; visibility: hidden; transition: 0.3s; }
         .cart-overlay.active { opacity: 1; visibility: visible; }
-        .cart-drawer { position: fixed; top: 0; right: 0; width: 380px; max-width: 100%; height: 100%; background: #1a1a1a; border-left: 1px solid var(--gold); z-index: 2950; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,0.8); }
+        .cart-drawer { position: fixed; top: 0; right: 0; width: 380px; max-width: 100%; height: 100%; background: #fff; border-left: 1px solid #eee; z-index: 2950; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,0.1); }
         .cart-drawer.active { transform: translateX(0); }
-        .cart-header { padding: 15px 20px; background: #222; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h3 { color: var(--gold); margin: 0; font-size: 17px; }
-        .cart-close { color: #888; font-size: 26px; cursor: pointer; line-height: 1; }
-        .cart-close:hover { color: #fff; }
-        .cart-body { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .cart-empty { color: #666; text-align: center; margin-top: 60px; font-size: 14px; }
-        .cart-item { display: flex; gap: 12px; background: #222; border: 1px solid #333; border-radius: 10px; padding: 10px; }
-        .cart-item img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #333; }
+        .cart-header { padding: 15px 20px; background: #fff; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h3 { color: var(--text-dark); margin: 0; font-size: 17px; }
+        .cart-close { color: #999; font-size: 26px; cursor: pointer; line-height: 1; }
+        .cart-close:hover { color: #000; }
+        .cart-body { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background: #fafafa;}
+        .cart-empty { color: #999; text-align: center; margin-top: 60px; font-size: 14px; }
+        .cart-item { display: flex; gap: 12px; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .cart-item img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #eee; }
         .cart-item-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-        .cart-item-name { color: var(--gold); font-size: 13px; font-weight: bold; line-height: 1.3; }
+        .cart-item-name { color: var(--text-dark); font-size: 13px; font-weight: bold; line-height: 1.3; }
         .cart-item-row { display: flex; align-items: center; gap: 8px; justify-content: space-between; flex-wrap: wrap; }
-        .cart-budget-select { background: #111; border: 1px solid #444; color: #ccc; border-radius: 5px; padding: 4px 6px; font-size: 12px; }
+        .cart-budget-select { background: #f5f5f5; border: 1px solid #ddd; color: var(--text-dark); border-radius: 5px; padding: 4px 6px; font-size: 12px; }
         .qty-ctrl { display: flex; align-items: center; gap: 6px; }
-        .qty-ctrl button { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #444; background: #111; color: var(--gold); cursor: pointer; font-size: 14px; line-height: 1; }
-        .qty-ctrl span { min-width: 20px; text-align: center; font-size: 14px; }
+        .qty-ctrl button { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ddd; background: #fff; color: var(--gold-dark); cursor: pointer; font-size: 14px; line-height: 1; }
+        .qty-ctrl span { min-width: 20px; text-align: center; font-size: 14px; color: var(--text-dark);}
         .cart-item-del { background: transparent; border: none; color: #ff4757; cursor: pointer; font-size: 16px; }
-        .cart-footer { padding: 15px 20px; border-top: 1px solid #333; background: #222; }
-        .cart-total { color: #ccc; font-size: 14px; margin-bottom: 10px; text-align: center; }
-        .cart-total span { color: var(--gold); font-weight: bold; font-size: 16px; }
-        .cart-checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #111; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .cart-checkout-btn:hover { filter: brightness(1.1); }
+        .cart-footer { padding: 15px 20px; border-top: 1px solid #eee; background: #fff; }
+        .cart-total { color: var(--text-dark); font-size: 14px; margin-bottom: 10px; text-align: center; }
+        .cart-total span { color: var(--gold-dark); font-weight: bold; font-size: 16px; }
+        .cart-checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(212,175,55,0.3);}
+        .cart-checkout-btn:hover { filter: brightness(1.1); transform: translateY(-2px);}
 
-        .site-footer { width: 100%; max-width: 1200px; text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #333; color: #666; font-size: 13px; }
-        .site-footer a { color: #aaa; text-decoration: none; margin: 0 10px; transition: 0.3s; cursor: pointer; }
-        .site-footer a:hover { color: var(--gold); }
+        .site-footer { width: 100%; max-width: 1200px; text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #ddd; color: #999; font-size: 13px; }
+        .site-footer a { color: var(--text-gray); text-decoration: none; margin: 0 10px; transition: 0.3s; cursor: pointer; }
+        .site-footer a:hover { color: var(--gold-dark); }
         .legal-modal .modal-content { text-align: left; }
         .legal-modal h2 { text-align: center; margin-bottom: 20px; }
-        .legal-modal h3 { color: #ccc; font-size: 15px; margin-top: 20px; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 10px; }
-        .legal-modal p { color: #888; font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
+        .legal-modal h3 { color: var(--text-dark); font-size: 15px; margin-top: 20px; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 10px; }
+        .legal-modal p { color: var(--text-gray); font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
 
-        .image-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; visibility: hidden; transition: 0.3s; }
+        /* 圖片燈箱 (白底版) */
+        .image-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; visibility: hidden; transition: 0.3s; }
         .image-lightbox.active { opacity: 1; visibility: visible; }
-        .image-lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
-        .image-lightbox .close-icon { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .image-lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); object-fit: contain; }
+        .image-lightbox .close-icon { position: absolute; top: 20px; right: 30px; color: var(--text-dark); font-size: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .image-lightbox .close-icon:hover { color: #ff4757; transform: scale(1.1); }
 
         @media (max-width: 600px) {
@@ -274,7 +288,7 @@
 </head>
 <body>
 
-    <!-- 頂部跑馬燈 (假購買整合在此) -->
+    <!-- 頂部跑馬燈 -->
     <div class="marquee-container">
         <div class="marquee-text" id="marqueeText">
             🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
@@ -309,7 +323,7 @@
             <div class="line-text">
                 <h3>📱 真人客服：小美 為您服務</h3>
                 <p>真人一對一在線回覆，安心有保障<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
-                <p style="font-size: 12px; color: var(--gold); margin-top: 6px; text-decoration: underline;">👉 點擊頭像或此處立即諮詢</p>
+                <p style="font-size: 12px; color: var(--gold-dark); margin-top: 6px; text-decoration: underline;">👉 點擊頭像或此處立即諮詢</p>
             </div>
         </div>
 
@@ -327,17 +341,17 @@
             <div class="buyer-show-card">
                 <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
                 <p>"實體真的超美！戴去聚會朋友以為我花了好幾十萬，物流也很快！"</p>
-                <span>- 新北市 陳先生 (購買：勞力士水鬼)</span>
+                <span>- 新北市 陳先生 (購買：經典水鬼款)</span>
             </div>
             <div class="buyer-show-card">
                 <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
                 <p>"包裝很嚴實，開箱那一刻真的有驚豔到，客服回覆也很即時。"</p>
-                <span>- 台中市 林小姐 (購買：愛彼皇家橡樹)</span>
+                <span>- 台中市 林小姐 (購買：奢華運動款)</span>
             </div>
             <div class="buyer-show-card">
                 <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
                 <p>"原本很怕貨到付款買到假的，結果質感直接拉滿，絕對物超所值！"</p>
-                <span>- 高雄市 張先生 (購買：沛納海)</span>
+                <span>- 高雄市 張先生 (購買：經典黑面款)</span>
             </div>
         </div>
     </div>
@@ -348,11 +362,11 @@
         </div>
         <div class="category-tabs" id="categoryTabs">
             <button class="category-btn active" onclick="setCategory('全部', this)">全部</button>
-            <button class="category-btn" onclick="setCategory('勞力士', this)">勞力士</button>
-            <button class="category-btn" onclick="setCategory('歐米茄', this)">歐米茄</button>
-            <button class="category-btn" onclick="setCategory('愛彼', this)">愛彼</button>
-            <button class="category-btn" onclick="setCategory('沛納海', this)">沛納海</button>
-            <button class="category-btn" onclick="setCategory('百達翡麗', this)">百達翡麗</button>
+            <button class="category-btn" onclick="setCategory('經典款', this)">經典款</button>
+            <button class="category-btn" onclick="setCategory('運動款', this)">運動款</button>
+            <button class="category-btn" onclick="setCategory('奢華款', this)">奢華款</button>
+            <button class="category-btn" onclick="setCategory('潛水款', this)">潛水款</button>
+            <button class="category-btn" onclick="setCategory('計時款', this)">計時款</button>
         </div>
     </div>
 
@@ -394,7 +408,7 @@
             <a onclick="openLegal('return')">退換貨政策</a>
         </div>
         <div>&copy; 2026 尊享腕錶 精品展示. All rights reserved.</div>
-        <div style="font-size: 11px; margin-top: 10px; color: #555;">本網站商品均為嚴選品質，非原廠公司貨。</div>
+        <div style="font-size: 11px; margin-top: 10px; color: #999;">本網站商品均為嚴選品質，非原廠公司貨。</div>
     </div>
 
     <div class="modal-overlay legal-modal" id="legalModal">
@@ -418,10 +432,10 @@
                     </div>
                 </div>
 
-                <div id="modalCartSummary" style="display:none; background:#111; border:1px solid #333; border-radius:8px; padding:10px; margin:8px 0 12px; font-size:13px; color:#ccc; text-align:left; line-height:1.7;"></div>
+                <div id="modalCartSummary" style="display:none; background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:10px; margin:8px 0 12px; font-size:13px; color:var(--text-dark); text-align:left; line-height:1.7;"></div>
 
                 <div id="budgetSelectorWrap" style="text-align: left; margin-bottom: 15px;">
-                    <p style="color: #aaa; font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
+                    <p style="color: var(--text-gray); font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
                     <div class="budget-selector">
                         <button type="button" class="budget-btn active" onclick="selectBudget(this, '基礎')">基礎</button>
                         <button type="button" class="budget-btn" onclick="selectBudget(this, '高端')">高端</button>
@@ -461,18 +475,18 @@
             </div>
 
             <div id="successContainer" style="display: none;">
-                <h2 style="color: #00c800; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
-                <p style="color: #ddd; margin-bottom: 20px; font-size: 14px;">系統已收到您的資料！<br>正在為您跳轉至 LINE 客服為您報價...</p>
+                <h2 style="color: #00a000; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 14px;">系統已收到您的資料！<br>正在為您跳轉至 LINE 客服為您報價...</p>
 
                 <a id="mobile-line-btn" href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: none; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4); text-align: center;">
                     📱 若未自動跳轉，點此加入 LINE
                 </a>
 
                 <div id="desktop-line-box" style="display: none; padding: 10px 0;">
-                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0,200,0,0.3);">
+                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0,200,0,0.2); border: 1px solid #eee;">
                         <img src="images/line-qr.jpg" alt="LINE QR Code" style="width: 150px; height: 150px; display: block; border-radius: 5px;" onerror="this.src='https://via.placeholder.com/150x150?text=QR+Code'">
                     </div>
-                    <p style="color: #fff; font-size: 14px; margin: 0;">📷 請用手機 LINE 掃描上方 QR Code</p>
+                    <p style="color: var(--text-dark); font-size: 14px; margin: 0;">📷 請用手機 LINE 掃描上方 QR Code</p>
                 </div>
             </div>
         </div>
@@ -482,7 +496,7 @@
     <div class="modal-overlay" id="budgetSelectModal" style="z-index: 4000;">
         <div class="budget-modal-content">
             <h3>請選擇您的預算區間</h3>
-            <p id="budgetModalProductName" style="color:#fff; font-weight:bold; font-size:14px;"></p>
+            <p id="budgetModalProductName" style="color:var(--text-dark); font-weight:bold; font-size:14px;"></p>
             <div class="budget-modal-btns">
                 <button class="budget-modal-btn" onclick="confirmAddToCart('基礎')">
                     <div>💎 基礎款</div><span class="price">約 $6,000</span>
@@ -506,7 +520,7 @@
 
     <div class="floating-btns">
         <button class="float-btn" id="cartFloatBtn" onclick="toggleCart()" title="購物車"
-                style="background:#00bcd4; color:#fff; font-size:24px;">🛒
+                style="background:#fff; color:var(--gold-dark); font-size:24px; border:1px solid var(--gold);">🛒
             <span class="chat-badge" id="cartBadge">0</span>
         </button>
         <button class="float-btn btn-chat" title="線上客服" onclick="toggleChat()">💬
@@ -547,13 +561,13 @@
         </div>
         <div class="chat-input-area">
             <input type="file" id="chatFileInput" accept="image/*" hidden onchange="handleChatImage(this)">
-            <button onclick="document.getElementById('chatFileInput').click()" style="padding:10px; border-radius:50%; background:#333; color:#00bcd4; border:none; cursor:pointer; font-size:16px;" title="傳送圖片">📷</button>
+            <button onclick="document.getElementById('chatFileInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#00bcd4; border:none; cursor:pointer; font-size:16px;" title="傳送圖片">📷</button>
             
             <input type="file" id="chatVideoInput" accept="video/*" hidden onchange="handleChatVideo(this)">
-            <button onclick="document.getElementById('chatVideoInput').click()" style="padding:10px; border-radius:50%; background:#333; color:#ff4757; border:none; cursor:pointer; font-size:16px;" title="傳送影片">📹</button>
+            <button onclick="document.getElementById('chatVideoInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#ff4757; border:none; cursor:pointer; font-size:16px;" title="傳送影片">📹</button>
 
             <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()">送出</button>
+            <button onclick="sendChatMessage()" style="background:var(--gold); color:#fff;">送出</button>
         </div>
     </div>
 
@@ -589,59 +603,60 @@
             selectedBudget = budget;
         }
 
+        // 為了合規與視覺統一，這裡的款式名稱已將品牌字眼移除
         const watchData = {
-            1: { name: "勞力士 GMT-Master II (沙士圈 半金)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
-            2: { name: "沛納海 Luminor Marina (藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
-            3: { name: "歐米茄 海馬 300 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", images: ["images/3.webp"] },
-            4: { name: "愛彼 皇家橡樹 (玫瑰金黑面)", desc: "霸氣玫瑰金，Tapisserie 格紋面盤。", images: ["images/4.webp"] },
-            5: { name: "沛納海 Luminor Marina (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", images: ["images/5.webp"] },
-            6: { name: "愛彼 皇家橡樹 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", images: ["images/6.webp"] },
-            7: { name: "勞力士 水鬼 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", images: ["images/7.webp"] },
-            8: { name: "勞力士 Datejust (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", images: ["images/8.webp"] },
-            9: { name: "勞力士 Air-King", desc: "航空傳奇，獨特黑面數字時標。", images: ["images/9.webp"] },
-            10: { name: "勞力士 Yacht-Master (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", images: ["images/10.webp"] },
-            11: { name: "歐米茄 海馬 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", images: ["images/11.webp"] },
-            12: { name: "沛納海 Luminor Marina (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", images: ["images/12.webp"] },
-            13: { name: "勞力士 綠水鬼", desc: "超人氣綠水鬼，一錶難求。", images: ["images/13.webp"] },
-            14: { name: "勞力士 水鬼 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", images: ["images/14.webp"] },
-            15: { name: "勞力士 Day-Date (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", images: ["images/15.webp"] },
-            16: { name: "勞力士 GMT-Master II (百事圈)", desc: "紅藍百事圈，超人氣款。", images: ["images/16.webp"] },
-            17: { name: "勞力士 蠔式恒動 (彩色慶典面盤)", desc: "活潑亮眼的慶典面盤。", images: ["images/17.webp"] },
-            18: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", images: ["images/18.webp"] },
-            19: { name: "歐米茄 海馬 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", images: ["images/19.webp"] },
-            20: { name: "沛納海 Luminor (全黑陶瓷)", desc: "全黑面盤，黑色皮帶，低調神秘。", images: ["images/20.webp"] },
-            21: { name: "沛納海 Submersible (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", images: ["images/21.webp"] },
-            22: { name: "歐米茄 海馬 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", images: ["images/22.webp"] },
-            23: { name: "勞力士 Explorer II (白面橘針)", desc: "探險家II，兩地時區。", images: ["images/23.webp"] },
-            24: { name: "勞力士 Day-Date (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", images: ["images/24.webp"] },
-            25: { name: "愛彼 皇家橡樹 (玫瑰金黑面皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", images: ["images/25.webp"] },
-            26: { name: "愛彼 皇家橡樹 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", images: ["images/26.webp"] },
-            27: { name: "勞力士 Datejust (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", images: ["images/27.webp"] },
-            28: { name: "沛納海 Luminor Marina (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", images: ["images/28.webp"] },
-            29: { name: "勞力士 黑水鬼", desc: "黑水鬼經典款，保值首選。", images: ["images/29.webp"] },
-            30: { name: "沛納海 Luminor (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", images: ["images/30.webp"] },
-            31: { name: "勞力士 海使型 Deepsea (漸變藍)", desc: "深潛王者，霸氣外露。", images: ["images/31.webp"] },
-            32: { name: "勞力士 GMT-Master II (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", images: ["images/32.webp"] },
-            33: { name: "勞力士 Datejust (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", images: ["images/33.webp"] },
-            34: { name: "愛彼 皇家橡樹 Offshore (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
-            35: { name: "勞力士 GMT-Master II (百事圈 五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
-            36: { name: "愛彼 皇家橡樹 Offshore (黑面橡膠帶)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
-            37: { name: "百達翡麗 Aquanaut (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
-            38: { name: "歐米茄 海馬 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
-            39: { name: "勞力士 Daytona (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
-            40: { name: "百達翡麗 Aquanaut (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", images: ["images/40.webp"] },
-            41: { name: "勞力士 Daytona (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", images: ["images/41.webp"] },
-            42: { name: "百達翡麗 Aquanaut (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", images: ["images/42.webp"] },
-            43: { name: "歐米茄 海馬 Planet Ocean (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", images: ["images/43.webp"] },
-            44: { name: "百達翡麗 鸚鵡螺 (藍面)", desc: "經典藍色橫紋面盤，鋼款鸚鵡螺。", images: ["images/44.webp"] },
-            45: { name: "歐米茄 海馬 Planet Ocean (藍面)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", images: ["images/45.webp"] },
-            46: { name: "百達翡麗 Aquanaut (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", images: ["images/46.webp"] },
-            47: { name: "百達翡麗 Aquanaut (黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", images: ["images/47.webp"] },
-            48: { name: "勞力士 Datejust (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", images: ["images/48.webp"] },
-            49: { name: "歐米茄 海馬 300 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/49.webp"] },
-            50: { name: "勞力士 Yacht-Master (玫瑰金黑面)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", images: ["images/50.webp"] },
-            51: { name: "勞力士 Daytona (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", images: ["images/51.webp"] },
-            52: { name: "勞力士 GMT-Master II (綠黑圈 五珠帶)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
+            1: { name: "經典 GMT 兩地時區款 (半金沙士圈)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
+            2: { name: "頂級潛水腕錶 (深海藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
+            3: { name: "300米專業潛水款 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", images: ["images/3.webp"] },
+            4: { name: "奢華運動八角腕錶 (玫瑰金黑面)", desc: "霸氣玫瑰金，格紋面盤。", images: ["images/4.webp"] },
+            5: { name: "經典潛水腕錶 (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", images: ["images/5.webp"] },
+            6: { name: "奢華運動八角腕錶 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", images: ["images/6.webp"] },
+            7: { name: "經典潛水款 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", images: ["images/7.webp"] },
+            8: { name: "經典日曆款 (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", images: ["images/8.webp"] },
+            9: { name: "傳奇飛行腕錶 (黑面數字)", desc: "航空傳奇，獨特黑面數字時標。", images: ["images/9.webp"] },
+            10: { name: "奢華遊艇腕錶 (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", images: ["images/10.webp"] },
+            11: { name: "專業潛水款 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", images: ["images/11.webp"] },
+            12: { name: "經典潛水腕錶 (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", images: ["images/12.webp"] },
+            13: { name: "超人氣綠面潛水款", desc: "超人氣綠水鬼，一錶難求。", images: ["images/13.webp"] },
+            14: { name: "經典潛水款 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", images: ["images/14.webp"] },
+            15: { name: "尊貴星期日曆款 (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", images: ["images/15.webp"] },
+            16: { name: "經典 GMT 兩地時區款 (紅藍圈)", desc: "紅藍百事圈，超人氣款。", images: ["images/16.webp"] },
+            17: { name: "活潑彩色面盤腕錶", desc: "活潑亮眼的慶典面盤。", images: ["images/17.webp"] },
+            18: { name: "奢華運動計時碼錶 (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", images: ["images/18.webp"] },
+            19: { name: "專業潛水款 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", images: ["images/19.webp"] },
+            20: { name: "全黑陶瓷潛水腕錶", desc: "全黑面盤，黑色皮帶，低調神秘。", images: ["images/20.webp"] },
+            21: { name: "專業潛水腕錶 (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", images: ["images/21.webp"] },
+            22: { name: "經典潛水款 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", images: ["images/22.webp"] },
+            23: { name: "探險家兩地時區款 (白面橘針)", desc: "探險家II，兩地時區。", images: ["images/23.webp"] },
+            24: { name: "尊貴星期日曆款 (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", images: ["images/24.webp"] },
+            25: { name: "奢華運動八角腕錶 (玫瑰金皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", images: ["images/25.webp"] },
+            26: { name: "奢華運動八角腕錶 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", images: ["images/26.webp"] },
+            27: { name: "經典日曆款 (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", images: ["images/27.webp"] },
+            28: { name: "經典潛水腕錶 (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", images: ["images/28.webp"] },
+            29: { name: "經典黑面潛水款", desc: "黑水鬼經典款，保值首選。", images: ["images/29.webp"] },
+            30: { name: "奢華潛水腕錶 (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", images: ["images/30.webp"] },
+            31: { name: "深潛王者腕錶 (漸變藍)", desc: "深潛王者，霸氣外露。", images: ["images/31.webp"] },
+            32: { name: "經典 GMT 兩地時區款 (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", images: ["images/32.webp"] },
+            33: { name: "經典日曆款 (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", images: ["images/33.webp"] },
+            34: { name: "奢華運動計時碼錶 (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
+            35: { name: "經典 GMT 兩地時區款 (紅藍五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
+            36: { name: "奢華運動計時碼錶 (黑面橡膠)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
+            37: { name: "頂級運動優雅款 (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
+            38: { name: "專業潛水款 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
+            39: { name: "經典計時碼錶 (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
+            40: { name: "頂級運動優雅款 (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", images: ["images/40.webp"] },
+            41: { name: "經典計時碼錶 (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", images: ["images/41.webp"] },
+            42: { name: "頂級運動優雅款 (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", images: ["images/42.webp"] },
+            43: { name: "600米深潛腕錶 (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", images: ["images/43.webp"] },
+            44: { name: "頂級奢華鸚鵡螺款 (藍面)", desc: "經典藍色橫紋面盤，鋼款。", images: ["images/44.webp"] },
+            45: { name: "600米深潛腕錶 (藍面NATO帶)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", images: ["images/45.webp"] },
+            46: { name: "頂級運動優雅款 (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", images: ["images/46.webp"] },
+            47: { name: "頂級運動優雅款 (經典黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", images: ["images/47.webp"] },
+            48: { name: "經典日曆款 (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", images: ["images/48.webp"] },
+            49: { name: "專業潛水款 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/49.webp"] },
+            50: { name: "奢華遊艇腕錶 (玫瑰金橡膠帶)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", images: ["images/50.webp"] },
+            51: { name: "經典計時碼錶 (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", images: ["images/51.webp"] },
+            52: { name: "經典 GMT 兩地時區款 (綠黑圈)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
         };
 
         let allIds = Array.from({length: 52}, (_, i) => i + 1);
@@ -1380,7 +1395,7 @@
                 <h3>🛡️ 7天鑑賞期，不滿意包退</h3>
                 <p>您享有商品貨到後 7 天內的無條件退貨權益。退換貨運費由本公司全額吸收，您不需付一毛錢。</p>
                 <h3>📦 無腦退換貨 3 步驟：</h3>
-                <div style="background: #111; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                <div style="background: #f9f9f9; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
                     <p style="margin-bottom: 8px;"><strong style="color: #d4af37;">步驟 1：</strong> 拍下商品問題處（或直接說不想買了）。</p>
                     <p style="margin-bottom: 8px;"><strong style="color: #d4af37;">步驟 2：</strong> 透過網站右下角的「線上客服」或 LINE 聯繫我們。</p>
                     <p style="margin-bottom: 0;"><strong style="color: #d4af37;">步驟 3：</strong> 我們直接請黑貓宅急便去您家收貨，換新或退款秒處理。</p>
