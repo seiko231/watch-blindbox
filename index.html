@@ -609,8 +609,11 @@
         }
 
         // ============================================================
-        // ===== 商品資料：優先讀 products 表，失敗才用備援 =====
+        // ===== 商品資料：100% 由資料庫（後台）控制 =====
         // ============================================================
+        const EXPECTED_PRODUCT_COUNT = 52;   // 前台標題顯示的期望數量參考值
+        const AUTO_FILL_FALLBACK = false;    // false = 完全以 products 表為準，不足 52 筆就照實顯示
+
         const RAW_FALLBACK = {
             1: { name: "經典 GMT 兩地時區款 (半金沙士圈)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
             2: { name: "頂級潛水腕錶 (深海藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
@@ -666,7 +669,7 @@
             52: { name: "經典 GMT 兩地時區款 (綠黑圈)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
         };
 
-        // 從名稱推分類（備援資料沒有 category 欄位時使用）
+        // 從名稱推分類（資料庫沒有 category 時使用）
         function inferCategory(name) {
             if (name.includes('潛水') || name.includes('深潛')) return '潛水款';
             if (name.includes('計時')) return '計時款';
@@ -690,6 +693,7 @@
 
         let watchData = {};
         let hotItems = [];
+        let productsChannel = null;   // 後台改商品 → 前台即時更新
 
         function computeHotItems() {
             const ids = Object.keys(watchData).map(Number);
@@ -700,42 +704,111 @@
             hotItems = ids.slice(0, Math.min(20, ids.length));
         }
 
-        async function loadProducts() {
+        // 資料庫可能回傳多種 images 格式，統一成陣列
+        function normalizeImages(raw) {
+            if (!raw) return [];
+            if (Array.isArray(raw)) return raw.map(x => String(x).trim()).filter(Boolean);
+            if (typeof raw === 'string') {
+                let s = raw.trim();
+                if (!s) return [];
+                if (s.startsWith('[')) {
+                    try {
+                        const arr = JSON.parse(s);
+                        if (Array.isArray(arr)) return arr.map(x => String(x).trim()).filter(Boolean);
+                    } catch (e) {}
+                }
+                if (s.startsWith('{') && s.endsWith('}')) s = s.slice(1, -1);
+                return s.split(/[,\n]/).map(x => x.trim().replace(/^"|"$/g, '')).filter(Boolean);
+            }
+            return [];
+        }
+
+        function mapRowToWatch(p) {
+            const imgs = normalizeImages(p.images);
+            return {
+                name: p.name || '未命名腕錶',
+                desc: p.description || '',
+                category: p.category || inferCategory(p.name || ''),
+                stock: (p.stock === null || p.stock === undefined) ? null : Number(p.stock),
+                images: imgs.length ? imgs : [fallbackImg],
+                price: {
+                    base: Number(p.price_base) || 6000,
+                    mid: Number(p.price_mid) || 12000,
+                    custom: Number(p.price_custom) || 19999
+                }
+            };
+        }
+
+        // 後台異動（新增/編輯/上下架/刪除）→ 前台自動重繪
+        function subscribeProductsRealtime() {
+            if (productsChannel) return;
+            productsChannel = supabase
+                .channel('realtime-products')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, payload => {
+                    console.log('[即時] 商品資料變動，重新載入', payload.eventType);
+                    loadProducts(true);
+                })
+                .subscribe(status => {
+                    if (status === 'SUBSCRIBED') console.log('[即時] 商品頻道已連線');
+                });
+        }
+
+        async function loadProducts(skipRealtime) {
+            let rows = [];
             try {
                 const { data, error } = await supabase
                     .from('products')
                     .select('*')
-                    .eq('is_active', true)
-                    .order('sort_order', { ascending: true });
-
+                    .order('sort_order', { ascending: true })
+                    .order('id', { ascending: true });
                 if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    console.warn('products 表無資料，改用備援商品資料');
-                    watchData = FALLBACK_WATCH_DATA;
-                } else {
-                    watchData = {};
-                    data.forEach(p => {
-                        watchData[p.id] = {
-                            name: p.name,
-                            desc: p.description || '',
-                            category: p.category || inferCategory(p.name || ''),
-                            stock: (p.stock === null || p.stock === undefined) ? null : p.stock,
-                            images: (Array.isArray(p.images) && p.images.length) ? p.images : [fallbackImg],
-                            price: {
-                                base: p.price_base || 6000,
-                                mid: p.price_mid || 12000,
-                                custom: p.price_custom || 19999
-                            }
-                        };
-                    });
-                }
+                rows = Array.isArray(data) ? data : [];
             } catch (err) {
-                console.error('載入商品失敗，改用備援資料：', err);
-                watchData = FALLBACK_WATCH_DATA;
+                console.error('[商品] 讀取 products 表失敗：', err);
             }
+
+            const activeRows = rows.filter(p => p && p.is_active !== false);
+            console.log(`[商品] 資料庫共 ${rows.length} 筆，上架中 ${activeRows.length} 筆`);
+
+            watchData = {};
+            activeRows.forEach(p => {
+                const id = Number(p.id);
+                if (!Number.isFinite(id)) return;
+                watchData[id] = mapRowToWatch(p);
+            });
+
+            const filled = [];
+            if (AUTO_FILL_FALLBACK && Object.keys(watchData).length < EXPECTED_PRODUCT_COUNT) {
+                const usedNames = new Set(Object.values(watchData).map(w => w.name));
+                for (let id = 1; id <= EXPECTED_PRODUCT_COUNT; id++) {
+                    if (watchData[id]) continue;
+                    const fb = FALLBACK_WATCH_DATA[id];
+                    if (!fb) continue;
+                    if (usedNames.has(fb.name)) continue;
+                    watchData[id] = fb;
+                    usedNames.add(fb.name);
+                    filled.push(id);
+                }
+            }
+
+            const total = Object.keys(watchData).length;
+            console.log(`[商品] 最終顯示 ${total} 筆` + (filled.length ? `（備援補上 ${filled.length} 筆）` : ''));
+            if (total === 0) {
+                console.warn('[商品] 目前沒有任何上架商品，請到後台「商品管理」新增或匯入。');
+            } else if (total < EXPECTED_PRODUCT_COUNT) {
+                console.warn(`[商品] 目前僅 ${total} 筆（期望 ${EXPECTED_PRODUCT_COUNT} 筆），請到後台補齊或確認商品是否被下架。`);
+            }
+
             computeHotItems();
+            updateProductCount(total);
             renderProducts();
+
+            if (!skipRealtime) subscribeProductsRealtime();
+        }
+
+        function updateProductCount(total) {
+            const sub = document.querySelector('.header-section .subtitle');
+            if (sub && total > 0) sub.textContent = `精選 ${total} 款經典腕錶，請挑選您的最愛`;
         }
 
         function priceOf(id, budget) {
@@ -759,13 +832,21 @@
         function renderProducts() {
             productGrid.innerHTML = '';
             const ids = Object.keys(watchData).map(Number).sort((a, b) => a - b);
+
+            if (ids.length === 0) {
+                productGrid.innerHTML = `<div class="empty-hint"><span>📭</span>目前沒有上架中的商品<br>請到後台「商品管理」新增</div>`;
+                return;
+            }
+
+            // 卡片左上角編號 = 顯示順序（不依賴資料庫 id）
+            const seqMap = new Map(ids.map((id, idx) => [id, idx + 1]));
             let shown = 0;
 
             ids.forEach(i => {
                 const watch = watchData[i];
                 if (!watch) return;
                 if (currentCategory !== '全部' && watch.category !== currentCategory) return;
-                if (currentSearch && !watch.name.toLowerCase().includes(currentSearch.toLowerCase())) return;
+                if (currentSearch && !String(watch.name || '').toLowerCase().includes(currentSearch.toLowerCase())) return;
 
                 shown++;
                 const mainImgSrc = (watch.images && watch.images[0]) ? watch.images[0] : fallbackImg;
@@ -774,18 +855,19 @@
                     ? `<div style="font-size:11px; color:#ff4757; margin-bottom:8px;">⚠️ 庫存僅剩 ${watch.stock} 支</div>` : '';
                 const price = watch.price || { base: 6000, custom: 19999 };
                 const priceText = `<div class="price-tag">專屬價：$${Number(price.base).toLocaleString()} - $${Number(price.custom).toLocaleString()}</div>`;
+                const imagesJson = escapeHtmlF(JSON.stringify(watch.images || []));
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
 
                 card.innerHTML = `
-                    <div class="product-image-wrapper" data-images='${JSON.stringify(watch.images || [])}'>
+                    <div class="product-image-wrapper" data-images="${imagesJson}">
                         <div class="loader" id="loader-${i}"></div>
-                        <div class="image-number-badge">${i}</div>
+                        <div class="image-number-badge">${seqMap.get(i)}</div>
                         ${showHotBadge}
-                        <img src="${mainImgSrc}" loading="lazy" alt="${escapeHtmlF(watch.name)}"
-                             onload="this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';"
-                             onerror="this.onerror=null; this.src='${fallbackImg}'; this.classList.add('loaded'); document.getElementById('loader-${i}').style.display='none';">
+                        <img src="${escapeHtmlF(mainImgSrc)}" loading="lazy" decoding="async" alt="${escapeHtmlF(watch.name)}"
+                             onload="this.classList.add('loaded'); var l=document.getElementById('loader-${i}'); if(l) l.style.display='none';"
+                             onerror="this.onerror=null; this.src='${fallbackImg}'; this.classList.add('loaded'); var l=document.getElementById('loader-${i}'); if(l) l.style.display='none';">
                     </div>
                     <div class="product-info">
                         <h3>${escapeHtmlF(watch.name)}</h3>
@@ -823,7 +905,7 @@
         function setCategory(cat, btn) {
             currentCategory = cat;
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
             renderProducts();
         }
 
@@ -1510,6 +1592,9 @@
         // ===== 啟動 =====
         // ============================================================
         loadProducts();
+
+        // 保險：Realtime 對「下架 / 刪除」的事件會被 RLS 過濾，用低頻輪詢補上
+        setInterval(() => { loadProducts(true); }, 60000);
     </script>
 </body>
 </html>
