@@ -32,6 +32,7 @@
 
         .panel-section { background: #222; padding: 20px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; text-align: left; }
         .panel-section h2 { color: #d4af37; font-size: 18px; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .panel-hint { font-size: 12px; color: #888; margin-bottom: 10px; line-height: 1.6; }
 
         .visitor-overview { display: flex; align-items: center; gap: 30px; background: #1a1a1a; padding: 20px 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 15px; }
         .overview-total { text-align: center; padding-right: 30px; border-right: 1px solid #333; }
@@ -66,7 +67,7 @@
         .order-table tr:hover { background: rgba(212, 175, 55, 0.05); }
         .order-items-detail { font-size: 12px; color: #00bcd4; margin-top: 5px; line-height: 1.4; }
 
-        .btn-group { display: flex; gap: 5px; align-items: center; }
+        .btn-group { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
         .status-btn { padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; border: none; transition: 0.3s; white-space: nowrap;}
         .status-pending { background: #ffc107; color: #000; }
         .status-shipped { background: #00c800; color: #fff; }
@@ -77,6 +78,8 @@
         .print-btn:hover { background: #ab47bc; }
         .del-btn { background: #ff4757; color: #fff; }
         .del-btn:hover { background: #ff6b81; }
+        .call-btn { background: #ff9800; color: #fff; text-decoration: none; display: inline-flex; align-items: center; }
+        .call-btn:hover { background: #fb8c00; }
 
         .logout-btn { padding: 8px 20px; background: transparent; color: #888; border: 1px solid #888; border-radius: 5px; cursor: pointer; font-size: 13px; margin-top: 10px; transition: 0.3s; }
         .logout-btn:hover { color: #fff; border-color: #fff; }
@@ -362,6 +365,9 @@
                 💬 即時客服對話（每位訪客獨立）
                 <button onclick="refreshChatSessionList()" style="padding: 4px 10px; font-size: 12px; background: transparent; border: 1px solid #d4af37; color: #d4af37; border-radius: 4px; cursor: pointer; margin-left: 10px;">🔄 重新整理</button>
             </h2>
+            <div class="panel-hint">
+                ⚠️ 這裡的訊息只在客人「頁面開著」時才會即時送達；若客人已關頁，訊息會等他下次打開網站才看到。
+            </div>
             <div class="admin-chat-container">
                 <ul class="admin-chat-list" id="admin-chat-list">
                     <li style="color: #666; text-align: center; cursor: default;">載入中...</li>
@@ -394,7 +400,7 @@
                     <button onclick="openProductModal()" style="background:#00c800; color:#fff;">➕ 新增商品</button>
                 </span>
             </h2>
-            <div style="font-size:12px; color:#777; margin-bottom:10px;">
+            <div class="panel-hint">
                 這裡改的東西會直接生效在前台首頁；「上架」關掉＝前台立刻看不到。大量上架請用下方工具列的「📄 CSV 大量匯入」。
             </div>
             <div style="overflow-x: auto;" id="prodTableBox">
@@ -413,6 +419,9 @@
 
         <div class="panel-section">
             <h2>📋 訂單管理</h2>
+            <div class="panel-hint">
+                💡 客人關閉網頁後收不到站內訊息通知：重要事項請用 <b style="color:#ff9800;">📞</b> 直接撥號，或請客人加 LINE。
+            </div>
             <div class="toolbar">
                 <input type="text" id="search-input" placeholder="🔍 搜尋姓名或電話...">
                 <input type="date" id="start-date">
@@ -724,17 +733,19 @@
                     const safeAddress = (order.customer_address || '').replace(/'/g, "\\'");
                     const safeProduct = (order.product_name || '').replace(/'/g, "\\'");
                     const sid = order.session_id || '';
+                    const phone = order.customer_phone || '';
 
                     tr.innerHTML = `
                         <td data-label="時間" style="white-space: nowrap;">${time}</td>
                         <td data-label="商品">${productDisplay}</td>
                         <td data-label="姓名">${order.customer_name || '-'}</td>
-                        <td data-label="電話" style="color: #00c800; font-weight: bold;">${order.customer_phone || '-'}</td>
+                        <td data-label="電話" style="color: #00c800; font-weight: bold;">${phone || '-'}</td>
                         <td data-label="地址">${order.customer_address || '-'}</td>
                         <td data-label="操作">
                             <div class="btn-group">
                                 <button class="status-btn ${btnClass}" onclick="toggleStatus(${order.id}, '${order.status || 'pending'}')">${btnText}</button>
                                 ${sid ? `<button class="action-btn" style="background:#00c864; color:#fff;" onclick="openCustomerChat('${sid}')" title="與此客戶對話">💬</button>` : ''}
+                                ${phone ? `<a href="tel:${phone}" class="action-btn call-btn" title="直接撥打 ${phone}">📞</a>` : ''}
                                 <button class="action-btn copy-btn" onclick="copyInfo('${safeName}', '${order.customer_phone}', '${safeAddress}', '${safeProduct}')" title="複製收件資訊">📋</button>
                                 <button class="action-btn print-btn" onclick="printOrder('${time}', '${safeName}', '${order.customer_phone}', '${safeAddress}', '${safeProduct}')" title="列印出貨單">🖨️</button>
                                 <button class="action-btn del-btn" onclick="deleteOrder(${order.id}, '${safeName}')" title="刪除訂單">🗑️</button>
@@ -978,7 +989,7 @@
             const listEl = document.getElementById('admin-chat-list');
             listEl.innerHTML = '<li style="color: #888; text-align: center; cursor: default;">載入中...</li>';
 
-            await loadOrderSessionMap();   // ★ 先抓「session → 客戶」
+            await loadOrderSessionMap();
 
             const { data, error } = await supabase
                 .from('chat_messages')
