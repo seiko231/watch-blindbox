@@ -137,6 +137,29 @@
         .image-lightbox .close-icon { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .image-lightbox .close-icon:hover { color: #ff4757; transform: scale(1.1); }
 
+        /* ===== 商品管理 ===== */
+        .prod-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .prod-table th, .prod-table td { padding: 10px; border-bottom: 1px solid #333; text-align: left; vertical-align: middle; }
+        .prod-table th { color: #d4af37; background: #1a1a1a; white-space: nowrap; }
+        .prod-table tr:hover { background: rgba(212, 175, 55, 0.05); }
+        .prod-thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; border: 1px solid #444; background: #000; cursor: zoom-in; }
+        .prod-toggle { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; }
+        .prod-toggle input { opacity: 0; width: 0; height: 0; }
+        .prod-toggle span { position: absolute; inset: 0; background: #555; border-radius: 24px; cursor: pointer; transition: .3s; }
+        .prod-toggle span::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .3s; }
+        .prod-toggle input:checked + span { background: #00c800; }
+        .prod-toggle input:checked + span::before { transform: translateX(20px); }
+        .prod-modal .add-modal-content { max-width: 620px; max-height: 90vh; overflow-y: auto; }
+        .prod-modal label { font-size: 12px; color: #999; display: block; margin: 8px 0 4px; }
+        .prod-modal textarea { width: 100%; min-height: 80px; padding: 10px; background: #333; border: 1px solid #555; color: #fff; border-radius: 5px; box-sizing: border-box; font-family: inherit; font-size: 13px; resize: vertical; }
+        .prod-modal .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .prod-modal .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .prod-modal .add-modal-content input { margin-bottom: 0; }
+        .prod-img-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .prod-img-preview img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; border: 1px solid #444; }
+        .panel-h2-actions { margin-left: auto; display: flex; gap: 8px; }
+        .panel-h2-actions button { padding: 6px 12px; font-size: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; border: none; }
+
         @media (max-width: 900px) {
             .charts-container { grid-template-columns: 1fr; }
             .visitor-overview { flex-direction: column; gap: 20px; padding: 20px; }
@@ -295,6 +318,34 @@
             </div>
         </div>
 
+        <!-- ===== 商品管理（與前台 products 表聯動） ===== -->
+        <div class="panel-section">
+            <h2>
+                🛍️ 商品管理
+                <span id="prod-count-label" style="font-size:12px; color:#888; font-weight:normal; margin-left:8px;">共 0 筆</span>
+                <span class="panel-h2-actions">
+                    <button onclick="loadAdminProducts()" style="background:transparent; border:1px solid #d4af37; color:#d4af37;">🔄 重新整理</button>
+                    <button onclick="importDefaultProducts()" style="background:#9c27b0; color:#fff;">📦 一鍵匯入 52 筆預設</button>
+                    <button onclick="openProductModal()" style="background:#00c800; color:#fff;">➕ 新增商品</button>
+                </span>
+            </h2>
+            <div style="font-size:12px; color:#777; margin-bottom:10px;">
+                這裡改的東西會直接生效在前台首頁；「上架」關掉＝前台立刻看不到（前台有開實時監聽，不必重新整理）。
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="prod-table">
+                    <thead>
+                        <tr>
+                            <th>預覽</th><th>排序</th><th>商品名稱</th><th>分類</th><th>價格區間</th><th>庫存</th><th>上架</th><th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prod-list">
+                        <tr><td colspan="8" style="text-align:center; color:#666;">載入中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="panel-section">
             <h2>📋 訂單管理</h2>
             <div class="toolbar">
@@ -335,6 +386,67 @@
         </div>
     </div>
 
+    <!-- 商品新增／編輯彈窗 -->
+    <div class="add-modal prod-modal" id="productModal">
+        <div class="add-modal-content">
+            <h3 id="productModalTitle">➕ 新增商品</h3>
+
+            <label>商品名稱 *</label>
+            <input type="text" id="pf-name" placeholder="例：41mm 經典黑面腕錶">
+
+            <label>簡短描述（前台卡片灰字）</label>
+            <textarea id="pf-desc" placeholder="例：黑色面盤，鋼帶，三針日期。"></textarea>
+
+            <div class="row2">
+                <div>
+                    <label>分類</label>
+                    <select id="pf-category">
+                        <option value="經典款">經典款</option>
+                        <option value="運動款">運動款</option>
+                        <option value="奢華款">奢華款</option>
+                        <option value="潛水款">潛水款</option>
+                        <option value="計時款">計時款</option>
+                    </select>
+                </div>
+                <div>
+                    <label>庫存（留空 = 不顯示庫存警示）</label>
+                    <input type="number" id="pf-stock" placeholder="留空表示不限">
+                </div>
+            </div>
+
+            <div class="row3">
+                <div><label>基礎價</label><input type="number" id="pf-base" value="6000"></div>
+                <div><label>高端價</label><input type="number" id="pf-mid" value="12000"></div>
+                <div><label>定製價</label><input type="number" id="pf-custom" value="19999"></div>
+            </div>
+
+            <label>商品圖片網址（一行一個，第一張是封面）</label>
+            <textarea id="pf-images" oninput="updateProdPreview()" placeholder="images/1.webp&#10;https://xxxx.supabase.co/storage/v1/object/public/products/1.webp"></textarea>
+            <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
+                <input type="file" id="pf-file" accept="image/*" multiple hidden onchange="uploadProductImages(this)">
+                <button type="button" class="btn-cancel" style="padding:8px 12px; font-size:12px; flex:none;" onclick="document.getElementById('pf-file').click()">📤 上傳圖片</button>
+                <span id="pf-upload-status" style="font-size:12px; color:#888;"></span>
+            </div>
+            <div class="prod-img-preview" id="pf-preview"></div>
+
+            <div class="row2" style="margin-top:12px;">
+                <div><label>排序（數字小的排前面）</label><input type="number" id="pf-sort" value="1"></div>
+                <div>
+                    <label>上架狀態</label>
+                    <select id="pf-active">
+                        <option value="true">上架（前台顯示）</option>
+                        <option value="false">下架（前台隱藏）</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="add-modal-btns">
+                <button class="btn-cancel" onclick="closeProductModal()">取消</button>
+                <button class="btn-save" id="pf-save-btn" onclick="saveProduct()">儲存</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 圖片放大檢視器 -->
     <div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()">
         <span class="close-icon" onclick="closeImageLightbox()">&times;</span>
@@ -366,13 +478,8 @@
         const watchNames = ["勞力士 GMT-Master II", "沛納海 Luminor Marina", "歐米茄 海馬 300", "愛彼 皇家橡樹", "沛納海 Luminor", "勞力士 水鬼", "勞力士 Datejust", "勞力士 Air-King", "勞力士 Yacht-Master", "百達翡麗 Aquanaut", "百達翡麗 鸚鵡螺", "勞力士 Daytona"];
 
         window.onload = async function() {
-            const select = document.getElementById('addProduct');
-            watchNames.forEach(name => {
-                const opt = document.createElement('option');
-                opt.value = name;
-                opt.textContent = name;
-                select.appendChild(opt);
-            });
+            // 手動補單的商品選單改由 products 表帶入（與前台同一份資料）
+            await loadAddOrderProductOptions();
 
             const { data: { session } } = await supabase.auth.getSession();
             if (session) showAdminPanel(session.user.email);
@@ -474,6 +581,7 @@
             loadViewCount();
             loadSystemClicks();
             initAdminChat();
+            loadAdminProducts();
         }
 
         async function loadViewCount() {
@@ -1080,6 +1188,366 @@
             allChatSessions[currentChatSession].lastMessage = '[圖片]';
             allChatSessions[currentChatSession].lastTime = new Date();
             renderChatSessionList();
+        }
+
+        // ============================================================
+        // ===== 商品管理：後台寫 products 表，前台即時讀取（聯動） =====
+        // ============================================================
+        const PRODUCT_IMG_BUCKET = 'products';   // Supabase Storage bucket（需設為 public）
+        let adminProducts = [];
+        let editingProductId = null;
+
+        function inferCategory(name) {
+            if (name.includes('潛水') || name.includes('深潛')) return '潛水款';
+            if (name.includes('計時')) return '計時款';
+            if (name.includes('奢華') || name.includes('尊貴') || name.includes('鸚鵡螺') || name.includes('遊艇')) return '奢華款';
+            if (name.includes('運動') || name.includes('GMT') || name.includes('兩地') || name.includes('探險') || name.includes('飛行')) return '運動款';
+            return '經典款';
+        }
+
+        function normalizeImages(raw) {
+            if (!raw) return [];
+            if (Array.isArray(raw)) return raw.map(x => String(x).trim()).filter(Boolean);
+            if (typeof raw === 'string') {
+                let s = raw.trim();
+                if (!s) return [];
+                if (s.startsWith('[')) {
+                    try {
+                        const arr = JSON.parse(s);
+                        if (Array.isArray(arr)) return arr.map(x => String(x).trim()).filter(Boolean);
+                    } catch (e) {}
+                }
+                if (s.startsWith('{') && s.endsWith('}')) s = s.slice(1, -1);
+                return s.split(/[,\n]/).map(x => x.trim().replace(/^"|"$/g, '')).filter(Boolean);
+            }
+            return [];
+        }
+
+        // ---------- 讀取列表 ----------
+        async function loadAdminProducts() {
+            const tbody = document.getElementById('prod-list');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#666;">載入中...</td></tr>';
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .order('sort_order', { ascending: true })
+                    .order('id', { ascending: true });
+                if (error) throw error;
+                adminProducts = data || [];
+                renderAdminProducts();
+            } catch (err) {
+                console.error('載入商品失敗', err);
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#ff4757;">載入失敗：${escapeHtml(err.message)}<br>請確認 products 表存在、且 RLS 允許登入管理員讀取</td></tr>`;
+            }
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('prod-list');
+            const label = document.getElementById('prod-count-label');
+            if (label) label.textContent = `共 ${adminProducts.length} 筆`;
+
+            if (!adminProducts.length) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#666;">尚無商品，點右上角「📦 一鍵匯入 52 筆預設」開始</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = adminProducts.map(p => {
+                const imgs = normalizeImages(p.images);
+                const cover = imgs[0] || '';
+                const active = p.is_active !== false;
+                const coverHtml = cover
+                    ? `<img src="${escapeHtml(cover)}" class="prod-thumb" onclick="openImageLightbox(this.src)" onerror="this.style.opacity=0.2">`
+                    : '<span style="color:#666; font-size:11px;">無圖</span>';
+                return `
+                    <tr>
+                        <td data-label="預覽">${coverHtml}</td>
+                        <td data-label="排序" style="color:#888;">${p.sort_order == null ? 0 : p.sort_order}</td>
+                        <td data-label="名稱" style="color:#fff; font-weight:bold;">
+                            ${escapeHtml(p.name)}
+                            <div style="font-size:11px; color:#666; margin-top:3px;">ID: ${p.id} ・ ${imgs.length} 張圖</div>
+                        </td>
+                        <td data-label="分類"><span style="font-size:12px; padding:3px 8px; border:1px solid #d4af37; color:#d4af37; border-radius:10px;">${escapeHtml(p.category || '未分類')}</span></td>
+                        <td data-label="價格" style="white-space:nowrap; color:#00c800;">
+                            $${Number(p.price_base || 0).toLocaleString()}
+                            <br><span style="color:#666; font-size:11px;">~ $${Number(p.price_custom || 0).toLocaleString()}</span>
+                        </td>
+                        <td data-label="庫存">${p.stock == null ? '<span style="color:#666;">∞</span>' : p.stock}</td>
+                        <td data-label="上架">
+                            <label class="prod-toggle">
+                                <input type="checkbox" ${active ? 'checked' : ''} onchange="toggleProductActive(${p.id}, this.checked)">
+                                <span></span>
+                            </label>
+                        </td>
+                        <td data-label="操作">
+                            <div class="btn-group">
+                                <button class="action-btn copy-btn" onclick="openProductModal(${p.id})" title="編輯">✏️</button>
+                                <button class="action-btn del-btn" onclick="deleteProduct(${p.id})" title="刪除">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ---------- 新增／編輯 ----------
+        function openProductModal(id) {
+            editingProductId = id ? Number(id) : null;
+            const p = id ? adminProducts.find(x => Number(x.id) === Number(id)) : null;
+
+            document.getElementById('productModalTitle').textContent = p ? '✏️ 編輯商品' : '➕ 新增商品';
+            document.getElementById('pf-name').value = p ? (p.name || '') : '';
+            document.getElementById('pf-desc').value = p ? (p.description || '') : '';
+            document.getElementById('pf-category').value = p ? (p.category || inferCategory(p.name || '')) : '經典款';
+            document.getElementById('pf-stock').value = (p && p.stock != null) ? p.stock : '';
+            document.getElementById('pf-base').value = p ? (p.price_base == null ? 6000 : p.price_base) : 6000;
+            document.getElementById('pf-mid').value = p ? (p.price_mid == null ? 12000 : p.price_mid) : 12000;
+            document.getElementById('pf-custom').value = p ? (p.price_custom == null ? 19999 : p.price_custom) : 19999;
+            document.getElementById('pf-sort').value = p ? (p.sort_order == null ? 0 : p.sort_order) : (adminProducts.length + 1);
+            document.getElementById('pf-active').value = (p && p.is_active === false) ? 'false' : 'true';
+            document.getElementById('pf-images').value = p ? normalizeImages(p.images).join('\n') : '';
+            document.getElementById('pf-upload-status').textContent = '';
+            updateProdPreview();
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+            editingProductId = null;
+        }
+
+        function updateProdPreview() {
+            const box = document.getElementById('pf-preview');
+            const list = document.getElementById('pf-images').value.split('\n').map(s => s.trim()).filter(Boolean);
+            box.innerHTML = list.map(src => `<img src="${escapeHtml(src)}" onerror="this.style.opacity=0.2">`).join('');
+        }
+
+        // ---------- 圖片上傳到 Storage ----------
+        async function uploadProductImages(input) {
+            const files = Array.from(input.files || []);
+            if (!files.length) return;
+            const status = document.getElementById('pf-upload-status');
+            const ta = document.getElementById('pf-images');
+
+            for (let i = 0; i < files.length; i++) {
+                const f = files[i];
+                status.style.color = '#888';
+                status.textContent = `上傳中 ${i + 1}/${files.length}...`;
+                const ext = (f.name.split('.').pop() || 'jpg').toLowerCase();
+                const path = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`;
+                const { error } = await supabase.storage
+                    .from(PRODUCT_IMG_BUCKET)
+                    .upload(path, f, { cacheControl: '3600', upsert: false });
+
+                if (error) {
+                    status.style.color = '#ff4757';
+                    status.textContent = '上傳失敗：' + error.message;
+                    alert('上傳失敗：' + error.message + '\n（請確認 Storage 已建立 public bucket，名稱為 ' + PRODUCT_IMG_BUCKET + '）');
+                    break;
+                }
+                const { data } = supabase.storage.from(PRODUCT_IMG_BUCKET).getPublicUrl(path);
+                ta.value = (ta.value.trim() ? ta.value.trim() + '\n' : '') + data.publicUrl;
+            }
+            status.style.color = '#00c800';
+            status.textContent = '✅ 完成';
+            input.value = '';
+            updateProdPreview();
+        }
+
+        // ---------- 儲存 ----------
+        async function saveProduct() {
+            const name = document.getElementById('pf-name').value.trim();
+            if (!name) { alert('請填寫商品名稱'); return; }
+
+            const images = document.getElementById('pf-images').value
+                .split('\n').map(s => s.trim()).filter(Boolean);
+            const stockRaw = document.getElementById('pf-stock').value.trim();
+
+            const payload = {
+                name: name,
+                description: document.getElementById('pf-desc').value.trim(),
+                category: document.getElementById('pf-category').value,
+                images: images,
+                price_base: Number(document.getElementById('pf-base').value) || 6000,
+                price_mid: Number(document.getElementById('pf-mid').value) || 12000,
+                price_custom: Number(document.getElementById('pf-custom').value) || 19999,
+                stock: stockRaw === '' ? null : Number(stockRaw),
+                sort_order: Number(document.getElementById('pf-sort').value) || 0,
+                is_active: document.getElementById('pf-active').value === 'true'
+            };
+
+            const btn = document.getElementById('pf-save-btn');
+            btn.disabled = true;
+            btn.textContent = '儲存中...';
+            try {
+                let error;
+                if (editingProductId) {
+                    const res = await supabase.from('products').update(payload).eq('id', editingProductId);
+                    error = res.error;
+                } else {
+                    const res = await supabase.from('products').insert([payload]);
+                    error = res.error;
+                }
+                if (error) throw error;
+                closeProductModal();
+                await loadAdminProducts();
+                await loadAddOrderProductOptions();
+            } catch (err) {
+                console.error(err);
+                alert('儲存失敗：' + err.message + '\n（請確認 RLS 允許 authenticated 寫入 products）');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '儲存';
+            }
+        }
+
+        // ---------- 上架開關（前台即時生效） ----------
+        async function toggleProductActive(id, checked) {
+            try {
+                const { error } = await supabase.from('products').update({ is_active: checked }).eq('id', id);
+                if (error) throw error;
+                const local = adminProducts.find(x => Number(x.id) === Number(id));
+                if (local) local.is_active = checked;
+                await loadAddOrderProductOptions();
+            } catch (err) {
+                alert('更新失敗：' + err.message);
+                await loadAdminProducts();
+            }
+        }
+
+        // ---------- 刪除 ----------
+        async function deleteProduct(id) {
+            const p = adminProducts.find(x => Number(x.id) === Number(id));
+            if (!confirm(`確定要刪除「${p ? p.name : id}」嗎？\n刪除後前台會立刻消失，且無法復原。`)) return;
+            try {
+                const { error } = await supabase.from('products').delete().eq('id', id);
+                if (error) throw error;
+                await loadAdminProducts();
+                await loadAddOrderProductOptions();
+            } catch (err) {
+                alert('刪除失敗：' + err.message);
+            }
+        }
+
+        // ---------- 一鍵匯入 52 筆預設商品 ----------
+        const DEFAULT_PRODUCTS = [
+            ["經典 GMT 兩地時區款 (半金沙士圈)", "半金材質，黑面棕黑圈，經典復古。", ["images/1.webp", "images/1-2.webp"]],
+            ["頂級潛水腕錶 (深海藍面)", "深海藍面盤，搭配藍色帆布錶帶。", ["images/2.webp"]],
+            ["300米專業潛水款 (黑面橡膠帶)", "波浪紋黑面盤，潛水經典。", ["images/3.webp"]],
+            ["奢華運動八角腕錶 (玫瑰金黑面)", "霸氣玫瑰金，格紋面盤。", ["images/4.webp"]],
+            ["經典潛水腕錶 (黑面灰帶)", "黑面盤，搭配灰色帆布錶帶。", ["images/5.webp"]],
+            ["奢華運動八角腕錶 (白面鋼款)", "經典白面，剛毅金屬質感。", ["images/6.webp"]],
+            ["經典潛水款 (半金黑面)", "半金黑水鬼，經典不敗款。", ["images/7.webp"]],
+            ["經典日曆款 (銀白面鋼款)", "三角坑紋錶圈，五珠鍊帶。", ["images/8.webp"]],
+            ["傳奇飛行腕錶 (黑面數字)", "航空傳奇，獨特黑面數字時標。", ["images/9.webp"]],
+            ["奢華遊艇腕錶 (黑面橡膠帶)", "遊艇名仕型，低調奢華。", ["images/10.webp"]],
+            ["專業潛水款 (白面橘針)", "清爽白面，橘色秒針點綴。", ["images/11.webp"]],
+            ["經典潛水腕錶 (黑面金針)", "黑面盤，金色指針，配黑色皮帶。", ["images/12.webp"]],
+            ["超人氣綠面潛水款", "超人氣綠水鬼，一錶難求。", ["images/13.webp"]],
+            ["經典潛水款 (半金藍面)", "藍水鬼半金款，亮眼奪目。", ["images/14.webp"]],
+            ["尊貴星期日曆款 (全金黑面)", "元首型鍊帶，身分地位象徵。", ["images/15.webp"]],
+            ["經典 GMT 兩地時區款 (紅藍圈)", "紅藍百事圈，超人氣款。", ["images/16.webp"]],
+            ["活潑彩色面盤腕錶", "活潑亮眼的慶典面盤。", ["images/17.webp"]],
+            ["奢華運動計時碼錶 (黑面橡膠帶)", "計時碼錶，霸氣黑面。", ["images/18.webp"]],
+            ["專業潛水款 (白面藍針)", "白面搭配藍色指針與藍色橡膠帶。", ["images/19.webp"]],
+            ["全黑陶瓷潛水腕錶", "全黑面盤，黑色皮帶，低調神秘。", ["images/20.webp"]],
+            ["專業潛水腕錶 (黑面鋼帶)", "潛水系列，剛毅金屬鋼帶。", ["images/21.webp"]],
+            ["經典潛水款 (黑面橡膠帶)", "黑面波浪紋，經典潛水錶。", ["images/22.webp"]],
+            ["探險家兩地時區款 (白面橘針)", "探險家II，兩地時區。", ["images/23.webp"]],
+            ["尊貴星期日曆款 (白金黑面)", "白金材質，黑面，尊貴典雅。", ["images/24.webp"]],
+            ["奢華運動八角腕錶 (玫瑰金皮帶)", "玫瑰金錶殼，搭配黑色皮帶。", ["images/25.webp"]],
+            ["奢華運動八角腕錶 (銀白面)", "經典銀白格紋面盤，金屬質感。", ["images/26.webp"]],
+            ["經典日曆款 (銀白面半金)", "半金材質，三角坑紋錶圈。", ["images/27.webp"]],
+            ["經典潛水腕錶 (黑面綠帶)", "黑面盤，搭配軍綠色皮帶。", ["images/28.webp"]],
+            ["經典黑面潛水款", "黑水鬼經典款，保值首選。", ["images/29.webp"]],
+            ["奢華潛水腕錶 (玫瑰金黑面)", "玫瑰金錶殼，黑面盤，奢華運動風。", ["images/30.webp"]],
+            ["深潛王者腕錶 (漸變藍)", "深潛王者，霸氣外露。", ["images/31.webp"]],
+            ["經典 GMT 兩地時區款 (藍黑圈)", "蝙蝠俠配色，兩地時區。", ["images/32.webp"]],
+            ["經典日曆款 (黑面鑲鑽)", "低調奢華，鑲鑽時標。", ["images/33.webp"]],
+            ["奢華運動計時碼錶 (黑面鋼帶)", "黑面經典，金屬鋼帶。", ["images/34.webp"]],
+            ["經典 GMT 兩地時區款 (紅藍五珠帶)", "紅藍百事圈，搭配五珠鍊帶。", ["images/35.webp"]],
+            ["奢華運動計時碼錶 (黑面橡膠)", "運動計時碼錶，霸氣黑面。", ["images/36.webp"]],
+            ["頂級運動優雅款 (綠面)", "軍綠色面盤，搭配綠色橡膠錶帶。", ["images/37.webp"]],
+            ["專業潛水款 (藍面鋼帶)", "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", ["images/38.webp"]],
+            ["經典計時碼錶 (白面鋼款)", "熊貓配色計時碼錶，鋼帶。", ["images/39.webp"]],
+            ["頂級運動優雅款 (黑面鋼款)", "黑面盤，不鏽鋼材質，橡膠帶。", ["images/40.webp"]],
+            ["經典計時碼錶 (銀面橡膠帶)", "銀色面盤，搭配橡膠錶帶。", ["images/41.webp"]],
+            ["頂級運動優雅款 (玫瑰金棕面)", "玫瑰金錶殼，棕色面盤，橡膠帶。", ["images/42.webp"]],
+            ["600米深潛腕錶 (黑面橘圈)", "600米深潛，橘黑配色，鋼帶。", ["images/43.webp"]],
+            ["頂級奢華鸚鵡螺款 (藍面)", "經典藍色橫紋面盤，鋼款。", ["images/44.webp"]],
+            ["600米深潛腕錶 (藍面NATO帶)", "深藍面盤，搭配黑藍相間NATO錶帶。", ["images/45.webp"]],
+            ["頂級運動優雅款 (黑面兩地時間)", "具備兩地時間功能，黑面橡膠帶。", ["images/46.webp"]],
+            ["頂級運動優雅款 (經典黑面)", "經典黑面，搭配黑色橡膠錶帶。", ["images/47.webp"]],
+            ["經典日曆款 (黑面半金)", "黑面半金，五珠鍊帶，經典優雅。", ["images/48.webp"]],
+            ["專業潛水款 (白面鋼帶)", "白色波浪紋面盤，搭配不鏽鋼錶帶。", ["images/49.webp"]],
+            ["奢華遊艇腕錶 (玫瑰金橡膠帶)", "玫瑰金錶殼，橡膠錶帶，奢華運動風。", ["images/50.webp"]],
+            ["經典計時碼錶 (黑面鋼款)", "經典計時碼錶，黑面白圈，鋼帶。", ["images/51.webp"]],
+            ["經典 GMT 兩地時區款 (綠黑圈)", "超人綠黑圈，搭配五珠鍊帶。", ["images/52.webp"]]
+        ];
+
+        async function importDefaultProducts() {
+            if (!confirm(`將匯入 ${DEFAULT_PRODUCTS.length} 筆預設商品（同名商品會自動跳過）。\n確定執行嗎？`)) return;
+            try {
+                const { data: exist, error: e1 } = await supabase.from('products').select('name');
+                if (e1) throw e1;
+                const existNames = new Set((exist || []).map(r => r.name));
+
+                const rows = DEFAULT_PRODUCTS
+                    .map((item, idx) => ({ item, idx }))
+                    .filter(x => !existNames.has(x.item[0]))
+                    .map(x => ({
+                        name: x.item[0],
+                        description: x.item[1],
+                        category: inferCategory(x.item[0]),
+                        images: x.item[2],
+                        price_base: 6000,
+                        price_mid: 12000,
+                        price_custom: 19999,
+                        stock: null,
+                        sort_order: x.idx + 1,
+                        is_active: true
+                    }));
+
+                if (!rows.length) { alert('這 52 筆商品資料庫裡都已經有了。'); return; }
+
+                const { error } = await supabase.from('products').insert(rows);
+                if (error) throw error;
+                alert(`✅ 已成功匯入 ${rows.length} 筆商品`);
+                await loadAdminProducts();
+                await loadAddOrderProductOptions();
+            } catch (err) {
+                console.error(err);
+                alert('匯入失敗：' + err.message);
+            }
+        }
+
+        // ---------- 手動補單的商品選單改由資料庫帶入（也是聯動） ----------
+        async function loadAddOrderProductOptions() {
+            const select = document.getElementById('addProduct');
+            if (!select) return;
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('name, is_active')
+                    .order('sort_order', { ascending: true });
+                if (error) throw error;
+                select.innerHTML = '';
+                (data || []).filter(p => p.is_active !== false).forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.name;
+                    opt.textContent = p.name;
+                    select.appendChild(opt);
+                });
+                if (!select.options.length) {
+                    const opt = document.createElement('option');
+                    opt.value = '';
+                    opt.textContent = '（尚無上架商品）';
+                    select.appendChild(opt);
+                }
+            } catch (err) {
+                console.error('載入手動補單商品選單失敗', err);
+            }
         }
 
         function escapeHtml(unsafe) {
