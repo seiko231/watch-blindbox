@@ -1046,7 +1046,7 @@
                     id: c.id, name: c.name, qty: c.qty, budget: c.budget,
                     price: cartPriceOf(c), category: c.category || categoryOf(c.id)
                 }));
-                productName = items.map(i => `${i.name} x${i.qty} (${i.budget})`).join('、');
+                                productName = items.map(i => `${i.name} x${i.qty} $${Number(i.price).toLocaleString()}`).join('、');
                 firstProductId = items[0].id;
             } else {
                 const imgNum = parseInt(form.dataset.imgNum, 10);
@@ -1056,7 +1056,7 @@
                     id: imgNum, name: watch.name, qty: 1, budget: selectedBudget,
                     price: priceOf(imgNum, selectedBudget), category: categoryOf(imgNum)
                 }];
-                productName = `${watch.name} (預算: ${selectedBudget})`;
+                               productName = `${watch.name} $${Number(priceOf(imgNum, selectedBudget)).toLocaleString()}`;
                 firstProductId = imgNum;
             }
 
