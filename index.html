@@ -10,7 +10,6 @@
     <meta property="og:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
     <meta property="og:type" content="website">
 
-    <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -474,6 +473,9 @@
                     <button type="button" class="submit-btn" id="submitBtn">
                         🔒 確認送出，加 LINE 獲取報價
                     </button>
+                    <div style="font-size:11px; color:#999; margin-top:8px; text-align:center; line-height:1.5;">
+                        送出後請加入 LINE，才能收到訂單進度與客服通知
+                    </div>
                 </form>
             </div>
 
@@ -504,6 +506,9 @@
 
                 <p style="color: var(--gold-dark); font-size: 13px; margin: 14px 0 0; font-weight: bold;">
                     💬 您也可以直接在右下角聊天室與客服對話
+                </p>
+                <p style="color: #ff4757; font-size: 12px; margin: 8px 0 0; line-height: 1.5;">
+                    ※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE
                 </p>
             </div>
         </div>
@@ -574,7 +579,18 @@
             <div class="chat-close" onclick="toggleChat()">&times;</div>
         </div>
         <div class="chat-body" id="chatBody">
-            <div class="chat-welcome">👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？</div>
+            <div class="chat-welcome">
+                👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？
+                <div style="margin-top:10px; padding:10px; background:#fff8e1; border:1px dashed #d4af37; border-radius:8px; color:#8a6d3b; font-size:12px; line-height:1.6; text-align:left;">
+                    ⚠️ 關閉網頁後就收不到客服訊息了<br>
+                    建議先加入我們的 LINE 官方帳號 👇
+                    <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener"
+                       style="display:block; margin-top:8px; padding:10px; background:#00c800; color:#fff; border-radius:6px;
+                              text-align:center; font-weight:bold; text-decoration:none; font-size:13px;">
+                        📱 加入 LINE 官方帳號
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="chat-input-area">
             <input type="file" id="chatFileInput" accept="image/*" hidden onchange="handleChatImage(this)">
@@ -623,7 +639,7 @@
         }
 
         // ============================================================
-        // ===== 商品資料：100% 由資料庫控制，支援任意數量（分頁＋伺服器搜尋） =====
+        // ===== 商品資料：資料庫控制，支援任意數量（分頁＋伺服器搜尋） =====
         // ============================================================
         const PAGE_SIZE = 24;
 
@@ -1021,7 +1037,6 @@
             if (event.target === lightbox || event.target.classList.contains('gallery-track')) closeLightbox();
         });
 
-        // 成功頁：按鈕與 QR 一律顯示（不依裝置隱藏）
         function checkDeviceForLine() {
             const btn = document.getElementById('mobile-line-btn');
             const box = document.getElementById('desktop-line-box');
@@ -1095,7 +1110,7 @@
                     items: items,
                     total_amount: totalAmount,
                     status: 'pending',
-                    session_id: sessionId            // ★ 綁定聊天室，後台才對得到人
+                    session_id: sessionId
                 }]);
                 if (error) throw error;
 
@@ -1112,15 +1127,10 @@
                 if (btnEl) btnEl.href = lineUrl;
                 if (qrLink) qrLink.href = lineUrl;
 
-                // ★ 自動打開站內聊天室，客人可直接留言
                 const chatW = document.getElementById('chatWidget');
                 if (chatW && !chatW.classList.contains('active')) {
                     toggleChat();
                 }
-
-                // 想同時自動跳 LINE，把下面兩行取消註解（延遲 4 秒）
-                // const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-                // setTimeout(() => { isMobile ? (window.location.href = lineUrl) : window.open(lineUrl, '_blank'); }, 4000);
 
             } catch (err) {
                 console.error('送出失敗:', err);
@@ -1190,9 +1200,7 @@
                 if (!error && typeof data === 'number') {
                     document.getElementById('realOrderCount').innerText = (12500 + data).toLocaleString();
                 }
-            } catch (err) {
-                // 讀不到就維持預設顯示
-            }
+            } catch (err) {}
         }
         fetchRealStats();
 
@@ -1329,7 +1337,7 @@
                 const badge = document.getElementById('chatBadge');
                 badge.style.display = 'none';
                 badge.textContent = '0';
-                stopTitleFlash();   // ★ 停止標題閃爍
+                stopTitleFlash();
                 setTimeout(() => {
                     const input = document.getElementById('chatInput');
                     if (input) input.focus();
@@ -1490,7 +1498,6 @@
                         badge.style.display = 'flex';
                         badge.textContent = String((parseInt(badge.textContent, 10) || 0) + 1);
 
-                        // ★ 提醒
                         playNotifySound();
                         startTitleFlash();
                         showDesktopNotification(msg.msg_type === 'image' ? '客服傳了一張圖片' : (msg.message || '客服有新訊息'));
@@ -1498,7 +1505,6 @@
                 })
             .subscribe();
 
-        // 使用者回到頁面時停止閃爍
         document.addEventListener('visibilitychange', function () {
             if (document.visibilityState === 'visible') {
                 const w = document.getElementById('chatWidget');
