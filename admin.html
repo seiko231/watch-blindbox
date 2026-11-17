@@ -1544,7 +1544,7 @@
             }
         }
 
-        // ---------- 複製商品（大量上架時好用） ----------
+        // ---------- 複製商品 ----------
         async function duplicateProduct(id) {
             const p = adminProducts.find(x => Number(x.id) === Number(id));
             if (!p) return;
