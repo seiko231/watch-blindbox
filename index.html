@@ -6,7 +6,7 @@
     <title>尊享腕錶 精品展示</title>
 
     <meta property="og:title" content="尊享腕錶 精品展示 | 嚴選高質感腕錶">
-    <meta property="og:description" content="精選 52 款經典腕錶，全台貨到付款、7天鑑賞期。立即加入 LINE 獲取專屬報價！">
+    <meta property="og:description" content="精選多款經典腕錶，全台貨到付款、7天鑑賞期。立即加入 LINE 獲取專屬報價！">
     <meta property="og:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
     <meta property="og:type" content="website">
 
@@ -313,7 +313,7 @@
 
     <div class="header-section">
         <h1>尊享腕錶 精品展示</h1>
-        <div class="subtitle">精選 52 款經典腕錶，請挑選您的最愛</div>
+        <div class="subtitle">精選經典腕錶，請挑選您的最愛</div>
 
         <!-- 第二層：真實數據與互動 -->
         <div class="total-served">
@@ -609,65 +609,19 @@
         }
 
         // ============================================================
-        // ===== 商品資料：100% 由資料庫（後台）控制 =====
+        // ===== 商品資料：100% 由資料庫控制，支援任意數量（分頁＋伺服器搜尋） =====
         // ============================================================
-        const EXPECTED_PRODUCT_COUNT = 52;   // 前台標題顯示的期望數量參考值
-        const AUTO_FILL_FALLBACK = false;    // false = 完全以 products 表為準，不足 52 筆就照實顯示
+        const PAGE_SIZE = 24;   // 每批載入筆數（可改 12 / 24 / 48 / 60）
 
-        const RAW_FALLBACK = {
-            1: { name: "經典 GMT 兩地時區款 (半金沙士圈)", desc: "半金材質，黑面棕黑圈，經典復古。", images: ["images/1.webp", "images/1-2.webp"] },
-            2: { name: "頂級潛水腕錶 (深海藍面)", desc: "深海藍面盤，搭配藍色帆布錶帶。", images: ["images/2.webp"] },
-            3: { name: "300米專業潛水款 (黑面橡膠帶)", desc: "波浪紋黑面盤，潛水經典。", images: ["images/3.webp"] },
-            4: { name: "奢華運動八角腕錶 (玫瑰金黑面)", desc: "霸氣玫瑰金，格紋面盤。", images: ["images/4.webp"] },
-            5: { name: "經典潛水腕錶 (黑面灰帶)", desc: "黑面盤，搭配灰色帆布錶帶。", images: ["images/5.webp"] },
-            6: { name: "奢華運動八角腕錶 (白面鋼款)", desc: "經典白面，剛毅金屬質感。", images: ["images/6.webp"] },
-            7: { name: "經典潛水款 (半金黑面)", desc: "半金黑水鬼，經典不敗款。", images: ["images/7.webp"] },
-            8: { name: "經典日曆款 (銀白面鋼款)", desc: "三角坑紋錶圈，五珠鍊帶。", images: ["images/8.webp"] },
-            9: { name: "傳奇飛行腕錶 (黑面數字)", desc: "航空傳奇，獨特黑面數字時標。", images: ["images/9.webp"] },
-            10: { name: "奢華遊艇腕錶 (黑面橡膠帶)", desc: "遊艇名仕型，低調奢華。", images: ["images/10.webp"] },
-            11: { name: "專業潛水款 (白面橘針)", desc: "清爽白面，橘色秒針點綴。", images: ["images/11.webp"] },
-            12: { name: "經典潛水腕錶 (黑面金針)", desc: "黑面盤，金色指針，配黑色皮帶。", images: ["images/12.webp"] },
-            13: { name: "超人氣綠面潛水款", desc: "超人氣綠水鬼，一錶難求。", images: ["images/13.webp"] },
-            14: { name: "經典潛水款 (半金藍面)", desc: "藍水鬼半金款，亮眼奪目。", images: ["images/14.webp"] },
-            15: { name: "尊貴星期日曆款 (全金黑面)", desc: "元首型鍊帶，身分地位象徵。", images: ["images/15.webp"] },
-            16: { name: "經典 GMT 兩地時區款 (紅藍圈)", desc: "紅藍百事圈，超人氣款。", images: ["images/16.webp"] },
-            17: { name: "活潑彩色面盤腕錶", desc: "活潑亮眼的慶典面盤。", images: ["images/17.webp"] },
-            18: { name: "奢華運動計時碼錶 (黑面橡膠帶)", desc: "計時碼錶，霸氣黑面。", images: ["images/18.webp"] },
-            19: { name: "專業潛水款 (白面藍針)", desc: "白面搭配藍色指針與藍色橡膠帶。", images: ["images/19.webp"] },
-            20: { name: "全黑陶瓷潛水腕錶", desc: "全黑面盤，黑色皮帶，低調神秘。", images: ["images/20.webp"] },
-            21: { name: "專業潛水腕錶 (黑面鋼帶)", desc: "潛水系列，剛毅金屬鋼帶。", images: ["images/21.webp"] },
-            22: { name: "經典潛水款 (黑面橡膠帶)", desc: "黑面波浪紋，經典潛水錶。", images: ["images/22.webp"] },
-            23: { name: "探險家兩地時區款 (白面橘針)", desc: "探險家II，兩地時區。", images: ["images/23.webp"] },
-            24: { name: "尊貴星期日曆款 (白金黑面)", desc: "白金材質，黑面，尊貴典雅。", images: ["images/24.webp"] },
-            25: { name: "奢華運動八角腕錶 (玫瑰金皮帶)", desc: "玫瑰金錶殼，搭配黑色皮帶。", images: ["images/25.webp"] },
-            26: { name: "奢華運動八角腕錶 (銀白面)", desc: "經典銀白格紋面盤，金屬質感。", images: ["images/26.webp"] },
-            27: { name: "經典日曆款 (銀白面半金)", desc: "半金材質，三角坑紋錶圈。", images: ["images/27.webp"] },
-            28: { name: "經典潛水腕錶 (黑面綠帶)", desc: "黑面盤，搭配軍綠色皮帶。", images: ["images/28.webp"] },
-            29: { name: "經典黑面潛水款", desc: "黑水鬼經典款，保值首選。", images: ["images/29.webp"] },
-            30: { name: "奢華潛水腕錶 (玫瑰金黑面)", desc: "玫瑰金錶殼，黑面盤，奢華運動風。", images: ["images/30.webp"] },
-            31: { name: "深潛王者腕錶 (漸變藍)", desc: "深潛王者，霸氣外露。", images: ["images/31.webp"] },
-            32: { name: "經典 GMT 兩地時區款 (藍黑圈)", desc: "蝙蝠俠配色，兩地時區。", images: ["images/32.webp"] },
-            33: { name: "經典日曆款 (黑面鑲鑽)", desc: "低調奢華，鑲鑽時標。", images: ["images/33.webp"] },
-            34: { name: "奢華運動計時碼錶 (黑面鋼帶)", desc: "黑面經典，金屬鋼帶。", images: ["images/34.webp"] },
-            35: { name: "經典 GMT 兩地時區款 (紅藍五珠帶)", desc: "紅藍百事圈，搭配五珠鍊帶。", images: ["images/35.webp"] },
-            36: { name: "奢華運動計時碼錶 (黑面橡膠)", desc: "運動計時碼錶，霸氣黑面。", images: ["images/36.webp"] },
-            37: { name: "頂級運動優雅款 (綠面)", desc: "軍綠色面盤，搭配綠色橡膠錶帶。", images: ["images/37.webp"] },
-            38: { name: "專業潛水款 (藍面鋼帶)", desc: "深藍色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/38.webp"] },
-            39: { name: "經典計時碼錶 (白面鋼款)", desc: "熊貓配色計時碼錶，鋼帶。", images: ["images/39.webp"] },
-            40: { name: "頂級運動優雅款 (黑面鋼款)", desc: "黑面盤，不鏽鋼材質，橡膠帶。", images: ["images/40.webp"] },
-            41: { name: "經典計時碼錶 (銀面橡膠帶)", desc: "銀色面盤，搭配橡膠錶帶。", images: ["images/41.webp"] },
-            42: { name: "頂級運動優雅款 (玫瑰金棕面)", desc: "玫瑰金錶殼，棕色面盤，橡膠帶。", images: ["images/42.webp"] },
-            43: { name: "600米深潛腕錶 (黑面橘圈)", desc: "600米深潛，橘黑配色，鋼帶。", images: ["images/43.webp"] },
-            44: { name: "頂級奢華鸚鵡螺款 (藍面)", desc: "經典藍色橫紋面盤，鋼款。", images: ["images/44.webp"] },
-            45: { name: "600米深潛腕錶 (藍面NATO帶)", desc: "深藍面盤，搭配黑藍相間NATO錶帶。", images: ["images/45.webp"] },
-            46: { name: "頂級運動優雅款 (黑面兩地時間)", desc: "具備兩地時間功能，黑面橡膠帶。", images: ["images/46.webp"] },
-            47: { name: "頂級運動優雅款 (經典黑面)", desc: "經典黑面，搭配黑色橡膠錶帶。", images: ["images/47.webp"] },
-            48: { name: "經典日曆款 (黑面半金)", desc: "黑面半金，五珠鍊帶，經典優雅。", images: ["images/48.webp"] },
-            49: { name: "專業潛水款 (白面鋼帶)", desc: "白色波浪紋面盤，搭配不鏽鋼錶帶。", images: ["images/49.webp"] },
-            50: { name: "奢華遊艇腕錶 (玫瑰金橡膠帶)", desc: "玫瑰金錶殼，橡膠錶帶，奢華運動風。", images: ["images/50.webp"] },
-            51: { name: "經典計時碼錶 (黑面鋼款)", desc: "經典計時碼錶，黑面白圈，鋼帶。", images: ["images/51.webp"] },
-            52: { name: "經典 GMT 兩地時區款 (綠黑圈)", desc: "超人綠黑圈，搭配五珠鍊帶。", images: ["images/52.webp"] }
-        };
+        let watchData = {};
+        let currentSearch = '';
+        let currentCategory = '全部';
+        let currentIds = [];        // 目前已載入的 id（依排序）
+        let renderedCount = 0;      // 已渲染到第幾筆
+        let totalMatches = 0;       // 符合條件的總筆數（資料庫回傳）
+        let hasMore = true;
+        let isLoadingPage = false;
+        let productsChannel = null;
 
         // 從名稱推分類（資料庫沒有 category 時使用）
         function inferCategory(name) {
@@ -678,33 +632,7 @@
             return '經典款';
         }
 
-        const FALLBACK_WATCH_DATA = {};
-        Object.keys(RAW_FALLBACK).forEach(k => {
-            const w = RAW_FALLBACK[k];
-            FALLBACK_WATCH_DATA[k] = {
-                name: w.name,
-                desc: w.desc,
-                images: w.images,
-                category: inferCategory(w.name),
-                stock: null,
-                price: { base: 6000, mid: 12000, custom: 19999 }
-            };
-        });
-
-        let watchData = {};
-        let hotItems = [];
-        let productsChannel = null;   // 後台改商品 → 前台即時更新
-
-        function computeHotItems() {
-            const ids = Object.keys(watchData).map(Number);
-            for (let i = ids.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [ids[i], ids[j]] = [ids[j], ids[i]];
-            }
-            hotItems = ids.slice(0, Math.min(20, ids.length));
-        }
-
-        // 資料庫可能回傳多種 images 格式，統一成陣列
+        // 資料庫可能回傳多種 images 格式，統一成陣列（jsonb / JSON 字串 / Postgres 陣列 / 逗號分隔）
         function normalizeImages(raw) {
             if (!raw) return [];
             if (Array.isArray(raw)) return raw.map(x => String(x).trim()).filter(Boolean);
@@ -739,118 +667,99 @@
             };
         }
 
-        // 後台異動（新增/編輯/上下架/刪除）→ 前台自動重繪
-        function subscribeProductsRealtime() {
-            if (productsChannel) return;
-            productsChannel = supabase
-                .channel('realtime-products')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, payload => {
-                    console.log('[即時] 商品資料變動，重新載入', payload.eventType);
-                    loadProducts(true);
-                })
-                .subscribe(status => {
-                    if (status === 'SUBSCRIBED') console.log('[即時] 商品頻道已連線');
-                });
+        // 「人氣爆款」用固定規則，不用亂數，換頁／重新載入都不會亂跳
+        function isHot(id) {
+            return (Number(id) * 7919) % 100 < 22;   // 約 22% 的商品會帶標籤
         }
 
-        async function loadProducts(skipRealtime) {
-            let rows = [];
+        // 建立查詢：分頁 + 關鍵字 + 分類（全部在資料庫端過濾）
+        function productsQuery(from, to) {
+            let q = supabase
+                .from('products')
+                .select('*', { count: 'exact' })
+                .eq('is_active', true)
+                .order('sort_order', { ascending: true })
+                .order('id', { ascending: true })
+                .range(from, to);
+
+            const kw = String(currentSearch || '').replace(/[,()%*]/g, ' ').trim();
+            if (kw) q = q.or(`name.ilike.%${kw}%,description.ilike.%${kw}%`);
+            if (currentCategory !== '全部') q = q.eq('category', currentCategory);
+
+            return q;
+        }
+
+        async function loadProducts(append) {
+            if (isLoadingPage) return;
+
+            if (!append) {
+                currentIds = [];
+                renderedCount = 0;
+                watchData = {};
+                totalMatches = 0;
+                hasMore = true;
+                productGrid.innerHTML = '<div class="empty-hint"><span>⏳</span>載入商品中...</div>';
+            }
+
+            isLoadingPage = true;
+            updateLoadMoreUI();
+
+            const from = currentIds.length;
+
             try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .order('sort_order', { ascending: true })
-                    .order('id', { ascending: true });
+                const { data, error, count } = await productsQuery(from, from + PAGE_SIZE - 1);
                 if (error) throw error;
-                rows = Array.isArray(data) ? data : [];
+
+                const rows = data || [];
+                rows.forEach(p => {
+                    const id = Number(p.id);
+                    if (!Number.isFinite(id)) return;
+                    watchData[id] = mapRowToWatch(p);
+                    currentIds.push(id);
+                });
+
+                totalMatches = (typeof count === 'number') ? count : currentIds.length;
+                hasMore = rows.length === PAGE_SIZE && currentIds.length < totalMatches;
+
+                console.log(`[商品] 本批 ${rows.length} 筆，已載入 ${currentIds.length} / ${totalMatches} 筆`);
+                renderProducts(append);
+                updateProductCount(totalMatches);
             } catch (err) {
-                console.error('[商品] 讀取 products 表失敗：', err);
-            }
-
-            const activeRows = rows.filter(p => p && p.is_active !== false);
-            console.log(`[商品] 資料庫共 ${rows.length} 筆，上架中 ${activeRows.length} 筆`);
-
-            watchData = {};
-            activeRows.forEach(p => {
-                const id = Number(p.id);
-                if (!Number.isFinite(id)) return;
-                watchData[id] = mapRowToWatch(p);
-            });
-
-            const filled = [];
-            if (AUTO_FILL_FALLBACK && Object.keys(watchData).length < EXPECTED_PRODUCT_COUNT) {
-                const usedNames = new Set(Object.values(watchData).map(w => w.name));
-                for (let id = 1; id <= EXPECTED_PRODUCT_COUNT; id++) {
-                    if (watchData[id]) continue;
-                    const fb = FALLBACK_WATCH_DATA[id];
-                    if (!fb) continue;
-                    if (usedNames.has(fb.name)) continue;
-                    watchData[id] = fb;
-                    usedNames.add(fb.name);
-                    filled.push(id);
+                console.error('[商品] 讀取失敗：', err);
+                if (!append) {
+                    productGrid.innerHTML = `<div class="empty-hint"><span>⚠️</span>商品載入失敗<br>請稍後重新整理</div>`;
                 }
+            } finally {
+                isLoadingPage = false;
+                updateLoadMoreUI();
+                subscribeProductsRealtime();
+            }
+        }
+
+        function renderProducts(append) {
+            if (!append) {
+                productGrid.innerHTML = '';
+                renderedCount = 0;
             }
 
-            const total = Object.keys(watchData).length;
-            console.log(`[商品] 最終顯示 ${total} 筆` + (filled.length ? `（備援補上 ${filled.length} 筆）` : ''));
-            if (total === 0) {
-                console.warn('[商品] 目前沒有任何上架商品，請到後台「商品管理」新增或匯入。');
-            } else if (total < EXPECTED_PRODUCT_COUNT) {
-                console.warn(`[商品] 目前僅 ${total} 筆（期望 ${EXPECTED_PRODUCT_COUNT} 筆），請到後台補齊或確認商品是否被下架。`);
-            }
-
-            computeHotItems();
-            updateProductCount(total);
-            renderProducts();
-
-            if (!skipRealtime) subscribeProductsRealtime();
-        }
-
-        function updateProductCount(total) {
-            const sub = document.querySelector('.header-section .subtitle');
-            if (sub && total > 0) sub.textContent = `精選 ${total} 款經典腕錶，請挑選您的最愛`;
-        }
-
-        function priceOf(id, budget) {
-            const p = (watchData[id] && watchData[id].price) || { base: 6000, mid: 12000, custom: 19999 };
-            if (budget === '高端') return p.mid;
-            if (budget === '定制') return p.custom;
-            return p.base;
-        }
-
-        function categoryOf(id) {
-            const w = watchData[id];
-            return (w && w.category) ? w.category : '其他';
-        }
-
-        // ============================================================
-        // ===== 商品列表 =====
-        // ============================================================
-        let currentCategory = '全部';
-        let currentSearch = '';
-
-        function renderProducts() {
-            productGrid.innerHTML = '';
-            const ids = Object.keys(watchData).map(Number).sort((a, b) => a - b);
-
-            if (ids.length === 0) {
-                productGrid.innerHTML = `<div class="empty-hint"><span>📭</span>目前沒有上架中的商品<br>請到後台「商品管理」新增</div>`;
+            if (currentIds.length === 0) {
+                const filtered = (currentSearch || currentCategory !== '全部');
+                productGrid.innerHTML = filtered
+                    ? `<div class="empty-hint"><span>🔍</span>查無符合條件的商品<br>換個關鍵字或分類試試</div>`
+                    : `<div class="empty-hint"><span>📭</span>目前沒有上架中的商品<br>請到後台「商品管理」新增</div>`;
                 return;
             }
 
-            // 卡片左上角編號 = 顯示順序（不依賴資料庫 id）
-            const seqMap = new Map(ids.map((id, idx) => [id, idx + 1]));
-            let shown = 0;
+            // 左上角編號 = 顯示順序（不依賴資料庫 id）
+            const seqMap = new Map(currentIds.map((id, idx) => [id, idx + 1]));
+            const slice = append ? currentIds.slice(renderedCount) : currentIds;
 
-            ids.forEach(i => {
+            slice.forEach(i => {
                 const watch = watchData[i];
                 if (!watch) return;
-                if (currentCategory !== '全部' && watch.category !== currentCategory) return;
-                if (currentSearch && !String(watch.name || '').toLowerCase().includes(currentSearch.toLowerCase())) return;
 
-                shown++;
                 const mainImgSrc = (watch.images && watch.images[0]) ? watch.images[0] : fallbackImg;
-                const showHotBadge = hotItems.includes(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
+                const showHotBadge = isHot(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
                 const stockText = (typeof watch.stock === 'number' && watch.stock > 0 && watch.stock <= 3)
                     ? `<div style="font-size:11px; color:#ff4757; margin-bottom:8px;">⚠️ 庫存僅剩 ${watch.stock} 支</div>` : '';
                 const price = watch.price || { base: 6000, custom: 19999 };
@@ -859,7 +768,6 @@
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
-
                 card.innerHTML = `
                     <div class="product-image-wrapper" data-images="${imagesJson}">
                         <div class="loader" id="loader-${i}"></div>
@@ -888,9 +796,117 @@
                 productGrid.appendChild(card);
             });
 
-            if (shown === 0) {
-                productGrid.innerHTML = `<div class="empty-hint"><span>🔍</span>查無符合條件的商品<br>換個關鍵字或分類試試</div>`;
+            renderedCount = currentIds.length;
+        }
+
+        // ---------- 「載入更多」按鈕（自動注入，不用改 HTML） ----------
+        function ensureLoadMoreUI() {
+            if (document.getElementById('loadMoreWrap')) return;
+            const wrap = document.createElement('div');
+            wrap.id = 'loadMoreWrap';
+            wrap.style.cssText = 'width:100%; max-width:1200px; display:flex; flex-direction:column; align-items:center; gap:8px; margin:26px auto 6px;';
+            wrap.innerHTML = `
+                <button id="loadMoreBtn" type="button"
+                    style="padding:14px 40px; border-radius:30px; border:2px solid var(--gold); background:#fff;
+                           color:var(--gold-dark); font-size:15px; font-weight:bold; cursor:pointer; transition:.3s;
+                           box-shadow:0 4px 15px rgba(212,175,55,.18);">
+                    載入更多商品 ⌄
+                </button>
+                <div id="loadMoreHint" style="font-size:13px; color:#999;"></div>
+            `;
+            productGrid.insertAdjacentElement('afterend', wrap);
+            document.getElementById('loadMoreBtn').addEventListener('click', () => {
+                if (hasMore && !isLoadingPage) loadProducts(true);
+            });
+        }
+
+        function updateLoadMoreUI() {
+            ensureLoadMoreUI();
+            const wrap = document.getElementById('loadMoreWrap');
+            const btn = document.getElementById('loadMoreBtn');
+            const hint = document.getElementById('loadMoreHint');
+            if (!wrap || !btn || !hint) return;
+
+            if (totalMatches === 0 && !isLoadingPage) {
+                wrap.style.display = 'none';
+                return;
             }
+            wrap.style.display = 'flex';
+
+            if (isLoadingPage) {
+                btn.disabled = true;
+                btn.style.opacity = 0.6;
+                btn.textContent = '載入中...';
+            } else if (hasMore) {
+                btn.disabled = false;
+                btn.style.opacity = 1;
+                btn.textContent = `載入更多商品（還有 ${Math.max(totalMatches - currentIds.length, 0)} 筆）`;
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = 0.45;
+                btn.textContent = '已全部載入 ✓';
+            }
+            if (totalMatches > 0) hint.textContent = `已顯示 ${currentIds.length} / ${totalMatches} 筆`;
+        }
+
+        // 自動無限滾動（滾到按鈕附近就自動載入下一批）
+        function setupInfiniteScroll() {
+            if (!('IntersectionObserver' in window)) return;
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting && hasMore && !isLoadingPage) loadProducts(true);
+                });
+            }, { rootMargin: '600px' });
+
+            const tryObserve = () => {
+                const btn = document.getElementById('loadMoreBtn');
+                if (btn) io.observe(btn);
+                else setTimeout(tryObserve, 500);
+            };
+            tryObserve();
+        }
+
+        function updateProductCount(total) {
+            const sub = document.querySelector('.header-section .subtitle');
+            if (sub && total > 0) sub.textContent = `精選 ${total} 款經典腕錶，請挑選您的最愛`;
+        }
+
+        function priceOf(id, budget) {
+            const p = (watchData[id] && watchData[id].price) || { base: 6000, mid: 12000, custom: 19999 };
+            if (budget === '高端') return p.mid;
+            if (budget === '定制') return p.custom;
+            return p.base;
+        }
+
+        function categoryOf(id) {
+            const w = watchData[id];
+            return (w && w.category) ? w.category : '其他';
+        }
+
+        // 購物車商品價格（優先用加入當下存下來的價格，避免換頁後抓不到）
+        function cartPriceOf(c) {
+            const p = c.price || (watchData[c.id] && watchData[c.id].price) || { base: 6000, mid: 12000, custom: 19999 };
+            if (c.budget === '高端') return p.mid;
+            if (c.budget === '定制') return p.custom;
+            return p.base;
+        }
+
+        // 後台異動 → 前台重新載入第一頁（防抖 0.8 秒）
+        let realtimeTimer = null;
+        function subscribeProductsRealtime() {
+            if (productsChannel) return;
+            productsChannel = supabase
+                .channel('realtime-products')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {
+                    clearTimeout(realtimeTimer);
+                    realtimeTimer = setTimeout(() => {
+                        console.log('[即時] 商品資料變動，重新載入第一頁');
+                        loadProducts(false);
+                    }, 800);
+                })
+                .subscribe(status => {
+                    if (status === 'SUBSCRIBED') console.log('[即時] 商品頻道已連線');
+                });
         }
 
         let searchTimer = null;
@@ -898,15 +914,15 @@
             clearTimeout(searchTimer);
             searchTimer = setTimeout(() => {
                 currentSearch = document.getElementById('searchInput').value.trim();
-                renderProducts();
-            }, 250);
+                loadProducts(false);   // 搜尋一律回資料庫，不管有幾筆都能找到
+            }, 350);
         }
 
         function setCategory(cat, btn) {
             currentCategory = cat;
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
-            renderProducts();
+            loadProducts(false);
         }
 
         function toggleFaq(element) {
@@ -1041,8 +1057,8 @@
                     name: c.name,
                     qty: c.qty,
                     budget: c.budget,
-                    price: priceOf(c.id, c.budget),
-                    category: categoryOf(c.id)
+                    price: cartPriceOf(c),
+                    category: c.category || categoryOf(c.id)
                 }));
                 productName = items.map(i => `${i.name} x${i.qty} (${i.budget})`).join('、');
                 firstProductId = items[0].id;
@@ -1443,7 +1459,12 @@
                 exist.qty += 1;
                 exist.budget = selected;
             } else {
-                cart.push({ id: pendingCartItemId, name: w.name, image: (w.images && w.images[0]) || fallbackImg, qty: 1, budget: selected });
+                cart.push({
+                    id: pendingCartItemId, name: w.name,
+                    image: (w.images && w.images[0]) || fallbackImg,
+                    qty: 1, budget: selected,
+                    price: w.price, category: w.category
+                });
             }
 
             saveCart();
@@ -1591,10 +1612,8 @@
         // ============================================================
         // ===== 啟動 =====
         // ============================================================
-        loadProducts();
-
-        // 保險：Realtime 對「下架 / 刪除」的事件會被 RLS 過濾，用低頻輪詢補上
-        setInterval(() => { loadProducts(true); }, 60000);
+        loadProducts(false);
+        setupInfiniteScroll();
     </script>
 </body>
 </html>
