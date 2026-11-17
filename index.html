@@ -477,20 +477,34 @@
                 </form>
             </div>
 
+            <!-- 成功頁：按鈕 + 可點擊 QR -->
             <div id="successContainer" style="display: none;">
                 <h2 style="color: #00a000; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
-                <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 14px;">系統已收到您的資料！<br>正在為您跳轉至 LINE 客服為您報價...</p>
+                <p style="color: var(--text-gray); margin-bottom: 16px; font-size: 14px;">
+                    系統已收到您的資料！<br>點下方按鈕直接聯繫客服，馬上為您報價。
+                </p>
 
-                <a id="mobile-line-btn" href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" style="display: none; width: 100%; padding: 16px; background: #00c800; color: #fff; border-radius: 8px; font-size: 18px; font-weight: bold; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 200, 0, 0.4); text-align: center;">
-                    📱 若未自動跳轉，點此加入 LINE
+                <a id="mobile-line-btn" href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener"
+                   style="display:block; width:100%; padding:16px; background:#00c800; color:#fff; border-radius:10px;
+                          font-size:18px; font-weight:bold; text-decoration:none; box-sizing:border-box;
+                          box-shadow:0 6px 18px rgba(0,200,0,0.35); margin-bottom:14px; text-align:center;">
+                    💬 立即聯繫 LINE 客服
                 </a>
 
-                <div id="desktop-line-box" style="display: none; padding: 10px 0;">
-                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0,200,0,0.2); border: 1px solid #eee;">
-                        <img src="images/line-qr.jpg" alt="LINE QR Code" style="width: 150px; height: 150px; display: block; border-radius: 5px;" onerror="this.src='https://via.placeholder.com/150x150?text=QR+Code'">
+                <div id="desktop-line-box" style="padding: 6px 0;">
+                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 0 20px rgba(0,200,0,0.2); border: 1px solid #eee;">
+                        <a id="lineQrLink" href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener" title="點我開啟 LINE">
+                            <img id="lineQrImg" src="images/line-qr.jpg" alt="LINE QR Code"
+                                 style="width: 150px; height: 150px; display: block; border-radius: 5px; cursor: pointer;"
+                                 onerror="this.src='https://via.placeholder.com/150x150?text=QR+Code'">
+                        </a>
                     </div>
-                    <p style="color: var(--text-dark); font-size: 14px; margin: 0;">📷 請用手機 LINE 掃描上方 QR Code</p>
+                    <p style="color: var(--text-dark); font-size: 13px; margin: 10px 0 0;">📷 手機可掃描，或直接點 QR 開啟 LINE</p>
                 </div>
+
+                <p style="color: var(--gold-dark); font-size: 13px; margin: 14px 0 0; font-weight: bold;">
+                    💬 您也可以直接在右下角聊天室與客服對話
+                </p>
             </div>
         </div>
     </div>
@@ -611,7 +625,7 @@
         // ============================================================
         // ===== 商品資料：100% 由資料庫控制，支援任意數量（分頁＋伺服器搜尋） =====
         // ============================================================
-        const PAGE_SIZE = 24;   // 每批載入筆數（可改 12 / 24 / 48 / 60）
+        const PAGE_SIZE = 24;
 
         let watchData = {};
         let currentSearch = '';
@@ -623,7 +637,6 @@
         let isLoadingPage = false;
         let productsChannel = null;
 
-        // 從名稱推分類（資料庫沒有 category 時使用）
         function inferCategory(name) {
             if (name.includes('潛水') || name.includes('深潛')) return '潛水款';
             if (name.includes('計時')) return '計時款';
@@ -632,7 +645,6 @@
             return '經典款';
         }
 
-        // 資料庫可能回傳多種 images 格式，統一成陣列
         function normalizeImages(raw) {
             if (!raw) return [];
             if (Array.isArray(raw)) return raw.map(x => String(x).trim()).filter(Boolean);
@@ -667,12 +679,10 @@
             };
         }
 
-        // 「人氣爆款」用固定規則，不用亂數
         function isHot(id) {
             return (Number(id) * 7919) % 100 < 22;
         }
 
-        // 建立查詢：分頁 + 關鍵字 + 分類（全部在資料庫端過濾）
         function productsQuery(from, to) {
             let q = supabase
                 .from('products')
@@ -798,7 +808,6 @@
             renderedCount = currentIds.length;
         }
 
-        // ---------- 「載入更多」按鈕（自動注入） ----------
         function ensureLoadMoreUI() {
             if (document.getElementById('loadMoreWrap')) return;
             const wrap = document.createElement('div');
@@ -848,7 +857,6 @@
             if (totalMatches > 0) hint.textContent = `已顯示 ${currentIds.length} / ${totalMatches} 筆`;
         }
 
-        // 自動無限滾動
         function setupInfiniteScroll() {
             if (!('IntersectionObserver' in window)) return;
             const io = new IntersectionObserver(entries => {
@@ -882,7 +890,6 @@
             return (w && w.category) ? w.category : '其他';
         }
 
-        // 購物車商品價格（優先用加入當下存下來的價格）
         function cartPriceOf(c) {
             const p = c.price || (watchData[c.id] && watchData[c.id].price) || { base: 6000, mid: 12000, custom: 19999 };
             if (c.budget === '高端') return p.mid;
@@ -890,7 +897,6 @@
             return p.base;
         }
 
-        // 後台異動 → 前台重新載入第一頁（防抖）
         let realtimeTimer = null;
         function subscribeProductsRealtime() {
             if (productsChannel) return;
@@ -1015,15 +1021,12 @@
             if (event.target === lightbox || event.target.classList.contains('gallery-track')) closeLightbox();
         });
 
+        // 成功頁：按鈕與 QR 一律顯示（不依裝置隱藏）
         function checkDeviceForLine() {
-            const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-            if (isMobile) {
-                document.getElementById('mobile-line-btn').style.display = 'block';
-                document.getElementById('desktop-line-box').style.display = 'none';
-            } else {
-                document.getElementById('mobile-line-btn').style.display = 'none';
-                document.getElementById('desktop-line-box').style.display = 'block';
-            }
+            const btn = document.getElementById('mobile-line-btn');
+            const box = document.getElementById('desktop-line-box');
+            if (btn) btn.style.display = 'block';
+            if (box) box.style.display = 'block';
         }
         checkDeviceForLine();
 
@@ -1091,7 +1094,8 @@
                     product_id: firstProductId,
                     items: items,
                     total_amount: totalAmount,
-                    status: 'pending'
+                    status: 'pending',
+                    session_id: sessionId            // ★ 綁定聊天室，後台才對得到人
                 }]);
                 if (error) throw error;
 
@@ -1101,13 +1105,26 @@
                 successContainer.style.display = 'block';
 
                 const encodedText = encodeURIComponent(`您好，我想購買「${productName}」，我已填寫收件資料，請協助我確認訂單！`);
-                const lineUrl = `https://line.me/R/ti/p/${LINE_ID}?openExternalBrowser=1&text=${encodedText}`;
-                if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-                    setTimeout(() => { window.location.href = lineUrl; }, 1500);
+                const lineUrl = `https://line.me/ti/p/${LINE_ID}?openExternalBrowser=1&text=${encodedText}`;
+
+                const btnEl = document.getElementById('mobile-line-btn');
+                const qrLink = document.getElementById('lineQrLink');
+                if (btnEl) btnEl.href = lineUrl;
+                if (qrLink) qrLink.href = lineUrl;
+
+                // ★ 自動打開站內聊天室，客人可直接留言
+                const chatW = document.getElementById('chatWidget');
+                if (chatW && !chatW.classList.contains('active')) {
+                    toggleChat();
                 }
+
+                // 想同時自動跳 LINE，把下面兩行取消註解（延遲 4 秒）
+                // const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+                // setTimeout(() => { isMobile ? (window.location.href = lineUrl) : window.open(lineUrl, '_blank'); }, 4000);
+
             } catch (err) {
                 console.error('送出失敗:', err);
-                alert('送出失敗，請稍後再試。');
+                alert('送出失敗，請稍後再試。\n' + (err && err.message ? err.message : ''));
             } finally {
                 isSubmitting = false;
                 submitBtn.innerText = '🔒 確認送出，加 LINE 獲取報價';
@@ -1169,12 +1186,9 @@
 
         async function fetchRealStats() {
             try {
-                const { count, error } = await supabase
-                    .from('orders')
-                    .select('*', { count: 'exact', head: true });
-                if (!error && typeof count === 'number') {
-                    const total = 12500 + count;
-                    document.getElementById('realOrderCount').innerText = total.toLocaleString();
+                const { data, error } = await supabase.rpc('public_order_count');
+                if (!error && typeof data === 'number') {
+                    document.getElementById('realOrderCount').innerText = (12500 + data).toLocaleString();
                 }
             } catch (err) {
                 // 讀不到就維持預設顯示
@@ -1231,6 +1245,71 @@
         });
 
         // ============================================================
+        // ===== 新訊息提醒（音效 + 標題閃爍 + 桌面通知） =====
+        // ============================================================
+        const ORIGINAL_TITLE = document.title;
+        let titleFlashTimer = null;
+        let audioCtx = null;
+
+        function initAudioOnFirstTouch() {
+            if (audioCtx) return;
+            try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+        }
+        document.addEventListener('click', initAudioOnFirstTouch, { once: true });
+        document.addEventListener('touchstart', initAudioOnFirstTouch, { once: true });
+
+        function playNotifySound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const o = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                o.connect(g); g.connect(audioCtx.destination);
+                o.type = 'sine';
+                o.frequency.setValueAtTime(880, audioCtx.currentTime);
+                g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.25, audioCtx.currentTime + 0.02);
+                g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.35);
+                o.start(); o.stop(audioCtx.currentTime + 0.36);
+            } catch (e) {}
+        }
+
+        function startTitleFlash() {
+            if (titleFlashTimer) return;
+            let on = false;
+            titleFlashTimer = setInterval(() => {
+                document.title = on ? '💬 客服有新訊息' : ORIGINAL_TITLE;
+                on = !on;
+            }, 800);
+        }
+
+        function stopTitleFlash() {
+            if (titleFlashTimer) { clearInterval(titleFlashTimer); titleFlashTimer = null; }
+            document.title = ORIGINAL_TITLE;
+        }
+
+        async function showDesktopNotification(text) {
+            if (!('Notification' in window)) return;
+            if (Notification.permission === 'default') {
+                try { await Notification.requestPermission(); } catch (e) { return; }
+            }
+            if (Notification.permission !== 'granted') return;
+            if (document.visibilityState === 'visible') return;
+            try {
+                const n = new Notification('尊享腕錶客服', {
+                    body: text,
+                    icon: 'images/icon-192.png',
+                    tag: 'admin-chat'
+                });
+                n.onclick = () => {
+                    window.focus();
+                    const w = document.getElementById('chatWidget');
+                    if (w && !w.classList.contains('active')) toggleChat();
+                };
+            } catch (e) {}
+        }
+
+        // ============================================================
         // ===== 聊天 =====
         // ============================================================
         function escapeHtmlF(s) {
@@ -1250,6 +1329,7 @@
                 const badge = document.getElementById('chatBadge');
                 badge.style.display = 'none';
                 badge.textContent = '0';
+                stopTitleFlash();   // ★ 停止標題閃爍
                 setTimeout(() => {
                     const input = document.getElementById('chatInput');
                     if (input) input.focus();
@@ -1391,7 +1471,7 @@
             appendChatMessage('[影片]', 'user', new Date().toISOString(), url, 'video');
         }
 
-        // 後台回覆即時推送
+        // 後台回覆即時推送（含音效／標題閃爍／桌面通知）
         supabase.channel('front-chat-' + sessionId)
             .on('postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
@@ -1409,9 +1489,22 @@
                         const badge = document.getElementById('chatBadge');
                         badge.style.display = 'flex';
                         badge.textContent = String((parseInt(badge.textContent, 10) || 0) + 1);
+
+                        // ★ 提醒
+                        playNotifySound();
+                        startTitleFlash();
+                        showDesktopNotification(msg.msg_type === 'image' ? '客服傳了一張圖片' : (msg.message || '客服有新訊息'));
                     }
                 })
             .subscribe();
+
+        // 使用者回到頁面時停止閃爍
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'visible') {
+                const w = document.getElementById('chatWidget');
+                if (w && w.classList.contains('active')) stopTitleFlash();
+            }
+        });
 
         // ============================================================
         // ===== 購物車 =====
