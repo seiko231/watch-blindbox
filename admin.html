@@ -105,7 +105,6 @@
         .admin-chat-list .chat-last-msg .is-img { color: #00bcd4; font-weight: bold; }
         .admin-chat-list .chat-unread { display: inline-block; background: #ff4757; color: #fff; border-radius: 10px; font-size: 10px; padding: 1px 6px; margin-left: 5px; vertical-align: middle; }
         
-        /* 刪除對話按鈕 */
         .chat-del-icon { position: absolute; right: 10px; bottom: 12px; color: #ff4757; font-size: 14px; opacity: 0.5; transition: 0.2s; }
         .chat-del-icon:hover { opacity: 1; transform: scale(1.1); }
 
@@ -130,7 +129,6 @@
         .admin-chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid rgba(255,255,255,0.15); }
         .chat-msg.admin .chat-img { margin-left: auto; }
 
-        /* 圖片預覽燈箱 */
         .image-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; visibility: hidden; transition: 0.3s; }
         .image-lightbox.active { opacity: 1; visibility: visible; }
         .image-lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
@@ -386,7 +384,7 @@
             </div>
         </div>
 
-        <!-- ===== 商品管理（與前台 products 表聯動） ===== -->
+        <!-- ===== 商品管理 ===== -->
         <div class="panel-section">
             <h2>
                 🛍️ 商品管理
@@ -478,13 +476,12 @@
         let currentChatSession = null;
         let allChatSessions = {};
         let sessionMessages = {};
+        let orderSessionMap = {};   // session_id -> { name, phone }
 
         const AVERAGE_PRICE = 3000;
 
         window.onload = async function () {
-            // 手動補單的商品選單改由 products 表帶入（與前台同一份資料）
             await loadAddOrderProductOptions();
-
             const { data: { session } } = await supabase.auth.getSession();
             if (session) showAdminPanel(session.user.email);
         };
@@ -635,6 +632,49 @@
             }
         }
 
+        // ===== 訂單 ↔ 聊天室 對照 =====
+        async function loadOrderSessionMap() {
+            try {
+                const { data, error } = await supabase
+                    .from('orders')
+                    .select('session_id, customer_name, customer_phone, created_at')
+                    .not('session_id', 'is', null)
+                    .order('created_at', { ascending: false })
+                    .limit(500);
+                if (error) throw error;
+
+                orderSessionMap = {};
+                (data || []).forEach(o => {
+                    if (o.session_id && !orderSessionMap[o.session_id]) {
+                        orderSessionMap[o.session_id] = {
+                            name: o.customer_name || '客戶',
+                            phone: o.customer_phone || ''
+                        };
+                    }
+                });
+            } catch (err) {
+                console.warn('載入訂單客戶對應失敗', err);
+            }
+        }
+
+        // 從訂單列表點「💬」→ 跳到該客人的對話
+        async function openCustomerChat(sessionId) {
+            if (!sessionId) { alert('這筆訂單沒有聊天室紀錄（可能是改版前的舊訂單）'); return; }
+
+            await loadOrderSessionMap();
+            await refreshChatSessionList();
+            await selectChatSession(sessionId);
+
+            const body = document.getElementById('admin-chat-body');
+            const section = body ? body.closest('.panel-section') : null;
+            if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            setTimeout(() => {
+                const input = document.getElementById('admin-chat-input');
+                if (input) input.focus();
+            }, 700);
+        }
+
         async function loadOrders() {
             const tbody = document.getElementById('order-list');
             tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#666;">載入中...</td></tr>';
@@ -683,6 +723,7 @@
                     const safeName = (order.customer_name || '').replace(/'/g, "\\'");
                     const safeAddress = (order.customer_address || '').replace(/'/g, "\\'");
                     const safeProduct = (order.product_name || '').replace(/'/g, "\\'");
+                    const sid = order.session_id || '';
 
                     tr.innerHTML = `
                         <td data-label="時間" style="white-space: nowrap;">${time}</td>
@@ -693,6 +734,7 @@
                         <td data-label="操作">
                             <div class="btn-group">
                                 <button class="status-btn ${btnClass}" onclick="toggleStatus(${order.id}, '${order.status || 'pending'}')">${btnText}</button>
+                                ${sid ? `<button class="action-btn" style="background:#00c864; color:#fff;" onclick="openCustomerChat('${sid}')" title="與此客戶對話">💬</button>` : ''}
                                 <button class="action-btn copy-btn" onclick="copyInfo('${safeName}', '${order.customer_phone}', '${safeAddress}', '${safeProduct}')" title="複製收件資訊">📋</button>
                                 <button class="action-btn print-btn" onclick="printOrder('${time}', '${safeName}', '${order.customer_phone}', '${safeAddress}', '${safeProduct}')" title="列印出貨單">🖨️</button>
                                 <button class="action-btn del-btn" onclick="deleteOrder(${order.id}, '${safeName}')" title="刪除訂單">🗑️</button>
@@ -899,7 +941,7 @@
         }
 
         // ============================================================
-        // ========== 後台客服：與前端雙向即時對接（含圖片與刪除） ==========
+        // ========== 後台客服 ==========
         // ============================================================
 
         async function initAdminChat() {
@@ -935,6 +977,8 @@
         async function refreshChatSessionList() {
             const listEl = document.getElementById('admin-chat-list');
             listEl.innerHTML = '<li style="color: #888; text-align: center; cursor: default;">載入中...</li>';
+
+            await loadOrderSessionMap();   // ★ 先抓「session → 客戶」
 
             const { data, error } = await supabase
                 .from('chat_messages')
@@ -991,9 +1035,14 @@
                     ? '<span class="is-img">🖼️ [圖片]</span>'
                     : escapeHtml(info.lastMessage);
 
+                const cust = orderSessionMap[sid];
+                const titleHtml = cust
+                    ? `👤 ${escapeHtml(cust.name)} <span style="color:#00c864;font-size:11px;font-weight:normal;">${escapeHtml(cust.phone)}</span>`
+                    : `👤 訪客 ${shortId}...`;
+
                 li.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span class="chat-session-id">👤 訪客 ${shortId}...</span>
+                        <span class="chat-session-id">${titleHtml}</span>
                         <span style="font-size:11px; color:#888; margin-right:15px;">${timeStr}</span>
                     </div>
                     <div class="chat-last-msg">
@@ -1008,13 +1057,11 @@
             });
         }
 
-        // 刪除對話功能
         async function deleteChatSession(event, sessionId) {
-            event.stopPropagation(); // 阻止點擊事件傳遞到 li 元素 (避免選中該對話)
+            event.stopPropagation();
             if (!confirm(`⚠️ 確定要刪除「訪客 ${sessionId.substring(0,8)}...」的所有對話記錄嗎？\n刪除後將無法復原！`)) return;
 
             try {
-                // 從資料庫刪除該 session_id 的所有訊息
                 const { error } = await supabase
                     .from('chat_messages')
                     .delete()
@@ -1022,7 +1069,6 @@
 
                 if (error) throw error;
 
-                // 如果刪除的是當前正在查看的對話，清空右側視窗
                 if (currentChatSession === sessionId) {
                     currentChatSession = null;
                     document.getElementById('admin-chat-header').innerText = '請從左側選擇一位訪客';
@@ -1033,7 +1079,6 @@
                     document.getElementById('admin-chat-body').innerHTML = '<div class="chat-empty">尚未選擇對話</div>';
                 }
 
-                // 從前端記憶體與列表中移除
                 delete allChatSessions[sessionId];
                 delete sessionMessages[sessionId];
                 renderChatSessionList();
@@ -1052,8 +1097,10 @@
             }
             renderChatSessionList();
 
-            document.getElementById('admin-chat-header').innerText = `正在與訪客 ${sessionId.substring(0,8)}... 對話`;
-            document.getElementById('admin-chat-session-label').innerText = `Session: ${sessionId}`;
+            const cust = orderSessionMap[sessionId];
+            const who = cust ? `${cust.name} ${cust.phone}` : `訪客 ${sessionId.substring(0,8)}...`;
+            document.getElementById('admin-chat-header').innerText = `正在與 ${who} 對話`;
+            document.getElementById('admin-chat-session-label').innerText = `Session: ${sessionId.substring(0,8)}`;
 
             document.getElementById('admin-chat-input').disabled = false;
             document.getElementById('admin-chat-send-btn').disabled = false;
@@ -1077,7 +1124,7 @@
 
             body.innerHTML = '';
             if (data.length === 0) {
-                body.innerHTML = '<div class="chat-empty">此訪客尚無訊息</div>';
+                body.innerHTML = '<div class="chat-empty">此訪客尚無訊息，可直接輸入開始對話</div>';
                 return;
             }
             data.forEach(msg => appendAdminChatMessage(msg.message, msg.sender, msg.created_at, msg.image_url, msg.msg_type));
@@ -1146,7 +1193,6 @@
             renderChatSessionList();
         }
 
-        // ===== 後台傳送圖片功能 =====
         async function handleAdminChatImage(inputEl) {
             if (!currentChatSession) return;
             const file = inputEl.files[0];
@@ -1195,7 +1241,7 @@
         }
 
         // ============================================================
-        // ===== 商品管理：支援任意數量（分頁 / 搜尋 / 篩選 / CSV 大量匯入） =====
+        // ===== 商品管理 =====
         // ============================================================
         const PRODUCT_IMG_BUCKET = 'products';
         const ADMIN_PAGE_SIZE = 50;
@@ -1234,7 +1280,6 @@
             return [];
         }
 
-        // ---------- 工具列 / 分頁列 / CSV 彈窗（自動注入） ----------
         function ensureProdToolbar() {
             const tbody = document.getElementById('prod-list');
             if (!tbody || document.getElementById('prodToolbar')) return;
@@ -1292,7 +1337,6 @@
             `;
             document.body.appendChild(csvModal);
 
-            // 綁定事件
             const s = document.getElementById('prod-search');
             s.addEventListener('input', () => {
                 clearTimeout(window.__prodSearchTimer);
@@ -1305,12 +1349,9 @@
 
         function resetProdFilter() {
             adminSearch = ''; adminCat = ''; adminActive = '';
-            const s = document.getElementById('prod-search');
-            if (s) s.value = '';
-            const c = document.getElementById('prod-filter-cat');
-            if (c) c.value = '';
-            const a = document.getElementById('prod-filter-active');
-            if (a) a.value = '';
+            const s = document.getElementById('prod-search'); if (s) s.value = '';
+            const c = document.getElementById('prod-filter-cat'); if (c) c.value = '';
+            const a = document.getElementById('prod-filter-active'); if (a) a.value = '';
             loadAdminProducts(0);
         }
 
@@ -1320,7 +1361,6 @@
             document.getElementById('csvModal').classList.add('active');
         }
 
-        // ---------- 查詢（分頁） ----------
         function adminProductsQuery(from, to) {
             let q = supabase.from('products').select('*', { count: 'exact' })
                 .order('sort_order', { ascending: true })
@@ -1433,7 +1473,6 @@
             `;
         }
 
-        // ---------- 新增／編輯 ----------
         function openProductModal(id) {
             editingProductId = id ? Number(id) : null;
             const p = id ? adminProducts.find(x => Number(x.id) === Number(id)) : null;
@@ -1465,7 +1504,6 @@
             box.innerHTML = list.map(src => `<img src="${escapeHtml(src)}" onerror="this.style.opacity=0.2">`).join('');
         }
 
-        // ---------- 圖片上傳（可多選） ----------
         async function uploadProductImages(input) {
             const files = Array.from(input.files || []);
             if (!files.length) return;
@@ -1497,7 +1535,6 @@
             updateProdPreview();
         }
 
-        // ---------- 儲存 ----------
         async function saveProduct() {
             const name = document.getElementById('pf-name').value.trim();
             if (!name) { alert('請填寫商品名稱'); return; }
@@ -1544,7 +1581,6 @@
             }
         }
 
-        // ---------- 複製商品 ----------
         async function duplicateProduct(id) {
             const p = adminProducts.find(x => Number(x.id) === Number(id));
             if (!p) return;
@@ -1569,7 +1605,6 @@
             }
         }
 
-        // ---------- 上架開關 ----------
         async function toggleProductActive(id, checked) {
             try {
                 const { error } = await supabase.from('products').update({ is_active: checked }).eq('id', id);
@@ -1583,7 +1618,6 @@
             }
         }
 
-        // ---------- 刪除 ----------
         async function deleteProduct(id) {
             const p = adminProducts.find(x => Number(x.id) === Number(id));
             if (!confirm(`確定要刪除「${p ? p.name : id}」嗎？\n刪除後前台會立刻消失，且無法復原。`)) return;
@@ -1597,7 +1631,6 @@
             }
         }
 
-        // ---------- CSV 大量匯入 ----------
         function parseCsvLine(line) {
             const out = [];
             let cur = '', inQuote = false;
@@ -1631,7 +1664,7 @@
 
             lines.forEach((line, idx) => {
                 const c = parseCsvLine(line);
-                if (idx === 0 && (c[0] || '').includes('名稱')) return; // 略過標題列
+                if (idx === 0 && (c[0] || '').includes('名稱')) return;
 
                 const name = (c[0] || '').trim();
                 if (!name) { skipped++; return; }
@@ -1665,7 +1698,6 @@
             let done = 0;
 
             try {
-                // 每 100 筆送一次，避免單次請求過大
                 for (let i = 0; i < rows.length; i += 100) {
                     const chunk = rows.slice(i, i + 100);
                     const { error } = await supabase.from('products').insert(chunk);
@@ -1688,7 +1720,6 @@
             }
         }
 
-        // ---------- 手動補單的商品選單（由資料庫帶入） ----------
         async function loadAddOrderProductOptions() {
             const select = document.getElementById('addProduct');
             if (!select) return;
