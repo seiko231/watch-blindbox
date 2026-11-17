@@ -203,7 +203,7 @@
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
         .faq-item.active .faq-question { color: var(--gold-dark); }
 
-        /* ===== 聊天室完美適配 ===== */
+        /* ===== 聊天室 ===== */
         .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #fff; border: 1px solid #eee; border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
         .chat-widget.active { display: flex; }
         .chat-header { background: #fff; padding: 12px 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--text-dark); font-weight: bold; border-bottom: 1px solid #eee; }
@@ -260,12 +260,16 @@
         .legal-modal h3 { color: var(--text-dark); font-size: 15px; margin-top: 20px; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 10px; }
         .legal-modal p { color: var(--text-gray); font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
 
-        /* 圖片燈箱 (白底版) */
         .image-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; visibility: hidden; transition: 0.3s; }
         .image-lightbox.active { opacity: 1; visibility: visible; }
         .image-lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); object-fit: contain; }
         .image-lightbox .close-icon { position: absolute; top: 20px; right: 30px; color: var(--text-dark); font-size: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .image-lightbox .close-icon:hover { color: #ff4757; transform: scale(1.1); }
+
+        /* ===== 多語系選單 ===== */
+        #langSwitcher { position: fixed; top: 45px; left: 15px; z-index: 2600; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid rgba(212,175,55,.45); border-radius: 20px; padding: 5px 10px; box-shadow: 0 4px 14px rgba(0,0,0,.08); font-size: 13px; }
+        #langSwitcher select { border: none; background: transparent; font-size: 13px; color: #b38728; font-weight: bold; outline: none; cursor: pointer; }
+        html[lang="en"] body, html[lang="ja"] body, html[lang="ko"] body { font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans TC', sans-serif !important; }
 
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -280,11 +284,11 @@
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
             .trust-section { flex-direction: column; }
             .cart-drawer { width: 100%; }
-            
-            /* 聊天室手機端滿版且不被鍵盤遮擋 */
             .chat-widget { width: 100%; height: 100%; height: 100dvh; max-height: 100vh; right: 0; bottom: 0; border-radius: 0; border: none; z-index: 99999; }
             .chat-header { border-radius: 0; }
             .chat-input-area { border-radius: 0; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+            #langSwitcher { top: 42px; left: 8px; padding: 4px 8px; }
+            #langSwitcher select { font-size: 12px; }
         }
     </style>
 </head>
@@ -295,6 +299,18 @@
         <div class="marquee-text" id="marqueeText">
             🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
         </div>
+    </div>
+
+    <!-- 語言切換 -->
+    <div id="langSwitcher">
+        🌐
+        <select id="langSelect" aria-label="Language">
+            <option value="zh-TW">繁體中文</option>
+            <option value="zh-CN">简体中文</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+        </select>
     </div>
 
     <div class="live-counter">
@@ -314,7 +330,6 @@
         <h1>尊享腕錶 精品展示</h1>
         <div class="subtitle">精選經典腕錶，請挑選您的最愛</div>
 
-        <!-- 第二層：真實數據與互動 -->
         <div class="total-served">
             🏆 全台累計服務突破 <span id="realOrderCount">12,580</span> 人次，好評不斷！
         </div>
@@ -336,7 +351,7 @@
         </div>
     </div>
 
-    <!-- 第一層：真實買家實拍秀 -->
+    <!-- 買家實拍 -->
     <div class="buyer-show-section">
         <h3 class="buyer-show-title">📸 真實買家實拍反饋 (點擊看大圖)</h3>
         <div class="buyer-show-scroll">
@@ -399,7 +414,7 @@
         </div>
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(this)">Q3: 下單後多久會出貨？ <span>▼</span></div>
-            <div class="faq-answer">確認訂單後，我們會在 1-3 個工作天內安排出貨。出貨後會將物流單號發送至您的 LINE，請耐心等候。</div>
+            <div class="faq-answer">確認訂單後，我們會在第 1-3 個工作天內安排出貨。出貨後會將物流單號發送至您的 LINE，請耐心等候。</div>
         </div>
     </div>
 
@@ -456,7 +471,6 @@
                         <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" maxlength="100" required>
                     </div>
 
-                    <!-- 第三層：強力承諾 -->
                     <div class="form-warning">
                         ✅ 本公司安心承諾：<br>
                         1. 100% 貨到付款，確認質感再付錢。<br>
@@ -479,7 +493,6 @@
                 </form>
             </div>
 
-            <!-- 成功頁：按鈕 + 可點擊 QR -->
             <div id="successContainer" style="display: none;">
                 <h2 style="color: #00a000; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
                 <p style="color: var(--text-gray); margin-bottom: 16px; font-size: 14px;">
@@ -514,7 +527,6 @@
         </div>
     </div>
 
-    <!-- 選擇預算彈窗 -->
     <div class="modal-overlay" id="budgetSelectModal" style="z-index: 4000;">
         <div class="budget-modal-content">
             <h3>請選擇您的預算區間</h3>
@@ -548,7 +560,7 @@
         <button class="float-btn btn-chat" title="線上客服" onclick="toggleChat()">💬
             <span class="chat-badge" id="chatBadge">0</span>
         </button>
-        <a href="https://line.me/R/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
+        <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
     </div>
 
@@ -612,7 +624,7 @@
     <script>
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_Mb6kdbK9PvrrBq1PUU0IWA_FMMd7sTG';
-        const LINE_ID = 'vCEhGhnT9Z'; // 你的 LINE 官方帳號 ID
+        const LINE_ID = 'vCEhGhnT9Z';
 
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
@@ -681,9 +693,12 @@
 
         function mapRowToWatch(p) {
             const imgs = normalizeImages(p.images);
+            const lang = localStorage.getItem('site_lang') || 'zh-TW';
+            const i18nKey = lang === 'zh-TW' ? null : (lang === 'zh-CN' ? 'cn' : lang);
+
             return {
-                name: p.name || '未命名腕錶',
-                desc: p.description || '',
+                name: (i18nKey && p.name_i18n && p.name_i18n[i18nKey]) ? p.name_i18n[i18nKey] : (p.name || '未命名腕錶'),
+                desc: (i18nKey && p.desc_i18n && p.desc_i18n[i18nKey]) ? p.desc_i18n[i18nKey] : (p.description || ''),
                 category: p.category || inferCategory(p.name || ''),
                 stock: (p.stock === null || p.stock === undefined) ? null : Number(p.stock),
                 images: imgs.length ? imgs : [fallbackImg],
@@ -1184,7 +1199,7 @@
         setInterval(startMarqueeLoop, 25000);
 
         // ============================================================
-        // ===== 真實數據（走 RPC）=====
+        // ===== 真實數據 =====
         // ============================================================
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
@@ -1253,7 +1268,7 @@
         });
 
         // ============================================================
-        // ===== 新訊息提醒（音效 + 標題閃爍 + 桌面通知） =====
+        // ===== 新訊息提醒 =====
         // ============================================================
         const ORIGINAL_TITLE = document.title;
         let titleFlashTimer = null;
@@ -1479,7 +1494,6 @@
             appendChatMessage('[影片]', 'user', new Date().toISOString(), url, 'video');
         }
 
-        // 後台回覆即時推送（含音效／標題閃爍／桌面通知）
         supabase.channel('front-chat-' + sessionId)
             .on('postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
@@ -1710,5 +1724,222 @@
         loadProducts(false);
         setupInfiniteScroll();
     </script>
+
+    <!-- ==================== 多語系切換 ==================== -->
+    <script>
+    (function () {
+        'use strict';
+
+        const DICT = {
+            '尊享腕錶 精品展示':            { cn: '尊享腕表 精品展示', en: 'Premium Watch Gallery', ja: 'プレミアムウォッチ ギャラリー', ko: '프리미엄 시계 갤러리' },
+            '7天鑑賞期':                    { cn: '7天鉴赏期', en: '7-Day Returns', ja: '7日間返品保証', ko: '7일 반품 보장' },
+            '支持開箱驗貨':                 { cn: '支持开箱验货', en: 'Inspect Before Pay', ja: '開封確認OK', ko: '개봉 확인 가능' },
+            '嚴選品質保證':                 { cn: '严选品质保证', en: 'Quality Guaranteed', ja: '品質保証', ko: '품질 보장' },
+            '100% 隱密包裝':                { cn: '100% 隐秘包装', en: 'Discreet Packaging', ja: '完全秘密梱包', ko: '100% 비밀 포장' },
+            '全台累計服務突破':             { cn: '全台累计服务突破', en: 'Trusted by', ja: '累計サービス実績', ko: '누적 서비스' },
+            '人次，好評不斷！':             { cn: '人次，好评不断！', en: 'customers nationwide!', ja: '人以上のお客様！', ko: '명 돌파!' },
+            '真人客服：小美 為您服務':      { cn: '真人客服：小美 为您服务', en: 'Live agent: Mei at your service', ja: '担当者：メイが対応します', ko: '실시간 상담원: 메이' },
+            '真人一對一在線回覆，安心有保障': { cn: '真人一对一在线回复，安心有保障', en: 'One-on-one live support, safe & reliable', ja: '1対1のライブ対応で安心', ko: '1:1 실시간 상담, 안심 보장' },
+            '一律按貨到付款':               { cn: '一律按货到付款', en: 'Cash on delivery only', ja: '代金引換のみ', ko: '착불 결제만' },
+            '，出貨後會把單號發送給您！':   { cn: '，出货后会把单号发送给您！', en: ', tracking number sent after shipping!', ja: '、発送後に追跡番号をお送りします！', ko: ', 발송 후 운송장 번호를 보내드립니다!' },
+            '👉 點擊頭像或此處立即諮詢':     { cn: '👉 点击头像或此处立即咨询', en: '👉 Click here to chat now', ja: '👉 ここをクリックして相談する', ko: '👉 여기를 눌러 상담하기' },
+            '【交易與售後說明】':           { cn: '【交易与售后说明】', en: '[Payment & After-sales]', ja: '【お取引・アフターサービス】', ko: '[거래 및 A/S 안내]' },
+            '本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益（商品需保持全新未使用狀態）。':
+                { cn: '本网站商品皆为「货到付款」，您享有收货后 7 天无条件退货之权益（商品需保持全新未使用状态）。',
+                  en: 'All items are cash on delivery. You may return within 7 days of receipt (item must be unused).',
+                  ja: '全商品は代金引換です。お受け取り後7日以内の無条件返品が可能です（未使用品に限る）。',
+                  ko: '모든 상품은 착불입니다. 수령 후 7일 이내 무조건 반품 가능합니다(미사용 상태).' },
+            '為防範詐騙，本公司不會要求您前往 ATM 操作或提供信用卡密碼。如有疑慮請直接透過官方 LINE 與我們聯繫。':
+                { cn: '为防范诈骗，本公司不会要求您前往 ATM 操作或提供信用卡密码。如有疑虑请直接透过官方 LINE 与我们联系。',
+                  en: 'We never ask you to use an ATM or provide card passwords. Contact us on LINE if in doubt.',
+                  ja: 'ATM操作やカード暗証番号をお聞きすることはありません。ご不安な場合はLINEへご連絡ください。',
+                  ko: 'ATM 조작이나 카드 비밀번호를 요구하지 않습니다. 의심되면 LINE으로 문의하세요.' },
+            '📸 真實買家實拍反饋 (點擊看大圖)': { cn: '📸 真实买家实拍反馈 (点击看大图)', en: '📸 Real Customer Photos (click to zoom)', ja: '📸 お客様の実写レビュー（クリックで拡大）', ko: '📸 실제 구매자 사진 (클릭 확대)' },
+            '搜尋手錶名稱或關鍵字...':       { cn: '搜寻手表名称或关键字...', en: 'Search watches...', ja: '時計名・キーワードで検索...', ko: '시계 이름 또는 키워드 검색...' },
+            '全部':                         { cn: '全部', en: 'All', ja: 'すべて', ko: '전체' },
+            '經典款':                       { cn: '经典款', en: 'Classic', ja: 'クラシック', ko: '클래식' },
+            '運動款':                       { cn: '运动款', en: 'Sport', ja: 'スポーツ', ko: '스포츠' },
+            '奢華款':                       { cn: '奢华款', en: 'Luxury', ja: 'ラグジュアリー', ko: '럭셔리' },
+            '潛水款':                       { cn: '潜水款', en: 'Diver', ja: 'ダイバー', ko: '다이버' },
+            '計時款':                       { cn: '计时款', en: 'Chronograph', ja: 'クロノグラフ', ko: '크로노그래프' },
+            '人氣爆款':                     { cn: '人气爆款', en: 'Bestseller', ja: '人気商品', ko: '인기 상품' },
+            '👉 加 LINE 獲取專屬報價':       { cn: '👉 加 LINE 获取专属报价', en: '👉 Get price on LINE', ja: '👉 LINEで価格を問い合わせ', ko: '👉 LINE으로 가격 문의' },
+            '💬 立即諮詢此款':              { cn: '💬 立即咨询此款', en: '💬 Ask about this', ja: '💬 この商品を相談', ko: '💬 이 상품 문의' },
+            '🛒 加入購物車':                { cn: '🛒 加入购物车', en: '🛒 Add to cart', ja: '🛒 カートに入れる', ko: '🛒 장바구니 담기' },
+            '📦 支持開箱驗貨':              { cn: '📦 支持开箱验货', en: '📦 Inspect on arrival', ja: '📦 開封確認OK', ko: '📦 개봉 확인 가능' },
+            '🙈 隱密包裝':                  { cn: '🙈 隐秘包装', en: '🙈 Discreet pack', ja: '🙈 秘密梱包', ko: '🙈 비밀 포장' },
+            '🛡️ 7天退換':                  { cn: '🛡️ 7天退换', en: '🛡️ 7-day return', ja: '🛡️ 7日返品', ko: '🛡️ 7일 반품' },
+            '🚚 貨到付款':                  { cn: '🚚 货到付款', en: '🚚 Cash on delivery', ja: '🚚 代金引換', ko: '🚚 착불' },
+            '載入商品中...':                { cn: '载入商品中...', en: 'Loading products...', ja: '商品を読み込み中...', ko: '상품 불러오는 중...' },
+            '載入中...':                    { cn: '载入中...', en: 'Loading...', ja: '読み込み中...', ko: '불러오는 중...' },
+            '已全部載入 ✓':                 { cn: '已全部载入 ✓', en: 'All loaded ✓', ja: 'すべて表示済み ✓', ko: '모두 불러옴 ✓' },
+            '查無符合條件的商品':           { cn: '查无符合条件的商品', en: 'No matching products', ja: '該当する商品がありません', ko: '조건에 맞는 상품이 없습니다' },
+            '換個關鍵字或分類試試':         { cn: '换个关键字或分类试试', en: 'Try another keyword or category', ja: '別のキーワードや分類をお試しください', ko: '다른 키워드나 카테고리를 시도해 보세요' },
+            '目前沒有上架中的商品':         { cn: '目前没有上架中的商品', en: 'No products available', ja: '現在販売中の商品はありません', ko: '현재 판매 중인 상품이 없습니다' },
+            '請到後台「商品管理」新增':     { cn: '请到后台「商品管理」新增', en: 'Add products in admin panel', ja: '管理画面から商品を追加してください', ko: '관리자에서 상품을 추가하세요' },
+            '商品載入失敗':                 { cn: '商品载入失败', en: 'Failed to load products', ja: '商品の読み込みに失敗', ko: '상품 로드 실패' },
+            '請稍後重新整理':               { cn: '请稍后重新整理', en: 'Please refresh later', ja: '後で再読み込みしてください', ko: '잠시 후 새로고침하세요' },
+            '⭐ 買家真實好評':              { cn: '⭐ 买家真实好评', en: '⭐ Verified Reviews', ja: '⭐ お客様の声', ko: '⭐ 실제 구매 후기' },
+            '📦 出貨實拍保證':              { cn: '📦 出货实拍保证', en: '📦 Real Shipping Photos', ja: '📦 発送実写保証', ko: '📦 실제 발송 사진' },
+            '💡 常見問題 (FAQ)':            { cn: '💡 常见问题 (FAQ)', en: '💡 FAQ', ja: '💡 よくある質問', ko: '💡 자주 묻는 질문' },
+            'Q1: 請問品質有保固嗎？':       { cn: 'Q1: 请问品质有保固吗？', en: 'Q1: Is there a warranty?', ja: 'Q1: 品質保証はありますか？', ko: 'Q1: 품질 보증이 있나요?' },
+            'Q2: 付款方式有哪些？':         { cn: 'Q2: 付款方式有哪些？', en: 'Q2: Payment methods?', ja: 'Q2: 支払い方法は？', ko: 'Q2: 결제 방법은?' },
+            'Q3: 下單後多久會出貨？':       { cn: 'Q3: 下单后多久会出货？', en: 'Q3: When will it ship?', ja: 'Q3: いつ発送されますか？', ko: 'Q3: 언제 발송되나요?' },
+            '隱私權政策':                   { cn: '隐私权政策', en: 'Privacy Policy', ja: 'プライバシーポリシー', ko: '개인정보 처리방침' },
+            '服務條款':                     { cn: '服务条款', en: 'Terms of Service', ja: '利用規約', ko: '이용약관' },
+            '退換貨政策':                   { cn: '退换货政策', en: 'Return Policy', ja: '返品ポリシー', ko: '반품 정책' },
+            '確認商品與填寫資訊':           { cn: '确认商品与填写资讯', en: 'Confirm & fill in details', ja: '商品確認と情報入力', ko: '상품 확인 및 정보 입력' },
+            '您選擇的商品：':               { cn: '您选择的商品：', en: 'Selected item:', ja: '選択した商品：', ko: '선택한 상품:' },
+            '人查看此商品':                 { cn: '人查看此商品', en: 'people viewed', ja: '人が閲覧中', ko: '명이 조회' },
+            '請選擇您的預算區間：':         { cn: '请选择您的预算区间：', en: 'Choose your budget:', ja: 'ご予算をお選びください：', ko: '예산을 선택하세요:' },
+            '基礎':                         { cn: '基础', en: 'Basic', ja: 'ベーシック', ko: '기본' },
+            '高端':                         { cn: '高端', en: 'Premium', ja: 'プレミアム', ko: '프리미엄' },
+            '定制':                         { cn: '定制', en: 'Custom', ja: 'カスタム', ko: '커스텀' },
+            '請輸入收件人姓名':             { cn: '请输入收件人姓名', en: 'Recipient name', ja: 'お名前', ko: '받는 분 성함' },
+            '請輸入 10 碼手機號碼':         { cn: '请输入 10 码手机号码', en: 'Mobile number', ja: '携帯番号', ko: '휴대폰 번호' },
+            '請輸入詳細收件地址':           { cn: '请输入详细收件地址', en: 'Shipping address', ja: 'お届け先住所', ko: '배송 주소' },
+            '✅ 本公司安心承諾：':          { cn: '✅ 本公司安心承诺：', en: '✅ Our promise:', ja: '✅ 当社の約束：', ko: '✅ 저희 약속:' },
+            '🔒 確認送出，加 LINE 獲取報價': { cn: '🔒 确认送出，加 LINE 获取报价', en: '🔒 Submit & get price on LINE', ja: '🔒 送信してLINEで価格取得', ko: '🔒 제출 후 LINE으로 가격 확인' },
+            '處理中，請稍候...':            { cn: '处理中，请稍候...', en: 'Processing...', ja: '処理中...', ko: '처리 중...' },
+            '送出後請加入 LINE，才能收到訂單進度與客服通知': { cn: '送出后请加入 LINE，才能收到订单进度与客服通知', en: 'Please join LINE to receive order updates.', ja: '注文状況の通知はLINEで受け取れます。', ko: '주문 진행 상황은 LINE으로 받으세요.' },
+            '✅ 已收到您的預約！':          { cn: '✅ 已收到您的预约！', en: '✅ Order received!', ja: '✅ ご注文を承りました！', ko: '✅ 주문이 접수되었습니다!' },
+            '系統已收到您的資料！':         { cn: '系统已收到您的资料！', en: 'We have received your details.', ja: 'ご情報を受け付けました。', ko: '정보가 접수되었습니다.' },
+            '點下方按鈕直接聯繫客服，馬上為您報價。': { cn: '点下方按钮直接联系客服，马上为您报价。', en: 'Tap below to chat with us for a quote.', ja: '下のボタンから担当者へご連絡ください。', ko: '아래 버튼으로 상담원에게 문의하세요.' },
+            '💬 立即聯繫 LINE 客服':        { cn: '💬 立即联系 LINE 客服', en: '💬 Contact us on LINE', ja: '💬 LINEで問い合わせる', ko: '💬 LINE으로 문의하기' },
+            '📷 手機可掃描，或直接點 QR 開啟 LINE': { cn: '📷 手机可扫描，或直接点 QR 开启 LINE', en: '📷 Scan on mobile or tap the QR', ja: '📷 スマホで読み取り、またはタップ', ko: '📷 휴대폰으로 스캔하거나 QR을 탭하세요' },
+            '💬 您也可以直接在右下角聊天室與客服對話': { cn: '💬 您也可以直接在右下角聊天室与客服对话', en: '💬 Or chat with us using the button at bottom-right', ja: '💬 右下のチャットからも相談できます', ko: '💬 오른쪽 아래 채팅으로도 상담 가능' },
+            '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': { cn: '※ 关闭网页后将收不到客服讯息，建议点上方按钮加入 LINE', en: '＊Messages stop after you close the page — please join LINE.', ja: '＊ページを閉じると通知が届きません。LINE追加推奨。', ko: '※ 페이지를 닫으면 알림이 오지 않습니다. LINE 추가를 권장합니다.' },
+            '尊享腕錶客服 - 小美':          { cn: '尊享腕表客服 - 小美', en: 'Support - Mei', ja: 'サポート - メイ', ko: '고객센터 - 메이' },
+            '在線中，秒回覆':               { cn: '在线中，秒回复', en: 'Online · instant reply', ja: 'オンライン・即返信', ko: '온라인 · 즉시 응답' },
+            '👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？': { cn: '👋 您好！我是尊享腕表客服，请问想看哪一款手表呢？', en: '👋 Hi! Which watch are you interested in?', ja: '👋 こんにちは！どの時計をお探しですか？', ko: '👋 안녕하세요! 어떤 시계를 찾으시나요?' },
+            '⚠️ 關閉網頁後就收不到客服訊息了': { cn: '⚠️ 关闭网页后就收不到客服讯息了', en: '⚠️ You will miss messages after closing this page', ja: '⚠️ ページを閉じるとメッセージが届きません', ko: '⚠️ 페이지를 닫으면 메시지를 받을 수 없습니다' },
+            '建議先加入我們的 LINE 官方帳號 👇': { cn: '建议先加入我们的 LINE 官方帐号 👇', en: 'Please add our LINE first 👇', ja: '先にLINE公式を追加してください 👇', ko: '먼저 LINE 공식 계정을 추가하세요 👇' },
+            '📱 加入 LINE 官方帳號':        { cn: '📱 加入 LINE 官方帐号', en: '📱 Add our LINE', ja: '📱 LINE公式を追加', ko: '📱 LINE 공식 추가' },
+            '輸入訊息...':                  { cn: '输入讯息...', en: 'Type a message...', ja: 'メッセージを入力...', ko: '메시지 입력...' },
+            '送出':                         { cn: '送出', en: 'Send', ja: '送信', ko: '전송' },
+            '我的購物車':                   { cn: '我的购物车', en: 'My Cart', ja: 'カート', ko: '장바구니' },
+            '購物車是空的':                 { cn: '购物车是空的', en: 'Your cart is empty', ja: 'カートは空です', ko: '장바구니가 비었습니다' },
+            '前往結帳（貨到付款）':         { cn: '前往结账（货到付款）', en: 'Checkout (cash on delivery)', ja: 'レジへ（代金引換）', ko: '결제하기 (착불)' },
+            '件商品':                       { cn: '件商品', en: 'items', ja: '点', ko: '개' },
+            '取消':                         { cn: '取消', en: 'Cancel', ja: 'キャンセル', ko: '취소' },
+            '請選擇您的預算區間':           { cn: '请选择您的预算区间', en: 'Select your budget', ja: 'ご予算を選択', ko: '예산 선택' },
+            '💎 基礎款':                    { cn: '💎 基础款', en: '💎 Basic', ja: '💎 ベーシック', ko: '💎 기본' },
+            '👑 高端款':                    { cn: '👑 高端款', en: '👑 Premium', ja: '👑 プレミアム', ko: '👑 프리미엄' },
+            '✨ 尊榮定制':                  { cn: '✨ 尊荣定制', en: '✨ Custom', ja: '✨ カスタム', ko: '✨ 커스텀' },
+            '回到頂部':                     { cn: '回到顶部', en: 'Back to top', ja: 'トップへ', ko: '맨 위로' },
+            '線上客服':                     { cn: '在线客服', en: 'Live chat', ja: 'チャット', ko: '실시간 상담' },
+            '購物車':                       { cn: '购物车', en: 'Cart', ja: 'カート', ko: '장바구니' }
+        };
+
+        const RULES = [
+            { re: /^精選\s*(\d+)\s*款經典腕錶，請挑選您的最愛$/,
+              out: { cn: m => `精选 ${m[1]} 款经典腕表，请挑选您的最爱`, en: m => `${m[1]} watches selected for you`, ja: m => `厳選 ${m[1]} 点の腕時計`, ko: m => `엄선한 ${m[1]}개 시계` } },
+            { re: /^已顯示\s*(\d+)\s*\/\s*(\d+)\s*筆$/,
+              out: { cn: m => `已显示 ${m[1]} / ${m[2]} 笔`, en: m => `Showing ${m[1]} / ${m[2]}`, ja: m => `${m[1]} / ${m[2]} 件表示`, ko: m => `${m[1]} / ${m[2]} 표시` } },
+            { re: /^載入更多商品（還有\s*(\d+)\s*筆）$/,
+              out: { cn: m => `载入更多商品（还有 ${m[1]} 笔）`, en: m => `Load more (${m[1]} left)`, ja: m => `もっと見る（残り${m[1]}件）`, ko: m => `더 보기 (${m[1]}개 남음)` } },
+            { re: /^專屬價：(.+)$/,
+              out: { cn: m => `专属价：${m[1]}`, en: m => `Price: ${m[1]}`, ja: m => `価格：${m[1]}`, ko: m => `가격: ${m[1]}` } },
+            { re: /^共\s*(\d+)\s*件商品$/,
+              out: { cn: m => `共 ${m[1]} 件商品`, en: m => `${m[1]} items`, ja: m => `合計 ${m[1]} 点`, ko: m => `총 ${m[1]}개` } },
+            { re: /^約\s*(.+)$/,
+              out: { cn: m => `约 ${m[1]}`, en: m => `about ${m[1]}`, ja: m => `約 ${m[1]}`, ko: m => `약 ${m[1]}` } },
+            { re: /^⚠️ 庫存僅剩\s*(\d+)\s*支$/,
+              out: { cn: m => `⚠️ 库存仅剩 ${m[1]} 支`, en: m => `⚠️ Only ${m[1]} left`, ja: m => `⚠️ 残り${m[1]}点`, ko: m => `⚠️ ${m[1]}개 남음` } }
+        ];
+
+        let LANG = localStorage.getItem('site_lang') || 'zh-TW';
+        let translating = false;
+        const ATTRS = ['placeholder', 'title', 'alt', 'value'];
+
+        function translateText(raw, lang) {
+            if (!raw) return null;
+            const trimmed = raw.trim();
+            if (!trimmed) return null;
+            const entry = DICT[trimmed];
+            if (entry && entry[lang]) return raw.replace(trimmed, entry[lang]);
+            for (const rule of RULES) {
+                const m = trimmed.match(rule.re);
+                if (m && rule.out[lang]) return raw.replace(trimmed, rule.out[lang](m));
+            }
+            return null;
+        }
+
+        function walk(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const out = translateText(node.nodeValue, LANG);
+                if (out !== null && out !== node.nodeValue) node.nodeValue = out;
+                return;
+            }
+            if (node.nodeType !== Node.ELEMENT_NODE) return;
+            const tag = node.tagName;
+            if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return;
+            if (node.id === 'langSwitcher' || node.id === 'langSelect') return;
+
+            ATTRS.forEach(a => {
+                if (node.hasAttribute && node.hasAttribute(a)) {
+                    const val = node.getAttribute(a);
+                    const out = translateText(val, LANG);
+                    if (out !== null && out !== val) node.setAttribute(a, out);
+                }
+            });
+
+            Array.from(node.childNodes).forEach(walk);
+        }
+
+        function translatePage() {
+            if (translating) return;
+            translating = true;
+            try {
+                document.documentElement.lang = LANG;
+                if (LANG !== 'zh-TW') walk(document.body);
+            } finally {
+                translating = false;
+            }
+            const sel = document.getElementById('langSelect');
+            if (sel) sel.value = LANG;
+        }
+
+        let moTimer = null;
+        const observer = new MutationObserver(() => {
+            if (LANG === 'zh-TW' || translating) return;
+            clearTimeout(moTimer);
+            moTimer = setTimeout(() => translatePage(), 60);
+        });
+
+        function initLang() {
+            const sel = document.getElementById('langSelect');
+            sel.value = LANG;
+
+            sel.addEventListener('change', function () {
+                const newLang = this.value;
+                if (newLang === LANG) return;
+                if (LANG !== 'zh-TW' && newLang === 'zh-TW') {
+                    localStorage.setItem('site_lang', 'zh-TW');
+                    location.reload();
+                    return;
+                }
+                LANG = newLang;
+                localStorage.setItem('site_lang', LANG);
+                translatePage();
+            });
+
+            translatePage();
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                characterData: true
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initLang);
+        } else {
+            initLang();
+        }
+    })();
+    </script>
+    <!-- ==================== 多語系切換結束 ==================== -->
 </body>
 </html>
