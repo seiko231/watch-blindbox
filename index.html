@@ -616,9 +616,9 @@
         let watchData = {};
         let currentSearch = '';
         let currentCategory = '全部';
-        let currentIds = [];        // 目前已載入的 id（依排序）
-        let renderedCount = 0;      // 已渲染到第幾筆
-        let totalMatches = 0;       // 符合條件的總筆數（資料庫回傳）
+        let currentIds = [];
+        let renderedCount = 0;
+        let totalMatches = 0;
         let hasMore = true;
         let isLoadingPage = false;
         let productsChannel = null;
@@ -632,7 +632,7 @@
             return '經典款';
         }
 
-        // 資料庫可能回傳多種 images 格式，統一成陣列（jsonb / JSON 字串 / Postgres 陣列 / 逗號分隔）
+        // 資料庫可能回傳多種 images 格式，統一成陣列
         function normalizeImages(raw) {
             if (!raw) return [];
             if (Array.isArray(raw)) return raw.map(x => String(x).trim()).filter(Boolean);
@@ -667,9 +667,9 @@
             };
         }
 
-        // 「人氣爆款」用固定規則，不用亂數，換頁／重新載入都不會亂跳
+        // 「人氣爆款」用固定規則，不用亂數
         function isHot(id) {
-            return (Number(id) * 7919) % 100 < 22;   // 約 22% 的商品會帶標籤
+            return (Number(id) * 7919) % 100 < 22;
         }
 
         // 建立查詢：分頁 + 關鍵字 + 分類（全部在資料庫端過濾）
@@ -750,7 +750,6 @@
                 return;
             }
 
-            // 左上角編號 = 顯示順序（不依賴資料庫 id）
             const seqMap = new Map(currentIds.map((id, idx) => [id, idx + 1]));
             const slice = append ? currentIds.slice(renderedCount) : currentIds;
 
@@ -799,7 +798,7 @@
             renderedCount = currentIds.length;
         }
 
-        // ---------- 「載入更多」按鈕（自動注入，不用改 HTML） ----------
+        // ---------- 「載入更多」按鈕（自動注入） ----------
         function ensureLoadMoreUI() {
             if (document.getElementById('loadMoreWrap')) return;
             const wrap = document.createElement('div');
@@ -849,7 +848,7 @@
             if (totalMatches > 0) hint.textContent = `已顯示 ${currentIds.length} / ${totalMatches} 筆`;
         }
 
-        // 自動無限滾動（滾到按鈕附近就自動載入下一批）
+        // 自動無限滾動
         function setupInfiniteScroll() {
             if (!('IntersectionObserver' in window)) return;
             const io = new IntersectionObserver(entries => {
@@ -883,7 +882,7 @@
             return (w && w.category) ? w.category : '其他';
         }
 
-        // 購物車商品價格（優先用加入當下存下來的價格，避免換頁後抓不到）
+        // 購物車商品價格（優先用加入當下存下來的價格）
         function cartPriceOf(c) {
             const p = c.price || (watchData[c.id] && watchData[c.id].price) || { base: 6000, mid: 12000, custom: 19999 };
             if (c.budget === '高端') return p.mid;
@@ -891,7 +890,7 @@
             return p.base;
         }
 
-        // 後台異動 → 前台重新載入第一頁（防抖 0.8 秒）
+        // 後台異動 → 前台重新載入第一頁（防抖）
         let realtimeTimer = null;
         function subscribeProductsRealtime() {
             if (productsChannel) return;
@@ -914,7 +913,7 @@
             clearTimeout(searchTimer);
             searchTimer = setTimeout(() => {
                 currentSearch = document.getElementById('searchInput').value.trim();
-                loadProducts(false);   // 搜尋一律回資料庫，不管有幾筆都能找到
+                loadProducts(false);
             }, 350);
         }
 
@@ -972,7 +971,6 @@
             const watch = watchData[imgNum];
             if (!watch) return;
 
-            // 記錄商品點擊（後台「熱門商品」圖表用）
             supabase.rpc('increment_product_click', {
                 p_id: imgNum,
                 p_name: watch.name
@@ -1159,7 +1157,7 @@
         setInterval(startMarqueeLoop, 25000);
 
         // ============================================================
-        // ===== 真實數據（走 RPC，避免前端亂改）=====
+        // ===== 真實數據（走 RPC）=====
         // ============================================================
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
@@ -1179,7 +1177,7 @@
                     document.getElementById('realOrderCount').innerText = total.toLocaleString();
                 }
             } catch (err) {
-                // 讀不到就維持預設顯示，不影響頁面
+                // 讀不到就維持預設顯示
             }
         }
         fetchRealStats();
@@ -1227,7 +1225,6 @@
                     online_at: new Date().toISOString()
                 });
 
-                // 瀏覽統計改由 RPC 自增（前端沒有 UPDATE 權限）
                 const { error } = await supabase.rpc('track_visit', { p_platform: platformKey() });
                 if (error) console.warn('瀏覽統計失敗（請確認 DB 有 track_visit 函式）:', error.message);
             }
@@ -1394,7 +1391,7 @@
             appendChatMessage('[影片]', 'user', new Date().toISOString(), url, 'video');
         }
 
-        // 後台回覆即時推送（修正：未開啟聊天室也會亮紅點）
+        // 後台回覆即時推送
         supabase.channel('front-chat-' + sessionId)
             .on('postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
@@ -1404,7 +1401,6 @@
 
                     const widget = document.getElementById('chatWidget');
 
-                    // 已載入歷史訊息才直接插入，避免重複；未載入則等使用者點開時一次載入
                     if (widget.dataset.loaded) {
                         appendChatMessage(msg.message, 'admin', msg.created_at, msg.image_url, msg.msg_type);
                     }
