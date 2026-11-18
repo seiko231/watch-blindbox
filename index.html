@@ -18,35 +18,35 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
 
     <style>
-        :root { --gold: #d4af37; --gold-dark: #b38728; --bg-light: #f8f9fa; --text-dark: #333333; --text-gray: #666666; --card-bg: #ffffff; }
-        body { background-color: var(--bg-light); background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%); color: var(--text-dark); font-family: 'Microsoft JhengHei', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
+        :root { --gold: #0052d9; --gold-dark: #003cab; --td-brand: #0052d9; --td-brand-hover: #2667d4; --td-brand-active: #003cab; --td-brand-1: #f2f3ff; --td-brand-2: #d9e1ff; --bg-light: #f3f4f6; --text-dark: #1a1a1a; --text-gray: #646a73; --card-bg: #ffffff; --td-border: #e7e9eb; --td-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.05); }
+        body { background-color: var(--bg-light); background-image: none; color: var(--text-dark); font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
 
-        .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); color: #111; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .marquee-container { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: linear-gradient(90deg, #003cab, #0052d9, #2667d4); color: #ffffff; font-weight: bold; font-size: 14px; display: flex; align-items: center; overflow: hidden; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .marquee-text { white-space: nowrap; animation: scrollText 20s linear infinite; padding-left: 100%; }
         @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         body { padding-top: 55px; }
 
-        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.4); color: #00c800; padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.4); color: #00c800; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
         .trust-bar { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; width: 100%; font-size: 13px; color: var(--text-gray); flex-wrap: wrap; }
-        .trust-item { display: flex; align-items: center; gap: 5px; background: #ffffff; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(212, 175, 55, 0.4); font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .trust-item { display: flex; align-items: center; gap: 5px; background: #ffffff; padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(0, 82, 217, 0.4); font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .trust-item span { color: var(--gold-dark); }
         .trust-item.verify { color: #00a000; border-color: #00a000; background: #f0fff0; }
         .trust-item.verify span { color: #00a000; }
 
         .header-section { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1000px; }
-        h1 { color: var(--text-dark); font-size: 38px; margin-bottom: 10px; letter-spacing: 3px; font-weight: 900; }
+        h1 { color: var(--text-dark); font-size: 32px; margin-bottom: 8px; letter-spacing: 0; font-weight: 700; }
         .subtitle { color: var(--text-gray); font-size: 16px; margin-bottom: 20px; letter-spacing: 1px; }
 
-        .total-served { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 14px; color: var(--text-dark); background: #fff; padding: 10px 25px; border-radius: 30px; border: 1px dashed var(--gold); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.1); }
+        .total-served { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-size: 14px; color: var(--text-dark); background: #fff; padding: 10px 25px; border-radius: 8px; border: 1px dashed var(--gold); box-shadow: 0 4px 15px rgba(0, 82, 217, 0.1); }
         .total-served span { color: var(--gold-dark); font-size: 22px; font-weight: bold; font-family: Arial; }
 
-        .line-contact-banner { background: #ffffff; border: 2px solid var(--gold); border-radius: 15px; padding: 18px 25px; margin: 0 auto 25px auto; display: flex; align-items: center; justify-content: center; gap: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); max-width: 650px; position: relative; cursor: pointer; transition: 0.3s; }
-        .line-contact-banner:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15); }
+        .line-contact-banner { background: #ffffff; border: 2px solid var(--gold); border-radius: 10px; padding: 18px 25px; margin: 0 auto 25px auto; display: flex; align-items: center; justify-content: center; gap: 25px; box-shadow: var(--td-shadow); max-width: 650px; position: relative; cursor: pointer; transition: 0.3s; }
+        .line-contact-banner:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0, 82, 217, 0.15); }
         .online-dot { position: absolute; top: 15px; right: 15px; width: 12px; height: 12px; background: #00c800; border-radius: 50%; box-shadow: 0 0 12px #00c800; animation: blink 1.5s infinite; }
-        .line-contact-banner .avatar { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .line-contact-banner .avatar { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 15px rgba(0, 82, 217,0.3); }
         .line-text h3 { color: var(--gold-dark); margin: 0 0 8px 0; font-size: 18px; display: flex; align-items: center; gap: 5px; font-weight: bold;}
         .line-text p { color: var(--text-dark); margin: 0; font-size: 14px; line-height: 1.6; }
         .line-text p span { color: #ff4757; font-weight: bold; background: rgba(255,71,87,0.1); padding: 2px 6px; border-radius: 4px; }
@@ -54,7 +54,7 @@
         .legal-banner { background: #ffffff; border: 1px dashed #ccc; border-radius: 8px; padding: 12px 15px; margin-bottom: 30px; max-width: 650px; font-size: 13px; color: var(--text-gray); line-height: 1.6; text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
         .legal-banner strong { color: var(--gold-dark); }
 
-        .buyer-show-section { width: 100%; max-width: 1000px; margin: 0 auto 30px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .buyer-show-section { width: 100%; max-width: 1000px; margin: 0 auto 30px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; box-shadow: var(--td-shadow); }
         .buyer-show-title { color: var(--gold-dark); text-align: center; margin-top: 0; margin-bottom: 15px; font-size: 18px; }
         .buyer-show-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .buyer-show-scroll::-webkit-scrollbar { display: none; }
@@ -65,32 +65,41 @@
 
         .filter-section { width: 100%; max-width: 1200px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
         .search-box { position: relative; width: 100%; max-width: 500px; }
-        .search-box input { width: 100%; padding: 12px 15px 12px 45px; border-radius: 30px; border: 1px solid #ddd; background: #fff; color: var(--text-dark); font-size: 15px; outline: none; box-sizing: border-box; transition: 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
-        .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        .search-box input { width: 100%; padding: 12px 15px 12px 45px; border-radius: 8px; border: 1px solid var(--td-border); background: #fff; color: var(--text-dark); font-size: 15px; outline: none; box-sizing: border-box; transition: 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .search-box input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(0, 82, 217, 0.2); }
         .search-box::before { content: '🔍'; position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #999; }
         .category-tabs { display: flex; gap: 10px; overflow-x: auto; width: 100%; justify-content: flex-start; padding-bottom: 5px; }
         .category-tabs::-webkit-scrollbar { display: none; }
-        .category-btn { background: #fff; color: var(--text-gray); border: 1px solid #ddd; padding: 8px 16px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 14px; transition: 0.3s; }
+        .category-btn { background: #fff; color: var(--text-gray); border: 1px solid #ddd; padding: 8px 16px; border-radius: 8px; cursor: pointer; white-space: nowrap; font-size: 14px; transition: 0.3s; }
         .category-btn:hover { border-color: var(--gold); color: var(--gold-dark); }
         .category-btn.active { background: var(--gold); color: #fff; border-color: var(--gold); font-weight: bold; }
 
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .product-card { background: #ffffff; border: 1px solid #eee; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15); }
+        .product-card { background: #ffffff; border: 1px solid var(--td-border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.25s ease; position: relative; box-shadow: var(--td-shadow); }
+        .product-card:hover { transform: translateY(-2px); border-color: var(--td-brand-2); box-shadow: 0 8px 24px rgba(0, 82, 217, 0.12); }
         .product-image-wrapper { position: relative; width: 100%; height: 220px; overflow: hidden; cursor: zoom-in; background-color: #f9f9f9; }
         .product-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s, opacity 0.4s; opacity: 0; }
         .product-image-wrapper img.loaded { opacity: 1; }
         .product-card:hover .product-image-wrapper img { transform: scale(1.08); }
 
-        .loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border: 3px solid rgba(212, 175, 55, 0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; z-index: 1; }
+        .loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border: 3px solid rgba(0, 82, 217, 0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; z-index: 1; }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
         .image-number-badge { position: absolute; top: 10px; left: 10px; background: rgba(255, 255, 255, 0.95); color: var(--gold-dark); font-size: 20px; font-weight: 900; padding: 5px 12px; border-radius: 8px; border: 2px solid var(--gold); z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .stock-badge { position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81); color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 20px; z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.3); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .stock-badge { position: absolute; bottom: 10px; right: 10px; background: linear-gradient(45deg, #ff4757, #ff6b81); color: #fff; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 8px; z-index: 10; box-shadow: 0 2px 10px rgba(255, 71, 87, 0.3); border: 1px solid rgba(255, 255, 255, 0.5); }
 
         .product-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
         .product-info h3 { color: var(--text-dark); margin: 0 0 5px 0; font-size: 16px; line-height: 1.4; font-weight: bold;}
         .price-tag { color: #00a000; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+        /* 原價 / 優惠價 */
+        .price-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+        .price-original { color: #999; font-size: 13px; text-decoration: line-through; }
+        .price-sale { color: #e63946; font-size: 17px; font-weight: 900; letter-spacing: .3px; }
+        .price-off { background: #ff4757; color: #fff; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 4px; }
+        .price-line { color: #999; font-size: 12px; margin-bottom: 8px; line-height: 1.6; }
+        .price-line b { color: #e63946; }
+        .cart-price-line { font-size: 12px; color: #00a000; font-weight: bold; }
+        .cart-price-line s { color: #aaa; font-weight: normal; margin-left: 6px; }
         .product-info p { color: var(--text-gray); margin: 0 0 15px 0; font-size: 13px; line-height: 1.5; flex-grow: 1; }
 
         .empty-hint { grid-column: 1 / -1; text-align: center; color: #999; padding: 60px 20px; font-size: 15px; }
@@ -98,20 +107,20 @@
 
         .card-trust-tags { display: flex; gap: 6px; margin-bottom: 12px; font-size: 11px; color: var(--text-gray); flex-wrap: wrap; }
         .card-trust-tags span { background: #f5f5f5; padding: 4px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; border: 1px solid #eee; }
-        .card-trust-tags span.highlight { color: var(--gold-dark); border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.05); font-weight: bold; }
+        .card-trust-tags span.highlight { color: var(--gold-dark); border-color: rgba(0, 82, 217,0.3); background: rgba(0, 82, 217,0.05); font-weight: bold; }
 
-        .claim-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); background-size: 200% auto; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); transition: all 0.3s ease; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-        .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); transform: translateY(-2px); }
+        .claim-btn { width: 100%; padding: 13px; background: var(--td-brand); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; letter-spacing: .5px; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 82, 217, 0.22); transition: all 0.25s ease; }
+        .claim-btn:hover { background-position: right center; box-shadow: 0 6px 20px rgba(0, 82, 217, 0.5); transform: translateY(-2px); }
 
         .chat-product-btn { margin-top: 8px; background: transparent; border: 1px solid var(--gold-dark); color: var(--gold-dark); border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .chat-product-btn:hover { background: rgba(212, 175, 55, 0.1); transform: translateY(-2px); }
+        .chat-product-btn:hover { background: rgba(0, 82, 217, 0.1); transform: translateY(-2px); }
 
-        .cart-add-btn { margin-top: 8px; background: transparent; border: 1px solid #00bcd4; color: #00bcd4; border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .cart-add-btn:hover { background: rgba(0,188,212,0.1); transform: translateY(-2px); }
+        .cart-add-btn { margin-top: 8px; background: transparent; border: 1px solid var(--td-border); color: var(--text-gray); border-radius: 8px; padding: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .cart-add-btn:hover { background: var(--td-brand-1); border-color: var(--gold); color: var(--gold-dark); transform: translateY(-2px); }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background: #ffffff; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .modal-content { background: #ffffff; padding: 25px; border-radius: 10px; border: 1px solid var(--gold); width: 92%; max-width: 450px; text-align: center; position: relative; transform: translateY(20px) scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
         .modal-content h2 { color: var(--gold-dark); font-size: 22px; margin-top: 0; margin-bottom: 20px; }
 
@@ -123,12 +132,19 @@
 
         .budget-selector { display: flex; gap: 10px; margin-bottom: 15px; }
         .budget-btn { flex: 1; padding: 10px 5px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; color: var(--text-gray); font-size: 13px; cursor: pointer; transition: 0.3s; }
-        .budget-btn.active { background: #fff; border-color: var(--gold); color: var(--gold-dark); font-weight: bold; box-shadow: 0 2px 8px rgba(212,175,55,0.2); }
+        .budget-btn.active { background: #fff; border-color: var(--gold); color: var(--gold-dark); font-weight: bold; box-shadow: 0 2px 8px rgba(0, 82, 217,0.2); }
 
         .input-group { position: relative; margin-bottom: 15px; }
         .input-group::before { content: attr(data-icon); position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #999; z-index: 2; }
         .modal-content input { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; color: var(--text-dark); box-sizing: border-box; font-size: 16px; outline: none; transition: 0.3s;}
-        .modal-content input:focus { border-color: var(--gold); background: #fff; box-shadow: 0 0 10px rgba(212,175,55,0.1);}
+        .modal-content input:focus { border-color: var(--gold); background: #fff; box-shadow: 0 0 10px rgba(0, 82, 217,0.1);}
+        .modal-content select { width: 100%; padding: 15px 15px 15px 45px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; color: var(--text-dark); box-sizing: border-box; font-size: 16px; outline: none; transition: 0.3s; appearance: none; -webkit-appearance: none; cursor: pointer; }
+        .modal-content select:focus { border-color: var(--gold); background: #fff; box-shadow: 0 0 10px rgba(0, 82, 217,0.1); }
+        .deliver-tip { display: flex; flex-wrap: wrap; gap: 6px 14px; justify-content: center; background: #f2f7ff; border: 1px solid #d6e4ff; color: #0b4bb3; font-size: 12.5px; font-weight: bold; padding: 10px 12px; border-radius: 8px; margin: 4px 0 12px; }
+        .order-toast { position: fixed; left: 18px; bottom: 18px; z-index: 99990; display: flex; align-items: center; gap: 10px; max-width: 300px; background: #fff; border: 1px solid #e7e9eb; border-radius: 10px; box-shadow: 0 10px 28px rgba(0,0,0,0.14); padding: 10px 14px; font-size: 13px; color: #1a1a1a; line-height: 1.45; opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity .35s ease, transform .35s ease; }
+        .order-toast.show { opacity: 1; transform: none; }
+        .order-toast img { width: 42px; height: 42px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
+        .order-toast .ot-sub { font-size: 11.5px; color: #6b7280; margin-top: 2px; }
 
         .form-warning { background: #f0fff0; border: 2px dashed #00a000; color: #00a000; font-size: 13px; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.8; font-weight: bold; }
         .form-privacy-text { font-size: 12px; color: #999; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
@@ -140,12 +156,12 @@
         .close-btn { position: absolute; top: 10px; right: 15px; color: #999; font-size: 24px; cursor: pointer; padding: 5px; }
         .close-btn:hover { color: var(--text-dark); }
 
-        .budget-modal-content { background: #fff; padding: 25px 20px; border-radius: 15px; border: 1px solid var(--gold); width: 90%; max-width: 340px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+        .budget-modal-content { background: #fff; padding: 25px 20px; border-radius: 10px; border: 1px solid var(--gold); width: 90%; max-width: 340px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
         .budget-modal-content h3 { color: var(--gold-dark); margin-top: 0; font-size: 18px; margin-bottom: 5px; }
         .budget-modal-content p { color: var(--text-gray); font-size: 13px; margin-bottom: 20px; line-height: 1.4; }
         .budget-modal-btns { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
         .budget-modal-btn { padding: 14px; background: #f9f9f9; border: 1px solid #ddd; color: var(--text-dark); border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
-        .budget-modal-btn:hover { background: #fff; border-color: var(--gold); color: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(212,175,55,0.15); }
+        .budget-modal-btn:hover { background: #fff; border-color: var(--gold); color: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 82, 217,0.15); }
         .budget-modal-btn span.price { font-size: 13px; color: #999; font-weight: normal; }
         .budget-modal-cancel { padding: 10px; background: transparent; border: none; color: #999; cursor: pointer; width: 100%; font-size: 14px; transition: 0.3s; }
         .budget-modal-cancel:hover { color: var(--text-dark); }
@@ -156,20 +172,45 @@
         .lightbox-close:hover { transform: rotate(90deg) scale(1.1); background: rgba(0, 0, 0, 0.1); }
         .gallery-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; width: 95vw; height: 85vh; gap: 20px; padding: 0 20px; align-items: center; }
         .gallery-track::-webkit-scrollbar { display: none; }
-        .gallery-track img { flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.1), 0 0 40px rgba(212, 175, 55, 0.1); transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; will-change: transform; }
-        .gallery-track img:hover, .gallery-track img:active { transform: scale(1); box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 0 50px rgba(212, 175, 55, 0.2); cursor: zoom-in; }
-        .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(0,0,0,0.5); font-size: 14px; pointer-events: none; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);}
+        .gallery-track img { flex-shrink: 0; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.1), 0 0 40px rgba(0, 82, 217, 0.1); transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; will-change: transform; }
+        .gallery-track img:hover, .gallery-track img:active { transform: scale(1); box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 0 50px rgba(0, 82, 217, 0.2); cursor: zoom-in; }
+        .gallery-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: rgba(0,0,0,0.5); font-size: 14px; pointer-events: none; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);}
 
         .floating-btns { position: fixed; bottom: 30px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 1500; }
         .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; transition: 0.3s; border: none; outline: none; position: relative; }
         .float-btn:hover { transform: translateY(-5px); }
         .btn-line { background: #00c800; color: #fff; font-size: 28px; text-decoration: none; }
         .btn-top { background: #fff; color: var(--gold-dark); border: 1px solid var(--gold); font-size: 24px; display: none; }
-        .btn-chat { background: #00bcd4; color: #fff; font-size: 28px; }
+        .btn-chat { background: var(--gold); color: #fff; font-size: 28px; }
         .chat-badge { position: absolute; top: -5px; right: -5px; background: #ff4757; color: #fff; border-radius: 50%; font-size: 11px; font-weight: bold; min-width: 18px; height: 18px; display: none; justify-content: center; align-items: center; padding: 0 4px; border: 2px solid #fff; }
 
+        /* ===== 可拖動客服球 ===== */
+        .btn-chat { position: fixed; right: 20px; bottom: 100px; background: var(--gold); color: #fff; font-size: 24px; flex-direction: column; cursor: grab; touch-action: none; z-index: 1501; }
+        .btn-chat .btn-chat-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-indent: 3px; margin-top: 1px; }
+        .btn-chat.dragging { opacity: .95; box-shadow: 0 8px 24px rgba(0, 82, 217, .35); }
+        /* ===== 聊天窗商品訂單條 ===== */
+        .chat-ctx { display: none; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--td-border); background: #f7f9ff; }
+        .chat-ctx img { width: 42px; height: 42px; object-fit: cover; border-radius: 6px; border: 1px solid var(--td-border); }
+        .chat-ctx-info { flex: 1; min-width: 0; }
+        .chat-ctx-name { font-size: 13px; font-weight: bold; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .chat-ctx-price { font-size: 12px; color: var(--gold-dark); font-weight: bold; margin-top: 2px; }
+        .chat-ctx-order { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+        .chat-ctx-qty { display: flex; align-items: center; gap: 8px; }
+        .chat-ctx-qty button { width: 22px; height: 22px; border-radius: 4px; border: 1px solid var(--td-border); background: #fff; color: var(--text-dark); font-size: 14px; line-height: 1; cursor: pointer; }
+        .chat-ctx-qty span { min-width: 18px; text-align: center; font-size: 13px; font-weight: bold; color: var(--text-dark); }
+        .chat-ctx-send { border: none; background: var(--gold); color: #fff; font-size: 12px; font-weight: bold; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+        .chat-ctx-send:hover { background: var(--gold-dark); }
+        /* ===== 訂單訊息卡片 ===== */
+        .msg { white-space: pre-line; }
+        .msg.user.msg-order { background: #fff; color: var(--text-dark); border: 1.5px solid var(--gold); border-bottom-right-radius: 8px; text-align: left; }
+        .msg-order .order-head { display: flex; align-items: center; gap: 8px; border-bottom: 1px dashed var(--td-border); padding-bottom: 6px; margin-bottom: 6px; }
+        .msg-order .order-head img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; border: 1px solid var(--td-border); cursor: zoom-in; flex-shrink: 0; }
+        .msg-order .order-head .order-title { flex: 1; font-weight: bold; color: var(--gold-dark); font-size: 13px; }
+        .msg-order .order-line { display: flex; justify-content: space-between; gap: 14px; font-size: 13.5px; padding: 3px 0; color: var(--text-dark); }
+        .msg-order .order-line b { color: var(--gold-dark); }
+
         .trust-section { width: 100%; max-width: 1000px; margin: 40px auto 20px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-        .trust-card { flex: 1; min-width: 300px; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.02);}
+        .trust-card { flex: 1; min-width: 300px; background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 20px; text-align: center; box-shadow: var(--td-shadow);}
         .trust-card h3 { color: var(--gold-dark); margin-top: 0; font-size: 18px; }
         .trust-card p { color: var(--text-gray); font-size: 14px; line-height: 1.6; }
         .trust-card img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 1px solid #eee; }
@@ -178,14 +219,14 @@
         .faq-section h2 { text-align: center; color: var(--gold-dark); margin-bottom: 20px; }
         .faq-item { background: #fff; border: 1px solid #eee; border-radius: 8px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
         .faq-question { padding: 15px; cursor: pointer; font-weight: bold; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .faq-question:hover { background: rgba(212, 175, 55, 0.05); color: var(--gold-dark); }
+        .faq-question:hover { background: rgba(0, 82, 217, 0.05); color: var(--gold-dark); }
         .faq-answer { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; color: var(--text-gray); font-size: 14px; line-height: 1.6; }
         .faq-item.active .faq-answer { padding: 0 15px 15px 15px; max-height: 200px; }
         .faq-item.active .faq-question { color: var(--gold-dark); }
 
-        .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #fff; border: 1px solid #eee; border-radius: 12px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .chat-widget { position: fixed; bottom: 100px; right: 20px; width: 340px; height: 460px; background: #fff; border: 1px solid #eee; border-radius: 8px; display: none; flex-direction: column; z-index: 2000; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
         .chat-widget.active { display: flex; }
-        .chat-header { background: #fff; padding: 12px 15px; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--text-dark); font-weight: bold; border-bottom: 1px solid #eee; }
+        .chat-header { background: #fff; padding: 12px 15px; border-radius: 8px 8px 0 0; display: flex; justify-content: space-between; align-items: center; color: var(--text-dark); font-weight: bold; border-bottom: 1px solid #eee; }
         .chat-header-info { display: flex; align-items: center; gap: 10px; }
         .chat-header-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
         .chat-header-text { display: flex; flex-direction: column; }
@@ -195,11 +236,23 @@
         .chat-close { cursor: pointer; font-size: 20px; color: #999; padding: 5px; }
         .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; background: #fafafa;}
         .msg { max-width: 80%; padding: 10px 14px; border-radius: 8px; font-size: 14px; line-height: 1.4; word-break: break-word; }
-        .msg.user { align-self: flex-end; background: #d4af37; color: #fff; border-bottom-right-radius: 0; }
+        .msg.user { align-self: flex-end; background: #0052d9; color: #fff; border-bottom-right-radius: 0; }
         .msg.admin { align-self: flex-start; background: #fff; color: var(--text-dark); border-bottom-left-radius: 0; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
         .msg-time { font-size: 10px; color: #aaa; margin-top: 3px; text-align: right; }
-        .chat-input-area { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 8px; align-items: center; background: #fff; border-radius: 0 0 12px 12px; }
-        .chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #ddd; background: #f9f9f9; color: var(--text-dark); outline: none; font-size: 14px; }
+        .msg.pressing, .chat-msg.pressing { transform: scale(.97); filter: brightness(1.06); transition: transform .15s ease; }
+        .msg-menu { position: fixed; z-index: 2147483000; background: #1f1f1f; border-radius: 10px; box-shadow: 0 12px 34px rgba(0,0,0,.4); padding: 6px; display: none; flex-direction: column; min-width: 130px; }
+        .msg-menu.show { display: flex; }
+        .msg-menu button { background: transparent; border: none; color: #fff; font-size: 14px; padding: 11px 14px; text-align: left; border-radius: 7px; cursor: pointer; display: flex; gap: 8px; align-items: center; }
+        .msg-menu button:hover, .msg-menu button:active { background: rgba(255,255,255,.13); }
+        .msg-trans { margin-top: 7px; padding-top: 6px; border-top: 1px dashed rgba(0,0,0,.18); font-size: 12.5px; line-height: 1.55; color: #555; text-align: left; }
+        .msg.user .msg-trans { border-top-color: rgba(255,255,255,.35); color: rgba(255,255,255,.93); }
+        .chat-msg .chat-msg-trans { margin-top: 7px; padding-top: 6px; border-top: 1px dashed rgba(255,255,255,.22); font-size: 12.5px; line-height: 1.55; color: #c9c9c9; text-align: left; }
+        .chat-msg.admin .chat-msg-trans { border-top-color: rgba(0,0,0,.22); color: #3d3d3d; }
+        .msg-trans .tr-meta, .chat-msg-trans .tr-meta { font-size: 10px; opacity: .68; margin-top: 3px; }
+        .msg-trans .tr-err, .chat-msg-trans .tr-err { color: #e57373; }
+
+                .chat-input-area { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 8px; align-items: center; background: #fff; border-radius: 0 0 8px 8px; }
+        .chat-input-area input[type="text"] { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; background: #f9f9f9; color: var(--text-dark); outline: none; font-size: 14px; }
         .chat-welcome { text-align: center; color: #aaa; font-size: 12px; padding: 10px; }
         .chat-body .chat-img { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; cursor: zoom-in; border: 1px solid #eee; }
         .chat-body .chat-video { max-width: 200px; max-height: 200px; border-radius: 8px; display: block; background: #000; border: 1px solid #eee; }
@@ -228,7 +281,7 @@
         .cart-footer { padding: 15px 20px; border-top: 1px solid #eee; background: #fff; }
         .cart-total { color: var(--text-dark); font-size: 14px; margin-bottom: 10px; text-align: center; }
         .cart-total span { color: var(--gold-dark); font-weight: bold; font-size: 16px; }
-        .cart-checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(212,175,55,0.3);}
+        .cart-checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #0052d9 0%, #2667d4 100%); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 82, 217,0.3);}
         .cart-checkout-btn:hover { filter: brightness(1.1); transform: translateY(-2px);}
 
         .site-footer { width: 100%; max-width: 1200px; text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #ddd; color: #999; font-size: 13px; }
@@ -246,8 +299,8 @@
         .image-lightbox .close-icon:hover { color: #ff4757; transform: scale(1.1); }
 
         /* ===== 多語系選單 ===== */
-        #langSwitcher { position: fixed; top: 45px; left: 15px; z-index: 2600; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid rgba(212,175,55,.45); border-radius: 20px; padding: 5px 10px; box-shadow: 0 4px 14px rgba(0,0,0,.08); font-size: 13px; }
-        #langSwitcher select { border: none; background: transparent; font-size: 13px; color: #b38728; font-weight: bold; outline: none; cursor: pointer; }
+        #langSwitcher { position: fixed; top: 45px; left: 15px; z-index: 2600; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid rgba(0, 82, 217,.45); border-radius: 8px; padding: 5px 10px; box-shadow: 0 4px 14px rgba(0,0,0,.08); font-size: 13px; }
+        #langSwitcher select { border: none; background: transparent; font-size: 13px; color: #003cab; font-weight: bold; outline: none; cursor: pointer; }
         html[lang="en"] body, html[lang="ja"] body, html[lang="ko"] body,
         html[lang="th"] body, html[lang="vi"] body, html[lang="id"] body,
         html[lang="es"] body, html[lang="fr"] body, html[lang="de"] body {
@@ -368,11 +421,6 @@
         </div>
         <div class="category-tabs" id="categoryTabs">
             <button class="category-btn active" onclick="setCategory('全部', this)">全部</button>
-            <button class="category-btn" onclick="setCategory('經典款', this)">經典款</button>
-            <button class="category-btn" onclick="setCategory('運動款', this)">運動款</button>
-            <button class="category-btn" onclick="setCategory('奢華款', this)">奢華款</button>
-            <button class="category-btn" onclick="setCategory('潛水款', this)">潛水款</button>
-            <button class="category-btn" onclick="setCategory('計時款', this)">計時款</button>
         </div>
     </div>
 
@@ -381,8 +429,8 @@
     <div class="trust-section">
         <div class="trust-card">
             <h3>⭐ 買家真實好評</h3>
-            <p>「收到實體真的很有質感！包裝很用心，貨到付款讓人很放心，下次還會回購！」<br><span style="color:#d4af37; font-size:12px;">— 台北 林先生</span></p>
-            <p>「客服回覆很快，出貨也迅速，手錶戴起來很霸氣，朋友都問我哪裡買的。」<br><span style="color:#d4af37; font-size:12px;">— 台中 王小姐</span></p>
+            <p>「收到實體真的很有質感！包裝很用心，貨到付款讓人很放心，下次還會回購！」<br><span style="color:#0052d9; font-size:12px;">— 台北 林先生</span></p>
+            <p>「客服回覆很快，出貨也迅速，手錶戴起來很霸氣，朋友都問我哪裡買的。」<br><span style="color:#0052d9; font-size:12px;">— 台中 王小姐</span></p>
         </div>
         <div class="trust-card">
             <h3>📦 出貨實拍保證</h3>
@@ -433,6 +481,7 @@
                 <div class="price-display-box">
                     <p>您選擇的商品：</p>
                     <h3 id="modalProductName">手錶名稱</h3>
+                    <div class="price-line" id="modalPriceRow"></div>
                     <div class="viewer-count">
                         🔥 今日已有 <span id="randomViewerCount">15</span> 人查看此商品
                     </div>
@@ -454,10 +503,43 @@
                         <input type="text" id="custName" placeholder="請輸入收件人姓名" maxlength="30" required>
                     </div>
                     <div class="input-group" data-icon="📞">
-                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="10" title="請輸入 09 開頭的 10 碼手機號碼" required>
+                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="14" title="請輸入 09 開頭的 10 碼手機號碼" required>
+                    </div>
+                    <div class="input-group" data-icon="🏙️">
+                        <select id="custCity" required>
+                            <option value="">請選擇收件縣市</option>
+                            <option value="台北市">台北市</option>
+                            <option value="新北市">新北市</option>
+                            <option value="桃園市">桃園市</option>
+                            <option value="台中市">台中市</option>
+                            <option value="台南市">台南市</option>
+                            <option value="高雄市">高雄市</option>
+                            <option value="基隆市">基隆市</option>
+                            <option value="新竹市">新竹市</option>
+                            <option value="新竹縣">新竹縣</option>
+                            <option value="苗栗縣">苗栗縣</option>
+                            <option value="彰化縣">彰化縣</option>
+                            <option value="南投縣">南投縣</option>
+                            <option value="雲林縣">雲林縣</option>
+                            <option value="嘉義市">嘉義市</option>
+                            <option value="嘉義縣">嘉義縣</option>
+                            <option value="屏東縣">屏東縣</option>
+                            <option value="宜蘭縣">宜蘭縣</option>
+                            <option value="花蓮縣">花蓮縣</option>
+                            <option value="台東縣">台東縣</option>
+                            <option value="澎湖縣">澎湖縣</option>
+                            <option value="金門縣">金門縣</option>
+                            <option value="連江縣">連江縣</option>
+                        </select>
                     </div>
                     <div class="input-group" data-icon="📍">
-                        <input type="text" id="custAddress" placeholder="請輸入詳細收件地址" maxlength="100" required>
+                        <input type="text" id="custAddress" placeholder="請輸入鄉鎮市區 + 街道門牌" maxlength="100" required>
+                    </div>
+
+                    <div class="deliver-tip">
+                        <span>🚚 預計 2–3 天到貨</span>
+                        <span>💵 貨到付款</span>
+                        <span>📦 全館免運費</span>
                     </div>
 
                     <div class="form-warning">
@@ -522,13 +604,13 @@
             <p id="budgetModalProductName" style="color:var(--text-dark); font-weight:bold; font-size:14px;"></p>
             <div class="budget-modal-btns">
                 <button class="budget-modal-btn" onclick="confirmAddToCart('基礎')">
-                    <div>💎 基礎款</div><span class="price" id="priceOptBase">約 $6,000</span>
+                    <div>💎 基礎款</div><span class="price" id="priceOptBase">約 —</span>
                 </button>
                 <button class="budget-modal-btn" onclick="confirmAddToCart('高端')">
-                    <div>👑 高端款</div><span class="price" id="priceOptMid">約 $12,000</span>
+                    <div>👑 高端款</div><span class="price" id="priceOptMid">約 —</span>
                 </button>
                 <button class="budget-modal-btn" onclick="confirmAddToCart('定制')">
-                    <div>✨ 尊榮定制</div><span class="price" id="priceOptCustom">約 $19,999</span>
+                    <div>✨ 尊榮定制</div><span class="price" id="priceOptCustom">約 —</span>
                 </button>
             </div>
             <button class="budget-modal-cancel" onclick="closeBudgetModal()">取消</button>
@@ -546,12 +628,15 @@
                 style="background:#fff; color:var(--gold-dark); font-size:24px; border:1px solid var(--gold);">🛒
             <span class="chat-badge" id="cartBadge">0</span>
         </button>
-        <button class="float-btn btn-chat" title="線上客服" onclick="toggleChat()">💬
-            <span class="chat-badge" id="chatBadge">0</span>
-        </button>
         <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
         <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
     </div>
+
+    <!-- 可拖動客服球（按住拖到任意位置，鬆手自動吸附左右邊緣） -->
+    <button class="float-btn btn-chat" id="btnChat" title="線上客服">🎧
+        <span class="chat-badge" id="chatBadge">0</span>
+        <span class="btn-chat-label">客服</span>
+    </button>
 
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
@@ -579,10 +664,23 @@
             </div>
             <div class="chat-close" onclick="toggleChat()">&times;</div>
         </div>
+        <div class="chat-ctx" id="chatCtx">
+            <img id="chatCtxImg" src="" alt="">
+            <div class="chat-ctx-info">
+                <div class="chat-ctx-name" id="chatCtxName"></div>
+                <div class="chat-ctx-price" id="chatCtxPrice"></div>
+            </div>
+            <div class="chat-ctx-order">
+                <div class="chat-ctx-qty">
+                    <button onclick="ctxQty(-1)">−</button><span id="chatCtxQty">1</span><button onclick="ctxQty(1)">+</button>
+                </div>
+                <button class="chat-ctx-send" onclick="sendOrderMessage()">📋 發送訂單</button>
+            </div>
+        </div>
         <div class="chat-body" id="chatBody">
             <div class="chat-welcome">
                 👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？
-                <div style="margin-top:10px; padding:10px; background:#fff8e1; border:1px dashed #d4af37; border-radius:8px; color:#8a6d3b; font-size:12px; line-height:1.6; text-align:left;">
+                <div style="margin-top:10px; padding:10px; background:#fff8e1; border:1px dashed #0052d9; border-radius:8px; color:#8a6d3b; font-size:12px; line-height:1.6; text-align:left;">
                     ⚠️ 關閉網頁後就收不到客服訊息了<br>
                     建議先加入我們的 LINE 官方帳號 👇
                     <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener"
@@ -616,6 +714,135 @@
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: { lock: async (name, acquireTimeout, fn) => { return await fn(); } }
         });
+
+        /* ============================================================
+           站點設定（幣種 / 語言 / 介面文案翻譯 / 原價降級儲存）
+           - 優先讀 Supabase 資料表 site_settings(id=1).config
+           - 資料表不存在或無權限時，自動降級為本機 localStorage
+           ============================================================ */
+        window.SiteConfig = (function () {
+            const KEY = 'wb_site_config_v1';
+            const BUILTIN_LANGS = [
+                { code: 'zh-TW', label: '繁體中文', enabled: true, builtin: true },
+                { code: 'zh-CN', label: '简体中文', enabled: true, builtin: true },
+                { code: 'en',    label: 'English',  enabled: true, builtin: true },
+                { code: 'ja',    label: '日本語',   enabled: true, builtin: true },
+                { code: 'ko',    label: '한국어',    enabled: true, builtin: true },
+                { code: 'th',    label: 'ไทย',      enabled: true, builtin: true },
+                { code: 'vi',    label: 'Tiếng Việt', enabled: true, builtin: true },
+                { code: 'id',    label: 'Bahasa Indonesia', enabled: true, builtin: true },
+                { code: 'es',    label: 'Español',  enabled: true, builtin: true },
+                { code: 'fr',    label: 'Français', enabled: true, builtin: true },
+                { code: 'de',    label: 'Deutsch',  enabled: true, builtin: true }
+            ];
+            const DEFAULTS = {
+                currency: { symbol: '$', code: 'TWD', label: '台幣', rate: 1, position: 'before', decimals: 0, thousands: true },
+                languages: BUILTIN_LANGS,
+                translations: {},
+                originalPrices: {},
+                productI18n: {}
+            };
+            let cfg = loadLocal();
+            let source = 'local';
+
+            function clone(o) { return JSON.parse(JSON.stringify(o)); }
+            function merge(base, extra) {
+                const out = clone(base);
+                if (!extra || typeof extra !== 'object') return out;
+                Object.keys(extra).forEach(function (k) {
+                    const v = extra[k];
+                    if (v && typeof v === 'object' && !Array.isArray(v) &&
+                        out[k] && typeof out[k] === 'object' && !Array.isArray(out[k])) {
+                        out[k] = merge(out[k], v);
+                    } else if (v !== undefined && v !== null) {
+                        out[k] = v;
+                    }
+                });
+                return out;
+            }
+            function loadLocal() {
+                try {
+                    const raw = localStorage.getItem(KEY);
+                    if (raw) return merge(DEFAULTS, JSON.parse(raw));
+                } catch (e) {}
+                return clone(DEFAULTS);
+            }
+            function saveLocal() { try { localStorage.setItem(KEY, JSON.stringify(cfg)); } catch (e) {} }
+            function get() { return cfg; }
+            function currency() { return cfg.currency || DEFAULTS.currency; }
+            function originalPriceOf(row, id) {
+                const a = Number(row && row.price_original);
+                if (Number.isFinite(a) && a > 0) return a;
+                const b = Number((cfg.originalPrices || {})[String(id)]);
+                if (Number.isFinite(b) && b > 0) return b;
+                /* 降級格式：price_mid = 0 為標記，price_custom 存放原價 */
+                if (row && Number(row.price_mid) === 0) {
+                    const c = Number(row.price_custom);
+                    if (Number.isFinite(c) && c > 0) return c;
+                }
+                return 0;
+            }
+            function productText(row, lang, field) {
+                const base = field === 'name' ? (row.name || '') : (row.description || '');
+                if (lang === 'zh-TW') return base;
+                const key = lang === 'zh-CN' ? 'cn' : lang;
+                const col = field === 'name' ? 'name_i18n' : 'desc_i18n';
+                const dbVal = row[col] && row[col][key];
+                if (dbVal) return dbVal;
+                const local = ((cfg.productI18n || {})[String(row.name || '')] || {})[key];
+                if (local && local[field]) return local[field];
+                return base;
+            }
+            function customTranslate(zh, lang) {
+                const t = (cfg.translations || {})[lang];
+                if (!t) return null;
+                if (t[zh]) return t[zh];
+                /* 前綴詞條：例如「優惠價：」可套用到「優惠價：$6,000」等動態文字 */
+                const pref = Object.keys(t).filter(function (k) {
+                    return (/[：:]\s*$/.test(k) || /\s$/.test(k)) && zh.indexOf(k) === 0 && t[k];
+                }).sort(function (a, b) { return b.length - a.length; })[0];
+                if (pref) return t[pref] + zh.slice(pref.length);
+                return null;
+            }
+            function enabledLanguages() {
+                const list = (cfg.languages && cfg.languages.length) ? cfg.languages : BUILTIN_LANGS;
+                return list.filter(function (l) { return l.enabled !== false; });
+            }
+            async function init() {
+                const before = JSON.stringify(cfg);
+                try {
+                    const { data, error } = await supabase.from('site_settings')
+                        .select('config').eq('id', 1).maybeSingle();
+                    if (!error && data && data.config) {
+                        cfg = merge(DEFAULTS, data.config);
+                        source = 'db';
+                        saveLocal();
+                    }
+                } catch (e) {}
+                try { window.dispatchEvent(new CustomEvent('siteconfigchange', { detail: cfg })); } catch (e) {}
+                return JSON.stringify(cfg) !== before;
+            }
+            return {
+                get: get, init: init, currency: currency, originalPriceOf: originalPriceOf,
+                productText: productText, customTranslate: customTranslate,
+                enabledLanguages: enabledLanguages, source: function () { return source; },
+                DEFAULTS: DEFAULTS, BUILTIN_LANGS: BUILTIN_LANGS, KEY: KEY
+            };
+        })();
+
+        /* 全站統一金額格式：資料庫金額 × 匯率 → 加上可設定幣別符號 */
+        function formatMoney(n) {
+            const c = window.SiteConfig.currency();
+            const rate = Number(c.rate) > 0 ? Number(c.rate) : 1;
+            const dec = Math.max(0, Math.min(4, parseInt(c.decimals, 10) || 0));
+            const v = (Number(n) || 0) * rate;
+            const num = c.thousands === false
+                ? v.toFixed(dec)
+                : v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+            const sym = c.symbol || '';
+            return c.position === 'after' ? num + sym : sym + num;
+        }
+        window.formatMoney = formatMoney;
 
         const productGrid = document.getElementById('productGrid');
         const modal = document.getElementById('infoModal');
@@ -676,18 +903,19 @@
         function mapRowToWatch(p) {
             const imgs = normalizeImages(p.images);
             const lang = localStorage.getItem('site_lang') || 'zh-TW';
-            const i18nKey = lang === 'zh-TW' ? null : (lang === 'zh-CN' ? 'cn' : lang);
+            const cfg = window.SiteConfig;
 
             return {
-                name: (i18nKey && p.name_i18n && p.name_i18n[i18nKey]) ? p.name_i18n[i18nKey] : (p.name || '未命名腕錶'),
-                desc: (i18nKey && p.desc_i18n && p.desc_i18n[i18nKey]) ? p.desc_i18n[i18nKey] : (p.description || ''),
+                name: cfg.productText(p, lang, 'name') || '未命名腕錶',
+                desc: cfg.productText(p, lang, 'desc'),
                 category: p.category || inferCategory(p.name || ''),
                 stock: (p.stock === null || p.stock === undefined) ? null : Number(p.stock),
                 images: imgs.length ? imgs : [fallbackImg],
                 price: {
                     base: Number(p.price_base) || 6000,
                     mid: Number(p.price_mid) || 12000,
-                    custom: Number(p.price_custom) || 19999
+                    custom: Number(p.price_custom) || 19999,
+                    original: cfg.originalPriceOf(p, p.id)
                 }
             };
         }
@@ -780,10 +1008,17 @@
 
                 const mainImgSrc = (watch.images && watch.images[0]) ? watch.images[0] : fallbackImg;
                 const showHotBadge = isHot(i) ? `<div class="stock-badge">🔥 人氣爆款</div>` : '';
-                const stockText = (typeof watch.stock === 'number' && watch.stock > 0 && watch.stock <= 3)
-                    ? `<div style="font-size:11px; color:#ff4757; margin-bottom:8px;">⚠️ 庫存僅剩 ${watch.stock} 支</div>` : '';
-                                                const price = watch.price || { base: 6000, custom: 19999 };
-                               const priceText = `<div class="price-tag">專屬價：$${Number(price.base).toLocaleString()}</div>`;
+                const stockText = (typeof watch.stock === 'number' && watch.stock > 0)
+                    ? `<div style="font-size:11px; color:${watch.stock <= 5 ? '#ff4757' : '#0b8a3e'}; margin-bottom:8px; font-weight:bold;">${watch.stock <= 5 ? '⚠️ 庫存僅剩 ' : '✅ 現貨 '}${watch.stock} 支</div>` : '';
+                                                const price = watch.price || { base: 6000, original: 0 };
+                               const saleVal = Number(price.base) || 0;
+                const origVal = Number(price.original) || 0;
+                const offPct = (origVal > saleVal && saleVal > 0) ? Math.round((1 - saleVal / origVal) * 100) : 0;
+                const priceText = `<div class="price-row">` +
+                    (origVal > saleVal ? `<span class="price-original">${formatMoney(origVal)}</span>` : '') +
+                    `<span class="price-sale">優惠價：${formatMoney(saleVal)}</span>` +
+                    (offPct > 0 ? `<span class="price-off">-${offPct}%</span>` : '') +
+                    `</div>`;
                 const imagesJson = escapeHtmlF(JSON.stringify(watch.images || []));
 
                 const card = document.createElement('div');
@@ -828,7 +1063,7 @@
                 <button id="loadMoreBtn" type="button"
                     style="padding:14px 40px; border-radius:30px; border:2px solid var(--gold); background:#fff;
                            color:var(--gold-dark); font-size:15px; font-weight:bold; cursor:pointer; transition:.3s;
-                           box-shadow:0 4px 15px rgba(212,175,55,.18);">
+                           box-shadow:0 4px 15px rgba(0, 82, 217,.18);">
                     載入更多商品 ⌄
                 </button>
                 <div id="loadMoreHint" style="font-size:13px; color:#999;"></div>
@@ -948,9 +1183,8 @@
                 if (product) {
                     const widget = document.getElementById('chatWidget');
                     if (!widget.classList.contains('active')) toggleChat();
-                    const chatInput = document.getElementById('chatInput');
-                    chatInput.value = `我想詢問「${product.name}」的細節與優惠`;
-                    chatInput.focus();
+                    const cimg = (product.images && product.images[0]) ? product.images[0] : '';
+                    sendConsultMessage(`我想詢問「${product.name}」的細節與優惠`, cimg);
                 }
                 return;
             }
@@ -979,6 +1213,14 @@
 
             document.getElementById('randomViewerCount').innerText = Math.floor(Math.random() * 20) + 10;
             modalProductName.innerText = watch.name;
+            const _orig = Number(watch.price && watch.price.original) || 0;
+            const _sale = Number(watch.price && watch.price.base) || 0;
+            const priceRow = document.getElementById('modalPriceRow');
+            if (priceRow) {
+                priceRow.innerHTML = (_orig > _sale)
+                    ? `原價 <s>${formatMoney(_orig)}</s>　優惠價 <b>${formatMoney(_sale)}</b>　省 ${formatMoney(_orig - _sale)}`
+                    : `優惠價 <b>${formatMoney(_sale)}</b>`;
+            }
             modal.classList.add('active');
 
             const form = document.getElementById('shippingForm');
@@ -1022,6 +1264,16 @@
         }
         checkDeviceForLine();
 
+        // 手機號只允許數字，自動去掉空格/橫線
+        (function () {
+            const ph = document.getElementById('custPhone');
+            if (!ph) return;
+            ph.addEventListener('input', function () {
+                const v = this.value.replace(/\D/g, '').slice(0, 10);
+                if (v !== this.value) this.value = v;
+            });
+        })();
+
         let isSubmitting = false;
         submitBtn.addEventListener('click', async function () {
             if (isSubmitting) return;
@@ -1033,7 +1285,9 @@
 
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
+            const cityEl = document.getElementById('custCity');
+            const city = cityEl ? cityEl.value.trim() : '';
+            const address = ((city ? city : '') + document.getElementById('custAddress').value.trim()).trim();
             const mode = form.dataset.mode || 'single';
 
             let items = [];
@@ -1046,7 +1300,7 @@
                     id: c.id, name: c.name, qty: c.qty, budget: c.budget,
                     price: cartPriceOf(c), category: c.category || categoryOf(c.id)
                 }));
-                                productName = items.map(i => `${i.name} x${i.qty} $${Number(i.price).toLocaleString()}`).join('、');
+                                productName = items.map(i => `${i.name} x${i.qty} ${formatMoney(i.price)}`).join('、');
                 firstProductId = items[0].id;
             } else {
                 const imgNum = parseInt(form.dataset.imgNum, 10);
@@ -1056,7 +1310,7 @@
                     id: imgNum, name: watch.name, qty: 1, budget: selectedBudget,
                     price: priceOf(imgNum, selectedBudget), category: categoryOf(imgNum)
                 }];
-                               productName = `${watch.name} $${Number(priceOf(imgNum, selectedBudget)).toLocaleString()}`;
+                               productName = `${watch.name} ${formatMoney(priceOf(imgNum, selectedBudget))}`;
                 firstProductId = imgNum;
             }
 
@@ -1095,6 +1349,30 @@
 
                 const chatW = document.getElementById('chatWidget');
                 if (chatW && !chatW.classList.contains('active')) toggleChat();
+
+                // 客戶填寫訂單送出成功後，聊天窗才顯示商品訂單欄
+                const fp = watchData[firstProductId];
+                if (fp) setChatCtx(fp, firstProductId);
+
+                // 扣減庫存：先更新畫面（立即見效），再嘗試寫回資料庫（權限不足時靜默跳過）
+                try {
+                    items.forEach(function (it) {
+                        const w = watchData[it.id];
+                        const q = Number(it.qty) || 1;
+                        if (w && typeof w.stock === 'number') w.stock = Math.max(0, w.stock - q);
+                        (async function () {
+                            try {
+                                const { data: row } = await supabase.from('products').select('stock').eq('id', it.id).single();
+                                if (row && typeof row.stock === 'number') {
+                                    await supabase.from('products')
+                                        .update({ stock: Math.max(0, row.stock - q) })
+                                        .eq('id', it.id);
+                                }
+                            } catch (e) { /* 前台無更新權限時不影響下單 */ }
+                        })();
+                    });
+                    if (typeof renderProducts === 'function') renderProducts();
+                } catch (e) { console.warn('庫存扣減失敗', e); }
 
             } catch (err) {
                 console.error('送出失敗:', err);
@@ -1309,12 +1587,156 @@
                 div.innerHTML = `<img src="${escapeHtmlF(mediaUrl)}" class="chat-img" onclick="openImageLightbox(this.src)" alt="圖片"><div class="msg-time">${timeStr}</div>`;
             } else if (msgType === 'video') {
                 div.innerHTML = `<video src="${escapeHtmlF(mediaUrl)}" class="chat-video" controls playsinline webkit-playsinline preload="metadata"></video><div class="msg-time">${timeStr}</div>`;
+            } else if (text && text.indexOf('【訂單資訊】') === 0) {
+                div.classList.add('msg-order');
+                const lines = String(text).split('\n').filter(l => l && l !== '【訂單資訊】');
+                let oh = '<div class="order-head">' + (mediaUrl ? `<img src="${escapeHtmlF(mediaUrl)}" onclick="openImageLightbox(this.src)" alt="商品圖">` : '') + '<div class="order-title">📋 訂單資訊</div></div>';
+                lines.forEach(l => {
+                    const idx = l.indexOf('：');
+                    const k = idx > 0 ? l.slice(0, idx) : '';
+                    const v = idx > 0 ? l.slice(idx + 1) : l;
+                    oh += `<div class="order-line"><span>${escapeHtmlF(k)}</span><b>${escapeHtmlF(v)}</b></div>`;
+                });
+                div.innerHTML = oh + `<div class="msg-time">${timeStr}</div>`;
             } else {
-                div.innerHTML = `${escapeHtmlF(text)}<div class="msg-time">${timeStr}</div>`;
+                let h = '';
+                if (mediaUrl) h += `<img src="${escapeHtmlF(mediaUrl)}" class="chat-img" style="max-width:180px; border-radius:8px; margin-bottom:6px; cursor:zoom-in;" onclick="openImageLightbox(this.src)" alt="商品圖">`;
+                div.innerHTML = h + `${escapeHtmlF(text)}<div class="msg-time">${timeStr}</div>`;
             }
             body.appendChild(div);
             body.scrollTop = body.scrollHeight;
         }
+
+        /* ===== 商品訂單上下文 ===== */
+        var chatCtx = null, chatCtxQtyVal = 1;
+        function setChatCtx(p, pid) {
+            let img = '';
+            try { img = (p.images && p.images[0]) ? p.images[0] : ''; } catch (e) {}
+            chatCtx = {
+                id: (pid != null ? pid : (p.id || null)),
+                name: p.name || '',
+                img: img,
+                base: Number(p.price && p.price.base) || 0,
+                orig: Number(p.price && p.price.original) || 0
+            };
+            chatCtxQtyVal = 1;
+            renderChatCtx();
+        }
+        function renderChatCtx() {
+            const bar = document.getElementById('chatCtx');
+            if (!bar) return;
+            if (!chatCtx) { bar.style.display = 'none'; return; }
+            bar.style.display = 'flex';
+            document.getElementById('chatCtxImg').src = chatCtx.img || '';
+            let priceHtml = formatMoney(chatCtx.base);
+            if (chatCtx.orig > chatCtx.base) priceHtml += ` <s style="color:#999; font-weight:normal;">${formatMoney(chatCtx.orig)}</s>`;
+            document.getElementById('chatCtxName').textContent = chatCtx.name;
+            document.getElementById('chatCtxPrice').innerHTML = priceHtml;
+            document.getElementById('chatCtxQty').textContent = chatCtxQtyVal;
+        }
+        function ctxQty(d) {
+            chatCtxQtyVal = Math.max(1, Math.min(99, chatCtxQtyVal + d));
+            document.getElementById('chatCtxQty').textContent = chatCtxQtyVal;
+        }
+        async function sendOrderMessage() {
+            if (!chatCtx) { alert('請先在商品卡片上點「立即諮詢此款」選擇商品'); return; }
+            const total = chatCtx.base * chatCtxQtyVal;
+            const lines = ['【訂單資訊】', '商品：' + chatCtx.name, '數量：' + chatCtxQtyVal, '單價：' + formatMoney(chatCtx.base)];
+            if (chatCtx.orig > chatCtx.base) lines.push('原價：' + formatMoney(chatCtx.orig));
+            lines.push('小計：' + formatMoney(total));
+            const text = lines.join('\n');
+            const { error } = await supabase.from('chat_messages').insert([{
+                session_id: sessionId, sender: 'user', message: text, msg_type: 'text', image_url: chatCtx.img || null
+            }]);
+            if (error) { alert('訂單發送失敗：' + error.message); return; }
+            appendChatMessage(text, 'user', new Date().toISOString(), chatCtx.img || null, 'text');
+        }
+
+        /* ===== 下單動態提示（社會證明） ===== */
+        (function orderToast() {
+            const el = document.createElement('div');
+            el.id = 'orderToast';
+            el.className = 'order-toast';
+            document.body.appendChild(el);
+            const cities = ['台北市', '新北市', '桃園市', '台中市', '台南市', '高雄市', '新竹市', '彰化縣'];
+            const surnames = ['王', '李', '張', '劉', '陳', '楊', '黃', '林', '吳', '周'];
+            const titles = ['先生', '小姐'];
+            const times = ['剛剛', '1 分鐘前', '2 分鐘前', '3 分鐘前'];
+            function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+            function show() {
+                const keys = Object.keys(watchData || {});
+                if (!keys.length) return;
+                const p = watchData[pick(keys)];
+                if (!p) return;
+                const img = (p.images && p.images[0]) ? p.images[0] : '';
+                const safeImg = (typeof escapeHtmlF === 'function') ? escapeHtmlF(img) : img;
+                const safeName = (typeof escapeHtmlF === 'function') ? escapeHtmlF(p.name || '') : (p.name || '');
+                el.innerHTML = (img ? `<img src="${safeImg}" alt="商品">` : '') +
+                    `<div><b>${pick(cities)} ${pick(surnames)}${pick(titles)}</b> 剛下單` +
+                    `<div class="ot-sub">${safeName} · ${pick(times)}</div></div>`;
+                el.classList.add('show');
+                setTimeout(function () { el.classList.remove('show'); }, 5200);
+            }
+            function loop() { show(); setTimeout(loop, 20000 + Math.random() * 15000); }
+            setTimeout(loop, 9000);
+        })();
+
+        /* ===== 客服球拖動（鬆手吸附左右邊緣，位置記憶） ===== */
+        (function () {
+            const el = document.getElementById('btnChat');
+            if (!el) return;
+            const KEY = 'wbChatBtnPos';
+            try {
+                const p = JSON.parse(localStorage.getItem(KEY) || 'null');
+                if (p && p.left != null) {
+                    el.style.left = Math.max(8, Math.min(window.innerWidth - 63, p.left)) + 'px';
+                    el.style.top = Math.max(60, Math.min(window.innerHeight - 63, p.top)) + 'px';
+                    el.style.right = 'auto'; el.style.bottom = 'auto';
+                }
+            } catch (e) {}
+            let sx = 0, sy = 0, ox = 0, oy = 0, drag = false, moved = false;
+            function pos(e) { return e.touches && e.touches[0] ? e.touches[0] : e; }
+            function down(e) {
+                const t = pos(e);
+                drag = true; moved = false;
+                sx = t.clientX; sy = t.clientY;
+                const r = el.getBoundingClientRect();
+                ox = r.left; oy = r.top;
+                el.style.transition = 'none';
+            }
+            function move(e) {
+                if (!drag) return;
+                const t = pos(e);
+                if (!moved && Math.abs(t.clientX - sx) + Math.abs(t.clientY - sy) > 8) {
+                    moved = true; el.classList.add('dragging');
+                }
+                if (!moved) return;
+                if (e.cancelable) e.preventDefault();
+                const w = el.offsetWidth, h = el.offsetHeight;
+                const nx = Math.max(8, Math.min(window.innerWidth - w - 8, ox + t.clientX - sx));
+                const ny = Math.max(60, Math.min(window.innerHeight - h - 8, oy + t.clientY - sy));
+                el.style.left = nx + 'px'; el.style.top = ny + 'px';
+                el.style.right = 'auto'; el.style.bottom = 'auto';
+            }
+            function up() {
+                if (!drag) return;
+                drag = false;
+                el.classList.remove('dragging');
+                el.style.transition = '';
+                if (!moved) { toggleChat(); return; }
+                const r = el.getBoundingClientRect();
+                const L = (r.left + el.offsetWidth / 2 < window.innerWidth / 2) ? 8 : window.innerWidth - el.offsetWidth - 8;
+                el.style.transition = 'left .2s ease';
+                el.style.left = L + 'px';
+                try { localStorage.setItem(KEY, JSON.stringify({ left: L, top: r.top })); } catch (e) {}
+            }
+            el.addEventListener('mousedown', down);
+            document.addEventListener('mousemove', move);
+            document.addEventListener('mouseup', up);
+            el.addEventListener('touchstart', down, { passive: true });
+            el.addEventListener('touchmove', move, { passive: false });
+            el.addEventListener('touchend', up);
+        })();
 
         async function loadChatHistory() {
             const { data, error } = await supabase
@@ -1323,6 +1745,14 @@
                 .order('created_at', { ascending: true });
             if (error || !data) return;
             data.forEach(m => appendChatMessage(m.message, m.sender, m.created_at, m.image_url, m.msg_type));
+        }
+
+        async function sendConsultMessage(text, img) {
+            const { error } = await supabase.from('chat_messages').insert([{
+                session_id: sessionId, sender: 'user', message: text, msg_type: 'text', image_url: img || null
+            }]);
+            if (error) { alert('訊息送出失敗：' + error.message); return; }
+            appendChatMessage(text, 'user', new Date().toISOString(), img || null, 'text');
         }
 
         async function sendChatMessage() {
@@ -1453,9 +1883,9 @@
             document.getElementById('budgetModalProductName').innerText = `「${w.name}」`;
 
             const p = w.price || { base: 6000, mid: 12000, custom: 19999 };
-            document.getElementById('priceOptBase').innerText = `約 $${Number(p.base).toLocaleString()}`;
-            document.getElementById('priceOptMid').innerText = `約 $${Number(p.mid).toLocaleString()}`;
-            document.getElementById('priceOptCustom').innerText = `約 $${Number(p.custom).toLocaleString()}`;
+            document.getElementById('priceOptBase').innerText = `約 ${formatMoney(p.base)}`;
+            document.getElementById('priceOptMid').innerText = `約 ${formatMoney(p.mid)}`;
+            document.getElementById('priceOptCustom').innerText = `約 ${formatMoney(p.custom)}`;
 
             document.getElementById('budgetSelectModal').classList.add('active');
         }
@@ -1530,6 +1960,11 @@
                     <img src="${escapeHtmlF(c.image)}" onerror="this.src='${fallbackImg}'" alt="">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${escapeHtmlF(c.name)}</div>
+                        <div class="cart-price-line">${formatMoney(cartPriceOf(c))}${(() => {
+                            const o = Number(c.price && c.price.original) || 0;
+                            const s = cartPriceOf(c);
+                            return o > s ? `<s>${formatMoney(o)}</s>` : '';
+                        })()}</div>
                         <div class="cart-item-row">
                             <select class="cart-budget-select" onchange="changeBudget(${c.id}, this.value)">
                                 ${BUDGET_OPTIONS.map(b => `<option value="${b}" ${c.budget === b ? 'selected' : ''}>${b}</option>`).join('')}
@@ -1561,7 +1996,10 @@
 
             const summary = document.getElementById('modalCartSummary');
             summary.style.display = 'block';
-            summary.innerHTML = cart.map(c => `• ${escapeHtmlF(c.name)} × ${c.qty}（${c.budget}）`).join('<br>');
+            summary.innerHTML = cart.map(c => `• ${escapeHtmlF(c.name)} × ${c.qty}　${formatMoney(cartPriceOf(c) * c.qty)}`).join('<br>');
+            const totalAmt = cart.reduce((s, c) => s + cartPriceOf(c) * c.qty, 0);
+            const priceRow = document.getElementById('modalPriceRow');
+            if (priceRow) priceRow.innerHTML = `應付金額 <b>${formatMoney(totalAmt)}</b>（貨到付款）`;
 
             document.getElementById('budgetSelectorWrap').style.display = 'none';
             document.getElementById('randomViewerCount').innerText = Math.floor(Math.random() * 20) + 10;
@@ -1603,9 +2041,9 @@
                 <p>您享有商品貨到後 7 天內的無條件退貨權益。退換貨運費由本公司全額吸收，您不需付一毛錢。</p>
                 <h3>📦 無腦退換貨 3 步驟：</h3>
                 <div style="background: #f9f9f9; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
-                    <p style="margin-bottom: 8px;"><strong style="color: #d4af37;">步驟 1：</strong> 拍下商品問題處（或直接說不想買了）。</p>
-                    <p style="margin-bottom: 8px;"><strong style="color: #d4af37;">步驟 2：</strong> 透過網站右下角的「線上客服」或 LINE 聯繫我們。</p>
-                    <p style="margin-bottom: 0;"><strong style="color: #d4af37;">步驟 3：</strong> 我們直接請黑貓宅急便去您家收貨，換新或退款秒處理。</p>
+                    <p style="margin-bottom: 8px;"><strong style="color: #0052d9;">步驟 1：</strong> 拍下商品問題處（或直接說不想買了）。</p>
+                    <p style="margin-bottom: 8px;"><strong style="color: #0052d9;">步驟 2：</strong> 透過網站右下角的「線上客服」或 LINE 聯繫我們。</p>
+                    <p style="margin-bottom: 0;"><strong style="color: #0052d9;">步驟 3：</strong> 我們直接請黑貓宅急便去您家收貨，換新或退款秒處理。</p>
                 </div>
                 <p style="color: #ff4757; font-weight: bold; text-align: center;">※ 絕對不會刁難，請放心購買！</p>
             `
@@ -1617,6 +2055,9 @@
             m.classList.add('active');
         }
 
+        SiteConfig.init().then(function (changed) {
+            if (changed && typeof loadProducts === 'function') loadProducts(false);
+        });
         loadProducts(false);
         setupInfiniteScroll();
     </script>
@@ -1903,6 +2344,10 @@
         });
 
         const RULES = [
+            { re: /^優惠價：(.+)$/, out: {
+                cn: m => `优惠价：${m[1]}`, en: m => `Sale: ${m[1]}`, ja: m => `セール価格：${m[1]}`, ko: m => `할인가: ${m[1]}`,
+                th: m => `ราคาพิเศษ: ${m[1]}`, vi: m => `Giá ưu đãi: ${m[1]}`, id: m => `Harga promo: ${m[1]}`,
+                es: m => `Oferta: ${m[1]}`, fr: m => `Prix promo : ${m[1]}`, de: m => `Angebot: ${m[1]}` } },
             { re: /^精選\s*(\d+)\s*款經典腕錶，請挑選您的最愛$/, out: {
                 cn: m => `精选 ${m[1]} 款经典腕表，请挑选您的最爱`, en: m => `${m[1]} watches selected for you`,
                 ja: m => `厳選 ${m[1]} 点の腕時計`, ko: m => `엄선한 ${m[1]}개 시계`,
@@ -1930,6 +2375,10 @@
                 cn: m => `约 ${m[1]}`, en: m => `about ${m[1]}`, ja: m => `約 ${m[1]}`, ko: m => `약 ${m[1]}`,
                 th: m => `ประมาณ ${m[1]}`, vi: m => `khoảng ${m[1]}`, id: m => `sekitar ${m[1]}`,
                 es: m => `aprox. ${m[1]}`, fr: m => `environ ${m[1]}`, de: m => `ca. ${m[1]}` } },
+            { re: /^✅ 現貨\s*(\d+)\s*支$/, out: {
+                cn: m => `✅ 现货 ${m[1]} 支`, en: m => `✅ ${m[1]} in stock`, ja: m => `✅ 在庫 ${m[1]}点`, ko: m => `✅ 재고 ${m[1]}개`,
+                th: m => `✅ มีสินค้า ${m[1]} ชิ้น`, vi: m => `✅ Còn hàng ${m[1]} cái`, id: m => `✅ Stok ${m[1]}`,
+                es: m => `✅ ${m[1]} en stock`, fr: m => `✅ ${m[1]} en stock`, de: m => `✅ ${m[1]} auf Lager` } },
             { re: /^⚠️ 庫存僅剩\s*(\d+)\s*支$/, out: {
                 cn: m => `⚠️ 库存仅剩 ${m[1]} 支`, en: m => `⚠️ Only ${m[1]} left`, ja: m => `⚠️ 残り${m[1]}点`, ko: m => `⚠️ ${m[1]}개 남음`,
                 th: m => `⚠️ เหลือ ${m[1]} ชิ้น`, vi: m => `⚠️ Còn ${m[1]} cái`, id: m => `⚠️ Sisa ${m[1]}`,
@@ -1944,6 +2393,12 @@
             if (!raw) return null;
             const trimmed = raw.trim();
             if (!trimmed) return null;
+
+            /* 後台自訂翻譯優先（含自行新增的語種） */
+            if (window.SiteConfig) {
+                const custom = SiteConfig.customTranslate(trimmed, lang);
+                if (custom) return raw.replace(trimmed, custom);
+            }
 
             const entry = DICT[trimmed];
             if (entry) {
@@ -2003,8 +2458,30 @@
             moTimer = setTimeout(() => translatePage(), 60);
         });
 
+        function renderSiteLangSelect() {
+            const sel = document.getElementById('langSelect');
+            if (!sel || !window.SiteConfig) return;
+            const list = SiteConfig.enabledLanguages();
+            sel.innerHTML = '';
+            list.forEach(function (l) {
+                const o = document.createElement('option');
+                o.value = l.code;
+                o.textContent = l.label || l.code;
+                sel.appendChild(o);
+            });
+            if (!list.some(function (l) { return l.code === LANG; })) LANG = 'zh-TW';
+            sel.value = LANG;
+        }
+        window.renderSiteLangSelect = renderSiteLangSelect;
+
+        window.addEventListener('siteconfigchange', function () {
+            renderSiteLangSelect();
+            if (LANG !== 'zh-TW') translatePage();
+        });
+
         function initLang() {
             const sel = document.getElementById('langSelect');
+            renderSiteLangSelect();
             sel.value = LANG;
 
             sel.addEventListener('change', function () {
@@ -2018,6 +2495,8 @@
                 LANG = newLang;
                 localStorage.setItem('site_lang', LANG);
                 translatePage();
+                /* 商品名稱／描述的多語內容需重新向資料庫取得 */
+                if (typeof loadProducts === 'function') loadProducts(false);
             });
 
             translatePage();
@@ -2126,5 +2605,275 @@
     }, 400);
 })();
 </script>
+
+    <!-- ===== 長按訊息 → 翻譯（通訊軟體式） ===== -->
+    <script>
+    (function () {
+        'use strict';
+        var CFG = { box: 'chatBody', bubble: '.msg', time: '.msg-time', trans: 'msg-trans', esc: 'escapeHtmlF', mine: 'msg user', forceLang: '' };
+
+        /* ---- 目标语言：跟随当前界面语言（与微信一致） ---- */
+        var esc = window['escapeHtmlF'] || function (s) { return String(s == null ? '' : s); };
+        var LANG_LABEL = { 'zh-TW': '繁體中文', 'zh-CN': '简体中文', en: 'English', ja: '日本語', ko: '한국어', th: 'ไทย', vi: 'Tiếng Việt', id: 'Bahasa Indonesia', es: 'Español', fr: 'Français', de: 'Deutsch' };
+
+        function curLang() {
+            if (CFG.forceLang) return CFG.forceLang;   /* 後台固定翻成繁體中文 */
+            try { return localStorage.getItem('site_lang') || document.documentElement.lang || 'zh-TW'; }
+            catch (e) { return 'zh-TW'; }
+        }
+        function isChinese(t) {
+            var cn = (t.match(/[\u4e00-\u9fff]/g) || []).length;
+            return cn >= 2 && cn >= t.length * 0.3;
+        }
+        function targetLang(text) {
+            var cur = curLang();
+            if (cur.indexOf('zh') === 0 && isChinese(text)) return 'en';   /* 中文界面遇到中文消息 -> 翻英文 */
+            return cur;
+        }
+        function langLabel(c) { return LANG_LABEL[c] || c || '自動'; }
+
+        /* ---- 离线词典（网络不通时兜底，覆盖客服高频句） ---- */
+        var DICT = {
+            '你好': 'Hello', '您好': 'Hello', '在吗': 'Are you there?', '在嗎': 'Are you there?',
+            '多少钱': 'How much is it?', '多少錢': 'How much is it?', '价格': 'Price', '價格': 'Price',
+            '有现货吗': 'Is it in stock?', '有現貨嗎': 'Is it in stock?',
+            '可以便宜一点吗': 'Can you give me a discount?', '可以便宜一點嗎': 'Can you give me a discount?',
+            '怎么付款': 'How do I pay?', '怎麼付款': 'How do I pay?',
+            '货到付款': 'Cash on delivery', '貨到付款': 'Cash on delivery',
+            '多久到货': 'How long is the delivery?', '多久到貨': 'How long is the delivery?',
+            '运费': 'Shipping fee', '運費': 'Shipping fee', '免运': 'Free shipping', '免運': 'Free shipping',
+            '我要买': 'I would like to buy it', '我要買': 'I would like to buy it',
+            '谢谢': 'Thank you', '謝謝': 'Thank you', '好的': 'OK', '好': 'OK',
+            '明天发货': 'Will ship tomorrow', '明天發貨': 'Will ship tomorrow',
+            '颜色': 'Color', '顏色': 'Color', '尺寸': 'Size', '保固': 'Warranty',
+            '退换货': 'Return and exchange', '退換貨': 'Return and exchange',
+            '开箱验货': 'Open-box inspection', '開箱驗貨': 'Open-box inspection',
+            '正品吗': 'Is it authentic?', '正品嗎': 'Is it authentic?'
+        };
+        function dictLookup(text) {
+            var t = text.trim().replace(/[？?！!。．，,]+$/g, '');
+            if (DICT[t]) return DICT[t];
+            var keys = Object.keys(DICT), hit = [];
+            for (var i = 0; i < keys.length; i++) {
+                if (t.indexOf(keys[i]) !== -1 && keys[i].length >= 2) { hit.push(keys[i]); }
+            }
+            if (hit.length) {
+                hit.sort(function (a, b) { return b.length - a.length; });
+                return DICT[hit[0]];
+            }
+            return '';
+        }
+
+        /* ---- 在线翻译：Google 免费端点（超时 7 秒） ---- */
+        function withTimeout(url, ms) {
+            var ctrl = ('AbortController' in window) ? new AbortController() : null;
+            var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, ms || 7000);
+            var opt = ctrl ? { signal: ctrl.signal } : {};
+            return fetch(url, opt).then(function (r) {
+                clearTimeout(timer);
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            });
+        }
+        function googleTranslate(text, tl) {
+            var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl='
+                + encodeURIComponent(tl) + '&dt=t&q=' + encodeURIComponent(text);
+            return withTimeout(url, 7000).then(function (j) {
+                var out = (j[0] || []).map(function (x) { return (x && x[0]) ? x[0] : ''; }).join('');
+                out = (out || '').trim();
+                if (!out) throw new Error('empty');
+                return { text: out, src: j[2] || 'auto', engine: 'online' };
+            });
+        }
+        /* ---- 备用引擎：MyMemory（Google 不通时使用） ---- */
+        function guessSrc(text) {
+            if (/[\uac00-\ud7af]/.test(text)) return 'ko';
+            if (/[\u3040-\u30ff]/.test(text)) return 'ja';
+            if (/[\u0e00-\u0e7f]/.test(text)) return 'th';
+            if (/[\u4e00-\u9fff]/.test(text)) return 'zh-CN';
+            return 'en';
+        }
+        function mymemoryTranslate(text, tl) {
+            var sl = guessSrc(text);
+            var target = (tl === 'zh-TW') ? 'zh-CN' : tl;
+            if (sl === target) throw new Error('same_lang');
+            var url = 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text)
+                + '&langpair=' + encodeURIComponent(sl) + '|' + encodeURIComponent(target);
+            return withTimeout(url, 7000).then(function (j) {
+                var out = (j && j.responseData && j.responseData.translatedText) || '';
+                out = String(out).trim();
+                if (!out || /MYMEMORY WARNING|QUOTA|INVALID|QUERY LENGTH/i.test(out)) throw new Error('mm');
+                return { text: out, src: sl, engine: 'mymemory' };
+            });
+        }
+        function translateText(text, tl) {
+            return googleTranslate(text, tl)
+                .catch(function () { return mymemoryTranslate(text, tl); })
+                .catch(function () {
+                    var d = dictLookup(text);
+                    if (d) return { text: d, src: 'zh-TW', engine: 'dict' };
+                    throw new Error('translate_failed');
+                });
+        }
+
+        /* ---- 取气泡里的纯文本 ---- */
+        function plainText(el) {
+            var c = el.cloneNode(true);
+            var junk = c.querySelectorAll(CFG.time + ', .' + CFG.trans + ', .chat-msg-trans, img, video, button');
+            for (var i = 0; i < junk.length; i++) { junk[i].parentNode.removeChild(junk[i]); }
+            return (c.textContent || '').replace(/\s+/g, ' ').trim();
+        }
+
+        /* ---- 菜单 ---- */
+        var menu = document.createElement('div');
+        menu.className = 'msg-menu';
+        menu.innerHTML = '<button data-act="trans">🌐 翻譯</button><button data-act="copy">📋 複製</button>';
+        document.body.appendChild(menu);
+
+        var currentEl = null;
+        function openMenu(el, x, y) {
+            currentEl = el;
+            menu.classList.add('show');
+            var w = menu.offsetWidth, h = menu.offsetHeight;
+            var left = Math.min(Math.max(8, x - w / 2), window.innerWidth - w - 8);
+            var top = y - h - 12;
+            if (top < 8) top = Math.min(y + 14, window.innerHeight - h - 8);
+            menu.style.left = left + 'px';
+            menu.style.top = top + 'px';
+            if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
+        }
+        function closeMenu() { menu.classList.remove('show'); }
+
+        document.addEventListener('click', function (e) { if (!menu.contains(e.target)) closeMenu(); }, true);
+        document.addEventListener('scroll', closeMenu, true);
+        window.addEventListener('resize', closeMenu);
+
+        menu.addEventListener('click', function (e) {
+            var btn = e.target.closest('button[data-act]');
+            if (!btn || !currentEl) return;
+            var el = currentEl, act = btn.dataset.act;
+            closeMenu();
+            if (act === 'trans') doTranslate(el);
+            else if (act === 'copy') copyText(plainText(el), el);
+        });
+
+        function copyText(text, el) {
+            if (!text) return;
+            var done = function () { flash(el, '📋 已複製'); };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done); });
+            } else { fallbackCopy(text, done); }
+        }
+        function fallbackCopy(text, cb) {
+            var ta = document.createElement('textarea');
+            ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); cb(); } catch (e) {} 
+            document.body.removeChild(ta);
+        }
+        function flash(el, msg) {
+            var t = document.createElement('div');
+            t.textContent = msg;
+            t.style.cssText = 'position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;font-size:13px;padding:9px 16px;border-radius:20px;z-index:2147483001;pointer-events:none;';
+            document.body.appendChild(t);
+            setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 1400);
+        }
+
+        /* ---- 翻译并就地显示 ---- */
+        function doTranslate(el) {
+            var text = plainText(el);
+            if (!text) { flash(el, '這則訊息沒有可翻譯的文字'); return; }
+
+            var box = el.querySelector('.' + CFG.trans);
+            if (!box) {
+                box = document.createElement('div');
+                box.className = CFG.trans;
+                var tm = el.querySelector(CFG.time);
+                if (tm) el.insertBefore(box, tm); else el.appendChild(box);
+            }
+            box.innerHTML = '<div class="tr-meta">🌐 翻譯中…</div>';
+
+            var tl0 = targetLang(text);
+
+            /* 同語言時自動換另一種語言重譯一次（中文<->英文） */
+            function run(lang, allowRetry) {
+                return translateText(text, lang).then(function (res) {
+                    var s = String(res.src || '').toLowerCase();
+                    var t = String(lang).toLowerCase();
+                    var same = (s === t) || (s.indexOf('zh') === 0 && t.indexOf('zh') === 0);
+                    if (same && allowRetry) {
+                        var alt = (s.indexOf('zh') === 0) ? 'en' : 'zh-TW';
+                        if (alt !== t) return run(alt, false);
+                    }
+                    return { res: res, tl: lang };
+                });
+            }
+
+            run(tl0, true).then(function (o) {
+                var res = o.res, tl = o.tl;
+                var note = (res.engine === 'dict') ? '（離線詞典）' : (res.engine === 'mymemory' ? '（備用引擎）' : '');
+                box.innerHTML = '<div>' + esc(res.text) + '</div>'
+                    + '<div class="tr-meta">🌐 ' + esc(langLabel(res.src)) + ' → ' + esc(langLabel(tl)) + note
+                    + ' · 長按可重新翻譯</div>';
+                var body = document.getElementById(CFG.box);
+                if (body) body.scrollTop = body.scrollHeight;
+            }).catch(function () {
+                box.innerHTML = '<div class="tr-err">翻譯暫不可用（網路或翻譯服務受限），可長按「複製」後到翻譯軟體查看。</div>';
+            });
+        }
+
+        /* ---- 长按手势：移动端 520ms / 桌面右键或按住 ---- */
+        function attach(boxId) {
+            var box = document.getElementById(boxId);
+            if (!box) { setTimeout(function () { attach(boxId); }, 800); return; }
+
+            var timer = null, sx = 0, sy = 0, cur = null;
+
+            function start(e) {
+                var bubble = e.target.closest(CFG.bubble);
+                if (!bubble) return;
+                if (e.touches && e.touches.length > 1) return;
+                var p = e.touches ? e.touches[0] : e;
+                sx = p.clientX; sy = p.clientY; cur = bubble;
+                bubble.classList.add('pressing');
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    timer = null;
+                    if (cur) cur.classList.remove('pressing');
+                    openMenu(bubble, sx, sy);
+                }, 520);
+            }
+            function move(e) {
+                if (!timer) return;
+                var p = e.touches ? e.touches[0] : e;
+                if (Math.abs(p.clientX - sx) > 12 || Math.abs(p.clientY - sy) > 12) stop();
+            }
+            function stop() {
+                if (timer) { clearTimeout(timer); timer = null; }
+                if (cur) cur.classList.remove('pressing');
+            }
+
+            box.addEventListener('touchstart', start, { passive: true });
+            box.addEventListener('touchmove', move, { passive: true });
+            box.addEventListener('touchend', stop);
+            box.addEventListener('touchcancel', stop);
+            box.addEventListener('mousedown', start);
+            box.addEventListener('mousemove', move);
+            box.addEventListener('mouseup', stop);
+            box.addEventListener('mouseleave', stop);
+            box.addEventListener('contextmenu', function (e) {
+                var bubble = e.target.closest(CFG.bubble);
+                if (!bubble) return;
+                e.preventDefault();
+                openMenu(bubble, e.clientX, e.clientY);
+            });
+        }
+        attach(CFG.box);
+
+        /* 供外部调用（例如气泡内按钮） */
+        window.translateChatBubble = doTranslate;
+    })();
+    </script>
+
 </body>
 </html>
