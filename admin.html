@@ -76,6 +76,13 @@
         .status-aftersale { background: #ffeef0; color: #d93025; }
         .status-cancelled { background: #f2f3f5; color: #6b7280; }
         .status-select { padding: 7px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 600; border: 1px solid #d9dde3; background: #fff; cursor: pointer; font-family: inherit; }
+        .coupon-mode-tip { background: #fff8e6; border: 1px solid #ffd666; color: #8a5b00; border-radius: 8px; padding: 10px 14px; font-size: 12.5px; line-height: 1.7; margin-bottom: 12px; }
+        .coupon-mode-tip b { color: #b26a00; }
+        .cp-code { font-family: ui-monospace, monospace; font-weight: bold; color: #0052d9; letter-spacing: .5px; }
+        .cp-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .cp-badge.on { background: #e8f7ee; color: #00a870; }
+        .cp-badge.off { background: #f2f3f5; color: #8a8f99; }
+        .cp-badge.pct { background: #eef3ff; color: #0052d9; }
         .order-check, .order-check-all { width: 15px; height: 15px; cursor: pointer; accent-color: #0052d9; }
         .od-sec { margin-bottom: 14px; }
         .od-sec h4 { font-size: 13px; color: #1a1a1a; margin: 0 0 8px; padding-bottom: 6px; border-bottom: 1px solid #eef0f3; }
@@ -263,6 +270,43 @@
 <body>
 
     <div id="toast" class="toast">🔔 收到新訂單！</div>
+
+    <!-- 優惠券編輯彈窗 -->
+    <div class="add-modal" id="couponModal">
+        <div class="add-modal-content">
+            <h3 id="couponModalTitle">➕ 新增優惠碼</h3>
+            <label>優惠碼 *（英文數字，不分大小寫）</label>
+            <input type="text" id="cf-code" placeholder="例：SPRING300" maxlength="24">
+            <div class="row2">
+                <div>
+                    <label>折抵方式</label>
+                    <select id="cf-type" onchange="updateCouponTypeHint()">
+                        <option value="fixed">固定折抵金額</option>
+                        <option value="percent">折扣百分比（減 %）</option>
+                    </select>
+                </div>
+                <div><label id="cf-value-label">折抵金額（元）*</label><input type="number" id="cf-value" min="0" step="1" placeholder="例：300"></div>
+            </div>
+            <div style="font-size:12px; color:#8a8f99; margin:-4px 0 8px;" id="cf-type-hint">例：填 300 → 訂單現折 300 元</div>
+            <div class="row2">
+                <div><label>最低消費（0 = 不限）</label><input type="number" id="cf-min" min="0" step="1" value="0"></div>
+                <div><label>使用次數上限（留空 = 不限）</label><input type="number" id="cf-max" min="1" step="1" placeholder="例：50"></div>
+            </div>
+            <div class="row2">
+                <div><label>有效期限（留空 = 永久）</label><input type="date" id="cf-expire"></div>
+                <div>
+                    <label>狀態</label>
+                    <select id="cf-active"><option value="true">啟用</option><option value="false">停用</option></select>
+                </div>
+            </div>
+            <label>備註（僅後台可見）</label>
+            <input type="text" id="cf-note" placeholder="例：春季活動、IG 導流專用" maxlength="60">
+            <div class="add-modal-btns">
+                <button class="btn-cancel" onclick="closeCouponModal()">取消</button>
+                <button class="btn-save" onclick="saveCoupon()">儲存</button>
+            </div>
+        </div>
+    </div>
 
     <!-- 訂單詳情彈層 -->
     <div class="add-modal" id="orderDetailModal">
@@ -597,6 +641,39 @@
                     </thead>
                     <tbody id="prod-list">
                         <tr><td colspan="10" style="text-align:center; color:#666;">載入中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h2>🎟 優惠券管理
+                <span id="coupon-count-label" style="font-size:12px;color:#888;font-weight:normal;"></span>
+            </h2>
+            <div class="panel-hint">
+                💡 優惠碼<b style="color:#0052d9;">不公開展示</b>：建立後只有你在後台看得到，前台結帳頁不會列出任何碼。請點列表的 <b>📋</b> 複製，再私訊發給指定客人，客人手動輸入才生效。可設折抵金額／折扣百分比、最低消費、有效期、使用次數上限。
+            </div>
+            <div id="coupon-mode-tip" class="coupon-mode-tip" style="display:none;">
+                <b>尚未建立 coupons 資料表</b>：目前新增的優惠碼只存在這台電腦的瀏覽器（換裝置就看不到，前台也讀不到）。
+                請複製下方 SQL 到 Supabase → SQL Editor 執行一次，之後即可全站同步。
+                <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+                    <button onclick="copyCouponSql()" style="background:#0052d9;">📋 複製建表 SQL</button>
+                </div>
+            </div>
+            <div class="toolbar" style="margin-bottom:12px;">
+                <button onclick="openCouponModal(null)" style="background:#0052d9;">➕ 新增優惠碼</button>
+                <button onclick="loadCouponList()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;">🔄 重新整理</button>
+                <span style="font-size:12.5px; color:#8a8f99;">🔒 私密發放：優惠碼不會出現在前台，請複製後私訊客人</span>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="cfg-table">
+                    <thead>
+                        <tr>
+                            <th>優惠碼</th><th>折抵方式</th><th>最低消費</th><th>已用 / 上限</th><th>有效期</th><th>狀態</th><th>備註</th><th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coupon-list">
+                        <tr><td colspan="8" style="text-align:center; color:#666;">載入中...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -968,6 +1045,7 @@
             loadSystemClicks();
             initAdminChat();
             loadAdminProducts(0);
+            loadCouponList();
         }
 
         async function loadViewCount() {
@@ -1420,6 +1498,224 @@
         }
 
         const ST_LABEL = { pending: '待發貨', shipped: '已出貨', delivered: '已送達', reviewed: '已評價', aftersale: '售後處理中', cancelled: '已取消' };
+
+        /* ===== 優惠券管理 ===== */
+        var COUPON_MODE = 'db';
+        var COUPON_DATA = [];
+        var COUPON_EDIT_ID = null;
+        var COUPON_SQL = [
+            'create table if not exists public.coupons (',
+            '  id bigserial primary key,',
+            '  code text unique not null,',
+            "  type text not null default 'fixed',",
+            '  value numeric not null default 0,',
+            '  min_spend numeric not null default 0,',
+            '  max_uses int,',
+            '  used_count int not null default 0,',
+            '  expires_at timestamptz,',
+            '  active boolean not null default true,',
+            '  note text,',
+            '  created_at timestamptz default now()',
+            ');',
+            'alter table public.coupons enable row level security;',
+            'drop policy if exists coupons_all on public.coupons;',
+            'create policy coupons_all on public.coupons for all using (true) with check (true);'
+        ].join('\n');
+
+        function copyCouponSql() {
+            try {
+                navigator.clipboard.writeText(COUPON_SQL).then(function () {
+                    showToast('SQL 已複製，貼到 Supabase SQL Editor 執行即可');
+                }).catch(function () {
+                    alert(COUPON_SQL);
+                });
+            } catch (e) { alert(COUPON_SQL); }
+        }
+
+        async function loadCouponList() {
+            const tbody = document.getElementById('coupon-list');
+            if (!tbody) return;
+            try {
+                const { data, error } = await supabase.from('coupons').select('*').order('created_at', { ascending: false });
+                if (error) throw error;
+                COUPON_MODE = 'db';
+                COUPON_DATA = data || [];
+            } catch (e) {
+                COUPON_MODE = 'local';
+                try { COUPON_DATA = JSON.parse(localStorage.getItem('wb_coupons') || '[]'); } catch (x) { COUPON_DATA = []; }
+            }
+            const tip = document.getElementById('coupon-mode-tip');
+            if (tip) tip.style.display = (COUPON_MODE === 'local') ? 'block' : 'none';
+            renderCouponList();
+        }
+
+        function renderCouponList() {
+            const tbody = document.getElementById('coupon-list');
+            if (!tbody) return;
+            const lbl = document.getElementById('coupon-count-label');
+            if (lbl) lbl.textContent = COUPON_DATA.length + ' 個優惠碼' + (COUPON_MODE === 'local' ? '（本機暫存）' : '');
+            if (!COUPON_DATA.length) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#666;">尚無優惠碼，點左上「➕ 新增優惠碼」開始建立</td></tr>';
+                return;
+            }
+            tbody.innerHTML = COUPON_DATA.map(function (c) {
+                const isPct = c.type === 'percent';
+                const valTxt = isPct
+                    ? '<span class="cp-badge pct">減 ' + Number(c.value) + '%（打 ' + (100 - Number(c.value)) / 10 + ' 折）</span>'
+                    : '<b style="color:#00a870;">折 ' + formatMoney(Number(c.value)) + '</b>';
+                const usedMax = (c.max_uses == null || c.max_uses === '') ? (Number(c.used_count || 0) + ' / 不限') : (Number(c.used_count || 0) + ' / ' + c.max_uses);
+                const exp = c.expires_at ? new Date(c.expires_at).toLocaleDateString('zh-TW') : '永久';
+                const expired = c.expires_at && new Date(c.expires_at).getTime() < Date.now();
+                const on = c.active !== false;
+                return '<tr>' +
+                    '<td><span class="cp-code">' + escapeHtml(c.code) + '</span></td>' +
+                    '<td>' + valTxt + '</td>' +
+                    '<td>' + (Number(c.min_spend || 0) > 0 ? formatMoney(Number(c.min_spend)) : '不限') + '</td>' +
+                    '<td>' + usedMax + '</td>' +
+                    '<td' + (expired ? ' style="color:#ff4757; font-weight:600;"' : '') + '>' + exp + (expired ? '（已過期）' : '') + '</td>' +
+                    '<td><span class="cp-badge ' + (on ? 'on' : 'off') + '">' + (on ? '啟用' : '停用') + '</span></td>' +
+                    '<td style="font-size:12px; color:#8a8f99;">' + escapeHtml(c.note || '') + '</td>' +
+                    '<td style="white-space:nowrap;">' +
+                        '<button class="action-btn" style="background:#e8f1ff; color:#0052d9;" data-code="' + escapeHtml(c.code) + '" onclick="copyCouponCode(this)" title="複製代碼發給客人">📋</button> ' +
+                        '<button class="action-btn" style="background:#0052d9; color:#fff;" onclick="openCouponModal(' + c.id + ')" title="編輯">✏️</button> ' +
+                        '<button class="action-btn" style="background:' + (on ? '#ff9800' : '#00a870') + '; color:#fff;" onclick="toggleCoupon(' + c.id + ', ' + (on ? 'false' : 'true') + ')" title="' + (on ? '停用' : '啟用') + '">' + (on ? '⏸' : '▶') + '</button> ' +
+                        '<button class="action-btn del-btn" onclick="deleteCoupon(' + c.id + ')" title="刪除">🗑️</button>' +
+                    '</td></tr>';
+            }).join('');
+        }
+
+        function updateCouponTypeHint() {
+            const type = document.getElementById('cf-type').value;
+            const lbl = document.getElementById('cf-value-label');
+            const hint = document.getElementById('cf-type-hint');
+            if (type === 'percent') {
+                if (lbl) lbl.textContent = '折扣百分比（減 %）*';
+                if (hint) hint.textContent = '例：填 10 → 訂單打 9 折（減 10%）；填 20 → 打 8 折';
+            } else {
+                if (lbl) lbl.textContent = '折抵金額（元）*';
+                if (hint) hint.textContent = '例：填 300 → 訂單現折 300 元';
+            }
+        }
+
+        function openCouponModal(id) {
+            COUPON_EDIT_ID = id;
+            const c = id ? COUPON_DATA.find(function (x) { return Number(x.id) === Number(id); }) : null;
+            document.getElementById('couponModalTitle').textContent = c ? '✏️ 編輯優惠碼' : '➕ 新增優惠碼';
+            document.getElementById('cf-code').value = c ? (c.code || '') : '';
+            document.getElementById('cf-type').value = c ? (c.type || 'fixed') : 'fixed';
+            document.getElementById('cf-value').value = c ? Number(c.value) : '';
+            document.getElementById('cf-min').value = c ? Number(c.min_spend || 0) : 0;
+            document.getElementById('cf-max').value = (c && c.max_uses != null) ? c.max_uses : '';
+            document.getElementById('cf-expire').value = (c && c.expires_at) ? String(c.expires_at).slice(0, 10) : '';
+            document.getElementById('cf-active').value = (c && c.active === false) ? 'false' : 'true';
+            document.getElementById('cf-note').value = c ? (c.note || '') : '';
+            updateCouponTypeHint();
+            document.getElementById('couponModal').classList.add('active');
+        }
+
+        function closeCouponModal() { document.getElementById('couponModal').classList.remove('active'); }
+
+        async function saveCoupon() {
+            const code = (document.getElementById('cf-code').value || '').trim().toUpperCase();
+            const type = document.getElementById('cf-type').value;
+            const value = Number(document.getElementById('cf-value').value);
+            const minSpend = Number(document.getElementById('cf-min').value) || 0;
+            const maxRaw = document.getElementById('cf-max').value;
+            const maxUses = maxRaw === '' ? null : Number(maxRaw);
+            const expRaw = document.getElementById('cf-expire').value;
+            const active = document.getElementById('cf-active').value === 'true';
+            const note = (document.getElementById('cf-note').value || '').trim();
+
+            if (!code) { alert('請填寫優惠碼'); return; }
+            if (!/^[A-Z0-9_-]{2,24}$/.test(code)) { alert('優惠碼只能用英文、數字、底線或減號（2–24 碼）'); return; }
+            if (!value || value <= 0) { alert('請填寫有效的折抵數值'); return; }
+            if (type === 'percent' && value >= 100) { alert('折扣百分比需小於 100'); return; }
+
+            const payload = {
+                code: code, type: type, value: value, min_spend: minSpend,
+                max_uses: maxUses, active: active, note: note,
+                expires_at: expRaw ? new Date(expRaw + 'T23:59:59').toISOString() : null
+            };
+
+            if (COUPON_MODE === 'local') {
+                if (COUPON_EDIT_ID) {
+                    const i = COUPON_DATA.findIndex(function (x) { return Number(x.id) === Number(COUPON_EDIT_ID); });
+                    if (i >= 0) COUPON_DATA[i] = Object.assign({}, COUPON_DATA[i], payload);
+                } else {
+                    payload.id = Date.now();
+                    payload.used_count = 0;
+                    payload.created_at = new Date().toISOString();
+                    COUPON_DATA.unshift(payload);
+                }
+                localStorage.setItem('wb_coupons', JSON.stringify(COUPON_DATA));
+                showToast('已儲存（本機）：' + code);
+                closeCouponModal();
+                renderCouponList();
+                return;
+            }
+
+            try {
+                if (COUPON_EDIT_ID) {
+                    const { error } = await supabase.from('coupons').update(payload).eq('id', COUPON_EDIT_ID);
+                    if (error) throw error;
+                    showToast('已更新優惠碼：' + code);
+                } else {
+                    payload.used_count = 0;
+                    const { error } = await supabase.from('coupons').insert([payload]);
+                    if (error) throw error;
+                    showToast('已新增優惠碼：' + code);
+                }
+                closeCouponModal();
+                loadCouponList();
+            } catch (e) {
+                alert('儲存失敗：' + (e && e.message ? e.message : '') + '\n（若提示資料表不存在，請先執行建表 SQL）');
+                loadCouponList();
+            }
+        }
+
+        function copyCouponCode(btn) {
+            const code = btn && btn.getAttribute ? btn.getAttribute('data-code') : '';
+            if (!code) return;
+            const done = function () { showToast('已複製「' + code + '」，貼給客人即可'); };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(code).then(done).catch(function () { fallbackCopy(code, done); });
+            } else { fallbackCopy(code, done); }
+        }
+
+        async function toggleCoupon(id, active) {
+            if (COUPON_MODE === 'local') {
+                const c = COUPON_DATA.find(function (x) { return Number(x.id) === Number(id); });
+                if (c) c.active = active;
+                localStorage.setItem('wb_coupons', JSON.stringify(COUPON_DATA));
+                renderCouponList();
+                showToast(active ? '已啟用' : '已停用');
+                return;
+            }
+            try {
+                const { error } = await supabase.from('coupons').update({ active: active }).eq('id', id);
+                if (error) throw error;
+                showToast(active ? '已啟用此優惠碼' : '已停用此優惠碼');
+                loadCouponList();
+            } catch (e) { alert('操作失敗：' + (e && e.message ? e.message : '')); }
+        }
+
+        async function deleteCoupon(id) {
+            const c = COUPON_DATA.find(function (x) { return Number(x.id) === Number(id); });
+            if (!confirm('確定刪除優惠碼「' + (c ? c.code : id) + '」？刪除後無法復原')) return;
+            if (COUPON_MODE === 'local') {
+                COUPON_DATA = COUPON_DATA.filter(function (x) { return Number(x.id) !== Number(id); });
+                localStorage.setItem('wb_coupons', JSON.stringify(COUPON_DATA));
+                renderCouponList();
+                showToast('已刪除');
+                return;
+            }
+            try {
+                const { error } = await supabase.from('coupons').delete().eq('id', id);
+                if (error) throw error;
+                showToast('已刪除優惠碼');
+                loadCouponList();
+            } catch (e) { alert('刪除失敗：' + (e && e.message ? e.message : '')); }
+        }
 
         /* ===== 訂單詳情彈層 ===== */
         function closeOrderDetail() { document.getElementById('orderDetailModal').classList.remove('active'); }
