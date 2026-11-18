@@ -9,6 +9,14 @@
     <meta property="og:description" content="精選多款經典腕錶，全台貨到付款、7天鑑賞期。立即加入 LINE 獲取專屬報價！">
     <meta property="og:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://a69bdc55b7072956e.app.workbuddy.host/">
+    <meta property="og:locale" content="zh_TW">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="尊享腕錶 精品展示｜嚴選高質感腕錶">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
+    <meta name="description" content="精選多款經典腕錶，超商取貨免運、貨到付款、7 天鑑賞期。">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icon-192.png">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -145,6 +153,42 @@
         .order-toast.show { opacity: 1; transform: none; }
         .order-toast img { width: 42px; height: 42px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
         .order-toast .ot-sub { font-size: 11.5px; color: #6b7280; margin-top: 2px; }
+        .share-btn { flex: 1; max-width: 220px; padding: 10px 14px; background: #fff; border: 1px solid #d9dde3; border-radius: 8px; color: #1a1a1a; font-size: 13.5px; font-weight: bold; cursor: pointer; transition: .2s; }
+        .share-btn:hover { background: #f5f9ff; border-color: #0052d9; color: #0052d9; }
+        .lk-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #eef0f3; border-radius: 8px; margin-bottom: 8px; background: #fff; }
+        .lk-b { flex-shrink: 0; font-size: 11.5px; font-weight: bold; padding: 3px 8px; border-radius: 6px; background: #fff7e6; color: #b76e00; }
+        .lk-b.lk-gray { background: #f2f3f5; color: #6b7280; }
+        .lk-b.lk-ok { background: #e8f8f0; color: #0b8a3e; }
+        .lk-main { flex: 1; min-width: 0; font-size: 13px; color: #1a1a1a; line-height: 1.4; }
+        .lk-sub { font-size: 11.5px; color: #9aa3ad; margin-top: 3px; }
+        .lk-amt { font-size: 13px; font-weight: bold; color: #0052d9; flex-shrink: 0; }
+        .wb-toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%) translateY(12px); background: rgba(26,26,26,.9); color: #fff; font-size: 13px; padding: 10px 18px; border-radius: 8px; z-index: 99995; opacity: 0; pointer-events: none; transition: .3s; }
+        .wb-toast.show { opacity: 1; transform: translateX(-50%); }
+        .product-card.hl { box-shadow: 0 0 0 3px rgba(0,82,217,.45) !important; transition: box-shadow .4s; }
+        .my-tabs { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #eef0f3; overflow-x: auto; flex-shrink: 0; }
+        .my-tabs::-webkit-scrollbar { display: none; }
+        .my-tab { flex-shrink: 0; padding: 7px 13px; border-radius: 999px; border: 1px solid #e7e9eb; background: #fff; color: #4b5563; font-size: 13px; cursor: pointer; font-family: inherit; }
+        .my-tab.active { background: #0052d9; border-color: #0052d9; color: #fff; font-weight: bold; }
+        .my-bind { display: flex; gap: 8px; padding: 10px; background: #f2f7ff; border: 1px solid #d6e4ff; border-radius: 8px; margin-bottom: 12px; }
+        .my-bind input { flex: 1; min-width: 0; padding: 9px 10px; border: 1px solid #d9dde3; border-radius: 6px; font-size: 13.5px; outline: none; }
+        .my-bind button { padding: 9px 14px; background: #0052d9; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; flex-shrink: 0; }
+        .my-order { border: 1px solid #eef0f3; border-radius: 10px; padding: 12px; margin-bottom: 10px; background: #fff; }
+        .my-order-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .my-st { font-size: 11.5px; font-weight: bold; padding: 3px 9px; border-radius: 6px; }
+        .st-pending { background: #fff7e6; color: #b76e00; }
+        .st-ship { background: #e8f1ff; color: #0052d9; }
+        .st-wait { background: #f3ecff; color: #7c3aed; }
+        .st-done { background: #e8f8f0; color: #0b8a3e; }
+        .st-after { background: #ffeef0; color: #d93025; }
+        .st-cancel { background: #f2f3f5; color: #6b7280; }
+        .my-time { font-size: 11.5px; color: #9aa3ad; }
+        .my-order-name { font-size: 14px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px; word-break: break-all; line-height: 1.4; }
+        .my-order-meta { font-size: 12.5px; color: #6b7280; margin-bottom: 10px; }
+        .my-order-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .my-btn { padding: 7px 14px; border-radius: 6px; font-size: 12.5px; cursor: pointer; border: 1px solid #d9dde3; background: #fff; color: #1a1a1a; font-family: inherit; }
+        .my-btn.primary { background: #0052d9; border-color: #0052d9; color: #fff; font-weight: bold; }
+        .my-btn.ghost { border: none; background: transparent; color: #6b7280; text-decoration: underline; padding: 7px 2px; }
+        .my-empty { text-align: center; color: #9aa3ad; font-size: 13px; padding: 34px 10px; line-height: 1.7; }
 
         .form-warning { background: #f0fff0; border: 2px dashed #00a000; color: #00a000; font-size: 13px; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; line-height: 1.8; font-weight: bold; }
         .form-privacy-text { font-size: 12px; color: #999; text-align: left; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 5px; }
@@ -183,9 +227,106 @@
         .btn-top { background: #fff; color: var(--gold-dark); border: 1px solid var(--gold); font-size: 24px; display: none; }
         .btn-chat { background: var(--gold); color: #fff; font-size: 28px; }
         .chat-badge { position: absolute; top: -5px; right: -5px; background: #ff4757; color: #fff; border-radius: 50%; font-size: 11px; font-weight: bold; min-width: 18px; height: 18px; display: none; justify-content: center; align-items: center; padding: 0 4px; border: 2px solid #fff; }
+        .float-btn.cart-hot { background: linear-gradient(135deg, #0052d9, #2f7bff); color: #fff; width: 60px; height: 60px; font-size: 27px; animation: cartPulse 2.4s ease-out infinite; }
+        .float-btn.cart-hot:hover { transform: scale(1.08); }
+        @keyframes cartPulse { 0% { box-shadow: 0 4px 18px rgba(0,82,217,.45); } 50% { box-shadow: 0 4px 18px rgba(0,82,217,.45), 0 0 0 12px rgba(0,82,217,.12); } 100% { box-shadow: 0 4px 18px rgba(0,82,217,.45); } }
+        .badge-alert { animation: badgeBlink 1s infinite; }
+        @keyframes badgeBlink { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .logi-modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 2147483000; display: none; justify-content: center; align-items: center; }
+        .logi-modal-mask.active { display: flex; }
+        .logi-modal { background: #fff; border-radius: 14px; padding: 24px; width: min(90vw, 380px); text-align: center; }
+        .logi-num { font-size: 20px; font-weight: bold; color: #0052d9; letter-spacing: 1px; word-break: break-all; }
+        .cart-items-title { font-size: 13px; font-weight: bold; color: #1a1a1a; padding: 12px 0 2px; display: flex; justify-content: space-between; align-items: center; }
+        .cart-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f2f5; }
+        .cart-item img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; border: 1px solid #e3e6eb; flex-shrink: 0; }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name { font-size: 13px; font-weight: bold; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cart-item-price { font-size: 12px; color: #0052d9; font-weight: bold; margin-top: 2px; }
+        .cart-item-qty { display: flex; align-items: center; gap: 8px; }
+        .cart-item-qty button { width: 24px; height: 24px; border-radius: 6px; border: 1px solid #d9dde3; background: #fff; color: #1a1a1a; font-size: 14px; cursor: pointer; line-height: 1; }
+        .cart-item-qty span { min-width: 20px; text-align: center; font-size: 13px; font-weight: bold; color: #1a1a1a; }
+        .cart-item-del { background: none; border: none; font-size: 16px; cursor: pointer; color: #999; padding: 4px; }
+        .ship-pick { text-align: left; margin: 4px 0 10px; }
+        .ship-pick-title { font-size: 13px; color: var(--text-gray); margin-bottom: 8px; }
+        .ship-opt { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #e3e6eb; border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: .2s; }
+        .ship-opt.active { border-color: #0052d9; background: #f2f6ff; box-shadow: 0 0 0 3px rgba(0,82,217,.08); }
+        .ship-ico { font-size: 20px; }
+        .ship-txt { flex: 1; min-width: 0; }
+        .ship-txt b { display: block; font-size: 13.5px; color: var(--text-dark); }
+        .ship-txt small { font-size: 11.5px; color: #8a8f99; }
+        .ship-fee { font-size: 12px; font-weight: bold; color: #0052d9; white-space: nowrap; }
+        .ship-fee.free { color: #00a870; }
+        .ship-fee-line { text-align: left; font-size: 12.5px; color: #555; background: #f7f9ff; border: 1px dashed #cddbf7; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; line-height: 1.7; }
+        .promo-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .promo-row input { flex: 1; padding: 9px 12px; border: 1px solid #d9dde3; border-radius: 8px; font-size: 13px; font-family: inherit; outline: none; }
+        .promo-row input:focus { border-color: #0052d9; }
+        .promo-row button { padding: 0 16px; border: none; background: #0052d9; color: #fff; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: inherit; }
+        .promo-ok { text-align: left; font-size: 12.5px; color: #00a870; font-weight: bold; margin-bottom: 10px; }
+        .cart-nudge { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); width: min(92vw, 520px); background: #fff; border: 1.5px solid #0052d9; box-shadow: 0 10px 34px rgba(0,82,217,.22); border-radius: 14px; padding: 14px 16px; z-index: 2147482000; display: flex; align-items: center; gap: 12px; animation: nudgeIn .35s ease; }
+        @keyframes nudgeIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        .cn-txt { flex: 1; font-size: 13px; color: #1a1a1a; line-height: 1.5; }
+        .cn-txt b { color: #0052d9; }
+        .cn-go { background: #0052d9; color: #fff; border: none; border-radius: 9px; padding: 9px 16px; font-size: 13px; font-weight: bold; cursor: pointer; white-space: nowrap; font-family: inherit; }
+        .cn-x { cursor: pointer; color: #b0b6bf; font-size: 22px; line-height: 1; padding: 0 4px; }
+        .track-box { margin-top: 14px; padding: 14px; background: #f7f9ff; border: 1px dashed #cddbf7; border-radius: 10px; }
+        .track-box input { width: 100%; padding: 9px 12px; border: 1px solid #d9dde3; border-radius: 8px; font-size: 13px; font-family: inherit; margin-bottom: 8px; box-sizing: border-box; }
+        .trust-badges { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+        .trust-badges span { font-size: 11px; color: #0052d9; background: #eef3ff; border: 1px solid #d7e3fb; border-radius: 20px; padding: 4px 10px; font-weight: 600; }
+        .prod-reviews { text-align: left; margin: 4px 0 14px; border-top: 1px dashed #e3e6eb; padding-top: 12px; }
+        .pr-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .pr-title { font-size: 13.5px; font-weight: bold; color: #1a1a1a; }
+        .pr-score { font-size: 12px; color: #f5a623; font-weight: bold; }
+        .pr-score b { color: #1a1a1a; font-size: 15px; }
+        .pr-item { padding: 9px 0; border-bottom: 1px solid #f2f4f7; }
+        .pr-item:last-child { border-bottom: none; }
+        .pr-top { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+        .pr-stars { color: #f5a623; letter-spacing: 1px; }
+        .pr-name { color: #1a1a1a; font-weight: 600; }
+        .pr-date { color: #a0a6b0; margin-left: auto; }
+        .pr-txt { font-size: 12.5px; color: #555; line-height: 1.6; margin-top: 4px; }
+        .pd-gallery { position: relative; border-radius: 12px; overflow: hidden; background: #f5f7fa; margin-bottom: 12px; }
+        .pd-track { display: flex; transition: transform .35s ease; }
+        .pd-track img { width: 100%; flex: 0 0 100%; height: 220px; object-fit: cover; cursor: zoom-in; }
+        .pd-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255,255,255,.92); color: #0052d9; font-size: 20px; line-height: 28px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.15); padding: 0; }
+        .pd-prev { left: 8px; } .pd-next { right: 8px; }
+        .pd-dots { position: absolute; bottom: 8px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; }
+        .pd-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.65); cursor: pointer; transition: .2s; }
+        .pd-dots i.on { background: #fff; width: 16px; border-radius: 3px; }
+        .spec-wrap { text-align: left; margin-bottom: 14px; }
+        .spec-title { font-size: 13px; color: var(--text-gray); margin-bottom: 8px; }
+        .spec-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .spec-btn { border: 1.5px solid #e3e6eb; background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 13px; font-weight: 600; color: #1a1a1a; cursor: pointer; font-family: inherit; transition: .2s; line-height: 1.3; }
+        .spec-btn small { display: block; font-size: 11px; color: #8a8f99; font-weight: 400; margin-top: 2px; }
+        .spec-btn.active { border-color: #0052d9; background: #f2f6ff; color: #0052d9; box-shadow: 0 0 0 3px rgba(0,82,217,.08); }
+        .spec-btn.active small { color: #0052d9; }
+        .fav-btn { position: absolute; top: 8px; right: 8px; width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(255,255,255,.94); box-shadow: 0 2px 8px rgba(0,0,0,.14); font-size: 16px; cursor: pointer; z-index: 4; line-height: 1; padding: 0; transition: .2s; }
+        .fav-btn:hover { transform: scale(1.1); }
+        .fav-btn.on { background: #ffeef2; }
+        .fav-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f2f5; text-align: left; }
+        .fav-item img { width: 54px; height: 54px; border-radius: 8px; object-fit: cover; border: 1px solid #e3e6eb; flex-shrink: 0; }
+        .fav-item-info { flex: 1; min-width: 0; }
+        .fav-item-name { font-size: 13px; font-weight: bold; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .fav-item-price { font-size: 12px; color: #0052d9; font-weight: bold; margin-top: 2px; }
+        .fav-go { background: #0052d9; color: #fff; border: none; border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: bold; cursor: pointer; font-family: inherit; white-space: nowrap; }
+        .fly-ghost { position: fixed; z-index: 2147483002; border-radius: 12px; pointer-events: none; object-fit: cover; box-shadow: 0 8px 24px rgba(0,82,217,.3); }
+        .m-nav { display: none; }
+        @media (max-width: 768px) {
+            body { padding-bottom: 60px; }
+            .m-nav { position: fixed; left: 0; right: 0; bottom: 0; height: 58px; background: #fff; border-top: 1px solid #e8eaee; display: flex; z-index: 1600; box-shadow: 0 -2px 12px rgba(0,0,0,.06); }
+            .m-nav-item { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 10.5px; color: #8a8f99; font-family: inherit; position: relative; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+            .m-nav-item span { font-size: 19px; line-height: 1; }
+            .m-nav-item.active { color: #0052d9; font-weight: 700; }
+            .m-dot { position: absolute; top: 3px; left: 50%; margin-left: 4px; min-width: 15px; height: 15px; border-radius: 8px; background: #ff4757; color: #fff; font-size: 10px; font-style: normal; line-height: 15px; text-align: center; padding: 0 4px; box-sizing: border-box; }
+            .m-dot.hide { display: none; }
+            .floating-btns { bottom: 74px !important; }
+            .btn-chat { bottom: 200px !important; }
+            .cart-nudge { bottom: 74px; }
+            .wb-toast { bottom: 74px !important; }
+            .chat-widget { bottom: 74px; max-height: calc(100vh - 140px); }
+        }
 
         /* ===== 可拖動客服球 ===== */
-        .btn-chat { position: fixed; right: 20px; bottom: 100px; background: var(--gold); color: #fff; font-size: 24px; flex-direction: column; cursor: grab; touch-action: none; z-index: 1501; }
+        .btn-chat { position: fixed; right: 20px; bottom: 170px; background: var(--gold); color: #fff; font-size: 24px; flex-direction: column; cursor: grab; touch-action: none; z-index: 1501; }
         .btn-chat .btn-chat-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-indent: 3px; margin-top: 1px; }
         .btn-chat.dragging { opacity: .95; box-shadow: 0 8px 24px rgba(0, 82, 217, .35); }
         /* ===== 聊天窗商品訂單條 ===== */
@@ -317,6 +458,7 @@
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; padding: 15px; }
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
+            .btn-chat { bottom: 130px; }
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
             .trust-section { flex-direction: column; }
             .cart-drawer { width: 100%; }
@@ -327,6 +469,9 @@
             #langSwitcher select { font-size: 12px; }
         }
     </style>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="preconnect" href="https://ncebylvmcnrrayqbwtog.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
 </head>
 <body>
 
@@ -398,17 +543,17 @@
         <h3 class="buyer-show-title">📸 真實買家實拍反饋 (點擊看大圖)</h3>
         <div class="buyer-show-scroll">
             <div class="buyer-show-card">
-                <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
+                <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀">
                 <p>"實體真的超美！戴去聚會朋友以為我花了好幾十萬，物流也很快！"</p>
                 <span>- 新北市 陳先生 (購買：經典水鬼款)</span>
             </div>
             <div class="buyer-show-card">
-                <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
+                <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀">
                 <p>"包裝很嚴實，開箱那一刻真的有驚豔到，客服回覆也很即時。"</p>
                 <span>- 台中市 林小姐 (購買：奢華運動款)</span>
             </div>
             <div class="buyer-show-card">
-                <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" style="cursor: zoom-in;" onclick="openImageLightbox(this.src)" alt="買家秀">
+                <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀">
                 <p>"原本很怕貨到付款買到假的，結果質感直接拉滿，絕對物超所值！"</p>
                 <span>- 高雄市 張先生 (購買：經典黑面款)</span>
             </div>
@@ -421,6 +566,7 @@
         </div>
         <div class="category-tabs" id="categoryTabs">
             <button class="category-btn active" onclick="setCategory('全部', this)">全部</button>
+            <button class="category-btn" id="favTabBtn" onclick="openFavModal()">❤️ 收藏 <b id="favCount">0</b></button>
         </div>
     </div>
 
@@ -457,6 +603,7 @@
 
     <div class="site-footer">
         <div style="margin-bottom: 15px;">
+            <a onclick="openOrderLookup()">🔍 查詢訂單</a> |
             <a onclick="openLegal('privacy')">隱私權政策</a> |
             <a onclick="openLegal('terms')">服務條款</a> |
             <a onclick="openLegal('return')">退換貨政策</a>
@@ -472,22 +619,74 @@
         </div>
     </div>
 
+    <div class="modal-overlay legal-modal" id="reviewModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-btn" onclick="document.getElementById('reviewModal').classList.remove('active')">&times;</span>
+            <h2 style="text-align: left;">⭐ 評價這次購買</h2>
+            <p style="font-size: 13px; color: #6b7280; text-align: left; margin: 4px 0 12px;">您的評價會同步給客服，幫助我們做得更好</p>
+            <div id="reviewStars" style="font-size: 30px; letter-spacing: 6px; color: #f5a623; text-align: center; margin-bottom: 12px; cursor: pointer;">
+                <span onclick="setStars(1)">★</span><span onclick="setStars(2)">★</span><span onclick="setStars(3)">★</span><span onclick="setStars(4)">★</span><span onclick="setStars(5)">★</span>
+            </div>
+            <div class="input-group" data-icon="✍️">
+                <input type="text" id="reviewText" placeholder="說說質感、包裝、物流如何" maxlength="120">
+            </div>
+            <button type="button" class="submit-btn" onclick="submitReview()" style="background:#0052d9; color:#fff; border-color:#0052d9;">送出評價</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay legal-modal" id="orderLookupModal">
+        <div class="modal-content" style="max-width: 420px;">
+            <span class="close-btn" onclick="document.getElementById('orderLookupModal').classList.remove('active')">&times;</span>
+            <h2 style="text-align: left;">🔍 查詢訂單進度</h2>
+            <p style="font-size: 13px; color: #6b7280; text-align: left; margin: 4px 0 14px;">輸入下單時填寫的手機號碼即可查詢</p>
+            <div class="input-group" data-icon="📞">
+                <input type="tel" id="lookupPhone" placeholder="請輸入 10 碼手機號碼" maxlength="14">
+            </div>
+            <button type="button" class="submit-btn" onclick="doOrderLookup()" style="background:#0052d9; color:#fff; border-color:#0052d9;">查詢我的訂單</button>
+            <div id="lookupResult" style="margin-top: 14px; text-align: left; font-size: 13.5px;"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="favModal">
+        <div class="modal-content" style="max-width: 460px;">
+            <span class="close-btn" onclick="closeFavModal()">&times;</span>
+            <h2>❤️ 我的收藏</h2>
+            <div id="favList" style="margin-top: 12px;"></div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="infoModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">&times;</span>
 
             <div id="formContainer">
                 <h2>確認商品與填寫資訊</h2>
+                <div class="pd-gallery" id="pdGallery">
+                    <div class="pd-track" id="pdTrack"></div>
+                    <button type="button" class="pd-nav pd-prev" onclick="pdSlide(-1)">‹</button>
+                    <button type="button" class="pd-nav pd-next" onclick="pdSlide(1)">›</button>
+                    <div class="pd-dots" id="pdDots"></div>
+                </div>
                 <div class="price-display-box">
                     <p>您選擇的商品：</p>
                     <h3 id="modalProductName">手錶名稱</h3>
                     <div class="price-line" id="modalPriceRow"></div>
+                    <div class="trust-badges">
+                        <span>🛡 7 天鑑賞期</span>
+                        <span>📦 拆箱驗貨</span>
+                        <span>🔒 隱私包裝</span>
+                    </div>
                     <div class="viewer-count">
                         🔥 今日已有 <span id="randomViewerCount">15</span> 人查看此商品
+                    </div>
+                    <div style="display:flex; justify-content:center; margin-top:10px;">
+                        <button type="button" class="share-btn" onclick="shareProduct()">📤 分享給朋友</button>
                     </div>
                 </div>
 
                 <div id="modalCartSummary" style="display:none; background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:10px; margin:8px 0 12px; font-size:13px; color:var(--text-dark); text-align:left; line-height:1.7;"></div>
+
+                <div class="prod-reviews" id="prodReviews"></div>
 
                 <div id="budgetSelectorWrap" style="text-align: left; margin-bottom: 15px;">
                     <p style="color: var(--text-gray); font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
@@ -498,6 +697,11 @@
                     </div>
                 </div>
 
+                <div class="spec-wrap" id="specWrap">
+                    <p class="spec-title">🎛 選擇規格（選配，會影響價格）</p>
+                    <div class="spec-group" id="specGroup"></div>
+                </div>
+
                 <form id="shippingForm" onsubmit="event.preventDefault();">
                     <div class="input-group" data-icon="👤">
                         <input type="text" id="custName" placeholder="請輸入收件人姓名" maxlength="30" required>
@@ -505,8 +709,35 @@
                     <div class="input-group" data-icon="📞">
                         <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="14" title="請輸入 09 開頭的 10 碼手機號碼" required>
                     </div>
-                    <div class="input-group" data-icon="🏙️">
-                        <select id="custCity" required>
+                    <div class="ship-pick" id="shipPick">
+                        <p class="ship-pick-title">🚚 請選擇配送方式</p>
+                        <label class="ship-opt active" id="shipOptCvs7" onclick="selectShip('cvs7')">
+                            <span class="ship-ico">🏪</span>
+                            <span class="ship-txt"><b>7-11 超商取貨</b><small>到店取貨 · 貨到付款</small></span>
+                            <span class="ship-fee free">免運</span>
+                        </label>
+                        <label class="ship-opt" id="shipOptCvsFamily" onclick="selectShip('cvsFamily')">
+                            <span class="ship-ico">🏬</span>
+                            <span class="ship-txt"><b>全家超商取貨</b><small>到店取貨 · 貨到付款</small></span>
+                            <span class="ship-fee free">免運</span>
+                        </label>
+                        <label class="ship-opt" id="shipOptHome" onclick="selectShip('home')">
+                            <span class="ship-ico">🚚</span>
+                            <span class="ship-txt"><b>黑貓宅配到府</b><small>專人配送到家 · 貨到付款</small></span>
+                            <span class="ship-fee" id="shipHomeFee">運費 $100</span>
+                        </label>
+                    </div>
+                    <div class="ship-fee-line" id="shipFeeLine"></div>
+                    <div class="promo-row">
+                        <input type="text" id="promoInput" placeholder="優惠碼（例：SAVE100 現折 $100）" maxlength="20">
+                        <button type="button" onclick="applyPromo()">套用</button>
+                    </div>
+                    <div class="promo-ok" id="promoOk" style="display:none;"></div>
+                    <div class="input-group" data-icon="🏪" id="storeGroup">
+                        <input type="text" id="custStore" placeholder="請輸入取貨門市（例：忠孝門市 / 店號）" maxlength="60">
+                    </div>
+                    <div class="input-group" data-icon="🏙️" id="cityGroup" style="display:none;">
+                        <select id="custCity">
                             <option value="">請選擇收件縣市</option>
                             <option value="台北市">台北市</option>
                             <option value="新北市">新北市</option>
@@ -532,14 +763,14 @@
                             <option value="連江縣">連江縣</option>
                         </select>
                     </div>
-                    <div class="input-group" data-icon="📍">
-                        <input type="text" id="custAddress" placeholder="請輸入鄉鎮市區 + 街道門牌" maxlength="100" required>
+                    <div class="input-group" data-icon="📍" id="addrGroup" style="display:none;">
+                        <input type="text" id="custAddress" placeholder="請輸入鄉鎮市區 + 街道門牌" maxlength="100">
                     </div>
 
                     <div class="deliver-tip">
                         <span>🚚 預計 2–3 天到貨</span>
                         <span>💵 貨到付款</span>
-                        <span>📦 全館免運費</span>
+                        <span id="deliverShipTip">🏪 超商取貨免運</span>
                     </div>
 
                     <div class="form-warning">
@@ -623,9 +854,16 @@
         <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
     </div>
 
+    <nav class="m-nav" id="mNav">
+        <button class="m-nav-item active" data-t="home" onclick="mNavGo('home')"><span>🏠</span>首頁</button>
+        <button class="m-nav-item" data-t="shop" onclick="mNavGo('shop')"><span>🛍</span>商品</button>
+        <button class="m-nav-item" data-t="cart" onclick="mNavGo('cart')"><span>🛒</span>購物車<i class="m-dot hide" id="mCartDot">0</i></button>
+        <button class="m-nav-item" data-t="fav" onclick="mNavGo('fav')"><span>❤️</span>收藏</button>
+        <button class="m-nav-item" data-t="chat" onclick="mNavGo('chat')"><span>💬</span>客服</button>
+    </nav>
+
     <div class="floating-btns">
-        <button class="float-btn" id="cartFloatBtn" onclick="toggleCart()" title="購物車"
-                style="background:#fff; color:var(--gold-dark); font-size:24px; border:1px solid var(--gold);">🛒
+        <button class="float-btn cart-hot" id="cartFloatBtn" onclick="toggleCart()" title="購物車 · 我的訂單">🛒
             <span class="chat-badge" id="cartBadge">0</span>
         </button>
         <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
@@ -641,15 +879,36 @@
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
-            <h3>🛒 我的購物車</h3>
+            <h3>🛒 購物車 · 我的訂單</h3>
             <span class="cart-close" onclick="toggleCart()">&times;</span>
         </div>
+        <div id="cartItemsBox" style="display:none; padding: 0 16px;"></div>
+        <div class="my-tabs" id="myTabs">
+            <button class="my-tab active" data-s="all" onclick="setMyTab('all')">全部</button>
+            <button class="my-tab" data-s="pending" onclick="setMyTab('pending')">待發貨</button>
+            <button class="my-tab" data-s="shipped" onclick="setMyTab('shipped')">待收貨</button>
+            <button class="my-tab" data-s="delivered" onclick="setMyTab('delivered')">待評價</button>
+            <button class="my-tab" data-s="aftersale" onclick="setMyTab('aftersale')">售後</button>
+        </div>
         <div class="cart-body" id="cartBody">
-            <div class="cart-empty">購物車是空的</div>
+            <div class="my-empty">載入中...</div>
         </div>
         <div class="cart-footer">
-            <div class="cart-total">共 <span id="cartTotalCount">0</span> 件商品</div>
-            <button class="cart-checkout-btn" onclick="openCartCheckout()">前往結帳（貨到付款）</button>
+            <div class="cart-total" id="myOrderCountText">共 0 筆訂單</div>
+            <button class="cart-checkout-btn" id="myCartBtn" onclick="openCartCheckout()" style="display:none;">🛒 前往購物車結帳</button>
+        </div>
+    </div>
+
+    <div class="logi-modal-mask" id="logiModal" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="logi-modal">
+            <div style="font-size:40px;">🚚</div>
+            <h3 style="margin:8px 0 4px;">物流單號查詢</h3>
+            <div id="logiInfo" style="color:#666; font-size:13px; margin-bottom:10px;"></div>
+            <div class="logi-num" id="logiNum"></div>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
+                <button class="my-btn primary" onclick="copyTracking()">📋 複製單號</button>
+                <button class="my-btn" onclick="document.getElementById('logiModal').classList.remove('active')">關閉</button>
+            </div>
         </div>
     </div>
 
@@ -720,6 +979,81 @@
            - 優先讀 Supabase 資料表 site_settings(id=1).config
            - 資料表不存在或無權限時，自動降級為本機 localStorage
            ============================================================ */
+        /* ===== 追蹤埋點（GA4 / Meta Pixel，後台可配置，未配置則靜默） ===== */
+        window.WBTrack = (function () {
+            var cfg = {};
+            try { cfg = JSON.parse(localStorage.getItem('wb_track') || '{}'); } catch (e) {}
+            var GA = cfg.ga4 || '', PX = cfg.pixel || '';
+            var FB_MAP = { view_item: 'ViewContent', add_to_cart: 'AddToCart', begin_checkout: 'InitiateCheckout', purchase: 'Purchase' };
+            if (GA) {
+                var s = document.createElement('script'); s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA);
+                document.head.appendChild(s);
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function () { window.dataLayer.push(arguments); };
+                gtag('js', new Date());
+                gtag('config', GA);
+            }
+            if (PX) {
+                !function (f, b, e, v, n, t, s) {
+                    if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+                    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+                    t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t, s);
+                }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', PX); fbq('track', 'PageView');
+            }
+            return function (name, data) {
+                try {
+                    if (GA && window.gtag) gtag('event', name, data || {});
+                    if (PX && window.fbq && FB_MAP[name]) fbq('track', FB_MAP[name], data || {});
+                } catch (e) {}
+            };
+        })();
+
+        /* ===== 優惠碼 ===== */
+        var PROMO = { code: '', discount: 0 };
+        var PROMO_TABLE = { SAVE100: 100, VIP200: 200, NEW100: 100 };
+        function applyPromo() {
+            const el = document.getElementById('promoInput');
+            const ok = document.getElementById('promoOk');
+            const v = (el && el.value || '').trim().toUpperCase();
+            if (!v) { showSimpleToast('請輸入優惠碼'); return; }
+            if (PROMO_TABLE[v]) {
+                PROMO.code = v; PROMO.discount = PROMO_TABLE[v];
+                if (ok) { ok.style.display = 'block'; ok.innerHTML = '✅ 已套用「' + v + '」，折抵 ' + formatMoney(PROMO.discount); }
+                showSimpleToast('優惠碼已套用');
+            } else {
+                PROMO.code = ''; PROMO.discount = 0;
+                if (ok) { ok.style.display = 'none'; ok.innerHTML = ''; }
+                showSimpleToast('優惠碼無效，請確認後再試');
+            }
+            updateShipFeeUI();
+        }
+
+        /* ===== 放棄購物車挽留（30 秒後） ===== */
+        function showCartNudge() {
+            if (document.getElementById('cartNudge')) return;
+            if (sessionStorage.getItem('wb_cart_nudge')) return;
+            const n = cart.reduce(function (s, c) { return s + c.qty; }, 0);
+            if (!n) return;
+            const el = document.createElement('div');
+            el.id = 'cartNudge'; el.className = 'cart-nudge';
+            el.innerHTML = '<div class="cn-txt"><b>還差一步！</b><br>購物車還有 ' + n + ' 件商品，現在下單享超商免運</div>' +
+                '<button class="cn-go" onclick="closeCartNudge(1)">立即結帳</button>' +
+                '<span class="cn-x" onclick="closeCartNudge(0)">&times;</span>';
+            document.body.appendChild(el);
+        }
+        function closeCartNudge(go) {
+            const el = document.getElementById('cartNudge');
+            if (el) el.remove();
+            try { sessionStorage.setItem('wb_cart_nudge', '1'); } catch (e) {}
+            if (go) openCartCheckout();
+        }
+        setTimeout(function () {
+            try { if (cart.length) showCartNudge(); } catch (e) {}
+        }, 30000);
+
         window.SiteConfig = (function () {
             const KEY = 'wb_site_config_v1';
             const BUILTIN_LANGS = [
@@ -845,6 +1179,26 @@
         window.formatMoney = formatMoney;
 
         const productGrid = document.getElementById('productGrid');
+        /* ===== 來源渠道採集（?utm_source=line / ig / fb，無參數按 referrer 判斷） ===== */
+        var WB_SRC = (function () {
+            try {
+                const q = new URLSearchParams(location.search);
+                const s = (q.get('utm_source') || q.get('src') || '').trim().toLowerCase();
+                const ref = document.referrer || '';
+                let val = 'direct';
+                if (s) val = s.slice(0, 24);
+                else if (ref && ref.indexOf(location.host) === -1) {
+                    const m = ref.match(/https?:\/\/([^\/]+)/);
+                    val = m ? m[1].replace(/^www\./, '').toLowerCase().slice(0, 32) : 'referral';
+                }
+                const old = localStorage.getItem('wb_src');
+                if (old && !s) return old;          // 首次歸因：已記錄過就不再覆蓋
+                if (s) localStorage.setItem('wb_src', val);
+                else if (!old) localStorage.setItem('wb_src', val);
+                return val;
+            } catch (e) { return 'direct'; }
+        })();
+
         const modal = document.getElementById('infoModal');
         const closeBtn = document.getElementById('closeModalBtn');
         const lightbox = document.getElementById('lightbox');
@@ -1023,9 +1377,11 @@
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                card.dataset.pid = i;
                 card.innerHTML = `
                     <div class="product-image-wrapper" data-images="${imagesJson}">
                         <div class="loader" id="loader-${i}"></div>
+                        <button class="fav-btn${isFav(i) ? ' on' : ''}" data-id="${i}" title="收藏此款">${isFav(i) ? '❤️' : '🤍'}</button>
                         <div class="image-number-badge">${seqMap.get(i)}</div>
                         ${showHotBadge}
                         <img src="${escapeHtmlF(mainImgSrc)}" loading="lazy" decoding="async" alt="${escapeHtmlF(watch.name)}"
@@ -1173,6 +1529,9 @@
         }
 
         productGrid.addEventListener('click', function (e) {
+            const favBtn = e.target.closest('.fav-btn');
+            if (favBtn) { e.preventDefault(); e.stopPropagation(); toggleFav(favBtn.dataset.id); return; }
+
             const claimBtn = e.target.closest('.claim-btn');
             if (claimBtn) { openModal(parseInt(claimBtn.dataset.id, 10)); return; }
 
@@ -1204,6 +1563,232 @@
             else document.getElementById('chatInput').focus();
         });
 
+        /* ===== 手機底部導航 ===== */
+        function mNavGo(t) {
+            Array.prototype.forEach.call(document.querySelectorAll('.m-nav-item'), function (b) {
+                b.classList.toggle('active', b.dataset.t === t);
+            });
+            if (t === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (t === 'shop') {
+                var g = document.getElementById('productGrid');
+                if (g) g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (t === 'cart') {
+                toggleCart();
+            } else if (t === 'fav') {
+                openFavModal();
+            } else if (t === 'chat') {
+                var w = document.getElementById('chatWidget');
+                if (w && !w.classList.contains('active')) toggleChat();
+            }
+        }
+        function syncNavDot() {
+            var dot = document.getElementById('mCartDot');
+            if (!dot) return;
+            var n = cart.reduce(function (s, c) { return s + c.qty; }, 0);
+            if (n > 0) { dot.textContent = n > 99 ? '99+' : n; dot.classList.remove('hide'); }
+            else { dot.classList.add('hide'); }
+        }
+
+        /* ===== PWA 註冊 ===== */
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js').catch(function () {});
+            });
+        }
+
+        /* ===== 分享預覽（?p=ID 深鏈時同步 OG 標題與圖） ===== */
+        function syncOgMeta() {
+            try {
+                var params = new URLSearchParams(location.search);
+                var pid = parseInt(params.get('p'), 10);
+                var w = (!isNaN(pid) && watchData[pid]) ? watchData[pid] : null;
+                if (!w) return;
+                var title = w.name + '｜尊享腕錶 精品展示';
+                var img = (w.images && w.images[0]) ? w.images[0] : '';
+                var pr = Number((w.price && w.price.base) || 0);
+                document.title = title;
+                var set = function (sel, attr, val) {
+                    var el = document.querySelector(sel);
+                    if (el && val) el.setAttribute(attr, val);
+                };
+                set('meta[property="og:title"]', 'content', title);
+                set('meta[name="twitter:title"]', 'content', title);
+                if (img) {
+                    set('meta[property="og:image"]', 'content', img);
+                    set('meta[name="twitter:image"]', 'content', img);
+                }
+                if (pr > 0) set('meta[property="og:description"]', 'content', '優惠價 ' + formatMoney(pr) + '｜超商取貨免運・貨到付款・7 天鑑賞期');
+            } catch (e) {}
+        }
+        setTimeout(function () { try { syncOgMeta(); } catch (e) {} }, 2000);
+
+        document.addEventListener('DOMContentLoaded', function () { updateFavCount(); syncNavDot(); });
+        setTimeout(function () { updateFavCount(); syncNavDot(); }, 1200);
+
+        /* ===== 商品多圖輪播 ===== */
+        var PD_IMGS = [], PD_IDX = 0;
+        function renderPdGallery(imgs, name) {
+            PD_IMGS = (Array.isArray(imgs) && imgs.length) ? imgs.slice() : [fallbackImg];
+            PD_IDX = 0;
+            var track = document.getElementById('pdTrack'), dots = document.getElementById('pdDots');
+            if (!track) return;
+            track.innerHTML = PD_IMGS.map(function (src) {
+                return '<img src="' + escapeHtmlF(src) + '" alt="' + escapeHtmlF(name || '') + '" onclick="openLightbox(PD_IMGS)">';
+            }).join('');
+            if (dots) dots.innerHTML = PD_IMGS.length > 1 ? PD_IMGS.map(function (_, i) {
+                return '<i class="' + (i === 0 ? 'on' : '') + '" onclick="pdGo(' + i + ')"></i>';
+            }).join('') : '';
+            pdGo(0);
+        }
+        function pdGo(i) {
+            if (!PD_IMGS.length) return;
+            PD_IDX = Math.max(0, Math.min(PD_IMGS.length - 1, i));
+            var track = document.getElementById('pdTrack');
+            if (track) track.style.transform = 'translateX(' + (-PD_IDX * 100) + '%)';
+            var dots = document.getElementById('pdDots');
+            if (dots) Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === PD_IDX); });
+            Array.prototype.forEach.call(document.querySelectorAll('.pd-nav'), function (b) {
+                b.style.display = PD_IMGS.length > 1 ? 'block' : 'none';
+            });
+        }
+        function pdSlide(d) { pdGo(PD_IDX + d); }
+
+        /* ===== 商品規格（選配加價） ===== */
+        var SPEC_DEFAULT = [
+            { name: '標準款', extra: 0 },
+            { name: '精鋼錶帶', extra: 300 },
+            { name: '真皮錶帶', extra: 200 },
+            { name: '陶瓷錶帶', extra: 500 }
+        ];
+        var SPEC = { name: '標準款', extra: 0 };
+        function renderSpecs(watch) {
+            var list = (watch && Array.isArray(watch.specs) && watch.specs.length) ? watch.specs : SPEC_DEFAULT;
+            var box = document.getElementById('specGroup');
+            if (!box) return;
+            SPEC = { name: list[0].name, extra: Number(list[0].extra) || 0 };
+            box.innerHTML = list.map(function (s, i) {
+                var ex = Number(s.extra) || 0;
+                var nm = String(s.name || '').replace(/'/g, '');
+                return '<button type="button" class="spec-btn' + (i === 0 ? ' active' : '') + '" onclick="selectSpec(this, \'' + nm + '\', ' + ex + ')">' +
+                    escapeHtmlF(s.name) + '<small>' + (ex > 0 ? '+' + formatMoney(ex) : '不加價') + '</small></button>';
+            }).join('');
+        }
+        function selectSpec(el, name, extra) {
+            SPEC = { name: name, extra: Number(extra) || 0 };
+            Array.prototype.forEach.call(document.querySelectorAll('.spec-btn'), function (b) { b.classList.remove('active'); });
+            if (el) el.classList.add('active');
+            refreshModalPrice();
+            updateShipFeeUI();
+        }
+        function refreshModalPrice() {
+            var form = document.getElementById('shippingForm');
+            if (!form) return;
+            var imgNum = parseInt(form.dataset.imgNum, 10);
+            var w = watchData[imgNum];
+            if (!w) return;
+            var ex = Number(SPEC.extra) || 0;
+            var base = Number(priceOf(imgNum, selectedBudget)) || 0;
+            var origBase = Number(w.price && w.price.original) || 0;
+            var sale = base + ex;
+            var orig = origBase > 0 ? origBase + ex : 0;
+            var row = document.getElementById('modalPriceRow');
+            if (!row) return;
+            var specTxt = (ex > 0 || SPEC.name !== '標準款') ? '　規格 <b>' + escapeHtmlF(SPEC.name) + '</b>' : '';
+            row.innerHTML = (orig > sale)
+                ? '原價 <s>' + formatMoney(orig) + '</s>　優惠價 <b>' + formatMoney(sale) + '</b>　省 ' + formatMoney(orig - sale) + specTxt
+                : '優惠價 <b>' + formatMoney(sale) + '</b>' + specTxt;
+        }
+
+        /* ===== 收藏心願單 ===== */
+        var FAV_KEY = 'wb_favs';
+        function getFavs() {
+            try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]').map(Number); } catch (e) { return []; }
+        }
+        function saveFavs(a) { try { localStorage.setItem(FAV_KEY, JSON.stringify(a)); } catch (e) {} }
+        function isFav(id) { return getFavs().indexOf(Number(id)) >= 0; }
+        function updateFavCount() {
+            var el = document.getElementById('favCount');
+            if (el) el.textContent = getFavs().length;
+        }
+        function toggleFav(id) {
+            id = Number(id);
+            var a = getFavs();
+            var i = a.indexOf(id);
+            if (i >= 0) { a.splice(i, 1); showSimpleToast('已取消收藏'); }
+            else { a.push(id); showSimpleToast('已加入收藏 ❤️'); }
+            saveFavs(a);
+            Array.prototype.forEach.call(document.querySelectorAll('.fav-btn'), function (b) {
+                if (Number(b.dataset.id) === id) {
+                    b.classList.toggle('on', a.indexOf(id) >= 0);
+                    b.textContent = a.indexOf(id) >= 0 ? '❤️' : '🤍';
+                }
+            });
+            updateFavCount();
+        }
+        function openFavModal() {
+            var box = document.getElementById('favList');
+            var ids = getFavs().filter(function (id) { return watchData[id]; });
+            if (!ids.length) {
+                box.innerHTML = '<div style="text-align:center; color:#9aa3ad; font-size:13px; padding:26px 0;">還沒有收藏商品<br>點商品圖右上角的 🤍 即可收藏</div>';
+            } else {
+                box.innerHTML = ids.map(function (id) {
+                    var w = watchData[id];
+                    var img = (w.images && w.images[0]) ? w.images[0] : fallbackImg;
+                    var pr = Number((w.price && w.price.base) || 0);
+                    return '<div class="fav-item">' +
+                        '<img src="' + escapeHtmlF(img) + '" alt="" onerror="this.src=\'' + fallbackImg + '\'">' +
+                        '<div class="fav-item-info"><div class="fav-item-name">' + escapeHtmlF(w.name) + '</div>' +
+                        '<div class="fav-item-price">' + formatMoney(pr) + '</div></div>' +
+                        '<button class="fav-go" onclick="goFavProduct(' + id + ')">查看</button>' +
+                        '<button class="cart-item-del" onclick="toggleFav(' + id + '); openFavModal();">🗑</button>' +
+                        '</div>';
+                }).join('');
+            }
+            document.getElementById('favModal').classList.add('active');
+        }
+        function closeFavModal() { document.getElementById('favModal').classList.remove('active'); }
+        function goFavProduct(id) {
+            closeFavModal();
+            var card = document.querySelector('.product-card[data-pid="' + id + '"]');
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.style.transition = 'box-shadow .3s';
+                card.style.boxShadow = '0 0 0 3px #0052d9';
+                setTimeout(function () { card.style.boxShadow = ''; }, 1600);
+            } else {
+                showSimpleToast('請先在下方商品列表找到此款，或重新整理頁面');
+            }
+        }
+
+        /* ===== 加入購物車飛入動效 ===== */
+        function flyToCart(id) {
+            try {
+                var src = document.querySelector('.product-card[data-pid="' + id + '"] img');
+                var target = document.getElementById('cartFloatBtn');
+                if (!src || !target) return;
+                var r1 = src.getBoundingClientRect(), r2 = target.getBoundingClientRect();
+                if (!r1.width) return;
+                var g = src.cloneNode(true);
+                g.className = 'fly-ghost';
+                g.style.left = r1.left + 'px';
+                g.style.top = r1.top + 'px';
+                g.style.width = r1.width + 'px';
+                g.style.height = r1.height + 'px';
+                g.style.transition = 'all .75s cubic-bezier(.4,0,.6,1)';
+                document.body.appendChild(g);
+                requestAnimationFrame(function () {
+                    g.style.left = (r2.left + r2.width / 2 - 22) + 'px';
+                    g.style.top = (r2.top + r2.height / 2 - 22) + 'px';
+                    g.style.width = '44px';
+                    g.style.height = '44px';
+                    g.style.opacity = '.2';
+                    g.style.transform = 'rotate(24deg)';
+                });
+                setTimeout(function () { if (g.parentNode) g.parentNode.removeChild(g); }, 820);
+            } catch (e) {}
+        }
+
         function openModal(imgNum) {
             const watch = watchData[imgNum];
             if (!watch) return;
@@ -1215,17 +1800,17 @@
             modalProductName.innerText = watch.name;
             const _orig = Number(watch.price && watch.price.original) || 0;
             const _sale = Number(watch.price && watch.price.base) || 0;
-            const priceRow = document.getElementById('modalPriceRow');
-            if (priceRow) {
-                priceRow.innerHTML = (_orig > _sale)
-                    ? `原價 <s>${formatMoney(_orig)}</s>　優惠價 <b>${formatMoney(_sale)}</b>　省 ${formatMoney(_orig - _sale)}`
-                    : `優惠價 <b>${formatMoney(_sale)}</b>`;
-            }
+            renderPdGallery(watch.images, watch.name);
+            renderSpecs(watch);
+            var _sw = document.getElementById('specWrap');
+            if (_sw) _sw.style.display = 'block';
+            if (window.WBTrack) WBTrack('view_item', { value: _sale, currency: 'TWD' });
             modal.classList.add('active');
 
             const form = document.getElementById('shippingForm');
             form.dataset.imgNum = imgNum;
             form.dataset.mode = 'single';
+            refreshModalPrice();
 
             document.getElementById('modalCartSummary').style.display = 'none';
             document.getElementById('budgetSelectorWrap').style.display = 'block';
@@ -1235,6 +1820,9 @@
 
             formContainer.style.display = 'block';
             successContainer.style.display = 'none';
+            updateShipFeeUI();
+            renderProdReviews(imgNum);
+            if (window.WBTrack) WBTrack('begin_checkout', { value: _sale, currency: 'TWD' });
         }
 
         closeBtn.addEventListener('click', function () { modal.classList.remove('active'); });
@@ -1264,6 +1852,83 @@
         }
         checkDeviceForLine();
 
+        /* ===== 輕提示 ===== */
+        function showSimpleToast(msg) {
+            let el = document.getElementById('wbToast');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'wbToast';
+                el.className = 'wb-toast';
+                document.body.appendChild(el);
+            }
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(el._t);
+            el._t = setTimeout(function () { el.classList.remove('show'); }, 2600);
+        }
+
+        /* ===== 分享商品 ===== */
+        async function shareProduct() {
+            const form = document.getElementById('shippingForm');
+            const pid = form ? form.dataset.imgNum : null;
+            const w = watchData[pid];
+            const url = location.origin + location.pathname + (pid != null ? '?p=' + pid : '');
+            const price = (w && w.price) ? formatMoney(w.price.base) : '';
+            const text = w ? `推薦這款「${w.name}」${price ? '，優惠價 ' + price : ''}` : '推薦你看看這款';
+            if (navigator.share) {
+                try { await navigator.share({ title: '尊享腕錶', text: text, url: url }); return; } catch (e) { /* 使用者取消 */ }
+            }
+            const lineUrl = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text);
+            try {
+                await navigator.clipboard.writeText(url);
+                showSimpleToast('連結已複製！分享後朋友下單，你可用折扣碼 SAVE100 現折 $100');
+            } catch (e) {
+                showSimpleToast('請長按網址複製後分享（分享後可用折扣碼 SAVE100）');
+            }
+            window.open(lineUrl, '_blank');
+        }
+
+        /* ===== 訂單進度查詢 ===== */
+        function openOrderLookup() {
+            document.getElementById('orderLookupModal').classList.add('active');
+            setTimeout(function () { const e = document.getElementById('lookupPhone'); if (e) e.focus(); }, 200);
+        }
+        async function doOrderLookup() {
+            const inp = document.getElementById('lookupPhone');
+            const out = document.getElementById('lookupResult');
+            const phone = (inp.value || '').replace(/\D/g, '');
+            if (!/^09\d{8}$/.test(phone)) {
+                out.innerHTML = '<div style="color:#ff4757; font-weight:bold;">請輸入 09 開頭的 10 碼手機號碼</div>';
+                return;
+            }
+            out.innerHTML = '<div style="color:#6b7280;">查詢中...</div>';
+            try {
+                const { data, error } = await supabase.from('orders')
+                    .select('id, created_at, product_name, total_amount, status, customer_name')
+                    .eq('customer_phone', phone)
+                    .order('created_at', { ascending: false })
+                    .limit(20);
+                if (error) throw error;
+                if (!data || !data.length) {
+                    out.innerHTML = '<div style="color:#6b7280; line-height:1.7;">查無此號碼的訂單紀錄。<br>請確認號碼是否正確，或直接透過右下角客服詢問。</div>';
+                    return;
+                }
+                const badge = s => s === 'shipped' ? '<span class="lk-b lk-ok">已出貨</span>'
+                    : (s === 'cancelled' ? '<span class="lk-b lk-gray">已取消</span>' : '<span class="lk-b">待處理</span>');
+                out.innerHTML = '<div style="font-size:12px; color:#6b7280; margin-bottom:8px;">共 ' + data.length + ' 筆訂單</div>' +
+                    data.map(function (o) {
+                        const tm = o.created_at ? new Date(o.created_at).toLocaleString('zh-TW', { hour12: false }) : '';
+                        const nm = (o.customer_name || '').slice(0, 1) + '**';
+                        return '<div class="lk-item">' + badge(o.status) +
+                            '<div class="lk-main">' + escapeHtmlF(o.product_name || '-') +
+                            '<div class="lk-sub">' + escapeHtmlF(tm) + ' · ' + escapeHtmlF(nm) + '</div></div>' +
+                            '<div class="lk-amt">' + formatMoney(Number(o.total_amount) || 0) + '</div></div>';
+                    }).join('');
+            } catch (e) {
+                out.innerHTML = '<div style="color:#ff4757;">查詢失敗，請稍後再試或聯絡客服</div>';
+            }
+        }
+
         // 手機號只允許數字，自動去掉空格/橫線
         (function () {
             const ph = document.getElementById('custPhone');
@@ -1285,9 +1950,19 @@
 
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
+            const shipMethod = SHIP.method || 'cvs7';
+            const storeName = (document.getElementById('custStore') || {}).value ? document.getElementById('custStore').value.trim() : '';
             const cityEl = document.getElementById('custCity');
             const city = cityEl ? cityEl.value.trim() : '';
-            const address = ((city ? city : '') + document.getElementById('custAddress').value.trim()).trim();
+            const addrText = document.getElementById('custAddress').value.trim();
+            let address = '';
+            if (shipMethod === 'home') {
+                if (!city || !addrText) { alert('宅配到府需要填寫收件縣市與完整地址'); return; }
+                address = city + addrText;
+            } else {
+                if (!storeName) { alert('請填寫取貨門市名稱或店號（例：忠孝門市）'); return; }
+                address = SHIP_LABEL[shipMethod] + '｜門市：' + storeName;
+            }
             const mode = form.dataset.mode || 'single';
 
             let items = [];
@@ -1306,15 +1981,31 @@
                 const imgNum = parseInt(form.dataset.imgNum, 10);
                 const watch = watchData[imgNum];
                 if (!watch) { alert('商品資料讀取失敗，請重新整理'); return; }
+                const _ex = Number(SPEC.extra) || 0;
+                const _unit = (Number(priceOf(imgNum, selectedBudget)) || 0) + _ex;
                 items = [{
                     id: imgNum, name: watch.name, qty: 1, budget: selectedBudget,
-                    price: priceOf(imgNum, selectedBudget), category: categoryOf(imgNum)
+                    price: _unit, category: categoryOf(imgNum),
+                    spec: SPEC.name, spec_extra: _ex,
+                    image: (watch.images && watch.images[0]) || ''
                 }];
-                               productName = `${watch.name} ${formatMoney(priceOf(imgNum, selectedBudget))}`;
+                productName = watch.name + ((SPEC.name && SPEC.name !== '標準款') ? '（' + SPEC.name + '）' : '') + ' ' + formatMoney(_unit);
                 firstProductId = imgNum;
             }
 
-            const totalAmount = items.reduce((s, it) => s + (Number(it.price) || 0) * it.qty, 0);
+            const goodsTotal = items.reduce((s, it) => s + (Number(it.price) || 0) * it.qty, 0);
+            const shipFee = shipFeeOf(shipMethod, goodsTotal);
+            const promoDiscount = Math.min(PROMO.discount || 0, goodsTotal);
+            const totalAmount = Math.max(0, goodsTotal + shipFee - promoDiscount);
+            const shipInfo = { method: shipMethod, label: SHIP_LABEL[shipMethod], store: storeName, fee: shipFee, promo: PROMO.code || '', discount: promoDiscount };
+
+            // 記錄來源渠道（LINE / IG / FB / 直接訪問），供後台渠道統計
+            items = items.map(function (it) {
+                const o = Object.assign({}, it);
+                o.src = (typeof WB_SRC !== 'undefined' && WB_SRC) ? WB_SRC : 'direct';
+                o.shipping = shipInfo;
+                return o;
+            });
 
             isSubmitting = true;
             submitBtn.innerText = '處理中，請稍候...';
@@ -1335,6 +2026,10 @@
                 if (error) throw error;
 
                 if (mode === 'cart') { cart = []; saveCart(); }
+                if (window.WBTrack) WBTrack('purchase', { value: totalAmount, currency: 'TWD', items: items.length });
+                PROMO = { code: '', discount: 0 };
+                const _pi = document.getElementById('promoInput'); if (_pi) _pi.value = '';
+                const _po = document.getElementById('promoOk'); if (_po) { _po.style.display = 'none'; _po.innerHTML = ''; }
 
                 formContainer.style.display = 'none';
                 successContainer.style.display = 'block';
@@ -1349,6 +2044,9 @@
 
                 const chatW = document.getElementById('chatWidget');
                 if (chatW && !chatW.classList.contains('active')) toggleChat();
+
+                // 記住手機號，之後「我的訂單」可跨次查看
+                try { localStorage.setItem('wb_phone', phone); MY_PHONE = phone; } catch (e) {}
 
                 // 客戶填寫訂單送出成功後，聊天窗才顯示商品訂單欄
                 const fp = watchData[firstProductId];
@@ -1652,6 +2350,24 @@
             appendChatMessage(text, 'user', new Date().toISOString(), chatCtx.img || null, 'text');
         }
 
+        /* ===== 分享深鏈定位（?p=商品ID 自動滾動並高亮） ===== */
+        (function deepLink() {
+            try {
+                const pid = new URLSearchParams(location.search).get('p');
+                if (pid === null) return;
+                let tried = 0;
+                const timer = setInterval(function () {
+                    const card = document.querySelector('.product-card[data-pid="' + pid + '"]');
+                    if (card) {
+                        clearInterval(timer);
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        card.classList.add('hl');
+                        setTimeout(function () { card.classList.remove('hl'); }, 3200);
+                    } else if (++tried > 20) { clearInterval(timer); }
+                }, 500);
+            } catch (e) {}
+        })();
+
         /* ===== 下單動態提示（社會證明） ===== */
         (function orderToast() {
             const el = document.createElement('div');
@@ -1913,7 +2629,9 @@
 
             saveCart();
             closeBudgetModal();
+            if (window.WBTrack) WBTrack('add_to_cart', { value: cartPriceOf(exist || cart[cart.length - 1]) });
 
+            flyToCart(pendingCartItemId);
             const btn = document.getElementById('cartFloatBtn');
             btn.style.transform = 'scale(1.25)';
             setTimeout(() => btn.style.transform = '', 200);
@@ -1938,52 +2656,472 @@
         function updateCartBadge() {
             const total = cart.reduce((s, c) => s + c.qty, 0);
             const badge = document.getElementById('cartBadge');
-            if (!badge) return;
-            if (total > 0) { badge.style.display = 'flex'; badge.textContent = total; }
-            else badge.style.display = 'none';
+            if (badge) {
+                if (total > 0) { badge.style.display = 'flex'; badge.textContent = total; }
+                else badge.style.display = 'none';
+            }
+            if (typeof syncNavDot === 'function') syncNavDot();
         }
 
         function renderCart() {
-            const body = document.getElementById('cartBody');
-            const totalEl = document.getElementById('cartTotalCount');
-            if (!body) return;
-
+            updateCartBadge();
+            const btn = document.getElementById('myCartBtn');
+            const box = document.getElementById('cartItemsBox');
+            if (!btn || !box) return;
             const total = cart.reduce((s, c) => s + c.qty, 0);
-            if (totalEl) totalEl.textContent = total;
-
-            if (cart.length === 0) {
-                body.innerHTML = '<div class="cart-empty">購物車是空的</div>';
-                return;
+            if (total > 0) {
+                const sum = cart.reduce((s, c) => s + cartPriceOf(c) * c.qty, 0);
+                let html = '<div class="cart-items-title"><span>🛍 待結帳商品（' + total + ' 件）</span><span style="color:#0052d9;">小計 ' + formatMoney(sum) + '</span></div>';
+                html += cart.map(function (c) {
+                    const img = (typeof escapeHtmlF === 'function') ? escapeHtmlF(c.image || '') : (c.image || '');
+                    const nm = (typeof escapeHtmlF === 'function') ? escapeHtmlF(c.name || '') : (c.name || '');
+                    return '<div class="cart-item">' +
+                        (img ? '<img src="' + img + '" alt="">' : '') +
+                        '<div class="cart-item-info"><div class="cart-item-name">' + nm + '</div>' +
+                        '<div class="cart-item-price">' + formatMoney(cartPriceOf(c)) + '</div></div>' +
+                        '<div class="cart-item-qty"><button onclick="changeQty(' + c.id + ',-1)">−</button>' +
+                        '<span>' + c.qty + '</span>' +
+                        '<button onclick="changeQty(' + c.id + ',1)">＋</button></div>' +
+                        '<button class="cart-item-del" onclick="removeFromCart(' + c.id + ')">🗑</button>' +
+                        '</div>';
+                }).join('');
+                box.innerHTML = html;
+                box.style.display = 'block';
+                btn.style.display = 'block';
+                btn.textContent = '✅ 去支付（' + total + ' 件 · ' + formatMoney(sum) + '）';
+            } else {
+                box.style.display = 'none';
+                box.innerHTML = '';
+                btn.style.display = 'none';
             }
-            body.innerHTML = cart.map(c => `
-                <div class="cart-item">
-                    <img src="${escapeHtmlF(c.image)}" onerror="this.src='${fallbackImg}'" alt="">
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${escapeHtmlF(c.name)}</div>
-                        <div class="cart-price-line">${formatMoney(cartPriceOf(c))}${(() => {
-                            const o = Number(c.price && c.price.original) || 0;
-                            const s = cartPriceOf(c);
-                            return o > s ? `<s>${formatMoney(o)}</s>` : '';
-                        })()}</div>
-                        <div class="cart-item-row">
-                            <select class="cart-budget-select" onchange="changeBudget(${c.id}, this.value)">
-                                ${BUDGET_OPTIONS.map(b => `<option value="${b}" ${c.budget === b ? 'selected' : ''}>${b}</option>`).join('')}
-                            </select>
-                            <div class="qty-ctrl">
-                                <button onclick="changeQty(${c.id}, -1)">−</button>
-                                <span>${c.qty}</span>
-                                <button onclick="changeQty(${c.id}, 1)">＋</button>
-                            </div>
-                            <button class="cart-item-del" onclick="removeFromCart(${c.id})" title="移除">🗑️</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
         }
 
         function toggleCart() {
-            document.getElementById('cartDrawer').classList.toggle('active');
-            document.getElementById('cartOverlay').classList.toggle('active');
+            const d = document.getElementById('cartDrawer');
+            const o = document.getElementById('cartOverlay');
+            const willOpen = !d.classList.contains('active');
+            d.classList.toggle('active');
+            o.classList.toggle('active');
+            if (willOpen) { loadMyOrders(); ORDER_NOTIF = 0; renderCartNotif(); }
+        }
+
+        /* ===== 我的訂單 ===== */
+        var MY_ORDERS = [], MY_TAB = 'all';
+        var MY_PHONE = (function () { try { return localStorage.getItem('wb_phone') || ''; } catch (e) { return ''; } })();
+
+        const ST_MAP = {
+            pending:   { label: '待發貨', cls: 'st-pending' },
+            shipped:   { label: '待收貨', cls: 'st-ship' },
+            delivered: { label: '待評價', cls: 'st-wait' },
+            reviewed:  { label: '已完成', cls: 'st-done' },
+            aftersale: { label: '售後處理中', cls: 'st-after' },
+            cancelled: { label: '已取消', cls: 'st-cancel' }
+        };
+        function stInfo(s) { return ST_MAP[s] || ST_MAP.pending; }
+
+        function setMyTab(s) {
+            MY_TAB = s;
+            document.querySelectorAll('.my-tab').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.s === s);
+            });
+            renderMyOrders();
+        }
+
+        function bindMyPhone() {
+            const el = document.getElementById('myPhoneInput');
+            const v = (el && el.value || '').replace(/\D/g, '');
+            if (!/^09\d{8}$/.test(v)) { showSimpleToast('請輸入 09 開頭的 10 碼手機號碼'); return; }
+            try { localStorage.setItem('wb_phone', v); } catch (e) {}
+            MY_PHONE = v;
+            loadMyOrders();
+        }
+
+        async function loadMyOrders() {
+            const body = document.getElementById('cartBody');
+            if (!body) return;
+            body.innerHTML = '<div class="my-empty">載入中...</div>';
+            try {
+                let q = supabase.from('orders')
+                    .select('id, created_at, product_name, items, total_amount, status, customer_name')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+                q = MY_PHONE
+                    ? q.or('session_id.eq.' + sessionId + ',customer_phone.eq.' + MY_PHONE)
+                    : q.eq('session_id', sessionId);
+                const { data, error } = await q;
+                if (error) throw error;
+                MY_ORDERS = data || [];
+                renderMyOrders();
+            } catch (e) {
+                body.innerHTML = '<div class="my-empty">載入失敗，請稍後重新開啟<br><button class="my-btn" onclick="loadMyOrders()" style="margin-top:10px;">重試</button></div>';
+            }
+        }
+
+        function renderMyOrders() {
+            const body = document.getElementById('cartBody');
+            const cnt = document.getElementById('myOrderCountText');
+            if (!body) return;
+
+            const list = MY_ORDERS.filter(function (o) {
+                return MY_TAB === 'all' ? true : (o.status || 'pending') === MY_TAB;
+            });
+            if (cnt) cnt.textContent = MY_TAB === 'all'
+                ? '共 ' + MY_ORDERS.length + ' 筆訂單'
+                : stInfo(MY_TAB).label + '：' + list.length + ' 筆';
+
+            let html = '';
+            if (!MY_PHONE) {
+                html += '<div class="my-bind"><input id="myPhoneInput" type="tel" maxlength="14" placeholder="輸入手機號查看全部訂單"><button onclick="bindMyPhone()">綁定</button></div>';
+            }
+            if (!list.length) {
+                html += '<div class="my-empty">' + (MY_ORDERS.length ? '這個狀態下沒有訂單' : '還沒有訂單紀錄<br>選一款喜歡的手錶試試吧') + '</div>';
+                body.innerHTML = html;
+                return;
+            }
+            html += list.map(function (o) {
+                const st = stInfo(o.status);
+                const s = o.status || 'pending';
+                const tm = o.created_at ? new Date(o.created_at).toLocaleString('zh-TW', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }) : '';
+                let shipText = '';
+                try {
+                    const arr = Array.isArray(o.items) ? o.items : [];
+                    const si = arr.map(function (i) { return i && i.shipping; }).filter(Boolean)[0];
+                    if (si) shipText = ' · ' + (si.method === 'home' ? '🚚' : '🏪') + ' ' + (si.label || '') + (si.store ? '（' + si.store + '）' : '');
+                } catch (e) {}
+                let acts = '';
+                if (s === 'pending') {
+                    acts = '<button class="my-btn primary" onclick="urgeShipment(' + o.id + ')">聯絡客服催發</button>';
+                } else if (s === 'shipped') {
+                    acts = '<button class="my-btn primary" onclick="confirmReceive(' + o.id + ')">確認收貨</button>' +
+                           '<button class="my-btn" onclick="openLogistics(' + o.id + ')">查物流</button>';
+                } else if (s === 'delivered') {
+                    acts = '<button class="my-btn primary" onclick="openReview(' + o.id + ')">⭐ 去評價</button>' +
+                           '<button class="my-btn ghost" onclick="requestAfterSale(' + o.id + ')">申請售後</button>';
+                } else if (s === 'aftersale') {
+                    acts = '<button class="my-btn primary" onclick="openCustomerService()">查看售後進度</button>';
+                } else if (s === 'reviewed') {
+                    acts = '<button class="my-btn" onclick="openCustomerService()">再次購買 / 聯絡客服</button>';
+                }
+                return '<div class="my-order">' +
+                    '<div class="my-order-top"><span class="my-st ' + st.cls + '">' + st.label + '</span><span class="my-time">' + escapeHtmlF(tm) + '</span></div>' +
+                    '<div class="my-order-name">' + escapeHtmlF(o.product_name || '-') + '</div>' +
+                    '<div class="my-order-meta">合計 ' + formatMoney(Number(o.total_amount) || 0) + ' · 貨到付款' + shipText + '</div>' +
+                    '<div class="my-order-actions">' + acts + '</div>' +
+                    '</div>';
+            }).join('');
+            body.innerHTML = html;
+        }
+
+        function openCustomerService() {
+            const w = document.getElementById('chatWidget');
+            if (w && !w.classList.contains('active')) toggleChat();
+        }
+
+        function shipLabelOf(o) {
+            try {
+                const arr = Array.isArray(o.items) ? o.items : [];
+                const si = arr.map(function (i) { return i && i.shipping; }).filter(Boolean)[0];
+                if (si) return (si.label || '') + (si.store ? '（' + si.store + '）' : '') + (si.fee ? ' 運費' + formatMoney(si.fee) : ' 免運');
+            } catch (e) {}
+            return '未指定';
+        }
+
+        /* 催發：跳轉客服介面並自動把訂單資訊發給客服 */
+        async function urgeShipment(id) {
+            const o = MY_ORDERS.find(function (x) { return x.id === id; });
+            openCustomerService();
+            if (!o) { showSimpleToast('找不到訂單資料'); return; }
+            const lines = ['【催發提醒】', '訂單編號：#' + o.id,
+                '商品：' + (o.product_name || '-'),
+                '金額：' + formatMoney(Number(o.total_amount) || 0),
+                '目前狀態：' + stInfo(o.status).label,
+                '配送方式：' + shipLabelOf(o),
+                '麻煩客服幫我盡快安排出貨，謝謝！'];
+            const text = lines.join('\n');
+            try {
+                await supabase.from('chat_messages').insert([{ session_id: sessionId, sender: 'user', message: text, msg_type: 'text' }]);
+            } catch (e) {}
+            appendChatMessage(text, 'user', new Date().toISOString(), null, 'text');
+            showSimpleToast('已把訂單資訊發送給客服，正在為您催發');
+        }
+
+        /* 查物流：顯示物流單號；未錄入則自動向客服詢問 */
+        function openLogistics(id) {
+            const o = MY_ORDERS.find(function (x) { return x.id === id; });
+            if (!o) { showSimpleToast('找不到訂單資料'); return; }
+            let tracking = '';
+            try {
+                const arr = Array.isArray(o.items) ? o.items : (o.items ? [o.items] : []);
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i] && arr[i].tracking) { tracking = arr[i].tracking; break; }
+                }
+            } catch (e) {}
+            if (tracking) {
+                document.getElementById('logiInfo').textContent = '訂單 #' + id + ' · ' + (o.product_name || '') + '｜' + shipLabelOf(o);
+                document.getElementById('logiNum').textContent = tracking;
+                document.getElementById('logiModal').classList.add('active');
+            } else {
+                showSimpleToast('客服尚未錄入物流單號，已幫您詢問');
+                openCustomerService();
+                const text = '【查物流】請問訂單 #' + id + '（' + (o.product_name || '') + '）的物流單號是什麼？謝謝！';
+                supabase.from('chat_messages').insert([{ session_id: sessionId, sender: 'user', message: text, msg_type: 'text' }]).then(function () {
+                    appendChatMessage(text, 'user', new Date().toISOString(), null, 'text');
+                });
+            }
+        }
+
+        function copyTracking() {
+            const t = document.getElementById('logiNum').textContent;
+            if (!t) return;
+            if (navigator.clipboard) navigator.clipboard.writeText(t);
+            showSimpleToast('單號已複製：' + t);
+        }
+
+        /* ===== 訂單動態提醒（狀態變化 → 購物車紅點 + toast） ===== */
+        var ORDER_NOTIF = 0;
+        function renderCartNotif() {
+            const badge = document.getElementById('cartBadge');
+            if (!badge) return;
+            if (ORDER_NOTIF > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = ORDER_NOTIF > 99 ? '99+' : String(ORDER_NOTIF);
+                badge.classList.add('badge-alert');
+            } else {
+                badge.classList.remove('badge-alert');
+                updateCartBadge();
+            }
+        }
+        async function checkOrderUpdates(first) {
+            try {
+                let q = supabase.from('orders').select('id,status').order('created_at', { ascending: false }).limit(50);
+                q = MY_PHONE
+                    ? q.or('session_id.eq.' + sessionId + ',customer_phone.eq.' + MY_PHONE)
+                    : q.eq('session_id', sessionId);
+                const { data } = await q;
+                if (!data) return;
+                let snap = {}; try { snap = JSON.parse(localStorage.getItem('wb_order_snap') || '{}'); } catch (e) {}
+                let changed = 0, msg = '';
+                data.forEach(function (o) {
+                    const prev = snap[o.id];
+                    if (prev && prev !== o.status) {
+                        changed++;
+                        if (!msg) msg = '訂單 #' + o.id + '：' + stInfo(o.status).label;
+                    }
+                    snap[o.id] = o.status;
+                });
+                try { localStorage.setItem('wb_order_snap', JSON.stringify(snap)); } catch (e) {}
+                if (changed && !first) {
+                    ORDER_NOTIF += changed;
+                    showSimpleToast('🔔 ' + msg + (changed > 1 ? ' 等 ' + changed + ' 項更新' : ''));
+                    showDesktopNotification(msg);
+                    renderCartNotif();
+                }
+            } catch (e) {}
+        }
+        checkOrderUpdates(true);
+        setInterval(function () { checkOrderUpdates(false); }, 30000);
+
+        async function confirmReceive(id) {
+            if (!confirm('確認已經收到商品了嗎？')) return;
+            try {
+                const { error } = await supabase.from('orders').update({ status: 'delivered' }).eq('id', id);
+                if (error) throw error;
+                try {
+                    await supabase.from('chat_messages').insert([{ session_id: sessionId, sender: 'user', message: '【系統】我已確認收到商品，謝謝！', msg_type: 'text' }]);
+                } catch (e) {}
+                showSimpleToast('已確認收貨，歡迎給個評價 ⭐');
+                loadMyOrders();
+            } catch (e) {
+                showSimpleToast('操作失敗，請聯絡客服');
+            }
+        }
+
+        async function requestAfterSale(id) {
+            const reason = prompt('請簡述售後原因（例如：時間不準、錶帶問題）');
+            if (!reason) return;
+            try {
+                await supabase.from('chat_messages').insert([{ session_id: sessionId, sender: 'user', message: '【售後申請】訂單 #' + id + '：' + reason, msg_type: 'text' }]);
+                await supabase.from('orders').update({ status: 'aftersale' }).eq('id', id);
+                showSimpleToast('已提交售後申請，客服會盡快聯繫您');
+                loadMyOrders();
+            } catch (e) {
+                showSimpleToast('提交失敗，請直接聯絡客服');
+            }
+        }
+
+        /* ===== 商品評價（有 reviews 表則讀表，否則用內建好評 + 本機評價） ===== */
+        var REVIEW_DEMO_NAMES = ['林**', '陳**', '黃**', '張**', '吳**', '王**'];
+        var REVIEW_DEMO_TEXTS = [
+            '質感比照片還好看，出貨也很快，值得買！',
+            '包裝很用心，戴起來很有份量，朋友都問在哪買的。',
+            '客服回覆很快，有問題都馬上處理，售後很安心。',
+            '實品跟描述一樣，CP 值很高，會再回購。',
+            '超商取貨很方便，三天就到了，滿意。'
+        ];
+        function localReviews() {
+            try { return JSON.parse(localStorage.getItem('wb_reviews') || '[]'); } catch (e) { return []; }
+        }
+        function saveLocalReview(r) {
+            try {
+                const a = localReviews();
+                a.unshift(r);
+                localStorage.setItem('wb_reviews', JSON.stringify(a.slice(0, 60)));
+            } catch (e) {}
+        }
+        function demoReviews(pid) {
+            const seed = Number(pid) || 0;
+            const out = [];
+            for (let i = 0; i < 3; i++) {
+                const k = (seed + i * 7) % REVIEW_DEMO_NAMES.length;
+                out.push({
+                    name: REVIEW_DEMO_NAMES[k],
+                    stars: 5 - (i === 2 ? 1 : 0),
+                    content: REVIEW_DEMO_TEXTS[(seed + i * 3) % REVIEW_DEMO_TEXTS.length],
+                    created_at: new Date(Date.now() - (i + 1) * 86400000 * 2).toISOString(),
+                    demo: true
+                });
+            }
+            return out;
+        }
+        async function renderProdReviews(pid) {
+            const box = document.getElementById('prodReviews');
+            if (!box) return;
+            box.innerHTML = '<div class="pr-head"><span class="pr-title">買家評價</span><span class="pr-score">載入中...</span></div>';
+            let rows = [];
+            try {
+                const { data, error } = await supabase.from('reviews')
+                    .select('name, stars, content, created_at')
+                    .eq('product_id', pid)
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                if (!error && Array.isArray(data)) rows = data;
+            } catch (e) {}
+            rows = rows.concat(localReviews().filter(function (r) { return String(r.product_id) === String(pid); }));
+            const isReal = rows.length > 0;
+            if (!isReal) rows = demoReviews(pid);
+            const avg = rows.reduce(function (s, r) { return s + (Number(r.stars) || 5); }, 0) / rows.length;
+            let html = '<div class="pr-head"><span class="pr-title">買家評價' + (isReal ? '' : '（範例）') + '</span>' +
+                '<span class="pr-score"><b>' + avg.toFixed(1) + '</b> / 5 · ' + rows.length + ' 則</span></div>';
+            html += rows.slice(0, 5).map(function (r) {
+                const st = Number(r.stars) || 5;
+                const d = r.created_at ? new Date(r.created_at).toLocaleDateString('zh-TW', { month: '2-digit', day: '2-digit' }) : '';
+                return '<div class="pr-item"><div class="pr-top">' +
+                    '<span class="pr-stars">' + '★'.repeat(st) + '☆'.repeat(5 - st) + '</span>' +
+                    '<span class="pr-name">' + escapeHtmlF(r.name || '匿名買家') + '</span>' +
+                    '<span class="pr-date">' + d + '</span></div>' +
+                    '<div class="pr-txt">' + escapeHtmlF(r.content || '') + '</div></div>';
+            }).join('');
+            box.innerHTML = html;
+        }
+
+        var reviewOrderId = null, reviewStars = 5;
+        function renderReviewStars() {
+            const box = document.getElementById('reviewStars');
+            if (!box) return;
+            box.querySelectorAll('span').forEach(function (s, i) {
+                s.textContent = i < reviewStars ? '★' : '☆';
+            });
+        }
+        function setStars(n) { reviewStars = n; renderReviewStars(); }
+        function openReview(id) {
+            reviewOrderId = id;
+            reviewStars = 5;
+            const t = document.getElementById('reviewText');
+            if (t) t.value = '';
+            renderReviewStars();
+            document.getElementById('reviewModal').classList.add('active');
+        }
+        async function submitReview() {
+            const txt = (document.getElementById('reviewText').value || '').trim();
+            if (!txt) { showSimpleToast('請簡單寫一下使用感受'); return; }
+            const stars = '★'.repeat(reviewStars) + '☆'.repeat(5 - reviewStars);
+            let pid = 0, buyer = '買家';
+            try {
+                const o = MY_ORDERS.find(function (x) { return x.id === reviewOrderId; });
+                if (o) {
+                    buyer = o.customer_name ? String(o.customer_name).charAt(0) + '**' : '買家';
+                    const arr = Array.isArray(o.items) ? o.items : [];
+                    pid = (arr[0] && arr[0].id) || 0;
+                }
+            } catch (e) {}
+            const rec = { product_id: pid, name: buyer, stars: reviewStars, content: txt, created_at: new Date().toISOString() };
+            try {
+                await supabase.from('chat_messages').insert([{
+                    session_id: sessionId, sender: 'user',
+                    message: '【評價】' + stars + ' ' + txt, msg_type: 'text'
+                }]);
+                await supabase.from('orders').update({ status: 'reviewed' }).eq('id', reviewOrderId);
+                let saved = false;
+                try {
+                    const { error } = await supabase.from('reviews').insert([rec]);
+                    saved = !error;
+                } catch (e) {}
+                if (!saved) saveLocalReview(Object.assign({}, rec, { product_id: pid }));
+                document.getElementById('reviewModal').classList.remove('active');
+                showSimpleToast(saved ? '感謝您的評價！' : '感謝評價！已記錄並同步給客服');
+                loadMyOrders();
+            } catch (e) {
+                showSimpleToast('提交失敗，請稍後再試');
+            }
+        }
+
+        /* ===== 物流方式 ===== */
+        var SHIP_LABEL = { cvs7: '7-11 超商取貨', cvsFamily: '全家超商取貨', home: '黑貓宅配到府' };
+        var SHIP_HOME_FEE = 100, SHIP_FREE_LINE = 3000;
+        var SHIP = { method: 'cvs7', store: '', fee: 0 };
+
+        function shipGoodsTotal() {
+            const form = document.getElementById('shippingForm');
+            if (!form) return 0;
+            const mode = form.dataset.mode || 'single';
+            if (mode === 'cart') return cart.reduce(function (s, c) { return s + cartPriceOf(c) * c.qty; }, 0);
+            const imgNum = parseInt(form.dataset.imgNum, 10);
+            return (Number(priceOf(imgNum, selectedBudget)) || 0) + (Number(SPEC.extra) || 0);
+        }
+        function shipFeeOf(method, goods) {
+            if (method !== 'home') return 0;
+            return goods >= SHIP_FREE_LINE ? 0 : SHIP_HOME_FEE;
+        }
+        function selectShip(m) {
+            SHIP.method = m;
+            ['cvs7', 'cvsFamily', 'home'].forEach(function (k) {
+                const el = document.getElementById('shipOpt' + k.charAt(0).toUpperCase() + k.slice(1));
+                if (el) el.classList.toggle('active', k === m);
+            });
+            const isHome = m === 'home';
+            const sg = document.getElementById('storeGroup');
+            const cg = document.getElementById('cityGroup');
+            const ag = document.getElementById('addrGroup');
+            const cityEl = document.getElementById('custCity');
+            const addrEl = document.getElementById('custAddress');
+            if (sg) sg.style.display = isHome ? 'none' : 'block';
+            if (cg) cg.style.display = isHome ? 'block' : 'none';
+            if (ag) ag.style.display = isHome ? 'block' : 'none';
+            if (cityEl) cityEl.required = isHome;
+            if (addrEl) addrEl.required = isHome;
+            const tip = document.getElementById('deliverShipTip');
+            if (tip) tip.textContent = isHome ? ('🚚 宅配滿 $' + SHIP_FREE_LINE + ' 免運') : '🏪 超商取貨免運';
+            updateShipFeeUI();
+        }
+        function updateShipFeeUI() {
+            const goods = shipGoodsTotal();
+            const fee = shipFeeOf(SHIP.method, goods);
+            SHIP.fee = fee;
+            const hf = document.getElementById('shipHomeFee');
+            if (hf) {
+                const free = goods >= SHIP_FREE_LINE;
+                hf.textContent = free ? '免運' : '運費 $' + SHIP_HOME_FEE;
+                hf.classList.toggle('free', free);
+            }
+            const line = document.getElementById('shipFeeLine');
+            if (line) {
+                const disc = PROMO.discount || 0;
+                line.innerHTML = '商品小計 <b>' + formatMoney(goods) + '</b>　+　運費 <b>' +
+                    (fee ? formatMoney(fee) : '免運') + '</b>' +
+                    (disc ? '　−　折扣 <b style="color:#00a870;">' + formatMoney(disc) + '</b>' : '') +
+                    '　=　應付 <b style="color:#0052d9; font-size:16px;">' +
+                    formatMoney(Math.max(0, goods + fee - disc)) + '</b>';
+            }
         }
 
         function openCartCheckout() {
@@ -1994,6 +3132,10 @@
             const total = cart.reduce((s, c) => s + c.qty, 0);
             modalProductName.innerText = `購物車結帳（共 ${total} 件）`;
 
+            const prBox = document.getElementById('prodReviews');
+            if (prBox) { prBox.style.display = 'none'; prBox.innerHTML = ''; }
+            const _specWrap = document.getElementById('specWrap');
+            if (_specWrap) _specWrap.style.display = 'none';
             const summary = document.getElementById('modalCartSummary');
             summary.style.display = 'block';
             summary.innerHTML = cart.map(c => `• ${escapeHtmlF(c.name)} × ${c.qty}　${formatMoney(cartPriceOf(c) * c.qty)}`).join('<br>');
@@ -2001,12 +3143,13 @@
             const priceRow = document.getElementById('modalPriceRow');
             if (priceRow) priceRow.innerHTML = `應付金額 <b>${formatMoney(totalAmt)}</b>（貨到付款）`;
 
-            document.getElementById('budgetSelectorWrap').style.display = 'none';
             document.getElementById('randomViewerCount').innerText = Math.floor(Math.random() * 20) + 10;
 
             formContainer.style.display = 'block';
             successContainer.style.display = 'none';
             modal.classList.add('active');
+            updateShipFeeUI();
+            if (window.WBTrack) WBTrack('begin_checkout', { value: totalAmt, currency: 'TWD' });
             toggleCart();
         }
 
@@ -2080,6 +3223,12 @@
             '一律按貨到付款':               { cn: '一律按货到付款', en: 'Cash on delivery only', ja: '代金引換のみ', ko: '착불 결제만' },
             '，出貨後會把單號發送給您！':   { cn: '，出货后会把单号发送给您！', en: ', tracking number sent after shipping!', ja: '、発送後に追跡番号をお送りします！', ko: ', 발송 후 운송장 번호를 보내드립니다!' },
             '👉 點擊頭像或此處立即諮詢':     { cn: '👉 点击头像或此处立即咨询', en: '👉 Click here to chat now', ja: '👉 ここをクリックして相談する', ko: '👉 여기를 눌러 상담하기' },
+            '聯絡客服催發':                  { cn: '联络客服催发', en: 'Urge shipment', ja: '発送を催促する', ko: '발송 독촉하기' },
+            '查物流':                        { cn: '查物流', en: 'Track parcel', ja: '配送状況を見る', ko: '배송 조회' },
+            '物流單號查詢':                  { cn: '物流单号查询', en: 'Tracking Number', ja: '追跡番号照会', ko: '운송장 조회' },
+            '📋 複製單號':                   { cn: '📋 复制单号', en: '📋 Copy number', ja: '📋 番号をコピー', ko: '📋 번호 복사' },
+            '關閉':                          { cn: '关闭', en: 'Close', ja: '閉じる', ko: '닫기' },
+            '🛒 購物車 · 我的訂單':          { cn: '🛒 购物车 · 我的订单', en: '🛒 Cart · My Orders', ja: '🛒 カート · 注文履歴', ko: '🛒 장바구니 · 내 주문' },
             '【交易與售後說明】':           { cn: '【交易与售后说明】', en: '[Payment & After-sales]', ja: '【お取引・アフターサービス】', ko: '[거래 및 A/S 안내]' },
             '本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益（商品需保持全新未使用狀態）。':
                 { cn: '本网站商品皆为「货到付款」，您享有收货后 7 天无条件退货之权益（商品需保持全新未使用状态）。',
@@ -2596,7 +3745,8 @@
     var tidy = function () {
         var box = document.getElementById('modalCartSummary');
         if (!box) return;
-        box.innerHTML = box.innerHTML.replace(/（(基礎|高端|定制)）/g, '');
+        var cleaned = box.innerHTML.replace(/（(基礎|高端|定制)）/g, '');
+        if (cleaned !== box.innerHTML) box.innerHTML = cleaned;
     };
     var mo = new MutationObserver(tidy);
     var tryBind = setInterval(function () {
