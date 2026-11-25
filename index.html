@@ -1,29 +1,492 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>尊享腕錶 精品展示</title>
+<!DOCTYPE html><!--pnid:hq3CDr6eSDX4pXDdxRQXzs-->
+<html lang="zh-TW" data-page-node-id="rB0vkI139EaiBRmPr8a7OU"><!--pnid:eWPKC4q16pmlo1dZdgF2pY-->
+<head data-page-node-id="GZmzR93O7wBKHzBJxmSoez"><script data-smartpage-injected="storage">(function(){
+try{
+  void window.localStorage;
+  void window.sessionStorage;
+}catch(e){
+  var noop={
+    getItem:function(){return null;},
+    setItem:function(){},
+    removeItem:function(){},
+    clear:function(){},
+    key:function(){return null;},
+    length:0
+  };
+  try{
+    Object.defineProperties(window,{
+      localStorage:{value:noop,writable:false,configurable:false},
+      sessionStorage:{value:noop,writable:false,configurable:false}
+    });
+  }catch(e2){
+    window.localStorage=noop;
+    window.sessionStorage=noop;
+  }
+}
+})();</script><style data-smartpage-injected="scrollbar">
+:root{
+  color-scheme:light dark;
+  --ai-page-scrollbar-track:transparent;
+  --ai-page-scrollbar-thumb:rgba(0,0,0,.32);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ai-page-scrollbar-track:rgb(16,16,20);
+    --ai-page-scrollbar-thumb:rgba(255,255,255,.32);
+  }
+}
+html,body,*{
+  scrollbar-width:thin!important;
+  scrollbar-color:transparent var(--ai-page-scrollbar-track)!important;
+}
+html:hover,body:hover,body:hover *{
+  scrollbar-color:var(--ai-page-scrollbar-thumb) var(--ai-page-scrollbar-track)!important;
+}
+*::-webkit-scrollbar{
+  width:12px!important;
+  height:12px!important;
+}
+*::-webkit-scrollbar-track,*::-webkit-scrollbar-corner{
+  background:var(--ai-page-scrollbar-track)!important;
+}
+*::-webkit-scrollbar-thumb{
+  border:3px solid transparent!important;
+  border-radius:999px!important;
+  background-clip:padding-box!important;
+  background-color:transparent!important;
+}
+html:hover::-webkit-scrollbar-thumb,
+body:hover::-webkit-scrollbar-thumb,
+body:hover *::-webkit-scrollbar-thumb{
+  background-color:var(--ai-page-scrollbar-thumb)!important;
+}
+</style><script data-smartpage-injected="loader">(function(){
+var nonce='';
+try{var bytes=new Uint8Array(16);crypto.getRandomValues(bytes);for(var i=0;i<bytes.length;i++)nonce+=bytes[i].toString(16).padStart(2,'0')}catch(e){nonce=Math.random().toString(36).slice(2)+Date.now()}
+var ready=function(){parent.postMessage({type:'SMARTPAGE_LOADER_READY',loaderNonce:nonce,href:location.href},'*')};
+var restoreTimer=0;
+// 宿主按「脚本执行前的源文档」生成绑定计划。静态页面走完整序列校验；已有 pnid
+// 的页面允许脚本追加无 pnid 的运行时节点，改按稳定 ID 绑定源码节点并保留当前
+// iframe/JS 状态。脚本节点仍无 pnid，编辑态只能交给 AI 修改。
+function bindDocument(nodes){
+  if(!Array.isArray(nodes)||nodes.length>500000)return 'invalid-plan';
+  var actual=[],stack=[document.documentElement];
+  while(stack.length){
+    var node=stack.pop();
+    if(node.nodeType===1&&(node.hasAttribute('data-smartpage-injected')||node.hasAttribute('data-dm-internal')))continue;
+    if(node.nodeType===1||node.nodeType===3)actual.push(node);
+    for(var i=node.childNodes.length-1;i>=0;i--)stack.push(node.childNodes[i]);
+  }
+  function invalid(spec,live,j){
+    if(!spec||typeof spec.id!=='string'||spec.id.length>200)return 'invalid-node:'+j;
+    if(spec.type==='element'){
+      if(!live||live.nodeType!==1)return 'type-element:'+j+':'+(live?live.nodeType:'missing');
+      if(typeof spec.tag!=='string'||spec.tag.length>100||live.nodeName.toLowerCase()!==spec.tag.toLowerCase())return 'tag:'+j;
+    }else if(spec.type==='text'){
+      if(!live||live.nodeType!==3)return 'type-text:'+j+':'+(live?live.nodeType:'missing');
+    }else return 'invalid-type:'+j;
+    return '';
+  }
+  var j,spec,live,reason='',mapped=[];
+  if(actual.length===nodes.length){
+    for(j=0;j<nodes.length;j++){
+      reason=invalid(nodes[j],actual[j],j);
+      if(reason)break;
+      mapped[j]=actual[j];
+    }
+    if(!reason)return applyBindings(nodes,mapped);
+  }else{
+    reason='count:'+actual.length+':'+nodes.length;
+  }
 
-    <meta property="og:title" content="尊享腕錶 精品展示 | 嚴選高質感腕錶">
-    <meta property="og:description" content="精選多款經典腕錶，全台貨到付款、7天鑑賞期。立即加入 LINE 獲取專屬報價！">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://a69bdc55b7072956e.app.workbuddy.host/">
-    <meta property="og:locale" content="zh_TW">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="尊享腕錶 精品展示｜嚴選高質感腕錶">
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop">
-    <meta name="description" content="精選多款經典腕錶，超商取貨免運、貨到付款、7 天鑑賞期。">
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="apple-touch-icon" href="icon-192.png">
+  // 结构被脚本扩展时，仅在每个源码元素都仍带原 pnid 的情况下容忍额外节点。
+  // 任一源码元素缺失/替换就沿用严格校验错误，让宿主安全回退到重新加载。
+  var byId=Object.create(null),el,id,duplicate=false;
+  for(j=0;j<actual.length;j++){
+    el=actual[j];
+    if(el.nodeType!==1)continue;
+    id=el.getAttribute('data-page-node-id');
+    if(!id)continue;
+    if(byId[id]){duplicate=true;break}
+    byId[id]=el;
+  }
+  if(duplicate)return 'anchored:duplicate-id';
+  mapped=[];
+  var mappedById=Object.create(null);
+  for(j=0;j<nodes.length;j++){
+    spec=nodes[j];live=null;
+    if(spec&&spec.type==='element'){
+      live=byId[spec.id]||null;
+      if(!live&&typeof spec.parentElementId==='string'&&Number.isInteger(spec.elementIndex)&&spec.elementIndex>=0){
+        var elementParent=mappedById[spec.parentElementId];
+        if(elementParent){
+          var elementAt=0;
+          for(var n=0;n<elementParent.children.length;n++){
+            var elementChild=elementParent.children[n];
+            if(elementChild.hasAttribute('data-smartpage-injected')||elementChild.hasAttribute('data-dm-internal'))continue;
+            if(elementAt===spec.elementIndex){live=elementChild;break}
+            elementAt++;
+          }
+        }
+      }
+    }else if(spec&&spec.type==='text'){
+      var parent=typeof spec.parentElementId==='string'?mappedById[spec.parentElementId]:null;
+      if(parent&&Number.isInteger(spec.textIndex)&&spec.textIndex>=0){
+        var textAt=0;
+        for(var k=0;k<parent.childNodes.length;k++){
+          var child=parent.childNodes[k];
+          if(child.nodeType!==3)continue;
+          if(textAt===spec.textIndex){live=child;break}
+          textAt++;
+        }
+      }
+    }
+    var anchoredFailure=invalid(spec,live,j);
+    if(anchoredFailure)return Object.keys(mappedById).length?'anchored:'+anchoredFailure:reason;
+    if(spec.type==='element')mappedById[spec.id]=live;
+    mapped[j]=live;
+  }
+  return applyBindings(nodes,mapped);
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#ffffff">
+  function applyBindings(plan,bound){
+    var j,spec,live;
+    for(j=0;j<plan.length;j++){
+      spec=plan[j];live=bound[j];
+      if(spec.type==='element'){
+        live.setAttribute('data-page-node-id',spec.id);
+      }else if(spec.rawTextAncestor===null){
+        var prev=live.previousSibling;
+        if(!(prev&&prev.nodeType===8&&prev.nodeValue==='pnid:'+spec.id)){
+          live.parentNode.insertBefore(document.createComment('pnid:'+spec.id),live);
+        }
+      }
+    }
+    return 'ok';
+  }
+}
+function scrollTop(){return window.scrollY||document.documentElement.scrollTop||document.body.scrollTop||0}
+function restore(top){
+  if(restoreTimer)clearTimeout(restoreTimer);
+  var until=Date.now()+1200;
+  function attempt(){
+    window.scrollTo(0,top);
+    if(scrollTop()<top-1&&Date.now()<until)restoreTimer=setTimeout(attempt,50);
+    else restoreTimer=0
+  }
+  attempt()
+}
+window.addEventListener('message',function(e){
+  if(e.source!==parent||!e.data||typeof e.data!=='object')return;
+  var d=e.data;
+  if(d.type==='SMARTPAGE_REQUEST_READY'){ready();return}
+  if(d.type==='SMARTPAGE_BIND_DOCUMENT'&&typeof d.requestId==='string'&&d.requestId.length<=80){
+    var bound='error';try{bound=bindDocument(d.nodes)}catch(error){bound='error:'+String(error)}
+    parent.postMessage({type:'SMARTPAGE_DOCUMENT_BOUND',requestId:d.requestId,value:bound},'*');return
+  }
+  if(d.type==='SMARTPAGE_GET_SCROLL'&&typeof d.requestId==='string'&&d.requestId.length<=80){
+    parent.postMessage({type:'SMARTPAGE_SCROLL',requestId:d.requestId,scrollTop:scrollTop()},'*');return
+  }
+  if(d.type==='SMARTPAGE_RESTORE_SCROLL'&&typeof d.scrollTop==='number'&&Number.isFinite(d.scrollTop)&&d.scrollTop>=0&&d.scrollTop<=10000000){
+    restore(d.scrollTop);return
+  }
+  if(d.type!=='SMARTPAGE_INJECT_SCRIPT'||d.loaderNonce!==nonce||d.kind!=='dm'||typeof d.script!=='string'||d.script.length>2097152)return;
+  try{if(!document.querySelector('script[data-smartpage-injected="dm"]')){
+    var script=document.createElement('script');script.setAttribute('data-smartpage-injected','dm');script.textContent=d.script;document.head.appendChild(script)
+  }
+  parent.postMessage({type:'SMARTPAGE_SCRIPT_INJECTED',loaderNonce:nonce,kind:'dm',success:true},'*')
+  }catch(error){parent.postMessage({type:'SMARTPAGE_SCRIPT_INJECTED',loaderNonce:nonce,kind:'dm',success:false,error:String(error)},'*')}
+});
+// ─────────────────────── 画布缩放意图转发 ───────────────────────
+// opaque origin 下宿主拿不到本文档、wheel/keydown 又不跨 frame 冒泡，故缩放交互
+// 必须在 iframe 内捕获后经 postMessage 转发给宿主，由宿主统一施加**重排式 Page Zoom**
+// （对 iframe 元素设 CSS zoom 的档位缩放）。两类来源：
+// - Ctrl|⌘+滚轮（含触控板捏合，Chromium 合成为 ctrlKey 的 wheel）→ 逐档缩放；
+// - Ctrl|⌘ +/-/0 键盘 → 逐档缩放（0 复位）。
+// 必须 preventDefault：否则 Chromium 对本 iframe 施加默认 page zoom（与宿主共享
+// webContents，表现为整个客户端 UI 一起缩放）。
+function forwardZoom(payload){payload.loaderNonce=nonce;parent.postMessage(payload,'*')}
+addEventListener('wheel',function(e){
+  if(!(e.ctrlKey||e.metaKey)||e.altKey||e.defaultPrevented)return;
+  e.preventDefault();e.stopPropagation();
+  forwardZoom({type:'SMARTPAGE_CANVAS_ZOOM',kind:'wheel',deltaY:e.deltaY,ctrlKey:!!e.ctrlKey,metaKey:!!e.metaKey})
+},{capture:true,passive:false});
+addEventListener('keydown',function(e){
+  if(!(e.ctrlKey||e.metaKey)||e.altKey)return;
+  var k=e.key;
+  if(k!=='='&&k!=='+'&&k!=='-'&&k!=='_'&&k!=='0')return;
+  e.preventDefault();e.stopPropagation();
+  forwardZoom({type:'SMARTPAGE_CANVAS_ZOOM',kind:'key',key:k})
+},true);
+ready();setTimeout(ready,50);setTimeout(ready,150);setTimeout(ready,500)
+})();</script><script data-smartpage-injected="interceptor">(function(){
+window.__wbEditMode=false;
+window.__wbSetEditMode=function(v){window.__wbEditMode=!!v;};
+// 禁用 Service Worker：预览是临时渲染环境，用户 HTML 里的 SW 只会带来危害——
+// 典型如 SW activate 后 postMessage(SW_UPDATED) 让页面 location.reload()，
+// 而重载又重新注册 SW，形成无限重载循环，几十毫秒内拖垮共享的宿主渲染进程
+// （srcDoc iframe 无独立进程），表现为白屏崩溃 killed exitCode=3。
+// 用一个 register 恒 reject 的桩替换：用户代码普遍带 .catch 兜底，静默失败即可，
+// 不影响页面内容渲染（SW 只管离线缓存）。用 try/catch 包裹：navigator.serviceWorker
+// 是只读属性，defineProperty 在个别环境可能抛错，失败也不应中断后续拦截脚本。
+try{
+  var _swReject=function(){return Promise.reject(new Error('ServiceWorker disabled in preview'));};
+  var _swStub={register:_swReject,getRegistration:function(){return Promise.resolve(undefined);},getRegistrations:function(){return Promise.resolve([]);},ready:new Promise(function(){}),addEventListener:function(){},removeEventListener:function(){}};
+  Object.defineProperty(navigator,'serviceWorker',{value:_swStub,configurable:true});
+}catch(e){}
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a');
+  if(!a||!a.getAttribute('href'))return;
+  if(window.__wbEditMode)return;
+  if(a.target==='_blank'||a.target==='_top')return;
+  var raw=a.getAttribute('href');
+  if(raw.charAt(0)==='#'){
+    e.preventDefault();
+    // srcDoc 的 base 指向资源目录；直接改当前文档 hash，避免跳离预览。
+    // 由浏览器触发 hashchange 并维护前进/后退，不另行模拟事件或历史。
+    location.hash=raw;
+    var id=raw.slice(1);
+    try{id=decodeURIComponent(id);}catch(_){}
+    if(id){
+      var el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:'smooth'});
+    }else{
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    return;
+  }
+  var h=a.href;
+  // 内部 SPA 子页面导航：/static-html/ 下或 file:// 的 .html/.htm，交给宿主换 srcDoc。
+  if(/\.html?$/i.test(h)&&(h.indexOf('/static-html/')!==-1||h.startsWith('file://'))){
+    e.preventDefault();e.stopPropagation();
+    parent.postMessage({type:'ai-page-html-editor-navigate',href:h},'*');
+    return;
+  }
+  // 其余 http(s) 外部链接（含跳到别的域名的 .html）：iframe 自身导航会被宿主 CSP
+  // frame-src 拦截变白屏（#132087），改交给宿主用系统浏览器打开。
+  if(/^https?:\/\//i.test(h)){
+    e.preventDefault();e.stopPropagation();
+    parent.postMessage({type:'ai-page-html-editor-open-external',href:h},'*');
+  }
+},true);
+var origFetch=window.fetch;
+window.fetch=function(){
+  var url=arguments[0];
+  if(typeof url==='string'&&/\.html?(\?|$)/i.test(url)){
+    var fullUrl=url;
+    try{fullUrl=new URL(url,document.baseURI).href}catch(e){}
+    parent.postMessage({type:'ai-page-html-editor-spa-subpage',href:fullUrl},'*');
+  }
+  return origFetch.apply(this,arguments);
+};
+})();</script><script data-smartpage-injected="find">(function(){
+if(window.__wbFindInstalled)return;window.__wbFindInstalled=true;
+// 与查找无关的注入节点、以及无法被 Highlight API 覆盖/无法滚动定位的替换元素，
+// 一律排除（同 dom-search.ts 的 EXCLUDED），避免命中计数虚高且不可跳转。
+var EXCLUDED='script,style,template,noscript,iframe,canvas,svg,textarea,select,option,optgroup,datalist,progress,meter,video,audio,object,embed,[data-dm-internal],[data-smartpage-injected],[data-html-find-ignore]';
+var BLOCK=/^(block|flex|grid|table|table-row|table-cell|list-item|flow-root)/;
+var ranges=[];var current=-1;var query='';var matchCase=false;
+var allName='wb-html-find';var curName='wb-html-find-current';var sheet=null;var rehTimer=0;
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
+function supports(){
+  try{return !!(window.CSS&&window.CSS.highlights&&window.Highlight&&window.CSSStyleSheet&&('adoptedStyleSheets' in document))}catch(e){return false}
+}
+function ensureSheet(){
+  if(sheet)return;
+  sheet=new window.CSSStyleSheet();
+  // 高亮配色跟随宿主主题变量；取不到时回退到温和的黄色。
+  var cs=getComputedStyle(document.documentElement);
+  var soft=(cs.getPropertyValue('--wb-warning-soft')||'').trim()||'rgba(255,213,79,0.4)';
+  var strong=(cs.getPropertyValue('--wb-warning')||'').trim()||'#ffb300';
+  var fg=(cs.getPropertyValue('--wb-color-text-primary')||'').trim()||'inherit';
+  sheet.replaceSync('::highlight('+allName+'){background-color:'+soft+';color:'+fg+';}::highlight('+curName+'){background-color:'+strong+';color:'+fg+';}');
+  document.adoptedStyleSheets=document.adoptedStyleSheets.concat([sheet]);
+}
+function paint(){
+  if(!supports())return;
+  ensureSheet();
+  var reg=window.CSS.highlights;
+  var all=new window.Highlight();
+  for(var i=0;i<ranges.length;i++)all.add(ranges[i]);
+  reg.set(allName,all);
+  reg.set(curName,ranges[current]?new window.Highlight(ranges[current]):new window.Highlight());
+}
+function clearPaint(){
+  try{if(window.CSS&&window.CSS.highlights){window.CSS.highlights.delete(allName);window.CSS.highlights.delete(curName)}}catch(e){}
+}
+// 收集可见文本节点、按块级边界切段，段内正则匹配建 Range（移植 dom-search.findHtmlRanges）。
+function compute(){
+  ranges=[];
+  if(!query||!document.body)return;
+  var runs=[];var run={text:'',parts:[]};
+  function flush(){if(run.text)runs.push(run);run={text:'',parts:[]}}
+  var stack=[{node:document.body}];
+  while(stack.length){
+    var entry=stack.pop();
+    if(entry.exit){flush();continue}
+    var node=entry.node;
+    if(node.nodeType===3){
+      var t=node;var pe=t.parentElement;
+      if(t.data&&pe&&getComputedStyle(pe).visibility==='visible'){run.parts.push({node:t,start:run.text.length});run.text+=t.data}
+      continue;
+    }
+    if(node.nodeType!==1)continue;
+    var el=node;var st=getComputedStyle(el);
+    if((el.matches&&el.matches(EXCLUDED))||st.display==='none'||st.contentVisibility==='hidden')continue;
+    if(el.tagName==='BR'){flush();continue}
+    var block=BLOCK.test(st.display);
+    if(block){flush();stack.push({node:node,exit:true})}
+    for(var i=node.childNodes.length-1;i>=0;i--)stack.push({node:node.childNodes[i]});
+  }
+  flush();
+  var esc=query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  var flags=matchCase?'gu':'giu';
+  var re;try{re=new RegExp(esc,flags)}catch(e){return}
+  for(var r=0;r<runs.length;r++){
+    var item=runs[r];re.lastIndex=0;var m;var pi=0;
+    while((m=re.exec(item.text))){
+      if(m[0]===''){re.lastIndex++;continue}
+      var s=m.index;var e=s+m[0].length;
+      while(pi+1<item.parts.length&&item.parts[pi+1].start<=s)pi++;
+      var first=item.parts[pi];var li=pi;
+      while(li+1<item.parts.length&&item.parts[li+1].start<e)li++;
+      var last=item.parts[li];
+      try{
+        var rg=document.createRange();
+        rg.setStart(first.node,s-first.start);
+        rg.setEnd(last.node,e-last.start);
+        ranges.push(rg);
+      }catch(err){}
+    }
+  }
+}
+// Chrome 原生页内查找会在命中 closed <details> 正文时自动展开。CSS Highlight 只负责
+// 绘制 Range，不会揭示折叠内容，故在定位当前项时显式打开阻挡它的 details 祖先。
+// 命中 details 的首个直接 <summary> 时无需展开；嵌套场景按外→内依次打开。
+function revealDetails(range){
+  if(!range)return;
+  var origin=range.startContainer.nodeType===1?range.startContainer:range.startContainer.parentElement;
+  var el=origin;var closed=[];
+  while(el){
+    if(el.tagName==='DETAILS'&&!el.open){
+      var direct=origin;
+      while(direct&&direct.parentElement!==el)direct=direct.parentElement;
+      var firstSummary=null;var children=el.children;
+      for(var i=0;i<children.length;i++){if(children[i].tagName==='SUMMARY'){firstSummary=children[i];break}}
+      if(!firstSummary||direct!==firstSummary)closed.push(el);
+    }
+    el=el.parentElement;
+  }
+  for(var j=closed.length-1;j>=0;j--)closed[j].open=true;
+}
+// 把当前匹配滚动进视口中央，逐层处理可滚动祖先（移植 dom-search.scrollHtmlRange）。
+function scrollTo(range){
+  if(!range||!range.getBoundingClientRect)return;
+  var el=range.startContainer.parentElement;
+  while(el){
+    var st=getComputedStyle(el);
+    var root=el===document.scrollingElement;
+    if(root||/(auto|scroll|overlay)/.test(st.overflowY+' '+st.overflowX)){
+      var hit=range.getBoundingClientRect();
+      var box=root?{top:0,left:0,bottom:window.innerHeight,right:window.innerWidth}:el.getBoundingClientRect();
+      var dy=(hit.top<box.top||hit.bottom>box.bottom)?hit.top-box.top-(box.bottom-box.top)/2:0;
+      var dx=(hit.left<box.left||hit.right>box.right)?hit.left-box.left-(box.right-box.left)/2:0;
+      if(dy||dx){if(root)window.scrollBy({top:dy,left:dx,behavior:'instant'});else el.scrollBy({top:dy,left:dx,behavior:'instant'})}
+    }
+    el=el.parentElement;
+  }
+}
+function post(failed){
+  parent.postMessage({type:'SMARTPAGE_FIND_RESULT',total:ranges.length,current:current,failed:!!failed},'*');
+}
+function runQuery(keepCurrent){
+  var prev=ranges[current];
+  try{compute()}catch(e){ranges=[];current=-1;clearPaint();post(true);return}
+  if(!ranges.length){current=-1;clearPaint();post(false);return}
+  var retained=-1;
+  if(keepCurrent&&prev){
+    for(var i=0;i<ranges.length;i++){
+      var rg=ranges[i];
+      if(rg.startContainer===prev.startContainer&&rg.startOffset===prev.startOffset&&rg.endContainer===prev.endContainer&&rg.endOffset===prev.endOffset){retained=i;break}
+    }
+  }
+  current=retained>=0?retained:0;
+  // 首次命中或当前 Range 已失效而重新选中时才自动揭示。内容变化的保序重算
+  // （尤其用户手动收起当前 details 触发的 open 属性变化）不得再次强制展开。
+  if(retained<0)revealDetails(ranges[current]);
+  paint();
+  if(retained<0)scrollTo(ranges[current]);
+  post(false);
+}
+function navigate(dir){
+  if(!ranges.length)return;
+  current=(current+dir+ranges.length)%ranges.length;
+  revealDetails(ranges[current]);
+  paint();scrollTo(ranges[current]);post(false);
+}
+function clearAll(){ranges=[];current=-1;query='';clearPaint();}
+// 内容变化后（AI 编辑 / 页面脚本渲染）重算，150ms 去抖。
+var mo=new MutationObserver(function(){
+  if(!query)return;
+  if(rehTimer)clearTimeout(rehTimer);
+  rehTimer=setTimeout(function(){rehTimer=0;runQuery(true)},150);
+});
+try{mo.observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','style','hidden','open']})}catch(e){}
+
+window.addEventListener('message',function(e){
+  if(e.source!==parent||!e.data||typeof e.data!=='object')return;
+  var d=e.data;
+  if(d.type==='SMARTPAGE_FIND_QUERY'){
+    query=typeof d.query==='string'?d.query:'';
+    matchCase=!!d.matchCase;
+    if(!query){clearAll();post(false);return}
+    runQuery(false);
+  }else if(d.type==='SMARTPAGE_FIND_NAV'){
+    navigate(d.direction<0?-1:1);
+  }else if(d.type==='SMARTPAGE_FIND_CLEAR'){
+    clearAll();
+  }else if(d.type==='SMARTPAGE_FIND_REQUEST_READY'){
+    // 宿主主动询问：立即回一发就绪，弥补错过广播窗口的时序。
+    ready();
+  }
+},false);
+
+// iframe 内 ⌘/Ctrl+F：opaque origin 下宿主无法在本 window 挂 keydown，故在此捕获并
+// 转发宿主打开查找栏（宿主收 FIND_HOTKEY）。必须 preventDefault 掉浏览器原生查找。
+addEventListener('keydown',function(e){
+  if(!(e.ctrlKey||e.metaKey)||e.altKey)return;
+  if(e.key!=='f'&&e.key!=='F')return;
+  e.preventDefault();e.stopPropagation();
+  parent.postMessage({type:'SMARTPAGE_FIND_HOTKEY'},'*')
+},true);
+
+// 广播就绪：宿主据此判定「查找可用」（含 Highlight API 支持性）。srcDoc 重写会重建
+// 文档、本脚本随之重跑，故多次广播覆盖宿主晚挂监听的情况。
+function ready(){parent.postMessage({type:'SMARTPAGE_FIND_READY',supported:supports()},'*')}
+ready();setTimeout(ready,150);setTimeout(ready,500);
+})();</script><!--pnid:cnBN5kYcCmpVmJqUUsAdMr-->
+    <meta charset="UTF-8" data-page-node-id="84DqZFBHQkunJ2UazhA0Ge"><!--pnid:UVMRxQg4HCQKoPVzbe1Dy2-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="ocLJe0FgqLm6k8PewIC3Ei"><!--pnid:cDcSTFAxcV8cvpUDb2vVY7-->
+    <title>尊享腕錶 精品展示</title><!--pnid:KVPXmVzQwGeG7BF9WNhpQ6-->
+
+    <meta property="og:title" content="尊享腕錶 精品展示 | 嚴選高質感腕錶" data-page-node-id="9D1DGJ3M80VQz6A8QFabSf"><!--pnid:2GwHrt4IGrsVPxG1jJX2Aw-->
+    <meta property="og:description" content="精選多款經典腕錶，全台貨到付款、7天鑑賞期。立即加入 LINE 獲取專屬報價！" data-page-node-id="nfsdi9AOKaD1RF47rN8YIc"><!--pnid:yHMj5Nry8fks8iNMseHvn4-->
+    <meta property="og:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop" data-page-node-id="rCn4wHY8OeW8U2LgxYcpZs"><!--pnid:tmx4OtMoKE4gMcgDUh56QV-->
+    <meta property="og:type" content="website" data-page-node-id="GAFgn6yjjUpYy87dthkjxD"><!--pnid:cpJ5U0ECAfdzXawaDJUUoT-->
+    <meta property="og:url" content="https://a69bdc55b7072956e.app.workbuddy.host/" data-page-node-id="n11RifFBqGpfvv8x95tae6"><!--pnid:nxbGlb3NZyZIgzYhTmFJvt-->
+    <meta property="og:locale" content="zh_TW" data-page-node-id="Qo8ZeYhtc2HGbfPvii3UBN"><!--pnid:c119EQtUkdVAGykEK4pwZO-->
+    <meta name="twitter:card" content="summary_large_image" data-page-node-id="yTXxvg3MikRErezbY8orec"><!--pnid:MUKNEbqKitAgnWQTkRPBqi-->
+    <meta name="twitter:title" content="尊享腕錶 精品展示｜嚴選高質感腕錶" data-page-node-id="DOuVCshsXfBKTPEGZ5IYSj"><!--pnid:H5FAxk56M6xCKIA7ts4hTL-->
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop" data-page-node-id="BzpKsHZmYvmDXvMTMv7lcs"><!--pnid:X05XaYmxjiSSbPfYXK2CVr-->
+    <meta name="description" content="精選多款經典腕錶，超商取貨免運、貨到付款、7 天鑑賞期。" data-page-node-id="C4gaLEM2cp4tySemsgewsd"><!--pnid:4eQMFjCfpRNrKOFd9Yr0Jb-->
+    <link rel="manifest" href="manifest.webmanifest" data-page-node-id="JHBDWBpN0KC1HtXaNj4eMO"><!--pnid:VhXLweYuxEftis1jMHdf0F-->
+    <link rel="apple-touch-icon" href="icon-192.png" data-page-node-id="TRgXQy2hBTSZzLeS6zwvPQ"><!--pnid:v7QkKsX9rFSYThkjs8Uq3W-->
+
+    <meta name="apple-mobile-web-app-capable" content="yes" data-page-node-id="PPjHkt0AWDebmdNE0q3hoO"><!--pnid:Gcve7x4Re3PEbbxn9vquCS-->
+    <meta name="mobile-web-app-capable" content="yes" data-page-node-id="jOxZ6sOTNWEThrPSKovxlL"><!--pnid:jU0e5YMhDfID4NEqU0j0uf-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" data-page-node-id="Sttgfr3yKffUqVmCVFOoxh"><!--pnid:b3fGficjFL6AGyA5o0Cgw9-->
+    <meta name="theme-color" content="#ffffff" data-page-node-id="d7K9mlP5uHlkMHvdDsH1AM"><!--pnid:xRxxoEXWcGJgjKdZEaH8cD-->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script><!--pnid:DBPkZr4VmkbvGbW3gMIHBZ-->
 
     <style>
         :root { --gold: #0052d9; --gold-dark: #003cab; --td-brand: #0052d9; --td-brand-hover: #2667d4; --td-brand-active: #003cab; --td-brand-1: #f2f3ff; --td-brand-2: #d9e1ff; --bg-light: #f3f4f6; --text-dark: #1a1a1a; --text-gray: #646a73; --card-bg: #ffffff; --td-border: #e7e9eb; --td-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.05); }
@@ -34,7 +497,7 @@
         @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         body { padding-top: 55px; }
 
-        .live-counter { position: fixed; top: 45px; right: 15px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.4); color: #00c800; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
+        .live-counter { display: none !important; position: fixed; top: 45px; right: 15px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); border: 1px solid rgba(0, 200, 0, 0.4); color: #00c800; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); }
         .live-dot { width: 8px; height: 8px; background: #00c800; border-radius: 50%; box-shadow: 0 0 8px #00c800; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
@@ -322,14 +785,14 @@
             .m-dot { position: absolute; top: 3px; left: 50%; margin-left: 4px; min-width: 15px; height: 15px; border-radius: 8px; background: #ff4757; color: #fff; font-size: 10px; font-style: normal; line-height: 15px; text-align: center; padding: 0 4px; box-sizing: border-box; }
             .m-dot.hide { display: none; }
             .floating-btns { bottom: 74px !important; }
-            .btn-chat { bottom: 200px !important; }
+            .btn-chat { left: 20px; right: auto; bottom: 200px !important; }
             .cart-nudge { bottom: 74px; }
             .wb-toast { bottom: 74px !important; }
             .chat-widget { bottom: 74px; max-height: calc(100vh - 140px); }
         }
 
         /* ===== 可拖動客服球 ===== */
-        .btn-chat { position: fixed; right: 20px; bottom: 170px; background: var(--gold); color: #fff; font-size: 24px; flex-direction: column; cursor: grab; touch-action: none; z-index: 1501; }
+        .btn-chat { position: fixed; left: 20px; right: auto; bottom: 170px; background: var(--gold); color: #fff; font-size: 24px; flex-direction: column; cursor: grab; touch-action: none; z-index: 1501; }
         .btn-chat .btn-chat-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-indent: 3px; margin-top: 1px; }
         .btn-chat.dragging { opacity: .95; box-shadow: 0 8px 24px rgba(0, 82, 217, .35); }
         /* ===== 聊天窗商品訂單條 ===== */
@@ -443,7 +906,7 @@
         .image-lightbox .close-icon:hover { color: #ff4757; transform: scale(1.1); }
 
         /* ===== 多語系選單 ===== */
-        #langSwitcher { position: fixed; top: 45px; left: 15px; z-index: 2600; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid rgba(0, 82, 217,.45); border-radius: 8px; padding: 5px 10px; box-shadow: 0 4px 14px rgba(0,0,0,.08); font-size: 13px; }
+        #langSwitcher { position: fixed !important; top: 45px !important; left: 15px !important; right: auto !important; z-index: 2600; display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid rgba(0, 82, 217,.45); border-radius: 8px; padding: 5px 10px; box-shadow: 0 4px 14px rgba(0,0,0,.08); font-size: 13px; }
         #langSwitcher select { border: none; background: transparent; font-size: 13px; color: #003cab; font-weight: bold; outline: none; cursor: pointer; }
         html[lang="en"] body, html[lang="ja"] body, html[lang="ko"] body,
         html[lang="th"] body, html[lang="vi"] body, html[lang="id"] body,
@@ -461,7 +924,7 @@
             .claim-btn { font-size: 14px; padding: 12px; }
             .line-contact-banner { flex-direction: column; text-align: center; padding: 15px; }
             .floating-btns { bottom: 20px; right: 15px; gap: 10px; }
-            .btn-chat { bottom: 130px; }
+            .btn-chat { left: 20px; right: auto; bottom: 130px; }
             .float-btn { width: 45px; height: 45px; font-size: 22px; }
             .trust-section { flex-direction: column; }
             .cart-drawer { width: 100%; }
@@ -471,503 +934,506 @@
             #langSwitcher { top: 42px; left: 8px; padding: 4px 8px; }
             #langSwitcher select { font-size: 12px; }
         }
-    </style>
-    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-    <link rel="preconnect" href="https://ncebylvmcnrrayqbwtog.supabase.co" crossorigin>
-    <link rel="dns-prefetch" href="https://images.unsplash.com">
-</head>
-<body>
+        .ai-typing { color: #5e7ce0; font-size: 13px; }
+        .ai-typing::after { content: '···'; animation: aiDots 1.2s infinite steps(4); }
+        @keyframes aiDots { 0% { content: ''; } 25% { content: '·'; } 50% { content: '··'; } 75% { content: '···'; } 100% { content: ''; } }
+    </style><!--pnid:SgAiHyTQr227mp5ATHWgkY-->
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin data-page-node-id="bHvr66bo3GUKB5iiRcTiUl"><!--pnid:kZRPiqeEDVlHAgbBzXPlXE-->
+    <link rel="preconnect" href="https://ncebylvmcnrrayqbwtog.supabase.co" crossorigin data-page-node-id="fb5l3IxSrYFepHFezE1XEL"><!--pnid:VQKprKuMx10QYCHBD6uwGh-->
+    <link rel="dns-prefetch" href="https://images.unsplash.com" data-page-node-id="yojBx5x7FE06cedrRzwf9s"><!--pnid:kyoOjnUq7MkmvgcQWFXqLq-->
+</head><!--pnid:JoEeAA0uN3pLEouu8t39Km-->
+<body data-page-node-id="o6mDCEcVv1o1PE8ORkuSSQ"><!--pnid:wFa1VwrhtE9Pq1kW6crBkZ-->
 
-    <!-- 頂部跑馬燈 -->
-    <div class="marquee-container">
-        <div class="marquee-text" id="marqueeText">
+    <!-- 頂部跑馬燈 --><!--pnid:EDpYJVLBKZm6n8jFEfi1p6-->
+    <div class="marquee-container" data-page-node-id="m5mb4LwrYYYkeY2C7D0HKG"><!--pnid:Mn1DgwXLWrVK3M0GaWXywn-->
+        <div class="marquee-text" id="marqueeText" data-page-node-id="x0AQ9kqx3o8g1fsak6L8nD"><!--pnid:yp3Cxp1wdC4cO27UU62tmR-->
             🔥 全館限時免運！加入官方 LINE 再領專屬折扣碼 🎁 嚴選品質保證，7天鑑賞期，貨到付款最安心 🚚
-        </div>
-    </div>
+        </div><!--pnid:qu9wK3gNjuZixxWMuaGXHb-->
+    </div><!--pnid:HXhFI6u4FnvNYBznXWVdgJ-->
 
-    <!-- 語言切換 -->
-    <div id="langSwitcher">
+    <!-- 語言切換 --><!--pnid:nBF663IdjQAPdiGkSprtDl-->
+    <div id="langSwitcher" data-page-node-id="hUacuAuL40dDgw0cpyezmw"><!--pnid:QguM3jbsgmdXpFpnfGS0Hd-->
         🌐
-        <select id="langSelect" aria-label="Language">
-            <option value="zh-TW">繁體中文</option>
-            <option value="zh-CN">简体中文</option>
-            <option value="en">English</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
-            <option value="th">ไทย</option>
-            <option value="vi">Tiếng Việt</option>
-            <option value="id">Bahasa Indonesia</option>
-            <option value="es">Español</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-        </select>
-    </div>
+        <select id="langSelect" aria-label="Language" data-page-node-id="UpgMBtwGVj3KkrF0A1vQEo"><!--pnid:WeoGqnyaGFcWZCf3kQ6nas-->
+            <option value="zh-TW" data-page-node-id="X6zoFj1NTHb3L4iBo7rpdV"><!--pnid:OGV6nUDWV0bUXGY1llUrUj-->繁體中文</option><!--pnid:6qHCleI6gTpkIhNWyheRwQ-->
+            <option value="zh-CN" data-page-node-id="ToUbzSfgEqxC23vlTEPth7"><!--pnid:GjdmAmeu3EmS7OXOHt1WYy-->简体中文</option><!--pnid:M6mZoIwYFYzLWU58PmLyky-->
+            <option value="en" data-page-node-id="kw5BiY0HUrvsPOYEH073nx"><!--pnid:eRDd32uvTcXlvBfC6vAGME-->English</option><!--pnid:iOehZQLl1cPMLrOqLnsvU7-->
+            <option value="ja" data-page-node-id="0ZSHrRrHQcZuXC2PE3bhvT"><!--pnid:hhHyTrx4roiJBtkB1ZHiIt-->日本語</option><!--pnid:OjLi4YvuLCHAsGeZzb1oH0-->
+            <option value="ko" data-page-node-id="fnYChQcXGURXtTep3BJVWs"><!--pnid:b94OVGRX0YSCV7KcTV0QoE-->한국어</option><!--pnid:c4F6wy2q6oEdOx1MAIAFq6-->
+            <option value="th" data-page-node-id="WU71OwEAsznjeaa6HkK07G"><!--pnid:gA4KeYuYeJKpSoGfcGThn6-->ไทย</option><!--pnid:B3nbIbd4FxTNgbpsRa4YKF-->
+            <option value="vi" data-page-node-id="qwVcyt2lo8bKvfXSMBTlDh"><!--pnid:zzvIZuGNG80y79qf5djJCe-->Tiếng Việt</option><!--pnid:9oXwBgZwHxIlKHYjECtbe6-->
+            <option value="id" data-page-node-id="blHvvXDFqwkpKFnl9gNCJ2"><!--pnid:3boJKkKS6w56jBoBsINPTS-->Bahasa Indonesia</option><!--pnid:7FEWBesdrj5wddV2fBpsou-->
+            <option value="es" data-page-node-id="HP9uCfB7sHxWDYH5rH6i8h"><!--pnid:Y1UqtLMwzToLjn3XLBxRHA-->Español</option><!--pnid:QCzwCjRpIvukRYFdRIMGoC-->
+            <option value="fr" data-page-node-id="cwMBxZymDb9juiNaCTdTa7"><!--pnid:jGsBYdsJTBIAs6PDrGVBwN-->Français</option><!--pnid:F78qrvpWUKNxdOWJypBjWT-->
+            <option value="de" data-page-node-id="bCj7gbg2MOalVe0Pn5Ffmd"><!--pnid:rc4AlWaHaObpPcWnuA7ixj-->Deutsch</option><!--pnid:HdrBCpLYvAJGL0Fo7wAB84-->
+        </select><!--pnid:EWa5zEnIFEZvReonQlNhva-->
+    </div><!--pnid:mhIlYAlFk8kwxRAUBw17nA-->
 
-    <div class="live-counter">
-        <div class="live-dot"></div>
-        目前線上 <span id="frontend-online-count" style="font-size: 15px; margin: 0 2px;">0</span> 人
-    </div>
+    <div class="live-counter" data-page-node-id="B8P0q43y2yXMjBpokInkP3"><!--pnid:VPlCN4zVWeQZf3no6elViQ-->
+        <div class="live-dot" data-page-node-id="IahJsdik0EQgtBZUQssAHd"></div><!--pnid:rLEKB0fU2fjEGUi6gGnzB9-->
+        目前線上 <span id="frontend-online-count" style="font-size: 15px; margin: 0 2px;" data-page-node-id="OCBFK1FkfpeZAbE2lNLzJD"><!--pnid:enQveth5lnS6yyeY6cBBjd-->0</span><!--pnid:AC5Gk1Glyo8wwBJUtmap2a--> 人
+    </div><!--pnid:1ZDCfLXDwX7rQnbBH8K8nz-->
 
-    <!-- 第一層：視覺與背書 -->
-    <div class="trust-bar">
-        <div class="trust-item">🛡️ <span>7天鑑賞期</span></div>
-        <div class="trust-item verify">✅ <span>支持開箱驗貨</span></div>
-        <div class="trust-item">💎 <span>嚴選品質保證</span></div>
-        <div class="trust-item verify">🔒 <span>100% 隱密包裝</span></div>
-    </div>
+    <!-- 第一層：視覺與背書 --><!--pnid:8sZIong6CnforZukeUfqlA-->
+    <div class="trust-bar" data-page-node-id="L2cproWE8z2tsMrMtSFq29"><!--pnid:clmxi47moN2JTXwIo4c22Q-->
+        <div class="trust-item" data-page-node-id="WB7oPrxbclL3dXo7DeriGT"><!--pnid:doiFnrObUfyboCTzGOyQU4-->🛡️ <span data-page-node-id="ZDOrOyDCdFgBlAlBbzWA60"><!--pnid:UmjnpDChrAGMdsUAdEWT06-->7天鑑賞期</span></div><!--pnid:9n0Nxl2WlvUTKIh5TM1nIW-->
+        <div class="trust-item verify" data-page-node-id="B6cChbop79IhGOnzEx25Mt"><!--pnid:sMp5R4IOeCsfIPBUjmLSwb-->✅ <span data-page-node-id="jEvsEa8GHD6GFHIgKIWocR"><!--pnid:UbshWQhFHGJfPFtE6VeTEq-->支持開箱驗貨</span></div><!--pnid:q6yIZEO6KNoL4d1K2P6mof-->
+        <div class="trust-item" data-page-node-id="RgQwDHdLGi4kT3aOYKEhUM"><!--pnid:EmFIwiDOqtfASkOGIYCmX4-->💎 <span data-page-node-id="tELETXEm52Otf24hO1Kpv6"><!--pnid:azruGuHrE7ckn9VxxSSBNG-->嚴選品質保證</span></div><!--pnid:V7vFs5E4kSRAFKKI3K8cNm-->
+        <div class="trust-item verify" data-page-node-id="bz2yBxGZ9tzDDASaqLxMeV"><!--pnid:4MlKJOfHUQcwaRwJEnSJd2-->🔒 <span data-page-node-id="iL74RXT7dVVFwiPJh3BflR"><!--pnid:fq5vVsLzukNpgSCdaRLOrr-->100% 隱密包裝</span></div><!--pnid:k6VIyA7AUxxrhdB7H3etT5-->
+    </div><!--pnid:qHkHqFcbjpWFbS921mv81f-->
 
-    <div class="header-section">
-        <h1>尊享腕錶 精品展示</h1>
-        <div class="subtitle">精選經典腕錶，請挑選您的最愛</div>
+    <div class="header-section" data-page-node-id="isaN7vlIoCuBN7mqqkCq8l"><!--pnid:BYeza71g4FO5CLizULRXS3-->
+        <h1 data-page-node-id="KJgEfZ55oHbUEO8teLrYI8"><!--pnid:Sk9juHLjbv3HYOihqjMAsT-->尊享腕錶 精品展示</h1><!--pnid:wkCNbwKtGNztYkayglN57O-->
+        <div class="subtitle" data-page-node-id="FHNXHSX5nNMassD0A2iSgb"><!--pnid:TALvFcTloCpcYa9Oty7JrY-->精選經典腕錶，請挑選您的最愛</div><!--pnid:7xhic8gVPohFzcKHRhSNA0-->
 
-        <div class="total-served">
-            🏆 全台累計服務突破 <span id="realOrderCount">12,580</span> 人次，好評不斷！
-        </div>
+        <div class="total-served" data-page-node-id="tKr7XTpv6geMuBzyM5saVT"><!--pnid:YDoELzPbsW3kt80O6ZEuhe-->
+            🏆 全台累計服務突破 <span id="realOrderCount" data-page-node-id="e8hjjwOBRhKDpDof3duOmS"><!--pnid:kyqwUSDD7fcn0Wly5xnfDr-->12,580</span><!--pnid:7HbuycBgXHZvRjXpyFR1WL--> 人次，好評不斷！
+        </div><!--pnid:8uSsKeUQAkCx9MFqvRw8vU-->
 
-        <div class="line-contact-banner" id="customerAvatarBanner">
-            <div class="online-dot"></div>
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="客服專員" class="avatar" id="customerAvatarImg">
-            <div class="line-text">
-                <h3>📱 真人客服：小美 為您服務</h3>
-                <p>真人一對一在線回覆，安心有保障<br><span>一律按貨到付款</span>，出貨後會把單號發送給您！</p>
-                <p style="font-size: 12px; color: var(--gold-dark); margin-top: 6px; text-decoration: underline;">👉 點擊頭像或此處立即諮詢</p>
-            </div>
-        </div>
+        <div class="line-contact-banner" id="customerAvatarBanner" data-page-node-id="ItF7Pnj6EfnMAnCr15E6pI"><!--pnid:QfjoDdK7oE2iICnwj2O8cv-->
+            <div class="online-dot" data-page-node-id="nl7oosCW4G94Qk4kmVo2i2"></div><!--pnid:NaafpSaao1QEzeEPrmDR0S-->
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="客服專員" class="avatar" id="customerAvatarImg" data-page-node-id="2PlyHBBv11EfThCewxZoKu"><!--pnid:Dj0T4r1Vc6eQs0kPhW2S5D-->
+            <div class="line-text" data-page-node-id="sQG5lFx7CDyFaYS5a99hGF"><!--pnid:2o8sYbGvfzbl0FyE1FwF4X-->
+                <h3 data-page-node-id="JwHYNplGpKVtYViLJYoMUy"><!--pnid:J5UqEPdQ2tfEjtIBIYmGDh-->📱 真人客服：小美 為您服務</h3><!--pnid:M2CbG6d6c12fPocGWf2gQE-->
+                <p data-page-node-id="U2Jupav9uUh7RuYDpVTyLu"><!--pnid:zOU21cHCc5E6tZg3o7MA65-->真人一對一在線回覆，安心有保障<br data-page-node-id="EA7bLiRVtGl63q8mwyPtrp"><span data-page-node-id="pIHlIra5d85xwk4QngB3wX"><!--pnid:6YCDsuVsPHRvhIRJAq0eue-->一律按貨到付款</span><!--pnid:Dv7njoTUzq92lDOPKzui16-->，出貨後會把單號發送給您！</p><!--pnid:LyFdb8dvM91iMxpknZ7fR4-->
+                <p style="font-size: 12px; color: var(--gold-dark); margin-top: 6px; text-decoration: underline;" data-page-node-id="g2O8uJZ92EAeMUHfsYlHTc"><!--pnid:BmW9og0DZFGG5qtHyDxlQw-->👉 點擊頭像或此處立即諮詢</p><!--pnid:AfKRBwYDW2YLB6cNid4wj2-->
+            </div><!--pnid:AYkyKPFPZcGkCcXdC8rVGB-->
+        </div><!--pnid:GYKVZFDwTD5g53xFCfzRCT-->
 
-        <div class="legal-banner">
-            <strong>【交易與售後說明】</strong><br>
-            本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益（商品需保持全新未使用狀態）。<br>
+        <div class="legal-banner" data-page-node-id="jxGz7Be8KQTIaYyFmtdPsh"><!--pnid:uFiJniIx9CLocxffAKbmys-->
+            <strong data-page-node-id="9DANqgq88B35uJx4YuJa38"><!--pnid:Iiz0mVjsfRutJy7GeQ8EIE-->【交易與售後說明】</strong><br data-page-node-id="iRWkhdbE1rpwOXDG80CBHN"><!--pnid:ZB8BkZeUY4t0itnn5o6UVR-->
+            本網站商品皆為「貨到付款」，您享有收貨後 7 天無條件退貨之權益（商品需保持全新未使用狀態）。<br data-page-node-id="rGCFWDhbjLSiGYMbOq94Tu"><!--pnid:DECuMCHcZES8HTVLnWYyoI-->
             為防範詐騙，本公司不會要求您前往 ATM 操作或提供信用卡密碼。如有疑慮請直接透過官方 LINE 與我們聯繫。
-        </div>
-    </div>
+        </div><!--pnid:2BqZtO0kdFpCePJw0icJzD-->
+    </div><!--pnid:w7SXc9Yi9scOUV7DMJ1Wrs-->
 
-    <!-- 買家實拍 -->
-    <div class="buyer-show-section">
-        <h3 class="buyer-show-title">📸 真實買家實拍反饋 (點擊看大圖)</h3>
-        <div class="buyer-show-scroll">
-            <div class="buyer-show-card">
-                <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀">
-                <p>"實體真的超美！戴去聚會朋友以為我花了好幾十萬，物流也很快！"</p>
-                <span>- 新北市 陳先生 (購買：經典水鬼款)</span>
-            </div>
-            <div class="buyer-show-card">
-                <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀">
-                <p>"包裝很嚴實，開箱那一刻真的有驚豔到，客服回覆也很即時。"</p>
-                <span>- 台中市 林小姐 (購買：奢華運動款)</span>
-            </div>
-            <div class="buyer-show-card">
-                <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀">
-                <p>"原本很怕貨到付款買到假的，結果質感直接拉滿，絕對物超所值！"</p>
-                <span>- 高雄市 張先生 (購買：經典黑面款)</span>
-            </div>
-        </div>
-    </div>
+    <!-- 買家實拍 --><!--pnid:yqp1msUtYBzaheKCQlC4CZ-->
+    <div class="buyer-show-section" data-page-node-id="rzeRCgkxFXBvj2EJ6ugPnv"><!--pnid:wBMCORnB4MyCueWthkVEtE-->
+        <h3 class="buyer-show-title" data-page-node-id="kgJ7u6u9XmZTJgwOshm1tv"><!--pnid:Wl9KnauPnHZ6Gy3BshFRjl-->📸 真實買家實拍反饋 (點擊看大圖)</h3><!--pnid:CZkvFWBkJKUz679HHzpIBe-->
+        <div class="buyer-show-scroll" data-page-node-id="TyY1x7DVNSgCtZv7ynUMmR"><!--pnid:9ldsV6NQ514Tr4GpOT5Uni-->
+            <div class="buyer-show-card" data-page-node-id="L9W7nNX8tj5A4uA1Qbc3Z3"><!--pnid:HP2uNbyQgF9378sQvAMOEn-->
+                <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀" data-page-node-id="HQCzYJP9U0fCm6ODpSSUXU"><!--pnid:llCR1h5gkUYfEyHmrwCRmB-->
+                <p data-page-node-id="FqFFYRtEJE66Z85g3CBnhA"><!--pnid:yxlnF69hp9PrjewaueehqD-->"實體真的超美！戴去聚會朋友以為我花了好幾十萬，物流也很快！"</p><!--pnid:w9LNe8tKL3XjrWRhIqULGH-->
+                <span data-page-node-id="srMoC25HFyOiQ1HEpTVLJE"><!--pnid:Si40B5OeI3wrekPZUPlDKF-->- 新北市 陳先生 (購買：經典水鬼款)</span><!--pnid:MdNFeDcb8xdtt14MNPdB9C-->
+            </div><!--pnid:REjeq6YRDcsBW2lnCPeeba-->
+            <div class="buyer-show-card" data-page-node-id="aH6AKAmvhVuK7FtGyqTVml"><!--pnid:qrA5wEHPDOx3pWwfxWyK3U-->
+                <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀" data-page-node-id="Epg8wBH7iEaiG1YRoDUKJ7"><!--pnid:IVEydLJs58MDmzBmBrRroj-->
+                <p data-page-node-id="M3o49mJzYIVUKmUW8bwwE2"><!--pnid:j5HIzSDDFJI0tgQrl4CgEt-->"包裝很嚴實，開箱那一刻真的有驚豔到，客服回覆也很即時。"</p><!--pnid:JtmiLCFR0zlirKAdMXpSVl-->
+                <span data-page-node-id="lKybLQcQOQF9xzka61YYQM"><!--pnid:W3Vj8uc1Q4BAacVhfx2y4q-->- 台中市 林小姐 (購買：奢華運動款)</span><!--pnid:5J3U36WzimelgGXuVlUHHq-->
+            </div><!--pnid:sPsneYHTgjSA3teAoOKK68-->
+            <div class="buyer-show-card" data-page-node-id="qb7e6JW6Sx4Bgs4zBNWdr2"><!--pnid:1T9zsE2DXuPqKDSC556hfb-->
+                <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=400" style="cursor: zoom-in;" loading="lazy" decoding="async" onclick="openImageLightbox(this.src)" alt="買家秀" data-page-node-id="8mFE4EFliZr7VpwFRwXvlf"><!--pnid:GSF8oIBuC3l5Lx5F4llr8y-->
+                <p data-page-node-id="y2lmTAi9DTBXBKwFJCXHyB"><!--pnid:R685PadI2mzWwwMhdAyDYH-->"原本很怕貨到付款買到假的，結果質感直接拉滿，絕對物超所值！"</p><!--pnid:1mWMwxysVlu44U5RQ1UiBL-->
+                <span data-page-node-id="0A8GzaWMEJYMBJG91AbJae"><!--pnid:ZsdZQuR4tqm2jepKUIz4Wr-->- 高雄市 張先生 (購買：經典黑面款)</span><!--pnid:yU9yrgU6vTZB9kyAfpRVvv-->
+            </div><!--pnid:bNTU4DcO7DYSwHSEmUYC9n-->
+        </div><!--pnid:0zCke6gMnHIAaxnwiLifK5-->
+    </div><!--pnid:v9w61JEZBlY8eAxcF0qisS-->
 
-    <div class="filter-section">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="搜尋手錶名稱或關鍵字..." oninput="filterProducts()">
-        </div>
-        <div class="category-tabs" id="categoryTabs">
-            <button class="category-btn active" onclick="setCategory('全部', this)">全部</button>
-            <button class="category-btn" id="favTabBtn" onclick="openFavModal()">❤️ 收藏 <b id="favCount">0</b></button>
-        </div>
-    </div>
+    <div class="filter-section" data-page-node-id="FlhpD79CQuLeqY5zr3f1pP"><!--pnid:3wJrGzi0FoHJVMSr4ZIm5p-->
+        <div class="search-box" data-page-node-id="iHIdAPEaqRtAJoi6Mifrmi"><!--pnid:ZygmCucFVi5xjECMj9y4IE-->
+            <input type="text" id="searchInput" placeholder="搜尋手錶名稱或關鍵字..." oninput="filterProducts()" data-page-node-id="UnB6KrcNVBuwKTdC5L8ina"><!--pnid:KGxLrfIqzgtrWSd4HgnFlQ-->
+        </div><!--pnid:MGzHndAWRPAwFNOoFiRsRP-->
+        <div class="category-tabs" id="categoryTabs" data-page-node-id="BXrjpRjJ0YP0Nh9CxCwd42"><!--pnid:vcNO4r1QjGMtS92QmqZphN-->
+            <button class="category-btn active" onclick="setCategory('全部', this)" data-page-node-id="eulb853qki8ds2vYqMyMlB"><!--pnid:zm3GZDo8PmIpCoy6Tb9T0Z-->全部</button><!--pnid:1LFtNBCd04fvKniddo7gAu-->
+            <button class="category-btn" id="favTabBtn" onclick="openFavModal()" data-page-node-id="WXUQdDEatjDbBt14UqPAU0"><!--pnid:eT7Mlzc41JMcwOr5BK4FHI-->❤️ 收藏 <b id="favCount" data-page-node-id="nEkgjV4TTFHCF0zsrR03rD"><!--pnid:UqyxIuLRwsbij8LEdclLQv-->0</b></button><!--pnid:6A4BSZKWEUgFOyRAsRH076-->
+        </div><!--pnid:pB2ctGrLenylddd9uWBAJj-->
+    </div><!--pnid:cpBH5M8OEGAZk8wT6GHGGe-->
 
-    <div class="product-grid" id="productGrid"></div>
+    <div class="product-grid" id="productGrid" data-page-node-id="vtXws65iEgkTLgUGtTWIC0"></div><!--pnid:fFoVwcaanalU5NHUdChKM9-->
 
-    <div class="trust-section">
-        <div class="trust-card">
-            <h3>⭐ 買家真實好評</h3>
-            <p>「收到實體真的很有質感！包裝很用心，貨到付款讓人很放心，下次還會回購！」<br><span style="color:#0052d9; font-size:12px;">— 台北 林先生</span></p>
-            <p>「客服回覆很快，出貨也迅速，手錶戴起來很霸氣，朋友都問我哪裡買的。」<br><span style="color:#0052d9; font-size:12px;">— 台中 王小姐</span></p>
-        </div>
-        <div class="trust-card">
-            <h3>📦 出貨實拍保證</h3>
-            <p>每支手錶皆附贈精美錶盒，出貨前專人嚴格品檢，超商寄件單號皆可查詢。</p>
-            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=600&auto=format&fit=crop" alt="精美包裝" onerror="this.src='https://via.placeholder.com/600x200?text=Package'">
-        </div>
-    </div>
+    <div class="trust-section" data-page-node-id="6rgv1ENkrGggrpFBZeKxyi"><!--pnid:4Jg8mfsjrTesnr5FEnEDJX-->
+        <div class="trust-card" data-page-node-id="YgdWotEMiL7mWXHt0LszN5"><!--pnid:H8oK19uooDLiuexu0nTjEE-->
+            <h3 data-page-node-id="YCO02SbTaPKQh4Z4JNKsoP"><!--pnid:B9eZYpu6KtTvGxXECgSC8Y-->⭐ 買家真實好評</h3><!--pnid:1TIvZr7zmjx66YnYeupltP-->
+            <p data-page-node-id="YPE9G5IWJjHumstdv0Gic3"><!--pnid:DlBsHNvQPVWRe0vBaP9CGb-->「收到實體真的很有質感！包裝很用心，貨到付款讓人很放心，下次還會回購！」<br data-page-node-id="JNPee4zNBBMfECGCF21hRv"><span style="color:#0052d9; font-size:12px;" data-page-node-id="RIOqr9zZRr1tOouKnwLaFh"><!--pnid:zd4jqH2Px0IqZWQhL0LDjB-->— 台北 林先生</span></p><!--pnid:gtRP9LEyU1rYtMClWo2iy2-->
+            <p data-page-node-id="5id6SwzDslnEEPfn91kX6l"><!--pnid:6ogwdkazke63co0Qbv2lsx-->「客服回覆很快，出貨也迅速，手錶戴起來很霸氣，朋友都問我哪裡買的。」<br data-page-node-id="cDyAteAqWyKyho5HnVMl28"><span style="color:#0052d9; font-size:12px;" data-page-node-id="OVQwRkTdNGNNEHIF6KL2aJ"><!--pnid:yW5ROSs4r1O2K3EXlKfUwT-->— 台中 王小姐</span></p><!--pnid:BmFwtZP2ynG8JLn0iVQ91c-->
+        </div><!--pnid:FRq1mrpDCdQfQNzHICX5MV-->
+        <div class="trust-card" data-page-node-id="TitmaeM5BzTfW48oIYYBhJ"><!--pnid:aZSR4FPxAbjO0bVRLUfbxs-->
+            <h3 data-page-node-id="4vyvu8VZuMKtbdKww0aTjD"><!--pnid:hiiDVjcAnPsumVDHbTcJvR-->📦 出貨實拍保證</h3><!--pnid:w9VqgbFaT9kEjfATCHD8uk-->
+            <p data-page-node-id="U6Bb9aTAdIzzki0hQTkKHq"><!--pnid:vrQrHAsdS7cClFeHlyIwuP-->每支手錶皆附贈精美錶盒，出貨前專人嚴格品檢，超商寄件單號皆可查詢。</p><!--pnid:W7DhDnmi1IO7z1kPAstvcJ-->
+            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=600&auto=format&fit=crop" alt="精美包裝" onerror="this.src='https://via.placeholder.com/600x200?text=Package'" data-page-node-id="I3B9GHGlwAiBAoMheBYKuk"><!--pnid:zMNK37z8Edqm4zaCLdsu0P-->
+        </div><!--pnid:6OIGATn95b3idKCzCHwQl2-->
+    </div><!--pnid:vDYfJgiFBPX2Owq6k9kqne-->
 
-    <div class="faq-section">
-        <h2>💡 常見問題 (FAQ)</h2>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Q1: 請問品質有保固嗎？ <span>▼</span></div>
-            <div class="faq-answer">我們所有商品皆為嚴選品質保證，並提供 7 天鑑賞期。若收到商品有任何非人為瑕疵，均可聯繫客服辦理退換貨。</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Q2: 付款方式有哪些？ <span>▼</span></div>
-            <div class="faq-answer">本網站一律採用「貨到付款」。您只需填寫收件資訊，待商品送達時將款項交給物流司機即可，安全有保障。</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(this)">Q3: 下單後多久會出貨？ <span>▼</span></div>
-            <div class="faq-answer">確認訂單後，我們會在第 1-3 個工作天內安排出貨。出貨後會將物流單號發送至您的 LINE，請耐心等候。</div>
-        </div>
-    </div>
+    <div class="faq-section" data-page-node-id="fRW6GiFYGnegqQM83CXfmC"><!--pnid:0Hs0ZBXSxuTu8bSXXAYJkC-->
+        <h2 data-page-node-id="bOvOE5REnA3apDKcnTDBaZ"><!--pnid:NZz3gMbZ45RAmOks12ZWP5-->💡 常見問題 (FAQ)</h2><!--pnid:gm9hJ1Hx6VbjFw8yBHaKc9-->
+        <div class="faq-item" data-page-node-id="qptJ1FYTmJatycyo4yZTEL"><!--pnid:l1G5myEhBWzgPaHQ3B6o1J-->
+            <div class="faq-question" onclick="toggleFaq(this)" data-page-node-id="elsPTVjUep8YaCgPwZzZDJ"><!--pnid:R48QMOqJLxCOnrUV7KVHKU-->Q1: 請問品質有保固嗎？ <span data-page-node-id="dGofzD6PIbLEtLbrID7mkf"><!--pnid:WqGf9VQEEGzVirnpegvGuo-->▼</span></div><!--pnid:rcmqbsVkc4xTCw5aEjSw0v-->
+            <div class="faq-answer" data-page-node-id="eAEkIglpaHugAOmEEOLsOR"><!--pnid:NzrI2h4DwOt8RX6Bx7aExQ-->我們所有商品皆為嚴選品質保證，並提供 7 天鑑賞期。若收到商品有任何非人為瑕疵，均可聯繫客服辦理退換貨。</div><!--pnid:e2ZdeM2SNKjZWrElcCcJ3X-->
+        </div><!--pnid:1qcJbCL5yN3LHE7Dbnn4ia-->
+        <div class="faq-item" data-page-node-id="55xq2cIIWMJkvE02ezotFh"><!--pnid:amVn1dPjydEctNw3xpGn61-->
+            <div class="faq-question" onclick="toggleFaq(this)" data-page-node-id="lC81jdPBQPun22QJ2oxKRw"><!--pnid:qzjnLjvDfVvXrsGBrKVt6C-->Q2: 付款方式有哪些？ <span data-page-node-id="JWcfLKVmEQOXxuuYINdvYI"><!--pnid:w7erw1HTINTtzwFQhRluWT-->▼</span></div><!--pnid:KVdGvO3BvRx9rIetuukNch-->
+            <div class="faq-answer" data-page-node-id="enV1hEZ7aPAS0SWD2GtjIA"><!--pnid:Si4I3G0DkFXlBAcjGaDXbt-->本網站一律採用「貨到付款」。您只需填寫收件資訊，待商品送達時將款項交給物流司機即可，安全有保障。</div><!--pnid:u6stnsxGgdGWv2rBiFbLiI-->
+        </div><!--pnid:FoqmyGnQVWT4q3qlvHVCqZ-->
+        <div class="faq-item" data-page-node-id="YaeB6aUKJZ9AKjZObzCygA"><!--pnid:rCoYoEw5azGMC99SFlTnQn-->
+            <div class="faq-question" onclick="toggleFaq(this)" data-page-node-id="CgWZuyCabPQUyM6IxtVm4h"><!--pnid:DqScRqAB9Xf8Ypo0wnyE51-->Q3: 下單後多久會出貨？ <span data-page-node-id="yY8za0hcAtc2ygLfUYTvl1"><!--pnid:oNKzUDnAmk9upjRTrRksNw-->▼</span></div><!--pnid:heQMPAQBKN3VZSF03n1etz-->
+            <div class="faq-answer" data-page-node-id="3sCJCbF4FoUJEWEw56Sq5Y"><!--pnid:mKuk6hyKfLdgL3d9MQrznP-->確認訂單後，我們會在第 1-3 個工作天內安排出貨。出貨後會將物流單號發送至您的 LINE，請耐心等候。</div><!--pnid:sPdhiGrDRB6YEIWbutFAKt-->
+        </div><!--pnid:CZ3kzy4k1et1HrmlTl5hUi-->
+    </div><!--pnid:niYRFhSqmutHHihC4o37Jk-->
 
-    <div class="site-footer">
-        <div style="margin-bottom: 15px;">
-            <a onclick="openOrderLookup()">🔍 查詢訂單</a> |
-            <a onclick="openLegal('privacy')">隱私權政策</a> |
-            <a onclick="openLegal('terms')">服務條款</a> |
-            <a onclick="openLegal('return')">退換貨政策</a>
-        </div>
-        <div>&copy; 2026 尊享腕錶 精品展示. All rights reserved.</div>
-        <div style="font-size: 11px; margin-top: 10px; color: #999;">本網站商品均為嚴選品質，非原廠公司貨。</div>
-    </div>
+    <div class="site-footer" data-page-node-id="aIXnOXlnjkX9HjknmsGgzS"><!--pnid:bVmlAl6wFJvDLMhPPf6fgo-->
+        <div style="margin-bottom: 15px;" data-page-node-id="KhwoBKqApF52SFhLeEgZC8"><!--pnid:wEv00cQLhPj3btLcKawhBF-->
+            <a onclick="openOrderLookup()" data-page-node-id="nC8xeg1hXtafnDJlylcHzP"><!--pnid:LUuDQhNVtXnwgXSuNtANHJ-->🔍 查詢訂單</a><!--pnid:BwD33lrcs16Mc04BoaW9dy--> |
+            <a onclick="openLegal('privacy')" data-page-node-id="E5suPIoHncw5sbtTxioD8z"><!--pnid:PAzH40GapyZwBq4WLF9dqf-->隱私權政策</a><!--pnid:SFBEznrVTBFrQuHwRErvqY--> |
+            <a onclick="openLegal('terms')" data-page-node-id="d9nWoCkrVY5faShn12NHvC"><!--pnid:I6lZ5iyrxeghqOxdquzmSr-->服務條款</a><!--pnid:Rdy8m6q3ljieoZTnKfAGGB--> |
+            <a onclick="openLegal('return')" data-page-node-id="zk0ImfdqfGIyIC8DOvC1pR"><!--pnid:3DKLf5CIw1wbsomL4kYwUi-->退換貨政策</a><!--pnid:Be5xMrR2jbLSG3cGdtLfqT-->
+        </div><!--pnid:pLis5bCvwOsehF2GLFl4nE-->
+        <div data-page-node-id="dJKeD6pdwGyvXFHE2Eit8w"><!--pnid:fwTa2kGkrKorygmMQKw5vV-->&copy; 2026 尊享腕錶 精品展示. All rights reserved.</div><!--pnid:070cAj5up2ipznGuq1Yzfl-->
+        <div style="font-size: 11px; margin-top: 10px; color: #999;" data-page-node-id="xkZrhb0BDujji8uZ2tag31"><!--pnid:FvkN57VCZCpb7hHVCZKP0E-->本網站商品均為嚴選品質，售出前皆經過嚴格品檢。</div><!--pnid:HWzV6udAf1Qvhl7NzhCDnG-->
+    </div><!--pnid:MxC14rdC1IzMlHLUI0aVGg-->
 
-    <div class="modal-overlay legal-modal" id="legalModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="document.getElementById('legalModal').classList.remove('active')">&times;</span>
-            <div id="legalContent"></div>
-        </div>
-    </div>
+    <div class="modal-overlay legal-modal" id="legalModal" data-page-node-id="dpbMr1d20C88OwXY9bmOMu"><!--pnid:0oKQAnNA4hpVbouW8REzFJ-->
+        <div class="modal-content" data-page-node-id="lEgDc8DzuRm9iYFZBwmdDT"><!--pnid:HpO0txmmK1NXcWOG6IkDDV-->
+            <span class="close-btn" onclick="document.getElementById('legalModal').classList.remove('active')" data-page-node-id="U3F5RIVubV4pIF2KqCYIJR"><!--pnid:hGb7rcJRAwC7CcUtlPTEiE-->&times;</span><!--pnid:Hiwk2wuwKci2U8ugd3HlpJ-->
+            <div id="legalContent" data-page-node-id="VWIHEw7gd0nAA0EPVTo5xA"></div><!--pnid:fW8oWWVlv9aTUu1cEkelcu-->
+        </div><!--pnid:LqTmuS4vAr7dOphM3nuLy9-->
+    </div><!--pnid:iMuRymwGbtwkijVC0ecvQA-->
 
-    <div class="modal-overlay legal-modal" id="reviewModal">
-        <div class="modal-content" style="max-width: 400px;">
-            <span class="close-btn" onclick="document.getElementById('reviewModal').classList.remove('active')">&times;</span>
-            <h2 style="text-align: left;">⭐ 評價這次購買</h2>
-            <p style="font-size: 13px; color: #6b7280; text-align: left; margin: 4px 0 12px;">您的評價會同步給客服，幫助我們做得更好</p>
-            <div id="reviewStars" style="font-size: 30px; letter-spacing: 6px; color: #f5a623; text-align: center; margin-bottom: 12px; cursor: pointer;">
-                <span onclick="setStars(1)">★</span><span onclick="setStars(2)">★</span><span onclick="setStars(3)">★</span><span onclick="setStars(4)">★</span><span onclick="setStars(5)">★</span>
-            </div>
-            <div class="input-group" data-icon="✍️">
-                <input type="text" id="reviewText" placeholder="說說質感、包裝、物流如何" maxlength="120">
-            </div>
-            <button type="button" class="submit-btn" onclick="submitReview()" style="background:#0052d9; color:#fff; border-color:#0052d9;">送出評價</button>
-        </div>
-    </div>
+    <div class="modal-overlay legal-modal" id="reviewModal" data-page-node-id="uq5DjoPQsxkTaRFqubx8lb"><!--pnid:uhRjwqCIAgqcL3EFFGPA1R-->
+        <div class="modal-content" style="max-width: 400px;" data-page-node-id="JLqrHOnGy76TTjupFhVVVH"><!--pnid:eOpBMQ49Pol2xQ5wIgkWWN-->
+            <span class="close-btn" onclick="document.getElementById('reviewModal').classList.remove('active')" data-page-node-id="vsUHevalC19mZIZnP0FAoi"><!--pnid:RrNy3CFWl2y49dRLYVlIIY-->&times;</span><!--pnid:TDJVlK8PW3gNaxqQSDTxK9-->
+            <h2 style="text-align: left;" data-page-node-id="X8NmgleBfmo0H735FQMKQT"><!--pnid:0indeonsWvNHUFKo8a6GvV-->⭐ 評價這次購買</h2><!--pnid:psam66XjoquUtVpPqqrsGv-->
+            <p style="font-size: 13px; color: #6b7280; text-align: left; margin: 4px 0 12px;" data-page-node-id="qcr6ZJuhNrduDZHMog3iF7"><!--pnid:FKB5Gggc0BeHN0xAp9DAYP-->您的評價會同步給客服，幫助我們做得更好</p><!--pnid:U57P2dy0JYXwj5mi9QVUQq-->
+            <div id="reviewStars" style="font-size: 30px; letter-spacing: 6px; color: #f5a623; text-align: center; margin-bottom: 12px; cursor: pointer;" data-page-node-id="2fVBPiTBW2WSjOUUTGuys5"><!--pnid:bMExSrxcp1ppP2NhcM7okX-->
+                <span onclick="setStars(1)" data-page-node-id="IABf94YCaSFAEJRNiMhD2X"><!--pnid:DW5Ksts9UTNxYzgJyS2PqI-->★</span><span onclick="setStars(2)" data-page-node-id="JxZLVIkrhAMswqwPpMsXuI"><!--pnid:F1nElXCQMXOHKcAGMIHP7Q-->★</span><span onclick="setStars(3)" data-page-node-id="6Azi78gQZlgbWIGkZFXYBB"><!--pnid:ICLYoxmCX6H0EtvIAFefVU-->★</span><span onclick="setStars(4)" data-page-node-id="ablnLChjs3vy7nLGX6wlgA"><!--pnid:RQdBaILc1FZFzhY8FxYU5S-->★</span><span onclick="setStars(5)" data-page-node-id="wpkAzoA6PB43NLSrYqrOEi"><!--pnid:wIUjwCAgW5VExGYTjVK9oq-->★</span><!--pnid:mVDidwXfv01TCtQSAKTIj0-->
+            </div><!--pnid:VXSsTsbec1zvZTwYFL4BOL-->
+            <div class="input-group" data-icon="✍️" data-page-node-id="bzptAmuXO6VDbcsLPgQjTE"><!--pnid:xPJxcA0UggBqZr4Q3aYzG7-->
+                <input type="text" id="reviewText" placeholder="說說質感、包裝、物流如何" maxlength="120" data-page-node-id="EMAt6xk7Lj6StSYtAE13KU"><!--pnid:Kqo65AhytrEk69WySIiLMs-->
+            </div><!--pnid:wZqpT86immsdRCDRVE1Rlo-->
+            <button type="button" class="submit-btn" onclick="submitReview()" style="background:#0052d9; color:#fff; border-color:#0052d9;" data-page-node-id="pp6rvfPverX7DA6nakSwVY"><!--pnid:tgcpn4Ql9Yj1KvLlDVf7mv-->送出評價</button><!--pnid:VJjXYaQ3LY7TLnykByOgGW-->
+        </div><!--pnid:ixQxJGULMJHRPGOGV1OYPv-->
+    </div><!--pnid:z4olRQOL17UlPKH4raSZhi-->
 
-    <div class="modal-overlay legal-modal" id="orderLookupModal">
-        <div class="modal-content" style="max-width: 420px;">
-            <span class="close-btn" onclick="document.getElementById('orderLookupModal').classList.remove('active')">&times;</span>
-            <h2 style="text-align: left;">🔍 查詢訂單進度</h2>
-            <p style="font-size: 13px; color: #6b7280; text-align: left; margin: 4px 0 14px;">輸入下單時填寫的手機號碼即可查詢</p>
-            <div class="input-group" data-icon="📞">
-                <input type="tel" id="lookupPhone" placeholder="請輸入 10 碼手機號碼" maxlength="14">
-            </div>
-            <button type="button" class="submit-btn" onclick="doOrderLookup()" style="background:#0052d9; color:#fff; border-color:#0052d9;">查詢我的訂單</button>
-            <div id="lookupResult" style="margin-top: 14px; text-align: left; font-size: 13.5px;"></div>
-        </div>
-    </div>
+    <div class="modal-overlay legal-modal" id="orderLookupModal" data-page-node-id="WtYtsu9TuKX30bEqGjn6ew"><!--pnid:nb2q6fIuaBCA1BgTpm5sY1-->
+        <div class="modal-content" style="max-width: 420px;" data-page-node-id="IntcykCdZnMOBIC9BAayls"><!--pnid:2dyGakAXeNgYuF6czAyy8l-->
+            <span class="close-btn" onclick="document.getElementById('orderLookupModal').classList.remove('active')" data-page-node-id="okD2vXlQSBeutA7r8FHEo4"><!--pnid:HR3oZYZjqMYKL4UcmdVIMg-->&times;</span><!--pnid:RXghXibJUR2LuMqsi0PQCl-->
+            <h2 style="text-align: left;" data-page-node-id="hXlnbPgTsanHnt8T7sAYao"><!--pnid:hZnKbGJSJlp2RGqcsdP9GY-->🔍 查詢訂單進度</h2><!--pnid:REV6jlDoQcyYvVe6jWRbEx-->
+            <p style="font-size: 13px; color: #6b7280; text-align: left; margin: 4px 0 14px;" data-page-node-id="9QcArFCx4RVMimH0q3okH1"><!--pnid:rIcT2CCD8pOzGtIKOYWmSa-->輸入下單時填寫的手機號碼即可查詢</p><!--pnid:svpAjvw5KCkzDbvbi2J4EC-->
+            <div class="input-group" data-icon="📞" data-page-node-id="jV6fklNxKz5QTM3gcclhMo"><!--pnid:EDipRh7S0ECz1pkbASVc7O-->
+                <input type="tel" id="lookupPhone" placeholder="請輸入 10 碼手機號碼" maxlength="14" data-page-node-id="VM0JInrqZdulSRzD3TdfWS"><!--pnid:Mao69NvkuOUX9TGwTBe3ds-->
+            </div><!--pnid:nb7uV9FrbUwgSudE87rnyn-->
+            <button type="button" class="submit-btn" onclick="doOrderLookup()" style="background:#0052d9; color:#fff; border-color:#0052d9;" data-page-node-id="35vawZiHX5CXhh5440AnYA"><!--pnid:UF9UqMLJPGY8BGcrQrCSiw-->查詢我的訂單</button><!--pnid:m6Xo5oMoo7UG2rXMdhfBxQ-->
+            <div id="lookupResult" style="margin-top: 14px; text-align: left; font-size: 13.5px;" data-page-node-id="58MNZZaSS5sIGZtE0H6lsk"></div><!--pnid:kulTZUyCvRCFUAp9gRa191-->
+        </div><!--pnid:42JCdsnGj2AA35IT9ZJfsW-->
+    </div><!--pnid:MlmVSRtrOZKyN5OG5QzEsR-->
 
-    <div class="modal-overlay" id="favModal">
-        <div class="modal-content" style="max-width: 460px;">
-            <span class="close-btn" onclick="closeFavModal()">&times;</span>
-            <h2>❤️ 我的收藏</h2>
-            <div id="favList" style="margin-top: 12px;"></div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="favModal" data-page-node-id="qckvfnCe8dhe1dKslEPnI3"><!--pnid:iDdjxyyDotYfZwQqLEwzCA-->
+        <div class="modal-content" style="max-width: 460px;" data-page-node-id="0kYufSs63pcUfMiSavgKmG"><!--pnid:KhGZo63AjEx9Cu3zdy8JFI-->
+            <span class="close-btn" onclick="closeFavModal()" data-page-node-id="8ND8pFmEaHE78VAoZD8SE2"><!--pnid:Em1rAgPX68jnGDbCqLDF3b-->&times;</span><!--pnid:dE27hLatx1dJQERd6oU2fH-->
+            <h2 data-page-node-id="86mQPZA1uKwfKt9yMD4hl6"><!--pnid:8RquaDfMlZVQFsT5Jzv5Nk-->❤️ 我的收藏</h2><!--pnid:X0wJaAt7itppRjEX9e3kOr-->
+            <div id="favList" style="margin-top: 12px;" data-page-node-id="I78bme5ffPI325URDKGrDL"></div><!--pnid:lx9k7YFFOK5eJaSr4l62FL-->
+        </div><!--pnid:SKcD80EHBMEg75tLuVCGiz-->
+    </div><!--pnid:VTxmDAqL0jTZxup1HyBPZi-->
 
-    <div class="modal-overlay" id="infoModal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModalBtn">&times;</span>
+    <div class="modal-overlay" id="infoModal" data-page-node-id="QQwcw1rxJ7dIaFBklc1Kuk"><!--pnid:G2dBJnw8z46Lh7pv70nETe-->
+        <div class="modal-content" data-page-node-id="gPRLTpQh4J1psrA9BCIWB8"><!--pnid:0AUutMrFcsWCs7N4aIywCZ-->
+            <span class="close-btn" id="closeModalBtn" data-page-node-id="81p7oNX64Woe6ir5m7avDs"><!--pnid:qLAoulcAAKBkVZXAPVbCJ3-->&times;</span><!--pnid:tH6fqFDq0URpa7qThvACtr-->
 
-            <div id="formContainer">
-                <h2>確認商品與填寫資訊</h2>
-                <div class="pd-gallery" id="pdGallery">
-                    <div class="pd-track" id="pdTrack"></div>
-                    <button type="button" class="pd-nav pd-prev" onclick="pdSlide(-1)">‹</button>
-                    <button type="button" class="pd-nav pd-next" onclick="pdSlide(1)">›</button>
-                    <div class="pd-dots" id="pdDots"></div>
-                </div>
-                <div class="price-display-box">
-                    <p>您選擇的商品：</p>
-                    <h3 id="modalProductName">手錶名稱</h3>
-                    <div class="price-line" id="modalPriceRow"></div>
-                    <div class="trust-badges">
-                        <span>🛡 7 天鑑賞期</span>
-                        <span>📦 拆箱驗貨</span>
-                        <span>🔒 隱私包裝</span>
-                    </div>
-                    <div class="viewer-count">
-                        🔥 今日已有 <span id="randomViewerCount">15</span> 人查看此商品
-                    </div>
-                    <div style="display:flex; justify-content:center; margin-top:10px;">
-                        <button type="button" class="share-btn" onclick="shareProduct()">📤 分享給朋友</button>
-                    </div>
-                </div>
+            <div id="formContainer" data-page-node-id="xa70BxY4TpT7kObn2wpisV"><!--pnid:YRrINK5K3hSvfQaIL8F4m7-->
+                <h2 data-page-node-id="OXWtjBKDWnjIjLCmMy32sF"><!--pnid:8ZUsUM6teJeGlDKoLlOaGb-->確認商品與填寫資訊</h2><!--pnid:aauHS95mGgXwinvf7K31BH-->
+                <div class="pd-gallery" id="pdGallery" data-page-node-id="Gi68tDSb00ogeBF11bbz2y"><!--pnid:WnanMF1ICTpeCkY5dUY0wr-->
+                    <div class="pd-track" id="pdTrack" data-page-node-id="kbMMhrY0gIjg9a1cKKAJvr"></div><!--pnid:DXjlHjoeCavAnBz5zHS9hG-->
+                    <button type="button" class="pd-nav pd-prev" onclick="pdSlide(-1)" data-page-node-id="SiCbWEVoKyT1vUlKZNEJSO"><!--pnid:YMN22t28aLuPreJIab7aq1-->‹</button><!--pnid:mkFA5VHMSgeUymaIduuTJ4-->
+                    <button type="button" class="pd-nav pd-next" onclick="pdSlide(1)" data-page-node-id="abfa5lSn23PLI3n4ttW2mo"><!--pnid:uDX7X6ttiX7IkpHt8PlwaO-->›</button><!--pnid:YiGiLPjcgBRhCPuohw8Dcg-->
+                    <div class="pd-dots" id="pdDots" data-page-node-id="csIoZzCMX8iHQPLCa5x7tt"></div><!--pnid:CT02eSC4M2V61C5gUTJ36K-->
+                </div><!--pnid:BJsDXTlMGtVhJnA21HOiHZ-->
+                <div class="price-display-box" data-page-node-id="fGMFyB2s1uQHkOFleKAJLo"><!--pnid:akw72IsYtxG1ACN1bEipSG-->
+                    <p data-page-node-id="hzfMmzaGEwzS1YINckB9k2"><!--pnid:lGRigLUyeE2oIg4REpHscz-->您選擇的商品：</p><!--pnid:taLnX0LFzKd0e8yhwaRQUF-->
+                    <h3 id="modalProductName" data-page-node-id="kGQdJhbXQAquLlSsTMHlGu"><!--pnid:h0m5GZNzFm7kSEnprbnH68-->手錶名稱</h3><!--pnid:FtUtACcRH7gQ0Gbhetahvh-->
+                    <div class="price-line" id="modalPriceRow" data-page-node-id="gPSJV91NY7X6GApAkF6djA"></div><!--pnid:MFASHGYlwYB6DTy3Es7ZtU-->
+                    <div class="trust-badges" data-page-node-id="lHQhc94PwGDDbZEP77JSad"><!--pnid:i7QZFNVnnYQaIZmiZQSaDo-->
+                        <span data-page-node-id="b06RfQUdCBaAw2Xuyuh5Zh"><!--pnid:O9qq6DF80kXkVOjqjVmlz2-->🛡 7 天鑑賞期</span><!--pnid:mVUPaAap8eq0ZuCIB8YAaw-->
+                        <span data-page-node-id="L1ZZuaT8ReCKfbdD0kD6zd"><!--pnid:hmeiQUGcZoKgJTno9w9TIK-->📦 拆箱驗貨</span><!--pnid:1noCqBfS4UYqNsu21eOENj-->
+                        <span data-page-node-id="en3HRgyfRBC1vwRs0bnU3o"><!--pnid:FbUOVOH80sAVnFdwWF6xxZ-->🔒 隱私包裝</span><!--pnid:3G6XZSgdiiDD7wxHLEREPq-->
+                    </div><!--pnid:zGfBDl4i8weK05mLxJN0FH-->
+                    <div class="viewer-count" data-page-node-id="DfOIBYHdJcu0Uqzxs8MPTs"><!--pnid:qGK6K6R5FQWdiOjq0JEPqj-->
+                        🔥 今日已有 <span id="randomViewerCount" data-page-node-id="0T0RsADFQjCzAHRxFkewTW"><!--pnid:nl4ISiKEchIkrtVH89ganY-->15</span><!--pnid:mgFSb6NiqCJAjtC3Hm3gpr--> 人查看此商品
+                    </div><!--pnid:1UBqKOLYwKnwXWjFpJvzGA-->
+                    <div style="display:flex; justify-content:center; margin-top:10px;" data-page-node-id="lEWbUzHq9RC0piJdRNYa5C"><!--pnid:mfeanMMcnkKzeol34SA8YF-->
+                        <button type="button" class="share-btn" onclick="shareProduct()" data-page-node-id="SsFVEulYuFxiH2ME6q2lSZ"><!--pnid:mBB8fd2YZ6kMBLOWBGKxDo-->📤 分享給朋友</button><!--pnid:gEx68ba32hI04RlplyI92G-->
+                    </div><!--pnid:792fNb8M0TZK4HMrbMXyGy-->
+                </div><!--pnid:9UeIYElUyCxPLNdqqHsGIT-->
 
-                <div id="modalCartSummary" style="display:none; background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:10px; margin:8px 0 12px; font-size:13px; color:var(--text-dark); text-align:left; line-height:1.7;"></div>
+                <div id="modalCartSummary" style="display:none; background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:10px; margin:8px 0 12px; font-size:13px; color:var(--text-dark); text-align:left; line-height:1.7;" data-page-node-id="gJIApCRMvibfhR9d0dSGA2"></div><!--pnid:IS77mBvhFy4lnL1Fo228kd-->
 
-                <div class="prod-reviews" id="prodReviews"></div>
+                <div class="prod-reviews" id="prodReviews" data-page-node-id="jlJJ9En5SkZ6xKrpqyCATG"></div><!--pnid:oUq9dU0F5GGyTSH9Z6qo9E-->
 
-                <div id="budgetSelectorWrap" style="text-align: left; margin-bottom: 15px;">
-                    <p style="color: var(--text-gray); font-size: 13px; margin-bottom: 8px;">請選擇您的預算區間：</p>
-                    <div class="budget-selector">
-                        <button type="button" class="budget-btn active" onclick="selectBudget(this, '')"></button>
-                        <button type="button" class="budget-btn" onclick="selectBudget(this, '')"></button>
-                        <button type="button" class="budget-btn" onclick="selectBudget(this, '')"></button>
-                    </div>
-                </div>
+                <div id="budgetSelectorWrap" style="text-align: left; margin-bottom: 15px;" data-page-node-id="GbaXbglitjrKWEpV6QCejF"><!--pnid:TOyHXICNgk5bDsQAt2ruPV-->
+                    <p style="color: var(--text-gray); font-size: 13px; margin-bottom: 8px;" data-page-node-id="yNxjL5tRuNgDFQ4JoZBvJL"><!--pnid:LFYigL82dAdzPR4cGBJuY9-->請選擇您的預算區間：</p><!--pnid:JX3igwwEFmXvpBTOojjU7i-->
+                    <div class="budget-selector" data-page-node-id="3em0CGOnhxUBiaSn9Un2iT"><!--pnid:IurrbqGGSEb2EDrqMzGoLE-->
+                        <button type="button" class="budget-btn active" onclick="selectBudget(this, '')" data-page-node-id="JNUl7GZALiCP8kuNM1GdRu"></button><!--pnid:Cf4CTdCwJroEaqHic3tKZH-->
+                        <button type="button" class="budget-btn" onclick="selectBudget(this, '')" data-page-node-id="O47TIbZD39OCERSEbH4y50"></button><!--pnid:9GOvnE0NUyO9s2cxSyHARF-->
+                        <button type="button" class="budget-btn" onclick="selectBudget(this, '')" data-page-node-id="VF8feWKckbKBKEE0gsbwES"></button><!--pnid:EsJSPjed9E0Vqz3dajBCRl-->
+                    </div><!--pnid:LezkjqmWUrQIJl0SijwSKy-->
+                </div><!--pnid:EjKHZmOSFQwjCb9Qxu3hwX-->
 
-                <div class="spec-wrap" id="specWrap">
-                    <p class="spec-title">🎛 選擇規格（選配，會影響價格）</p>
-                    <div class="spec-group" id="specGroup"></div>
-                </div>
+                <div class="spec-wrap" id="specWrap" data-page-node-id="budXeBNopFzW8mqinucwib"><!--pnid:z9jFjCICyV9WOB7kAdDRxG-->
+                    <p class="spec-title" data-page-node-id="FJwSLhoIhYy9waJmUIqYIs"><!--pnid:cUpgUeQCHq8LdbK7REaKDL-->🎛 選擇規格（選配，會影響價格）</p><!--pnid:4tGEDuH5bN3CKKYMdKqOXU-->
+                    <div class="spec-group" id="specGroup" data-page-node-id="bxytwh157fwoh22Vq5yrj7"></div><!--pnid:HYPpoPmY17oxL3mLpmE6p1-->
+                </div><!--pnid:DUyVCyr0CGohhufcWOXUGv-->
 
-                <form id="shippingForm" onsubmit="event.preventDefault();">
-                    <div class="input-group" data-icon="👤">
-                        <input type="text" id="custName" placeholder="請輸入收件人姓名" maxlength="30" required>
-                    </div>
-                    <div class="input-group" data-icon="📞">
-                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="14" title="請輸入 09 開頭的 10 碼手機號碼" required>
-                    </div>
-                    <div class="ship-pick" id="shipPick">
-                        <p class="ship-pick-title">🚚 請選擇配送方式</p>
-                        <label class="ship-opt active" id="shipOptCvs7" onclick="selectShip('cvs7')">
-                            <span class="ship-ico">🏪</span>
-                            <span class="ship-txt"><b>7-11 超商取貨</b><small>到店取貨 · 貨到付款</small></span>
-                            <span class="ship-fee free">免運</span>
-                        </label>
-                        <label class="ship-opt" id="shipOptCvsFamily" onclick="selectShip('cvsFamily')">
-                            <span class="ship-ico">🏬</span>
-                            <span class="ship-txt"><b>全家超商取貨</b><small>到店取貨 · 貨到付款</small></span>
-                            <span class="ship-fee free">免運</span>
-                        </label>
-                        <label class="ship-opt" id="shipOptHome" onclick="selectShip('home')">
-                            <span class="ship-ico">🚚</span>
-                            <span class="ship-txt"><b>黑貓宅配到府</b><small>專人配送到家 · 貨到付款</small></span>
-                            <span class="ship-fee" id="shipHomeFee">運費 $100</span>
-                        </label>
-                    </div>
-                    <div class="ship-fee-line" id="shipFeeLine"></div>
-                    <div class="promo-row">
-                        <input type="text" id="promoInput" placeholder="輸入客服提供的優惠碼" maxlength="20">
-                        <button type="button" onclick="applyPromo()">套用</button>
-                    </div>
-                    <div class="promo-ok" id="promoOk" style="display:none;"></div>
-                    <div class="promo-hints" id="promoHints"></div>
-                    <div class="input-group" data-icon="🏪" id="storeGroup">
-                        <input type="text" id="custStore" placeholder="請輸入取貨門市（例：忠孝門市 / 店號）" maxlength="60">
-                    </div>
-                    <div class="input-group" data-icon="🏙️" id="cityGroup" style="display:none;">
-                        <select id="custCity">
-                            <option value="">請選擇收件縣市</option>
-                            <option value="台北市">台北市</option>
-                            <option value="新北市">新北市</option>
-                            <option value="桃園市">桃園市</option>
-                            <option value="台中市">台中市</option>
-                            <option value="台南市">台南市</option>
-                            <option value="高雄市">高雄市</option>
-                            <option value="基隆市">基隆市</option>
-                            <option value="新竹市">新竹市</option>
-                            <option value="新竹縣">新竹縣</option>
-                            <option value="苗栗縣">苗栗縣</option>
-                            <option value="彰化縣">彰化縣</option>
-                            <option value="南投縣">南投縣</option>
-                            <option value="雲林縣">雲林縣</option>
-                            <option value="嘉義市">嘉義市</option>
-                            <option value="嘉義縣">嘉義縣</option>
-                            <option value="屏東縣">屏東縣</option>
-                            <option value="宜蘭縣">宜蘭縣</option>
-                            <option value="花蓮縣">花蓮縣</option>
-                            <option value="台東縣">台東縣</option>
-                            <option value="澎湖縣">澎湖縣</option>
-                            <option value="金門縣">金門縣</option>
-                            <option value="連江縣">連江縣</option>
-                        </select>
-                    </div>
-                    <div class="input-group" data-icon="📍" id="addrGroup" style="display:none;">
-                        <input type="text" id="custAddress" placeholder="請輸入鄉鎮市區 + 街道門牌" maxlength="100">
-                    </div>
+                <form id="shippingForm" onsubmit="event.preventDefault();" data-page-node-id="AQAaolXtjyw6lv3UvaURbX"><!--pnid:UR7oQN3j6TXHFblX7eVe28-->
+                    <div class="input-group" data-icon="👤" data-page-node-id="lULibRdcEaASEzahrcO5xj"><!--pnid:v9ka3KMVrVdaCXf7gLoWMQ-->
+                        <input type="text" id="custName" placeholder="請輸入收件人姓名" maxlength="30" required data-page-node-id="MBn5wrXM5RVgaC5ZelEE25"><!--pnid:5aV5v1szS6hUDiZPYFJdJ2-->
+                    </div><!--pnid:LCeAO1InTI5VBytWNDlmjF-->
+                    <div class="input-group" data-icon="📞" data-page-node-id="9nGlmiMNWaDTegzI508bio"><!--pnid:33yHK93BsiivOgl9m89jhz-->
+                        <input type="tel" id="custPhone" placeholder="請輸入 10 碼手機號碼" pattern="09[0-9]{8}" maxlength="14" title="請輸入 09 開頭的 10 碼手機號碼" required data-page-node-id="B1tw57OHbnWeppIL3AJ7cE"><!--pnid:fg5TmhIY3P8hwRmDfBFwQG-->
+                    </div><!--pnid:ASBbMUAp6pafiHdjt77JBg-->
+                    <div class="ship-pick" id="shipPick" data-page-node-id="xBfZBqLc0NnbJ1Y1fBlOHx"><!--pnid:jWdPzzF5XAFXQuFiVVVAd0-->
+                        <p class="ship-pick-title" data-page-node-id="yVVmiswbfokzfB81PHH0xA"><!--pnid:kC894FrQUFc5yvFDWyV3T1-->🚚 請選擇配送方式</p><!--pnid:Gpv5EoCrgDMOtEDDo3YcQD-->
+                        <label class="ship-opt active" id="shipOptCvs7" onclick="selectShip('cvs7')" data-page-node-id="vxb59BKK1R50UkgUjjePuJ"><!--pnid:zVZwT4UeA4IcJrhgCXMjBn-->
+                            <span class="ship-ico" data-page-node-id="2RzmRRCLRfkki7TG95SSvN"><!--pnid:5BWByZ2VDpUVn7CmqSVxQr-->🏪</span><!--pnid:2xR2lH952OJ4c1SZ6wJTTC-->
+                            <span class="ship-txt" data-page-node-id="68ReGnaLNsVN0iIyLnhKjl"><b data-page-node-id="X3x7YOEf405fDf12xErRGG"><!--pnid:5dSFyWTVXls8GF2Q27h0HI-->7-11 超商取貨</b><small data-page-node-id="jwdW0ypjC2j4tZsblD2YCw"><!--pnid:qcjcbdFPmmEi4gjq0g4jj3-->到店取貨 · 貨到付款</small></span><!--pnid:fTTTbgDORi6WaTv4ToF1hp-->
+                            <span class="ship-fee free" data-page-node-id="dCKh2UKcIWrN5y8cvNe6nY"><!--pnid:pUlW1F3cud5dOHIMhDk3d7-->免運</span><!--pnid:BFMF0BLGw00bGFwKxAQjv5-->
+                        </label><!--pnid:UNmA5hkDWbzRr5RSbrIvku-->
+                        <label class="ship-opt" id="shipOptCvsFamily" onclick="selectShip('cvsFamily')" data-page-node-id="p4wCqFQ6nuiyI9wnaYS48O"><!--pnid:3pTtEHTOrzggc4mOhuRbSl-->
+                            <span class="ship-ico" data-page-node-id="9Z0ZEgevtxPwwuueDT9wv3"><!--pnid:MFn66j5LBkbS3f16n8n7Vo-->🏬</span><!--pnid:03Wr8M3n3fLZJyA485EvqA-->
+                            <span class="ship-txt" data-page-node-id="joxejkEWSUmgg2ZMRA9PYL"><b data-page-node-id="fXOzRbN41CZyWSiuYE7EME"><!--pnid:hh382n6E4BX8zHKOd9OWvw-->全家超商取貨</b><small data-page-node-id="zTPHAht178uknuE5wcDUgZ"><!--pnid:fFllArQhbYHCHsHodHzFYY-->到店取貨 · 貨到付款</small></span><!--pnid:lGUPrQ0zCQSk3Wp4B4KM1S-->
+                            <span class="ship-fee free" data-page-node-id="cF6M84zK3zCjweaoSC5azk"><!--pnid:FWGjN0HWuVmCEXo9Ew7bY2-->免運</span><!--pnid:kCsKO9Q7EpUNJuOk5wa8Jd-->
+                        </label><!--pnid:9GM9SmLLccXcfLyQeAD4N6-->
+                        <label class="ship-opt" id="shipOptHome" onclick="selectShip('home')" data-page-node-id="aP0B6YKbYPMbsnvtCQhRf6"><!--pnid:1F5sGQeYe8CdDl6uzyNmUd-->
+                            <span class="ship-ico" data-page-node-id="K8vdbWi8FJcPpNjPxAnKpy"><!--pnid:yJQDw4anLFYYYEJjU1OynT-->🚚</span><!--pnid:oY1555IMGTh81p6KQMsXv9-->
+                            <span class="ship-txt" data-page-node-id="wgcTd0xaHzAgiZer8tsQ8r"><b data-page-node-id="lOmLcXeikWtU6A7WymamzN"><!--pnid:j3xwHS9zTJAIA1EA8H0yfX-->黑貓宅配到府</b><small data-page-node-id="Lbr24JoDyEwseg7sM6gxvD"><!--pnid:HRqCQqpxnzCnVPOcFEFFIC-->專人配送到家 · 貨到付款</small></span><!--pnid:ihv84HnZoEfpSzNk2Gvma6-->
+                            <span class="ship-fee" id="shipHomeFee" data-page-node-id="yqxPKfn3jpagxPA3Yxh7YG"><!--pnid:6pWU5COsslDaDMPQrGL9Vr-->運費 $100</span><!--pnid:BOCimrTTljaAwGxkKJR8bV-->
+                        </label><!--pnid:MzQDEKSXY8GSHNkUzR9D0w-->
+                    </div><!--pnid:YmfIcdm5FHcH1r4IR5A0Hm-->
+                    <div class="ship-fee-line" id="shipFeeLine" data-page-node-id="E1OdClQrhEeJSkkKxX6hoM"></div><!--pnid:lACcMJGaRpHhpZs1HNMp3G-->
+                    <div class="promo-row" data-page-node-id="ilL9F3yr2EykAb4WwmcJlO"><!--pnid:RDCEmiCTDum007fjcxFf6X-->
+                        <input type="text" id="promoInput" placeholder="輸入客服提供的優惠碼" maxlength="20" data-page-node-id="cHMBj8HzBqNyVcbYC9ght2"><!--pnid:7XSJ4iAEddmwkrhoogo933-->
+                        <button type="button" onclick="applyPromo()" data-page-node-id="D1V7KADyOuztESBYm5iekM"><!--pnid:clcoQ8zmmvJHjj6QHaTQZ2-->套用</button><!--pnid:sZ4TGL1EG172FJkLxo4MBz-->
+                    </div><!--pnid:bcBMlg2Pyz92mk4RBCcaBD-->
+                    <div class="promo-ok" id="promoOk" style="display:none;" data-page-node-id="a9JpbvPfEou4B4Pfo9qNzw"></div><!--pnid:3H5aw64HvCTB8sGWPC1rsr-->
+                    <div class="promo-hints" id="promoHints" data-page-node-id="TQnVHwIFC33SGO4bb2BneC"></div><!--pnid:rPBei88ldIW57nKZs82Af4-->
+                    <div class="input-group" data-icon="🏪" id="storeGroup" data-page-node-id="Ky9JML3ST5gZ1qkwOb4Goz"><!--pnid:8YaZ4JqedhGKW4CLDzDDTb-->
+                        <input type="text" id="custStore" placeholder="請輸入取貨門市（例：忠孝門市 / 店號）" maxlength="60" data-page-node-id="gDnflZP4jG8ucYntKCkbOP"><!--pnid:VdG7QZCDeiKzYbihHD0uTv-->
+                    </div><!--pnid:k5zjitxCYhFj5fElcb0oJB-->
+                    <div class="input-group" data-icon="🏙️" id="cityGroup" style="display:none;" data-page-node-id="Pvm7fMqDFL4yd6v2qlp2i5"><!--pnid:GolAT6BtjcXIko2RYud7vD-->
+                        <select id="custCity" data-page-node-id="7x2q4NnZC6seoyhRshWPF2"><!--pnid:jqetWla1lnCDUBeseRHhC4-->
+                            <option value="" data-page-node-id="BAYWXFU4qVZmvpfW3XmXmo"><!--pnid:XzJvr260qGttka2ISGtilX-->請選擇收件縣市</option><!--pnid:nPP5sqcVXibUukmtzKEIIi-->
+                            <option value="台北市" data-page-node-id="mUhMt6Uzpgz8tABMeNMDj4"><!--pnid:D2EHhqs5kbBITiJMsZBJlp-->台北市</option><!--pnid:vFksNRCPymkHAVYH9MXxOc-->
+                            <option value="新北市" data-page-node-id="3Z2waY8eGoBnqLiN0bslzt"><!--pnid:zDFzldw4qumKs5wIAXz5MS-->新北市</option><!--pnid:AvGezYjHqG7UIP9Tr23zWs-->
+                            <option value="桃園市" data-page-node-id="GtMA5N1iHCFSptfJiQ0O83"><!--pnid:KQuUkS2WPZjOof7E14W01v-->桃園市</option><!--pnid:SmmPNz26QECXlMye4rRQbY-->
+                            <option value="台中市" data-page-node-id="AWehB3ADl2dInHHOHk4zoR"><!--pnid:rbVycW4uexDTBvrk19uMFn-->台中市</option><!--pnid:erPdxz8KEU3lSYLYm6jHcE-->
+                            <option value="台南市" data-page-node-id="OJEitPhBDWOITwwDDdnT78"><!--pnid:GmqwEVKrsgz83JfkPCxkBC-->台南市</option><!--pnid:O4z2IR6bYXe8YmTQ4hKr9V-->
+                            <option value="高雄市" data-page-node-id="6VKsie0rHEZPiw4Nv1Ppz8"><!--pnid:5YObXvN7QkDrYMYyICONqn-->高雄市</option><!--pnid:rP5XK8GpGz6ANJiqhwt9RJ-->
+                            <option value="基隆市" data-page-node-id="mVejixtKJIWQ5sGQLPHjY2"><!--pnid:6JhbA1Z5cgbJmIMhS6GlND-->基隆市</option><!--pnid:GMF2ACqHoebIa7lAp5Ko6O-->
+                            <option value="新竹市" data-page-node-id="54G3yVnF5YYXKNB5xflJK9"><!--pnid:6fJ5VlrHBqajuTkK4RtdtO-->新竹市</option><!--pnid:2vSBcTieeAl8pnOdjtGzjq-->
+                            <option value="新竹縣" data-page-node-id="RRudQ05EamqHfmCTfkT8PI"><!--pnid:P39spmtldwv6JD9CYzcSRB-->新竹縣</option><!--pnid:up3EAIG8HBOQgPYAkWHm6d-->
+                            <option value="苗栗縣" data-page-node-id="kH0AKBKkvKfPLKkqH22EcZ"><!--pnid:2LnIgGLqlK3YgM0DCh4oWU-->苗栗縣</option><!--pnid:zOprDjIPUqmmucapnTvUmE-->
+                            <option value="彰化縣" data-page-node-id="YXEgevjHn0eTKuwxpe76QD"><!--pnid:UtPabAJunwEBL2Gnurgczf-->彰化縣</option><!--pnid:fdg6IOMyhv9oCmxIgEarJ0-->
+                            <option value="南投縣" data-page-node-id="cpEDMmScBBUT1FQKYdrwiQ"><!--pnid:pFClh9EM3nLo65oBfGpvLF-->南投縣</option><!--pnid:DmqF18LAP3xQniQD3UbNFs-->
+                            <option value="雲林縣" data-page-node-id="nKDZa5CogLBB2M8yti9KeQ"><!--pnid:PELEMiXLBKOzAJmpoJrx25-->雲林縣</option><!--pnid:B8f7dBjQmfN6ka3Z3VHBAL-->
+                            <option value="嘉義市" data-page-node-id="eyeuWaexbXvvqexHnUDoNc"><!--pnid:N5WDiF0WV4nWv9EHxBXDgN-->嘉義市</option><!--pnid:9CdmTkyCXhbfhw1WKPNbSv-->
+                            <option value="嘉義縣" data-page-node-id="5FhDRmStKuc0GNyQChvWWJ"><!--pnid:abQC7N71PtyAAoEtEO7oTD-->嘉義縣</option><!--pnid:I7kcNS1CU3Fg104dad5ou3-->
+                            <option value="屏東縣" data-page-node-id="Z8FhXsHlz4ZlumBDWKmzq3"><!--pnid:mu2l1ZeNCqtfErmjiMAXd4-->屏東縣</option><!--pnid:YvIm0uwrMgKXKcmq9KFMS0-->
+                            <option value="宜蘭縣" data-page-node-id="gtCSIu0BEkSGwH4QQ77rzX"><!--pnid:OCQeJ6jNcmGF7BHDWua5gI-->宜蘭縣</option><!--pnid:sgcpC5x5TVaazCatSK8S8s-->
+                            <option value="花蓮縣" data-page-node-id="8egEDC6jGofqE3WkuxEvCs"><!--pnid:OE1vmg08BmzH8aSRBWUnBx-->花蓮縣</option><!--pnid:sy2YTW9r7ofeGbr4krzmit-->
+                            <option value="台東縣" data-page-node-id="zWGHFRvvxEqCcuzeVM3Dc4"><!--pnid:GCJoCJrnBbErCxyqH9Alag-->台東縣</option><!--pnid:5UBVVaUfIIQE5BlRpD2zBH-->
+                            <option value="澎湖縣" data-page-node-id="m0PGPgVa7AmdNDbJwEoTZW"><!--pnid:igPbpNJ1KnjFGmNBd7FiPl-->澎湖縣</option><!--pnid:24q51zqSnhD6CFnzelNKOV-->
+                            <option value="金門縣" data-page-node-id="kapEGeyPV5c4BswCZKuRau"><!--pnid:6mHBQeJmwdKajqprW8WXiF-->金門縣</option><!--pnid:upc3MVew6ANOAwMy81P0D5-->
+                            <option value="連江縣" data-page-node-id="nDE6SybbGCK6mexZ8PDDm1"><!--pnid:IK0ZszcohwKUp0FtGhy9SX-->連江縣</option><!--pnid:Ec6yxTLKvuz8FAwz830mte-->
+                        </select><!--pnid:h5n9pxHRycbTIaJUfdUwrD-->
+                    </div><!--pnid:lkfsFqoVNMMqqZnKzFVsTZ-->
+                    <div class="input-group" data-icon="📍" id="addrGroup" style="display:none;" data-page-node-id="FPzKEQF29Q5mtycnvLuGxY"><!--pnid:5LzGBvTWOEJyGuwHHk0EgT-->
+                        <input type="text" id="custAddress" placeholder="請輸入鄉鎮市區 + 街道門牌" maxlength="100" data-page-node-id="qc1wjLpruEodCcK23UalEQ"><!--pnid:MEifFrMGy2Qg6VreQr2uIb-->
+                    </div><!--pnid:n2SfmRi5qjiYkyDCmhtzUG-->
 
-                    <div class="deliver-tip">
-                        <span>🚚 預計 2–3 天到貨</span>
-                        <span>💵 貨到付款</span>
-                        <span id="deliverShipTip">🏪 超商取貨免運</span>
-                    </div>
+                    <div class="deliver-tip" data-page-node-id="pDbIx61xhvHFyF6b04qLDn"><!--pnid:28un3T2IgzQyyA8ROyAfOo-->
+                        <span data-page-node-id="yf6kPnGSN4CrE3eT8Zn9Ak"><!--pnid:T4hHLeRqdV2r55H1iRceFf-->🚚 預計 2–3 天到貨</span><!--pnid:C0PDOnny8OMvTbIFH6mZ6o-->
+                        <span data-page-node-id="eveV1zJkalLGsyGUgbKvbx"><!--pnid:zShUsCELg10H3xkOl0XhMS-->💵 貨到付款</span><!--pnid:kniTORYfZtckUOjBuMcQv0-->
+                        <span id="deliverShipTip" data-page-node-id="zPhFF9E0KKcmJ82lhUDCW0"><!--pnid:nA7wgaaKqQpWCOexPMJpKk-->🏪 超商取貨免運</span><!--pnid:tWoBRSkCGx6nFxl1hnU8Vl-->
+                    </div><!--pnid:zyuw3APy4XgRSYXFwGmeNf-->
 
-                    <div class="form-warning">
-                        ✅ 本公司安心承諾：<br>
-                        1. 100% 貨到付款，確認質感再付錢。<br>
-                        2. 支持拆箱驗貨，不滿意直接拒收。<br>
-                        3. 外包裝「絕無」精品字樣，隱私 100%。<br>
+                    <div class="form-warning" data-page-node-id="X8dmLnh7kCZYC4iDApwLFz"><!--pnid:AyXLUvAK7NGzBqgoAVEHmx-->
+                        ✅ 本公司安心承諾：<br data-page-node-id="DX4NUt3UrJYZIa5sytV3LO"><!--pnid:ZOTsCLdSwwZ7NZqATPEETb-->
+                        1. 100% 貨到付款，確認質感再付錢。<br data-page-node-id="grYaS4fX6wnQkvj5fO3KNh"><!--pnid:cFUxiEiZNRsKGyPlKd6sRZ-->
+                        2. 支持拆箱驗貨，不滿意直接拒收。<br data-page-node-id="RNQzUFoVwl7I5MramgSGg2"><!--pnid:TF16SnPARTOFiCWHcy3us3-->
+                        3. 外包裝「絕無」精品字樣，隱私 100%。<br data-page-node-id="k1OM3xge3qJCmA8SshtZqE"><!--pnid:J8musb8qiL8FVWK7xSBsWA-->
                         4. 7天無條件退換貨，運費我們吸收。
-                    </div>
+                    </div><!--pnid:bUicZAmAkuwkMx8RGvrnQe-->
 
-                    <div class="form-privacy-text">
-                        <span>🔒</span>
-                        <div>您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div>
-                    </div>
+                    <div class="form-privacy-text" data-page-node-id="uTvVjWR606EXFHVbDti5Op"><!--pnid:x7nPbS8yEwsCwRmSpvnaSk-->
+                        <span data-page-node-id="IcAQ283Ef2917lsCcvfXIE"><!--pnid:qunVEyFOECsDzA2XA5MHbX-->🔒</span><!--pnid:YhMxxUcVUp4BdJy6vAynfr-->
+                        <div data-page-node-id="f4FPlJPElHHYlX2lS6QymC"><!--pnid:J7b5hcZZCbE2JxvQf52aeu-->您的資料受嚴格加密保護，僅用於本次「貨到付款」寄送，絕不對外洩漏。</div><!--pnid:6Jec3MOVhOtXcKIpVGNtpH-->
+                    </div><!--pnid:v1yRIYmOguEPoYVauqJeJX-->
 
-                    <button type="button" class="submit-btn" id="submitBtn">
+                    <button type="button" class="submit-btn" id="submitBtn" data-page-node-id="DrglI4JVToczqmhW1DWiL2"><!--pnid:rBsNsEu33Xyqqs3mIVyMta-->
                         🔒 確認送出，加 LINE 獲取報價
-                    </button>
-                    <div style="font-size:11px; color:#999; margin-top:8px; text-align:center; line-height:1.5;">
+                    </button><!--pnid:NIKHNDWQwJG1EUo0IViHEp-->
+                    <div style="font-size:11px; color:#999; margin-top:8px; text-align:center; line-height:1.5;" data-page-node-id="y2vyaq5yQyExI7HCOBRrE1"><!--pnid:VwVrmLXG1fJ8zOZwRsnF5R-->
                         送出後請加入 LINE，才能收到訂單進度與客服通知
-                    </div>
-                </form>
-            </div>
+                    </div><!--pnid:lTaVCRsjxJWidH0CFE0E6w-->
+                </form><!--pnid:OfmDDCBqCBB7F9HNsZfDRp-->
+            </div><!--pnid:X5HdqCnP1lTySfgWqRuBe1-->
 
-            <div id="successContainer" style="display: none;">
-                <h2 style="color: #00a000; margin-bottom: 10px;">✅ 已收到您的預約！</h2>
-                <p style="color: var(--text-gray); margin-bottom: 16px; font-size: 14px;">
-                    系統已收到您的資料！<br>點下方按鈕直接聯繫客服，馬上為您報價。
-                </p>
+            <div id="successContainer" style="display: none;" data-page-node-id="EzOCmwTu6pQqG3nGH7gHqq"><!--pnid:3CjIEZkO3gf57lYN0kbeUC-->
+                <h2 style="color: #00a000; margin-bottom: 10px;" data-page-node-id="dC7dm4mTQ0KFkjNkUKy2WT"><!--pnid:HRVZQtAWWzB4AigaS6wM23-->✅ 已收到您的預約！</h2><!--pnid:t00XLudEnQ2u3HBlOylgrd-->
+                <p style="color: var(--text-gray); margin-bottom: 16px; font-size: 14px;" data-page-node-id="tADDm8iduuB9n5uxHxuyAk"><!--pnid:tdweyaqtYT1S4aL91rHicE-->
+                    系統已收到您的資料！<br data-page-node-id="TeulcmWhYmAv1w77gpfqFl"><!--pnid:e0x6XCEXZi07pkn7Bdy3W9-->點下方按鈕直接聯繫客服，馬上為您報價。
+                </p><!--pnid:nWDUmH2WHNCU1zSGGmF4K0-->
 
                 <a id="mobile-line-btn" href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener"
                    style="display:block; width:100%; padding:16px; background:#00c800; color:#fff; border-radius:10px;
                           font-size:18px; font-weight:bold; text-decoration:none; box-sizing:border-box;
-                          box-shadow:0 6px 18px rgba(0,200,0,0.35); margin-bottom:14px; text-align:center;">
+                          box-shadow:0 6px 18px rgba(0,200,0,0.35); margin-bottom:14px; text-align:center;" data-page-node-id="OtQYCr8hl5MbIXZlQIzIcz"><!--pnid:DDDYMIvS80oq8ivj9gCZDo-->
                     💬 立即聯繫 LINE 客服
-                </a>
+                </a><!--pnid:EetKRyV8pyfRC62au418pY-->
 
-                <div id="desktop-line-box" style="padding: 6px 0;">
-                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 0 20px rgba(0,200,0,0.2); border: 1px solid #eee;">
-                        <a id="lineQrLink" href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener" title="點我開啟 LINE">
+                <div id="desktop-line-box" style="padding: 6px 0;" data-page-node-id="0ExpuKS7rheBrlO0WC1yN2"><!--pnid:tgsoODnh844cjwHodCvgzu-->
+                    <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 0 20px rgba(0,200,0,0.2); border: 1px solid #eee;" data-page-node-id="EA64j5mXBW8XzRXJLpHAhm"><!--pnid:NUEeXZHCbnavxD4VffNiZA-->
+                        <a id="lineQrLink" href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener" title="點我開啟 LINE" data-page-node-id="vSr9FdGtPI5Hi5NpehpUIF"><!--pnid:GQxalFvipc0uPHq1Me9qvL-->
                             <img id="lineQrImg" src="images/line-qr.jpg" alt="LINE QR Code"
                                  style="width: 150px; height: 150px; display: block; border-radius: 5px; cursor: pointer;"
-                                 onerror="this.src='https://via.placeholder.com/150x150?text=QR+Code'">
-                        </a>
-                    </div>
-                    <p style="color: var(--text-dark); font-size: 13px; margin: 10px 0 0;">📷 手機可掃描，或直接點 QR 開啟 LINE</p>
-                </div>
+                                 onerror="this.src='https://via.placeholder.com/150x150?text=QR+Code'" data-page-node-id="3Wav58ux3BA2WRW1YpepGB"><!--pnid:nQBnRL9p6gMonGTBC3ky7p-->
+                        </a><!--pnid:mDS7mzAXMQF4LUcUYqPwTb-->
+                    </div><!--pnid:zOHbpn0WUl56i7p8iw69ZA-->
+                    <p style="color: var(--text-dark); font-size: 13px; margin: 10px 0 0;" data-page-node-id="0yXPuBFQJHTSrX0QyDe6vo"><!--pnid:8DCxf5pT6OuyEVPiD6JbZF-->📷 手機可掃描，或直接點 QR 開啟 LINE</p><!--pnid:vUeB0hDakvhobxECFdwtao-->
+                </div><!--pnid:QLBxnYFRdw9QoAOhy3IRCA-->
 
-                <p style="color: var(--gold-dark); font-size: 13px; margin: 14px 0 0; font-weight: bold;">
+                <p style="color: var(--gold-dark); font-size: 13px; margin: 14px 0 0; font-weight: bold;" data-page-node-id="d2hOeCrwwj1BhK682XGl6r"><!--pnid:p2WmJRLG4vRlaZJmWCsOKT-->
                     💬 您也可以直接在右下角聊天室與客服對話
-                </p>
-                <p style="color: #ff4757; font-size: 12px; margin: 8px 0 0; line-height: 1.5;">
+                </p><!--pnid:rcwCea1DNnekQGtqZPV2Fp-->
+                <p style="color: #ff4757; font-size: 12px; margin: 8px 0 0; line-height: 1.5;" data-page-node-id="cKICdRHfSJZRkHuVcEBt1d"><!--pnid:Lw5E0OBQWEk8eJknVmThJc-->
                     ※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE
-                </p>
-            </div>
-        </div>
-    </div>
+                </p><!--pnid:rOrESbTNAHZ10RwBlpyulY-->
+            </div><!--pnid:C46opRm4iOc8V0eggg9pDY-->
+        </div><!--pnid:pe3E9UhGpdBFZWhJbP5eDc-->
+    </div><!--pnid:11O2DRqWRxJpzHoZuRESFi-->
 
-    <div class="modal-overlay" id="budgetSelectModal" style="z-index: 4000;">
-        <div class="budget-modal-content">
-            <h3>請選擇您的預算區間</h3>
-            <p id="budgetModalProductName" style="color:var(--text-dark); font-weight:bold; font-size:14px;"></p>
-            <div class="budget-modal-btns">
-                <button class="budget-modal-btn" onclick="confirmAddToCart('基礎')">
-                    <div>💎 基礎款</div><span class="price" id="priceOptBase">約 —</span>
-                </button>
-                <button class="budget-modal-btn" onclick="confirmAddToCart('高端')">
-                    <div>👑 高端款</div><span class="price" id="priceOptMid">約 —</span>
-                </button>
-                <button class="budget-modal-btn" onclick="confirmAddToCart('定制')">
-                    <div>✨ 尊榮定制</div><span class="price" id="priceOptCustom">約 —</span>
-                </button>
-            </div>
-            <button class="budget-modal-cancel" onclick="closeBudgetModal()">取消</button>
-        </div>
-    </div>
+    <div class="modal-overlay" id="budgetSelectModal" style="z-index: 4000;" data-page-node-id="2yubwIvqTXAayQ9lENHyLS"><!--pnid:8WOtMGS3YHCAG2uRiXuO8M-->
+        <div class="budget-modal-content" data-page-node-id="SsvXdqvICK8SfwedOAZUxI"><!--pnid:fs2nDsB0AcA7FAV3LAfOnP-->
+            <h3 data-page-node-id="vT1X7Y7AoKprZkye18aB23"><!--pnid:ZBG08PjNDlCOoY1eHpZ34g-->請選擇您的預算區間</h3><!--pnid:qPp62irVqFv25DLXSPTXzP-->
+            <p id="budgetModalProductName" style="color:var(--text-dark); font-weight:bold; font-size:14px;" data-page-node-id="zdwiGpIsBg4WIt2O934I1o"></p><!--pnid:PGMWP1YXTyXgbQ41JOnRHJ-->
+            <div class="budget-modal-btns" data-page-node-id="MfxWVFzytRB0uymGw0wNs3"><!--pnid:ddsfBch9AAkVDBWiqF2oRA-->
+                <button class="budget-modal-btn" onclick="confirmAddToCart('基礎')" data-page-node-id="t2czU3oGYwtk6YxJVoMCKI"><!--pnid:mcNhkEenYkhCznfpH1Xvc5-->
+                    <div data-page-node-id="JJyffILw5l1HbdTiiGLD7n"><!--pnid:9ZG96lcBcB5fb247CmMOAf-->💎 基礎款</div><span class="price" id="priceOptBase" data-page-node-id="LoRfbzAAbqL2gIU7xpZmoW"><!--pnid:pkjE68UnrtvJ3bFt71b5pa-->約 —</span><!--pnid:hWtNSHC7qDNK40H68uPob7-->
+                </button><!--pnid:R8Z4SOk8eLKozjR3RhHgvH-->
+                <button class="budget-modal-btn" onclick="confirmAddToCart('高端')" data-page-node-id="l9IK00uXnsDPH0vyECZlar"><!--pnid:rorDZgZlvbMijcWCxhp44W-->
+                    <div data-page-node-id="DNAK0PuG3IBTPO1h9FUCc9"><!--pnid:XO1kmPCBZLMaNHF8oGCiOW-->👑 高端款</div><span class="price" id="priceOptMid" data-page-node-id="PG6TNAupEo7gj1XDSBdAdB"><!--pnid:Od9NBKDfErBOCT0AsTv8iH-->約 —</span><!--pnid:ToQP1GsOpKWXSMmUe3pEGv-->
+                </button><!--pnid:aK1fy2Y4xVzh20MhEK82Be-->
+                <button class="budget-modal-btn" onclick="confirmAddToCart('定制')" data-page-node-id="1CtJGpOKbDk7fTnNgaPvsX"><!--pnid:JqCP239bWI7y4wLq2Zxb44-->
+                    <div data-page-node-id="UQinU3TMLOHqoVPygiz6ZJ"><!--pnid:jgsew98K1IDPDrfMkkCufO-->✨ 尊榮定制</div><span class="price" id="priceOptCustom" data-page-node-id="m9mNxBHH0viK1Gt5OuZ9s6"><!--pnid:WNaAyCX2eJDDdrOVd4kT0T-->約 —</span><!--pnid:tPdzDlUKTm0SaR2HMQhnEW-->
+                </button><!--pnid:eBGe3sIzLXLZD7jd2QCMpY-->
+            </div><!--pnid:CqIIwNpomAVukKOXB3ZZzo-->
+            <button class="budget-modal-cancel" onclick="closeBudgetModal()" data-page-node-id="gPGwFC7liRRijs8HR7ErCr"><!--pnid:OlWE7TDjgHK4kRZSRsyJxj-->取消</button><!--pnid:hXH0O6OVWqPjoQhXWBOsmu-->
+        </div><!--pnid:Yu7KH3tzGxAWLVoKg47s6r-->
+    </div><!--pnid:KWGNKRDGHZBDJdOBO9Wud6-->
 
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" onclick="closeLightbox()">&times;</div>
-        <div class="gallery-track" id="galleryTrack"></div>
-        <div class="gallery-hint">← 左右滑動查看更多細節 →</div>
-    </div>
+    <div class="lightbox" id="lightbox" data-page-node-id="LD27d2toyC5OQty5sT50n7"><!--pnid:ICOk3ASIonTc1q5Ujsbdeu-->
+        <div class="lightbox-close" onclick="closeLightbox()" data-page-node-id="an852HdvW0efexl99wE5ft"><!--pnid:IuCq9NZO8oMwj7sgoVj0gB-->&times;</div><!--pnid:aC2HzCMf0mz0qIRvtI8CDs-->
+        <div class="gallery-track" id="galleryTrack" data-page-node-id="JFUxnHV41ATB0VWTZpd6fw"></div><!--pnid:eEdnnn6rG8wDB0XYbgtaag-->
+        <div class="gallery-hint" data-page-node-id="hO5s6YawevqeCoRpTmOoO0"><!--pnid:Sr84c47hFhmq8Bk357vnxK-->← 左右滑動查看更多細節 →</div><!--pnid:akPq3Z1S0ehRMMkyzRPbWx-->
+    </div><!--pnid:qAMyfrn52SWlmBpNsFrrpl-->
 
-    <nav class="m-nav" id="mNav">
-        <button class="m-nav-item active" data-t="home" onclick="mNavGo('home')"><span>🏠</span>首頁</button>
-        <button class="m-nav-item" data-t="shop" onclick="mNavGo('shop')"><span>🛍</span>商品</button>
-        <button class="m-nav-item" data-t="cart" onclick="mNavGo('cart')"><span>🛒</span>購物車<i class="m-dot hide" id="mCartDot">0</i></button>
-        <button class="m-nav-item" data-t="fav" onclick="mNavGo('fav')"><span>❤️</span>收藏</button>
-        <button class="m-nav-item" data-t="chat" onclick="mNavGo('chat')"><span>💬</span>客服</button>
-    </nav>
+    <nav class="m-nav" id="mNav" data-page-node-id="5DIqhcqCB8DG3iJ3f4GsdA"><!--pnid:rEiiHVhnTSXIbCWEBfl9Cg-->
+        <button class="m-nav-item active" data-t="home" onclick="mNavGo('home')" data-page-node-id="lySxOFMEMwEHFBjjUZeWp4"><span data-page-node-id="lXA7CQ391oq96T3PmqJiov"><!--pnid:niyvBoPstupcY2gxcDnYF5-->🏠</span><!--pnid:E9PE696ckckyK0etAPhRJN-->首頁</button><!--pnid:AnRJdO46XncrnHpP3HZ913-->
+        <button class="m-nav-item" data-t="shop" onclick="mNavGo('shop')" data-page-node-id="ggRQtb1F4usE12JeewswKC"><span data-page-node-id="l9po2oYbbO9E0UtJnzG4Hz"><!--pnid:sTg1ZQZuZxE8D7nuOHjjAd-->🛍</span><!--pnid:UlobZ7Q0ZXJtihw59FESSz-->商品</button><!--pnid:5EFUtU5hcnHKqVtMLx4OKx-->
+        <button class="m-nav-item" data-t="cart" onclick="mNavGo('cart')" data-page-node-id="x3NXLwcXDtSjsXtQIfbrie"><span data-page-node-id="ik60uQOYJCjTvtphLBXb8b"><!--pnid:OVVQbO7hDcoBXVGAgy8lsH-->🛒</span><!--pnid:MksykCAx8RmAiG7nU78ptI-->購物車<i class="m-dot hide" id="mCartDot" data-page-node-id="rucYFlyjvB0Jkl8ChmXMEA"><!--pnid:fc2Vsu9XAvPOeoJoEgBH2y-->0</i></button><!--pnid:nyS7rHske5p5sBum3ZP3pW-->
+        <button class="m-nav-item" data-t="fav" onclick="mNavGo('fav')" data-page-node-id="DEIV1y1vGMtHiyxfpIToJP"><span data-page-node-id="GQCvT5SOJZdVUD33dP80RF"><!--pnid:YS7bRYBsbdCFTtbe95ASnN-->❤️</span><!--pnid:ETcsuy2eFBrFaISWEeZOsv-->收藏</button><!--pnid:HWaOa2Dvx5IfNzmKilJRDe-->
+        <button class="m-nav-item" data-t="chat" onclick="mNavGo('chat')" data-page-node-id="EOdCKb9TbtXyN3mdhGSCd6"><span data-page-node-id="0nKLHwIZkmwWtELNvFHNX6"><!--pnid:sdvQIsdfMKwxKX501A23GA-->💬</span><!--pnid:H7NRLtMg10cwSHDHig8Ie1-->客服</button><!--pnid:CMtkpLZ3UuU0UbQKSDIu9p-->
+    </nav><!--pnid:ebt3VEp8PODMr9UM0FXCGH-->
 
-    <div class="floating-btns">
-        <button class="float-btn cart-hot" id="cartFloatBtn" onclick="toggleCart()" title="購物車 · 我的訂單">🛒
-            <span class="chat-badge" id="cartBadge">0</span>
-        </button>
-        <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服">📱</a>
-        <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部">⬆️</button>
-    </div>
+    <div class="floating-btns" data-page-node-id="QzKFQz1GV0VnAdROKjZJRU"><!--pnid:Kzc6qXsx1K2SAgP5D4fZwa-->
+        <button class="float-btn cart-hot" id="cartFloatBtn" onclick="toggleCart()" title="購物車 · 我的訂單" data-page-node-id="ImGg5VRpSKJKvKZLyLUWMc"><!--pnid:J0EN99SibE7ujuUFPix8MD-->🛒
+            <span class="chat-badge" id="cartBadge" data-page-node-id="BjGGYJtEsQ48wFEJfb0uBR"><!--pnid:LqwcOnpIVwCiH9BG8lCtBj-->0</span><!--pnid:fuJvRdIF69S0LBhlbt1rfS-->
+        </button><!--pnid:2F1HfuUKvVagW6x8XpecNY-->
+        <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" class="float-btn btn-line" title="LINE 客服" data-page-node-id="Oga1xzwYJvVQfQdWyLX720"><!--pnid:DNmfabAP6ecotBnWhG6mje-->📱</a><!--pnid:cj8p9XPhTOdAsAELHcrnlE-->
+        <button class="float-btn btn-top" id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="回到頂部" data-page-node-id="DimElSpoysHicyae9ohxWm"><!--pnid:LKHwRMQxcv7cLfaXEkxAeU-->⬆️</button><!--pnid:J3rJp4ZSsnTEVsv3biRFir-->
+    </div><!--pnid:2FFSlptkymPCZREXsOAh6o-->
 
-    <!-- 可拖動客服球（按住拖到任意位置，鬆手自動吸附左右邊緣） -->
-    <button class="float-btn btn-chat" id="btnChat" title="線上客服">🎧
-        <span class="chat-badge" id="chatBadge">0</span>
-        <span class="btn-chat-label">客服</span>
-    </button>
+    <!-- 可拖動客服球（按住拖到任意位置，鬆手自動吸附左右邊緣） --><!--pnid:jJgm9da551E9AAvOL6RcmL-->
+    <button class="float-btn btn-chat" id="btnChat" title="線上客服" data-page-node-id="We9L1rAU9EDSzMq0MyDhSL"><!--pnid:cc9vVRPHTdHvxrfsi7cWC0-->🎧
+        <span class="chat-badge" id="chatBadge" data-page-node-id="8XLLXdQSk9TpcPiTHDSrzr"><!--pnid:KEpZN2FCEGK85TPHtREJxY-->0</span><!--pnid:i25ZvN5QYZ0iCj25HYFffG-->
+        <span class="btn-chat-label" data-page-node-id="DDDPtHpQuCrsNIJ48YZu02"><!--pnid:C9aApHDafqFFnlErOYlfOQ-->客服</span><!--pnid:IIutjnD6LLC90ZkUXKICCI-->
+    </button><!--pnid:5OHBWUYhrHz8WLNGN9sslz-->
 
-    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-    <div class="cart-drawer" id="cartDrawer">
-        <div class="cart-header">
-            <h3>🛒 購物車 · 我的訂單</h3>
-            <span class="cart-close" onclick="toggleCart()">&times;</span>
-        </div>
-        <div id="cartItemsBox" style="display:none; padding: 0 16px;"></div>
-        <div class="my-tabs" id="myTabs">
-            <button class="my-tab active" data-s="all" onclick="setMyTab('all')">全部</button>
-            <button class="my-tab" data-s="pending" onclick="setMyTab('pending')">待發貨</button>
-            <button class="my-tab" data-s="shipped" onclick="setMyTab('shipped')">待收貨</button>
-            <button class="my-tab" data-s="delivered" onclick="setMyTab('delivered')">待評價</button>
-            <button class="my-tab" data-s="aftersale" onclick="setMyTab('aftersale')">售後</button>
-        </div>
-        <div class="cart-body" id="cartBody">
-            <div class="my-empty">載入中...</div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total" id="myOrderCountText">共 0 筆訂單</div>
-            <button class="cart-checkout-btn" id="myCartBtn" onclick="openCartCheckout()" style="display:none;">🛒 前往購物車結帳</button>
-        </div>
-    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()" data-page-node-id="gjIOxJNInnvaToO8cbRAA9"></div><!--pnid:b9SAAYKmmdMfsGnKoyIh9C-->
+    <div class="cart-drawer" id="cartDrawer" data-page-node-id="aYN458oEikMdaicqR3MvgY"><!--pnid:uAXPJ0X956Cr86tDBSJgAl-->
+        <div class="cart-header" data-page-node-id="E3vtMMEBRAeY7wPwXr9h5L"><!--pnid:Bz8Hbh0voteHH8sSKWUyrV-->
+            <h3 data-page-node-id="eDoQrumzJ0ALsPeqL4Z4jg"><!--pnid:XFKHGMVYNlJA72UGMcrV4j-->🛒 購物車 · 我的訂單</h3><!--pnid:EAsW1J0EEByd0902cBYQ6s-->
+            <span class="cart-close" onclick="toggleCart()" data-page-node-id="WoysD6gHeRJDb08FL4mC8I"><!--pnid:YPS72Wgm8SvbXOCKxAPXvE-->&times;</span><!--pnid:b0FVB5f51z76EDYcoEkZbT-->
+        </div><!--pnid:uD9pPqCpOBSdobfFgCybmE-->
+        <div id="cartItemsBox" style="display:none; padding: 0 16px;" data-page-node-id="eIc46NIlwndQBlQM5T2Yu1"></div><!--pnid:Wc8bGvmTnB3fw6TFEgVLsX-->
+        <div class="my-tabs" id="myTabs" data-page-node-id="Ey2uDt5tk08GNlUg2ozErx"><!--pnid:l8g8EkRZhX72UlVZluJQBg-->
+            <button class="my-tab active" data-s="all" onclick="setMyTab('all')" data-page-node-id="IhiLihL16ZpvmufeZuAzuv"><!--pnid:4QNsUC9Di8gP7mrCmFD57N-->全部</button><!--pnid:LuiM7pVtxrhQnzJUGKOJwu-->
+            <button class="my-tab" data-s="pending" onclick="setMyTab('pending')" data-page-node-id="osRAwsMVEaVrjYYQwVGmYo"><!--pnid:CtFLm8Zbgt7ZR9eFiBaSsF-->待發貨</button><!--pnid:C2HnF9GiIsdaulG2lTDAqx-->
+            <button class="my-tab" data-s="shipped" onclick="setMyTab('shipped')" data-page-node-id="iMxaHpPfAE7T2vmhG9r3h1"><!--pnid:QqizQUXI0N4wM0Um35NZod-->待收貨</button><!--pnid:QhSIug4iCTTv9AHyrUBNbc-->
+            <button class="my-tab" data-s="delivered" onclick="setMyTab('delivered')" data-page-node-id="kQN8K7TMJNLmkc7FZzF85A"><!--pnid:ttO2WI6tCeWXAk4HBcMs1C-->待評價</button><!--pnid:3g5ihM3azkmqUavePznqEk-->
+            <button class="my-tab" data-s="aftersale" onclick="setMyTab('aftersale')" data-page-node-id="4MKw672mSPlg0C8zbmzC91"><!--pnid:SDIBbuA9FO7Bi2GzqXrdfC-->售後</button><!--pnid:S0aWo9hvBJVrdVlLl5J0C5-->
+        </div><!--pnid:FMlJhjlJcqZgbH9qZSCeW1-->
+        <div class="cart-body" id="cartBody" data-page-node-id="JSD5viQypX6PdDrOeJ42q4"><!--pnid:4TmW3f8iVlXjjIP7uC1C3u-->
+            <div class="my-empty" data-page-node-id="XJ9I82GHtzAsGtsWwc7fLV"><!--pnid:sXKmjFOwyGH9lZ3lhflq3T-->載入中...</div><!--pnid:KE4mCqXLoSguCHNyNF68X0-->
+        </div><!--pnid:F8ltbd8nmXjwZrBPeyUFLT-->
+        <div class="cart-footer" data-page-node-id="BICJipervGp1eyMR5KB9Ao"><!--pnid:8aEbnAj5mVukFTMjiglHCI-->
+            <div class="cart-total" id="myOrderCountText" data-page-node-id="J0MV5FAVovBQWXcpzX84zi"><!--pnid:o6iHY1ydWMzJBguBcqiQbX-->共 0 筆訂單</div><!--pnid:PBJLFUv8OAOBCJy2kKyNxU-->
+            <button class="cart-checkout-btn" id="myCartBtn" onclick="openCartCheckout()" style="display:none;" data-page-node-id="QgunHpBWWTkrY0z5oBKcSz"><!--pnid:aw30D34JayMQ5Grqez08bw-->🛒 前往購物車結帳</button><!--pnid:YacpEHL1acKv2OOyjn8Jx9-->
+        </div><!--pnid:YQJZLuOw6s3BGm6pveYPOn-->
+    </div><!--pnid:gKSaWc0qMYvuH87Rc4osDz-->
 
-    <div class="logi-modal-mask" id="logiModal" onclick="if(event.target===this)this.classList.remove('active')">
-        <div class="logi-modal">
-            <div style="font-size:40px;">🚚</div>
-            <h3 style="margin:8px 0 4px;">物流單號查詢</h3>
-            <div id="logiInfo" style="color:#666; font-size:13px; margin-bottom:10px;"></div>
-            <div class="logi-num" id="logiNum"></div>
-            <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
-                <button class="my-btn primary" onclick="copyTracking()">📋 複製單號</button>
-                <button class="my-btn" onclick="document.getElementById('logiModal').classList.remove('active')">關閉</button>
-            </div>
-        </div>
-    </div>
+    <div class="logi-modal-mask" id="logiModal" onclick="if(event.target===this)this.classList.remove('active')" data-page-node-id="Lg5FYMCCLjnggvNI2SrqiL"><!--pnid:ZAEh1jJtiGkGKSvPt1a022-->
+        <div class="logi-modal" data-page-node-id="HTcuFILQabEjIG0rj607pN"><!--pnid:wCKcHBZKUuIRQjCuZkKuMQ-->
+            <div style="font-size:40px;" data-page-node-id="rJTQkp6NgEwKZ9VEKmfU9v"><!--pnid:75QSaBTR9iS7HsCBh6QpBw-->🚚</div><!--pnid:UAh53R1v8HcRFztXuYgBvP-->
+            <h3 style="margin:8px 0 4px;" data-page-node-id="MvKtxEpBqYWJQxJ5tsbrqJ"><!--pnid:0vKLuzM4TlYL0yBG1MX5Cg-->物流單號查詢</h3><!--pnid:QufavY8lDgu9CMOvVOeBBE-->
+            <div id="logiInfo" style="color:#666; font-size:13px; margin-bottom:10px;" data-page-node-id="HibJfGAqo0rfR16H9Jb6HY"></div><!--pnid:syCzac8G1L6zksELonDwHV-->
+            <div class="logi-num" id="logiNum" data-page-node-id="lmFv0qFOmJWpKPw8FTRb2n"></div><!--pnid:zs573Lwy50EJ01EPc6fuZW-->
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;" data-page-node-id="MFQZiO2Hk07mXzVxUWSTsB"><!--pnid:ZggbHiXV40kPQFuWAfsNL2-->
+                <button class="my-btn primary" onclick="copyTracking()" data-page-node-id="FyEMT3RZhpbPUKnn3MF5l2"><!--pnid:CboTbVfFs2KQmlNqOajXFO-->📋 複製單號</button><!--pnid:rNv7U4mY5U0KrlFJRzmvQK-->
+                <button class="my-btn" onclick="document.getElementById('logiModal').classList.remove('active')" data-page-node-id="suCKNBgeJH69BpOgFP0GDN"><!--pnid:kEnEWJVqAUI9OpUEuofWB5-->關閉</button><!--pnid:NNwK74WhGDWP8GRsjkIBZv-->
+            </div><!--pnid:AdzgIenc5F35h9rCGmd3q7-->
+        </div><!--pnid:bZae5qvYVFGwKGH6SKUBok-->
+    </div><!--pnid:0jhySWCaYJIujUDaYXbfiT-->
 
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-header">
-            <div class="chat-header-info">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=50" class="chat-header-avatar" alt="小美">
-                <div class="chat-header-text">
-                    <div class="chat-header-name">尊享腕錶客服 - 小美</div>
-                    <div class="chat-header-status">在線中，秒回覆</div>
-                </div>
-            </div>
-            <div class="chat-close" onclick="toggleChat()">&times;</div>
-        </div>
-        <div class="chat-ctx" id="chatCtx">
-            <img id="chatCtxImg" src="" alt="">
-            <div class="chat-ctx-info">
-                <div class="chat-ctx-name" id="chatCtxName"></div>
-                <div class="chat-ctx-price" id="chatCtxPrice"></div>
-            </div>
-            <div class="chat-ctx-order">
-                <div class="chat-ctx-qty">
-                    <button onclick="ctxQty(-1)">−</button><span id="chatCtxQty">1</span><button onclick="ctxQty(1)">+</button>
-                </div>
-                <button class="chat-ctx-send" onclick="sendOrderMessage()">📋 發送訂單</button>
-            </div>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="chat-welcome">
+    <div class="chat-widget" id="chatWidget" data-page-node-id="5bjeSgbzfixhh71jVoo7G2"><!--pnid:l0pfvNEUIWDlZWyebUNNti-->
+        <div class="chat-header" data-page-node-id="PoWsa5W1WOLOxkPsqGuuB2"><!--pnid:prbT9zA5GAmZiAwUGRqOsM-->
+            <div class="chat-header-info" data-page-node-id="BJzWs8hcIFASl0JvGeZvZG"><!--pnid:SfHUxUVQDEk6TdBN6bZ1Fo-->
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=50" class="chat-header-avatar" alt="小美" data-page-node-id="yuY2hkaAUrHpk6MQpLyMHh"><!--pnid:UaBImzLuuA8V3XuxQkExox-->
+                <div class="chat-header-text" data-page-node-id="zgHgPg6mrmQnTcsv5GFC1F"><!--pnid:32fCDUrVqCyH9CXHe648bX-->
+                    <div class="chat-header-name" data-page-node-id="ICgd6xlpWo6OFkO9ciXfCJ"><!--pnid:7MICsDSR2btCALtC3CKwNJ-->尊享腕錶客服 - 小美</div><!--pnid:vUn2nveNE8seI7FkYZIzGi-->
+                    <div class="chat-header-status" data-page-node-id="abMMo564olWhKbfRHL8sCw"><!--pnid:PHQZf6zAAGF7E2LZsoNwlo-->在線中，秒回覆</div><!--pnid:sT54vyLNNe2wcNPHDDtk42-->
+                </div><!--pnid:S1VHnHXRsU410BFvtyCsob-->
+            </div><!--pnid:x8kC1V1JbkgJN8XjBDEJQQ-->
+            <div class="chat-close" onclick="toggleChat()" data-page-node-id="T5jjVFCgmczk7CndVtw2By"><!--pnid:NMgV5QouUsf7XzVFFv4vbV-->&times;</div><!--pnid:ykeaN75uMLRF9KNg3xF0tx-->
+        </div><!--pnid:fNzYrKzCVsb3YyltX1UYPv-->
+        <div class="chat-ctx" id="chatCtx" data-page-node-id="ZvuShqMP5N6esQS63LBUuA"><!--pnid:ZkCYHLp3hOmd2TGAUWTxkm-->
+            <img id="chatCtxImg" src="" alt="" data-page-node-id="OWvwPtGgDxIs6mXJQhdFAf"><!--pnid:cyWJtU11bndVNbYACVSnal-->
+            <div class="chat-ctx-info" data-page-node-id="0FgIaSWpUAzeHg98xk3OnY"><!--pnid:3N0rJ7B0SBU7kidOWnGK22-->
+                <div class="chat-ctx-name" id="chatCtxName" data-page-node-id="gSaPA6neisEJnq5ncTierB"></div><!--pnid:gzJ1NtiuarJgxgwh0CGweX-->
+                <div class="chat-ctx-price" id="chatCtxPrice" data-page-node-id="6cdxAS6WkL18B6FZ79jmVA"></div><!--pnid:Gq8WIYHZY0G2dxbHm1sHlO-->
+            </div><!--pnid:qMXFI0VhRtXnVccB8H45ku-->
+            <div class="chat-ctx-order" data-page-node-id="0Pdb7qzSe2v5zisr2CI8Bp"><!--pnid:AHVYhz3zStUBuhbgardndw-->
+                <div class="chat-ctx-qty" data-page-node-id="Y1rj3jh3U3IXFvFvSzd90e"><!--pnid:JYI7zMDKGM85VBdG8mt3p8-->
+                    <button onclick="ctxQty(-1)" data-page-node-id="NOmSkhwDuRk3Rd8dTjjn1Y"><!--pnid:JuKwOXTersKb6jpXGacqBv-->−</button><span id="chatCtxQty" data-page-node-id="cy2m2rnBPkRZfk6FxCW3YY"><!--pnid:N8HEHgGijFXC09QqIkAABM-->1</span><button onclick="ctxQty(1)" data-page-node-id="Haq5utY6adxMxfFEc3GSUh"><!--pnid:qapOstnyVH86EFMJ6otY7o-->+</button><!--pnid:6PGwFrqk3lcc1JXlGiANgB-->
+                </div><!--pnid:5yaKBsONbmves1A9oMaden-->
+                <button class="chat-ctx-send" onclick="sendOrderMessage()" data-page-node-id="79y2ruZDo5pAS45r29QnO6"><!--pnid:7C0oBgLxdiGPiERnHqYcm1-->📋 發送訂單</button><!--pnid:ZbAq5hTsxkPPO8oJHOyJVG-->
+            </div><!--pnid:4Q0HXL39jbqQclQTCNaFtj-->
+        </div><!--pnid:fXoq6Z02ztGF4CsWnrk35w-->
+        <div class="chat-body" id="chatBody" data-page-node-id="IhlIwXqni63DGb5AUPOyfD"><!--pnid:CZPsFbOE54HzZ68BtgvNcZ-->
+            <div class="chat-welcome" data-page-node-id="0n1plMx9APweq5xudEHuWq"><!--pnid:oXY6BaCFEHQeDRwSTyuZTl-->
                 👋 您好！我是尊享腕錶客服，請問想看哪一款手錶呢？
-                <div style="margin-top:10px; padding:10px; background:#fff8e1; border:1px dashed #0052d9; border-radius:8px; color:#8a6d3b; font-size:12px; line-height:1.6; text-align:left;">
-                    ⚠️ 關閉網頁後就收不到客服訊息了<br>
+                <div style="margin-top:10px; padding:10px; background:#fff8e1; border:1px dashed #0052d9; border-radius:8px; color:#8a6d3b; font-size:12px; line-height:1.6; text-align:left;" data-page-node-id="QM78HFs1EfV5IaZ6Olfnc4"><!--pnid:K9tBjGmtdwAFAFqoopyw9l-->
+                    ⚠️ 關閉網頁後就收不到客服訊息了<br data-page-node-id="0hlpbVjSRSiHfWswEmzovQ"><!--pnid:FujLxQ0GfdsGdD7JNmJ9JB-->
                     建議先加入我們的 LINE 官方帳號 👇
                     <a href="https://line.me/ti/p/vCEhGhnT9Z?openExternalBrowser=1" target="_blank" rel="noopener"
                        style="display:block; margin-top:8px; padding:10px; background:#00c800; color:#fff; border-radius:6px;
-                              text-align:center; font-weight:bold; text-decoration:none; font-size:13px;">
+                              text-align:center; font-weight:bold; text-decoration:none; font-size:13px;" data-page-node-id="eTuj2zkYFXnRpFeL3a6ovx"><!--pnid:IRTxgGVhG7dBaHzifHfKaT-->
                         📱 加入 LINE 官方帳號
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="chat-input-area">
-            <input type="file" id="chatFileInput" accept="image/*" hidden onchange="handleChatImage(this)">
-            <button onclick="document.getElementById('chatFileInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#00bcd4; border:none; cursor:pointer; font-size:16px;" title="傳送圖片">📷</button>
-            <input type="file" id="chatVideoInput" accept="video/*" hidden onchange="handleChatVideo(this)">
-            <button onclick="document.getElementById('chatVideoInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#ff4757; border:none; cursor:pointer; font-size:16px;" title="傳送影片">📹</button>
-            <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()" style="background:var(--gold); color:#fff;">送出</button>
-        </div>
-    </div>
+                    </a><!--pnid:2YxxxKjJeSZEYGu5rSZslM-->
+                </div><!--pnid:XtHXXic7a7p1RwmJKg5GAX-->
+            </div><!--pnid:1RjgBcn88bwN818TtThrXi-->
+        </div><!--pnid:ovcMB2FjVGj6sEeHMscLvm-->
+        <div class="chat-input-area" data-page-node-id="R5LdrtI03KZ8v2eb9yMlKW"><!--pnid:jVuYmhGFDsHLdLA0TcMxTq-->
+            <input type="file" id="chatFileInput" accept="image/*" hidden onchange="handleChatImage(this)" data-page-node-id="gBCkjATAFN1sTz4mk8v4lz"><!--pnid:5DsQaucsxtnzE2r3jStBVJ-->
+            <button onclick="document.getElementById('chatFileInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#00bcd4; border:none; cursor:pointer; font-size:16px;" title="傳送圖片" data-page-node-id="HIoDotiXl0EQQ45vKrTLlo"><!--pnid:iUyZAKci0trV34vosRq0dC-->📷</button><!--pnid:HX5gSqDPGDZBHNYgIsffqr-->
+            <input type="file" id="chatVideoInput" accept="video/*" hidden onchange="handleChatVideo(this)" data-page-node-id="A2SaSXCHT76OFigrzEOSfm"><!--pnid:5qQzKbQH3DDOJ0BXAXjQW7-->
+            <button onclick="document.getElementById('chatVideoInput').click()" style="padding:10px; border-radius:50%; background:#f0f0f0; color:#ff4757; border:none; cursor:pointer; font-size:16px;" title="傳送影片" data-page-node-id="r4KfFvx1cgk8cD1jQqtF7X"><!--pnid:yIBXKdHG6TFHiPrdWiJrii-->📹</button><!--pnid:z7c4jJfoVgxs3bQB3SaOLy-->
+            <input type="text" id="chatInput" placeholder="輸入訊息..." onkeypress="if(event.key === 'Enter') sendChatMessage()" data-page-node-id="KTENzJ7BqwYVdiizdHTjy0"><!--pnid:3koJ8vMxnxTh1FhVyIPkq8-->
+            <button onclick="sendChatMessage()" style="background:var(--gold); color:#fff;" data-page-node-id="hSWswCBqA6YEEcfANHWCo9"><!--pnid:iACan8U5QkQ3ywNR6xRGXw-->送出</button><!--pnid:bMUUWgX5w2yEYGz46AJOoa-->
+        </div><!--pnid:oX8YUBEcfK9euIgPNSnROC-->
+    </div><!--pnid:1ktSEONvoBOv5M2jt0XUEr-->
 
-    <div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()">
-        <span class="close-icon" onclick="closeImageLightbox()">&times;</span>
-        <img src="" id="lightboxImg" onclick="event.stopPropagation()">
-    </div>
+    <div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()" data-page-node-id="mt6uvPwvDTcNmejAsvtjpQ"><!--pnid:TjagUUX4TCyYpuuSQN0EV0-->
+        <span class="close-icon" onclick="closeImageLightbox()" data-page-node-id="TJisE2oVDofbDs3NyOhTDu"><!--pnid:aYFnBU0YssgFqE9OqAcOOW-->&times;</span><!--pnid:HC6BqwteTb2l2vNihxcwlM-->
+        <img src="" id="lightboxImg" onclick="event.stopPropagation()" data-page-node-id="GAxmyaBUlbV1Kq5UaJKRrf"><!--pnid:D87HM67Ir1x6UC87XmnT6z-->
+    </div><!--pnid:SGWCcAJ0fPvuZHO1MeeopL-->
 
     <script>
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
@@ -1149,12 +1615,28 @@
                 { code: 'fr',    label: 'Français', enabled: true, builtin: true },
                 { code: 'de',    label: 'Deutsch',  enabled: true, builtin: true }
             ];
+            const AI_PERSONA = '你是這家腕錶商店的線上客服助理。請用「繁體中文」簡潔友善地回答客人關於商品、價格、發貨、物流、退換售後的問題。規則：1) 只回答與本店購物相關的問題，其他話題婉轉帶回購物；2) 不確定的資訊（例如具體庫存、議價）不要編造，請客人留言等待人工客服回覆；3) 回覆控制在 120 字以內。';
             const DEFAULTS = {
                 currency: { symbol: '$', code: 'TWD', label: '台幣', rate: 1, position: 'before', decimals: 0, thousands: true },
                 languages: BUILTIN_LANGS,
                 translations: {},
                 originalPrices: {},
-                productI18n: {}
+                productI18n: {},
+                aiChat: {
+                    enabled: false,
+                    mode: 'kb_first',
+                    edgeUrl: '',
+                    model: 'deepseek-chat',
+                    persona: AI_PERSONA,
+                    kb: [
+                        { k: '發貨,出貨,多久到,幾天到,物流', a: '現貨商品 48 小時內出貨：超商取貨約 2-3 天、宅配約 1-2 天送達。出貨後可到「購物車 · 我的訂單」點「查物流」看單號。' },
+                        { k: '退,換,退貨,換貨,售後', a: '收到商品 7 天內、未使用且包裝完整可申請退換。直接在這裡留言說明問題，我們會盡快為您處理。' },
+                        { k: '運費,免運,郵費', a: '🏪 超商取貨免運費；🚚 宅配運費 $100，消費滿 $3000 免運。' },
+                        { k: '付款,支付,付款方式,貨到付款,轉帳', a: '超商取貨支援貨到付款；宅配可選貨到付款或 ATM 轉帳，下單時選擇即可。' },
+                        { k: '尺寸,錶徑,大小,手圍', a: '各款尺寸以商品頁規格為準。您可以告訴我手圍或偏好，我幫您推薦合適的款式。' },
+                        { k: '品質,真偽,保固,保修', a: '本店商品出貨前皆經過嚴格品檢，提供一年保固；非人為損壞可免費維修。' }
+                    ]
+                }
             };
             let cfg = loadLocal();
             let source = 'local';
@@ -2494,7 +2976,12 @@
             const el = document.getElementById('btnChat');
             if (!el) return;
             const KEY = 'wbChatBtnPos';
+            const VER = 'wbChatBtnPosV2';
             try {
+                if (!localStorage.getItem(VER)) {
+                    localStorage.removeItem(KEY);      /* 改版：客服球默認移到左側，清除舊的右側記憶 */
+                    localStorage.setItem(VER, '1');
+                }
                 const p = JSON.parse(localStorage.getItem(KEY) || 'null');
                 if (p && p.left != null) {
                     el.style.left = Math.max(8, Math.min(window.innerWidth - 63, p.left)) + 'px';
@@ -2552,7 +3039,10 @@
                 .eq('session_id', sessionId)
                 .order('created_at', { ascending: true });
             if (error || !data) return;
-            data.forEach(m => appendChatMessage(m.message, m.sender, m.created_at, m.image_url, m.msg_type));
+            data.forEach(m => {
+                appendChatMessage(m.message, m.sender, m.created_at, m.image_url, m.msg_type);
+                AI_CHAT.seedHistory(m);
+            });
         }
 
         async function sendConsultMessage(text, img) {
@@ -2561,6 +3051,7 @@
             }]);
             if (error) { alert('訊息送出失敗：' + error.message); return; }
             appendChatMessage(text, 'user', new Date().toISOString(), img || null, 'text');
+            AI_CHAT.maybeReply(text);
         }
 
         async function sendChatMessage() {
@@ -2574,6 +3065,7 @@
             }]);
             if (error) { alert('訊息送出失敗：' + error.message); input.value = text; return; }
             appendChatMessage(text, 'user', new Date().toISOString(), null, 'text');
+            AI_CHAT.maybeReply(text);
         }
 
         async function handleChatImage(inputEl) {
@@ -2644,12 +3136,152 @@
             appendChatMessage('[影片]', 'user', new Date().toISOString(), url, 'video');
         }
 
+        /* ================= AI 客服（知識庫優先 + DeepSeek 自動回覆） ================= */
+        var AI_CHAT = (function () {
+            const OWN_AI = new Set();          // 自己插入的 AI 消息 id，實時訂閱時去重
+            let HIST = [];                     // 上下文（最近 8 條）
+            function conf() {
+                try {
+                    const c = window.SiteConfig && window.SiteConfig.get();
+                    return (c && c.aiChat) || {};
+                } catch (e) { return {}; }
+            }
+            function isOn() { const c = conf(); return !!(c && c.enabled); }
+            function edgeUrl() {
+                const c = conf();
+                return String(c.edgeUrl || '').trim() || (typeof SUPABASE_URL === 'string' ? SUPABASE_URL.replace(/\/$/, '') + '/functions/v1/ai-chat' : '');
+            }
+            function wantsHuman(text) {
+                return /(人工|真人|轉人工|转人工|客服在嗎|客服在哪|找客服|在線客服)/i.test(String(text || ''));
+            }
+            function kbMatch(text) {
+                const c = conf();
+                const kb = (c && c.kb) || [];
+                const t = String(text || '').toLowerCase();
+                for (let i = 0; i < kb.length; i++) {
+                    const keys = String(kb[i].k || '').split(/[,，、;；|\s]+/).map(x => x.trim().toLowerCase()).filter(Boolean);
+                    for (let j = 0; j < keys.length; j++) {
+                        if (keys[j] && t.indexOf(keys[j]) >= 0) return kb[i].a;
+                    }
+                }
+                return null;
+            }
+            function cacheMsg(sender, text) {
+                HIST.push({ role: sender === 'user' ? 'user' : 'assistant', content: String(text).replace(/^🤖\s*/, '') });
+                if (HIST.length > 8) HIST = HIST.slice(-8);
+            }
+            function typingEl() {
+                const body = document.getElementById('chatBody');
+                const d = document.createElement('div');
+                d.className = 'msg admin';
+                d.innerHTML = '<span class="ai-typing">🤖 正在輸入…</span>';
+                body.appendChild(d);
+                body.scrollTop = body.scrollHeight;
+                return d;
+            }
+            function pushReply(text) {
+                const c = conf();
+                const full = '🤖 ' + text;
+                cacheMsg('admin', full);
+                supabase.from('chat_messages')
+                    .insert([{ session_id: sessionId, sender: 'admin', message: full, msg_type: 'text' }])
+                    .select()
+                    .then(function (r) {
+                        const row = (r.data && r.data[0]) || null;
+                        if (row && row.id) OWN_AI.add(row.id);
+                        appendChatMessage(full, 'admin', (row && row.created_at) || new Date().toISOString(), null, 'text');
+                    })
+                    .catch(function () {
+                        appendChatMessage(full, 'admin', new Date().toISOString(), null, 'text');
+                    });
+            }
+            async function askRemote(text) {
+                const c = conf();
+                const url = edgeUrl();
+                if (!url) return null;
+                const ctrl = new AbortController();
+                const timer = setTimeout(function () { ctrl.abort(); }, 30000);
+                try {
+                    const r = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'apikey': (typeof SUPABASE_ANON_KEY === 'string' ? SUPABASE_ANON_KEY : '')
+                        },
+                        signal: ctrl.signal,
+                        body: JSON.stringify({
+                            message: String(text).slice(0, 1500),
+                            history: HIST.slice(-8),
+                            persona: c.persona || '',
+                            model: c.model || 'deepseek-chat'
+                        })
+                    });
+                    const j = await r.json().catch(function () { return {}; });
+                    clearTimeout(timer);
+                    if (j && j.reply) return String(j.reply).trim();
+                    return null;
+                } catch (e) { clearTimeout(timer); return null; }
+            }
+            /* 商家接管檢測：最近 2 分鐘內有「人工」回覆（非 🤖 開頭）＝商家正在處理，AI 全部靜默 */
+            async function humanActive() {
+                try {
+                    const { data } = await supabase.from('chat_messages')
+                        .select('sender, message, created_at')
+                        .eq('session_id', sessionId)
+                        .order('created_at', { ascending: false })
+                        .limit(15);
+                    if (!data) return false;
+                    for (let i = 0; i < data.length; i++) {
+                        const m = data[i];
+                        if (m.sender === 'admin' && !/^🤖/.test(String(m.message || ''))) {
+                            const gap = Date.now() - new Date(m.created_at).getTime();
+                            return gap >= 0 && gap < 2 * 60 * 1000;
+                        }
+                    }
+                    return false;
+                } catch (e) { return false; }
+            }
+            /* 客人發言後觸發（僅純文本；【開頭的系統/訂單消息不觸發） */
+            async function maybeReply(text) {
+                if (!isOn()) return;
+                const t = String(text || '').trim();
+                if (!t || t.charAt(0) === '【' || t === '[圖片]' || t === '[影片]') return;
+                cacheMsg('user', t);
+                if (wantsHuman(t)) {
+                    /* 客人主動要人工：AI 停 10 分鐘，避免插話 */
+                    sessionStorage.setItem('wb_ai_until', String(Date.now() + 10 * 60 * 1000));
+                    pushReply('好的，已為您轉接人工客服，請稍候，客服看到訊息後會馬上回覆您 🙏');
+                    return;
+                }
+                const until = Number(sessionStorage.getItem('wb_ai_until') || 0);
+                if (Date.now() < until) return;
+                /* 商家 2 分鐘內回覆過＝已接管，AI 自動回覆關閉；超過 2 分鐘無回覆則自動啟動 */
+                if (await humanActive()) return;
+                const c = conf();
+                const mode = (c.mode || 'kb_first');
+                const hit = kbMatch(t);
+                if (hit && mode !== 'ai_only') { pushReply(hit); return; }
+                if (mode === 'kb_only') return;
+                const el = typingEl();
+                const ans = await askRemote(t);
+                el.remove();
+                if (ans) { pushReply(ans); return; }
+                if (!hit && mode !== 'kb_only') {
+                    /* AI 未配置或失敗：不硬答，留給人工 */
+                }
+            }
+            function owns(id) { return id && OWN_AI.has(id); }
+            function seedHistory(msg) { cacheMsg(msg.sender, msg.message); }
+            return { maybeReply: maybeReply, owns: owns, seedHistory: seedHistory, isOn: isOn };
+        })();
+
         supabase.channel('front-chat-' + sessionId)
             .on('postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'chat_messages', filter: `session_id=eq.${sessionId}` },
                 payload => {
                     const msg = payload.new;
                     if (msg.sender === 'user') return;
+                    if (AI_CHAT.owns(msg.id)) return;
 
                     const widget = document.getElementById('chatWidget');
                     if (widget.dataset.loaded) {
@@ -3263,7 +3895,7 @@
                 <h2>服務條款</h2>
                 <p>使用本網站服務即代表您同意以下條款：</p>
                 <h3>1. 商品性質</h3>
-                <p>本網站販售之腕錶均為嚴選品質之商品，並非原廠公司貨。我們保證商品出貨前皆經過嚴格品檢。</p>
+                <p>本網站販售之腕錶均為嚴選品質之商品，出貨前皆經過嚴格品檢，並提供一年保固服務。</p>
                 <h3>2. 交易方式</h3>
                 <p>本網站一律採用「貨到付款」方式。您收到商品並確認無誤後，再將款項交給物流司機即可。</p>
                 <h3>3. 防範詐騙</h3>
@@ -3277,7 +3909,7 @@
                 <h3>📦 無腦退換貨 3 步驟：</h3>
                 <div style="background: #f9f9f9; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
                     <p style="margin-bottom: 8px;"><strong style="color: #0052d9;">步驟 1：</strong> 拍下商品問題處（或直接說不想買了）。</p>
-                    <p style="margin-bottom: 8px;"><strong style="color: #0052d9;">步驟 2：</strong> 透過網站右下角的「線上客服」或 LINE 聯繫我們。</p>
+                    <p style="margin-bottom: 8px;"><strong style="color: #0052d9;">步驟 2：</strong> 透過網站左下角的「線上客服」或 LINE 聯繫我們。</p>
                     <p style="margin-bottom: 0;"><strong style="color: #0052d9;">步驟 3：</strong> 我們直接請黑貓宅急便去您家收貨，換新或退款秒處理。</p>
                 </div>
                 <p style="color: #ff4757; font-weight: bold; text-align: center;">※ 絕對不會刁難，請放心購買！</p>
@@ -3295,9 +3927,9 @@
         });
         loadProducts(false);
         setupInfiniteScroll();
-    </script>
+    </script><!--pnid:pjY2ZrcBdNIFqVqiW0sgFD-->
 
-    <!-- ==================== 多語系切換（11 語） ==================== -->
+    <!-- ==================== 多語系切換（11 語） ==================== --><!--pnid:8DdWEpSAlKGi83oBgxawNZ-->
     <script>
     (function () {
         'use strict';
@@ -3385,7 +4017,7 @@
             '點下方按鈕直接聯繫客服，馬上為您報價。': { cn: '点下方按钮直接联系客服，马上为您报价。', en: 'Tap below to chat with us for a quote.', ja: '下のボタンから担当者へご連絡ください。', ko: '아래 버튼으로 상담원에게 문의하세요.' },
             '💬 立即聯繫 LINE 客服':        { cn: '💬 立即联系 LINE 客服', en: '💬 Contact us on LINE', ja: '💬 LINEで問い合わせる', ko: '💬 LINE으로 문의하기' },
             '📷 手機可掃描，或直接點 QR 開啟 LINE': { cn: '📷 手机可扫描，或直接点 QR 开启 LINE', en: '📷 Scan on mobile or tap the QR', ja: '📷 スマホで読み取り、またはタップ', ko: '📷 휴대폰으로 스캔하거나 QR을 탭하세요' },
-            '💬 您也可以直接在右下角聊天室與客服對話': { cn: '💬 您也可以直接在右下角聊天室与客服对话', en: '💬 Or chat with us using the button at bottom-right', ja: '💬 右下のチャットからも相談できます', ko: '💬 오른쪽 아래 채팅으로도 상담 가능' },
+            '💬 您也可以直接在左下角聊天室與客服對話': { cn: '💬 您也可以直接在左下角聊天室与客服对话', en: '💬 Or chat with us using the button at bottom-left', ja: '💬 左下のチャットからも相談できます', ko: '💬 왼쪽 아래 채팅으로도 상담 가능' },
             '※ 關閉網頁後將收不到客服訊息，建議點上方按鈕加入 LINE': { cn: '※ 关闭网页后将收不到客服讯息，建议点上方按钮加入 LINE', en: '＊Messages stop after you close the page — please join LINE.', ja: '＊ページを閉じると通知が届きません。LINE追加推奨。', ko: '※ 페이지를 닫으면 알림이 오지 않습니다. LINE 추가를 권장합니다.' },
             '尊享腕錶客服 - 小美':          { cn: '尊享腕表客服 - 小美', en: 'Support - Mei', ja: 'サポート - メイ', ko: '고객센터 - 메이' },
             '在線中，秒回覆':               { cn: '在线中，秒回复', en: 'Online · instant reply', ja: 'オンライン・即返信', ko: '온라인 · 즉시 응답' },
@@ -3755,8 +4387,8 @@
             initLang();
         }
     })();
-    </script>
-    <!-- ==================== 多語系切換結束 ==================== -->
+    </script><!--pnid:1RARWCSeSZrwCRTbQZPZ3N-->
+    <!-- ==================== 多語系切換結束 ==================== --><!--pnid:z3zD0kMnjpwBhRe4bpB3gX-->
 <script>
 /* ============================================================
    全站單一價格覆寫
@@ -3846,9 +4478,9 @@
         if (box) { mo.observe(box, { childList: true, subtree: true }); clearInterval(tryBind); tidy(); }
     }, 400);
 })();
-</script>
+</script><!--pnid:CkpnjLWjXBRpkrMjKp2DSA-->
 
-    <!-- ===== 長按訊息 → 翻譯（通訊軟體式） ===== -->
+    <!-- ===== 長按訊息 → 翻譯（通訊軟體式） ===== --><!--pnid:cvBEx0yrpJ732IqJD4CQ61-->
     <script>
     (function () {
         'use strict';
@@ -4115,7 +4747,7 @@
         /* 供外部调用（例如气泡内按钮） */
         window.translateChatBubble = doTranslate;
     })();
-    </script>
+    </script><!--pnid:WVG6YG06TDyRWrD4L6sZnw-->
 
-</body>
+</body><!--pnid:RdPEFHugUGNiksDH23c0Xv-->
 </html>
