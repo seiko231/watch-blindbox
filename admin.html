@@ -1,7 +1,6 @@
-
-<!DOCTYPE html><!--pnid:Dpse7fRAcMK6oSaHDwapaC-->
-<html lang="zh-TW" data-page-node-id="VkbbNrLB8lUsZNojBUq6FN"><!--pnid:VRj5TptEwADNHHsMVrgsgB-->
-<head data-page-node-id="gUNyMprBdxUIQ2TftUYweX"><script data-smartpage-injected="storage">(function(){
+<!DOCTYPE html><!--pnid:1IRZBdaSsOV7p2iqqVecMh-->
+<html lang="zh-TW" data-page-node-id="42dHL0EfYqg0ZN0Mowmzv3"><!--pnid:UMs0TFCTCbAKQEdOh10VCQ-->
+<head data-page-node-id="eAn6vee7QEoWwc05WoSfzj"><script data-smartpage-injected="storage">(function(){
 try{
   void window.localStorage;
   void window.sessionStorage;
@@ -464,12 +463,12 @@ addEventListener('keydown',function(e){
 // 文档、本脚本随之重跑，故多次广播覆盖宿主晚挂监听的情况。
 function ready(){parent.postMessage({type:'SMARTPAGE_FIND_READY',supported:supports()},'*')}
 ready();setTimeout(ready,150);setTimeout(ready,500);
-})();</script><!--pnid:MlFgoYEyn8CyB3q2QHlIbP-->
-    <meta charset="UTF-8" data-page-node-id="es8xOjDQqunyq5MxhwpnNC"><!--pnid:U0U52jK1Rcv15RhisPW8lU-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="k2qrg2xDADeckHcdMrYaOi"><!--pnid:VL2rSgOU0ozMOLr9AnpLTk-->
-    <title>管理員後台 - 數據分析</title><!--pnid:3T8DafJFyGALk8iNr5j9kk-->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script><!--pnid:1W5NKrEaKjVC4pA8tRPWoH-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script><!--pnid:gZvTEPKaDpNXgHHTRyUJFx-->
+})();</script><!--pnid:ITAXsZCw6RGnMK19ZGt7lW-->
+    <meta charset="UTF-8" data-page-node-id="6iPYRK3U7oHQkSp2kotEIh"><!--pnid:FXa49mK9zcXm6gGYZ1ruZJ-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="q8BPuOCEN76SEdkd3mBVDs"><!--pnid:rM0rIfjPNTS19KBapKKiXi-->
+    <title>管理員後台 - 數據分析</title><!--pnid:BygWCOuQcmyH7ABBzWxOjg-->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script><!--pnid:oa9v6v8iPGWgY1nYXGQFfd-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script><!--pnid:DqeC53ldBKRUMslryZJQN3-->
 
     <style>
         body { background-color: #f3f4f6; color: #1a1a1a; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
@@ -729,526 +728,557 @@ ready();setTimeout(ready,150);setTimeout(ready,500);
         .pf-i18n-row label { display:block; font-size:11px; color:#0052d9; margin:2px 0 5px; }
         .pf-i18n-row input, .pf-i18n-row textarea { width:100%; padding:7px; background:#ffffff; border:1px solid #d9dde3; color:#1a1a1a; border-radius:4px; box-sizing:border-box; font-size:12px; }
         @media (max-width:600px) { .trans-row { grid-template-columns:1fr; } }
-    </style><!--pnid:e4UDR1W1smbx7NiiT2PcEk-->
-</head><!--pnid:5EJMLiblHeTtaBoehu3qGZ-->
-<body data-page-node-id="bjJwyHPWwZm3mlOYlQVTng"><!--pnid:9a7WZuiwieIfVN1s9C8ufd-->
+    </style><!--pnid:HFwFYsAVeoDDJojn15MyHc-->
+</head><!--pnid:2K7UgnF52uLtHLTxpuHbq0-->
+<body data-page-node-id="lyztEI0xKjViUsTxLSbhQs"><!--pnid:UvsIuOoGUrlEg0oEpYAGit-->
 
-    <div id="toast" class="toast" data-page-node-id="1NRwKzJifTgMy18XCJORSI"><!--pnid:vjr7UlrmDraEUFGdZzkEoo-->🔔 收到新訂單！</div><!--pnid:Ds220pLOnDs02dsMHvXgRs-->
+    <div id="toast" class="toast" data-page-node-id="koIeOfAvzyHRQPMC6PqZxb"><!--pnid:AbqAqmFhhLjBbh4GHKp6DV-->🔔 收到新訂單！</div><!--pnid:uoDid2rSZnX0WiDOEoMTh9-->
 
-    <!-- 優惠券編輯彈窗 --><!--pnid:EytICWcv0a5KQBg8MnntD5-->
-    <div class="add-modal" id="couponModal" data-page-node-id="3T8qRmQkq1gG5LDZHg1U7t"><!--pnid:kYWFXste9SGKZefbtfNf1S-->
-        <div class="add-modal-content" data-page-node-id="uiquHCyfyEhERXLipEMJ6e"><!--pnid:5gcvnHEKBe0CQyv3ktZxG2-->
-            <h3 id="couponModalTitle" data-page-node-id="QSGFqASjBELWnNqlJpXhP3"><!--pnid:hM8hW5Sby7w3uaBzJ9pLxe-->➕ 新增優惠碼</h3><!--pnid:LzytlSCVP4mBmatEUuPH6E-->
-            <label data-page-node-id="8OwXPIrK4PGjVvl9MahvyH"><!--pnid:17bBp2YGyF9b9ixwNa0fzK-->優惠碼 *（英文數字，不分大小寫）</label><!--pnid:JbFqRNdYl8qWSA8JHZ6t0a-->
-            <input type="text" id="cf-code" placeholder="例：SPRING300" maxlength="24" data-page-node-id="xLJrfVqNAB8T5ZbVC6JeHd"><!--pnid:OfWwNGeUCyPyyzANzgGw5k-->
-            <div class="row2" data-page-node-id="9MqdcLXBpalZZ4GPLMBCdD"><!--pnid:G5GDTq0qEL1W4CDtJRvLVd-->
-                <div data-page-node-id="gmuIlULZKYPA4cOBZtbwmQ"><!--pnid:FOEr7bopsJITx9UOjay5w5-->
-                    <label data-page-node-id="PmO50ouCYNwKNLTd0aX5hx"><!--pnid:Xphb6h7EBcPq9ELf7KGLJg-->折抵方式</label><!--pnid:Npri9oOTjy8E3NokJR8BZt-->
-                    <select id="cf-type" onchange="updateCouponTypeHint()" data-page-node-id="dtUkf9xNGGDKFSQ55ZpGQa"><!--pnid:Upww3kWjsh3ic0nE6VzpYI-->
-                        <option value="fixed" data-page-node-id="xfb8qZYDFn2lfTPFFiPxmP"><!--pnid:wdeZqQJmA2YJSI6L7JqDDq-->固定折抵金額</option><!--pnid:SJgwqzC7goRTWXBM4rAzRa-->
-                        <option value="percent" data-page-node-id="tDuewfohKrAlXkKfh8nPz1"><!--pnid:wtZpqNMPz78aFGlRO8tgSp-->折扣百分比（減 %）</option><!--pnid:7GmZVS3ldFWFZ6c3tGhuKD-->
-                    </select><!--pnid:a3TRTV5RTXmlCrk1UjiDSE-->
-                </div><!--pnid:cDQEEShOo4CPmbPAbxHBmi-->
-                <div data-page-node-id="80xIkdpd10Nu2xNy12R0vl"><label id="cf-value-label" data-page-node-id="TO2s8uwIPcqJUqX8EytPK7"><!--pnid:1yDwZOFhxJSdmpDa4DHQgB-->折抵金額（元）*</label><input type="number" id="cf-value" min="0" step="1" placeholder="例：300" data-page-node-id="v6r2FcXnGu1tK4LVueA3lJ"></div><!--pnid:oa0WgzeK9HkZ6nU2R48BXS-->
-            </div><!--pnid:JOqsS7FrazrhrlpiYCIi0E-->
-            <div style="font-size:12px; color:#8a8f99; margin:-4px 0 8px;" id="cf-type-hint" data-page-node-id="YBBFCy3fxef69zPhqqYTq2"><!--pnid:tNitZBTJNHtbV2HksYsO2A-->例：填 300 → 訂單現折 300 元</div><!--pnid:zzWxAAtViTwPOBdLmjFzil-->
-            <div class="row2" data-page-node-id="D1pH61lx4e2OKZ6cmWEHV7"><!--pnid:c4gETsukEmuZ6Tv4uzduHY-->
-                <div data-page-node-id="0zDFlnXZ7rs87jqnxPrnz4"><label data-page-node-id="x75CC9hcXD6IcV5yxw6NVI"><!--pnid:Un9vTVFbDbI0Bndf79HaHC-->最低消費（0 = 不限）</label><input type="number" id="cf-min" min="0" step="1" value="0" data-page-node-id="Q6WZsR6HEeBSDbOuFxtMLX"></div><!--pnid:vdUWpSnSoqCvlSs7OpVBYl-->
-                <div data-page-node-id="vs8YHv43xuf3x7YgGrcXNq"><label data-page-node-id="o7TDy7Q7vaJhAgDdNF3uGS"><!--pnid:cYrtbBZyybn4t1QpxkPigY-->使用次數上限（留空 = 不限）</label><input type="number" id="cf-max" min="1" step="1" placeholder="例：50" data-page-node-id="smkDEGiGJsjlT2lKaUKMnu"></div><!--pnid:ybGqkhDMYXCbVOW26u7c6G-->
-            </div><!--pnid:27XXXFmE9Br3Rwl52qBzpq-->
-            <div class="row2" data-page-node-id="55DJEzIlUjs6idbVtamLHR"><!--pnid:hwvh75mDrFEZYgdINCb55R-->
-                <div data-page-node-id="TnbyZsk6dsTlSvLCo0TPte"><label data-page-node-id="VihInC9CerwAk5HRSVd3qW"><!--pnid:hy7t9we4N1GvX1uBIN38FQ-->有效期限（留空 = 永久）</label><input type="date" id="cf-expire" data-page-node-id="fmLuordoD3s9qK7vitytDK"></div><!--pnid:rv8p3mXaEyfPSLp89CYYx8-->
-                <div data-page-node-id="UuvlKDqDHYjziIuhb2Gz1t"><!--pnid:mPeSzUgXdXBIfO10uArWGN-->
-                    <label data-page-node-id="1EShxRBZ7OKpd70uqLSZXY"><!--pnid:vm8bIXrN6tBFIlP0XCuQVs-->狀態</label><!--pnid:PvrDmwYH12rdS5CB9WhNPH-->
-                    <select id="cf-active" data-page-node-id="iLMm2wbzcmwCHev5AoV8Gr"><option value="true" data-page-node-id="jY8jqmxLbw3gs3FacxZEzc"><!--pnid:NTrCdjo5ECbHUPvmtomWQt-->啟用</option><option value="false" data-page-node-id="5k7Z6566lSplPNRWcPwqjP"><!--pnid:6IYGqMwg1KYNJfzXpfCjc3-->停用</option></select><!--pnid:fSOt37H7OMEDUYopeMnTPd-->
-                </div><!--pnid:BrnwqzYarY138GYGBBEKXq-->
-            </div><!--pnid:ickjmizyFjDzPXusNj7NPd-->
-            <label data-page-node-id="UqSBKVJOMIXDjrwEylTWkT"><!--pnid:tm8wjJWcbo8RT5baQZlJ9a-->備註（僅後台可見）</label><!--pnid:i8BFOV9aQaG5hqqzzKNRup-->
-            <input type="text" id="cf-note" placeholder="例：春季活動、IG 導流專用" maxlength="60" data-page-node-id="XuaBNAXnpOV7biQwsy9kOT"><!--pnid:R6Avc0fPkCmc47DFHH5qOW-->
-            <div class="add-modal-btns" data-page-node-id="yrbBuNKme2VujhUCOqTRWU"><!--pnid:r4skA2kOCX1UPlyrnZ792J-->
-                <button class="btn-cancel" onclick="closeCouponModal()" data-page-node-id="vTEePWnorCq9drufUQAGTK"><!--pnid:vmFtVb4rhN2Q5gUhFPADmc-->取消</button><!--pnid:iIXY8svhWyXctUZm1tyfGZ-->
-                <button class="btn-save" onclick="saveCoupon()" data-page-node-id="TwRfARtr5YCKXc7k5jvFI9"><!--pnid:d2BlyC8VyE3ObkVcrmzdSU-->儲存</button><!--pnid:fTzKoTHenX1454hrF5a8Gq-->
-            </div><!--pnid:Cf5bAY6Ua8R34am8xiY1VI-->
-        </div><!--pnid:RTXtiNnI8pr5A7XgyntIrd-->
-    </div><!--pnid:DV8YunA363Ima45dZVH7FV-->
+    <!-- 優惠券編輯彈窗 --><!--pnid:AxtTDjbMFyOqX4XUYq7oB3-->
+    <div class="add-modal" id="couponModal" data-page-node-id="LCNjoGzCP67fdyygtlT4Xj"><!--pnid:AOw1xviHHzVz5AtMVTVVza-->
+        <div class="add-modal-content" data-page-node-id="gqksuVbAA0lXW9WvOagaFP"><!--pnid:YCf1qSnsS9trF3K1Vfv9MF-->
+            <h3 id="couponModalTitle" data-page-node-id="dayDdPuqtAflfZFjVAtrmO"><!--pnid:bNyTBDSpUkEjKXNFzcLL1M-->➕ 新增優惠碼</h3><!--pnid:yUM9um0YntmOZnx0pPCylS-->
+            <label data-page-node-id="BDglUxxeP1ZorcfkJP7NXD"><!--pnid:JMkRIdNGYBwADVkkSLtDxE-->優惠碼 *（英文數字，不分大小寫）</label><!--pnid:iCMnLeAHryciQEar3EfIYO-->
+            <input type="text" id="cf-code" placeholder="例：SPRING300" maxlength="24" data-page-node-id="pZOCeOjiKVF16SoKpdUOSH"><!--pnid:iZR9DGVZaH2x7psjdPDSLn-->
+            <div class="row2" data-page-node-id="GyAFk9lpeHuGXb5KYkeTbv"><!--pnid:5jY3ir0C7e25E4tSQ3ONSf-->
+                <div data-page-node-id="IkZSCz6JYMYsgbG7XluBKA"><!--pnid:KZ4k3s5V605Ps1RlqZ0IVm-->
+                    <label data-page-node-id="FFHNAUJW13azHqAWAfw6dU"><!--pnid:BOI2DPZL6voodptAT1w9g1-->折抵方式</label><!--pnid:2Pj8l2KDAeDDpIBmUQfO3M-->
+                    <select id="cf-type" onchange="updateCouponTypeHint()" data-page-node-id="I0yCazInhItRR2al3GdTOn"><!--pnid:93zTQen74JDrNZDkoP4hug-->
+                        <option value="fixed" data-page-node-id="7GRAj0o2seC0QA1WfQc8uW"><!--pnid:ZrDPW7kJsWVKVi0FfiPp9x-->固定折抵金額</option><!--pnid:jxLKZ2zaOlXsUw57mV1l5A-->
+                        <option value="percent" data-page-node-id="Zclrljx2HHWKmwChGjEQWD"><!--pnid:RYtKMa1jBGnuyEosjZte25-->折扣百分比（減 %）</option><!--pnid:bUp02HbnKtdzTWPhlGhg9X-->
+                    </select><!--pnid:goD7jyuNrFvktc03uYCuLQ-->
+                </div><!--pnid:IM6eFKJwJcWjfZgRP0FoG4-->
+                <div data-page-node-id="TDkMbcckCBLAnfjvbXVHIT"><label id="cf-value-label" data-page-node-id="gKtzXHhnOYVTrbQyDksQgC"><!--pnid:AeebKlvkik80YE5ibrA2sN-->折抵金額（元）*</label><input type="number" id="cf-value" min="0" step="1" placeholder="例：300" data-page-node-id="2Klg6n5A9BF9zmjaT2A9bY"></div><!--pnid:JN5hIrN8FeViJKLVbmQ8Z9-->
+            </div><!--pnid:hyiGZRo3ot6NHmPee55KaC-->
+            <div style="font-size:12px; color:#8a8f99; margin:-4px 0 8px;" id="cf-type-hint" data-page-node-id="KJzWXs1nEB7J7WAtUrAnng"><!--pnid:PJhEoblrnJa0OEKBKdsEWg-->例：填 300 → 訂單現折 300 元</div><!--pnid:ghAjZuJGlDciN5yHmm70pq-->
+            <div class="row2" data-page-node-id="zgIsyelndussxHNvD8sPyZ"><!--pnid:HyX8AgslbkHjtkM8GhH6vl-->
+                <div data-page-node-id="BJ0Db7Mu21UuBmkPECJbyd"><label data-page-node-id="htfBcMnzCqxTeBkgIQa6G5"><!--pnid:vFitZFNnlFithYAnLuwz44-->最低消費（0 = 不限）</label><input type="number" id="cf-min" min="0" step="1" value="0" data-page-node-id="metbSnEu7tmT1Daax6SJBV"></div><!--pnid:nTIOZ4MPJjIfCMfLN91rZp-->
+                <div data-page-node-id="VGlPCDZbdBjmeysFacA13d"><label data-page-node-id="QvMDgTMUSqVupU1oJJN8XW"><!--pnid:18xqpCWpsYHrDuoQdm669K-->使用次數上限（留空 = 不限）</label><input type="number" id="cf-max" min="1" step="1" placeholder="例：50" data-page-node-id="4UgDNKp98zs1ZkkFqDCeUr"></div><!--pnid:I62TqEFtHZ0jdNHalVPD6Q-->
+            </div><!--pnid:aE7DRUHkaYJbNQlHJSOVi8-->
+            <div class="row2" data-page-node-id="bFcs5QPRfcUaEvOpvpeXAa"><!--pnid:4yyvTRTRTK7Jw6zcpK0GCx-->
+                <div data-page-node-id="PnMRDirbA4IdxTUAv0TDpn"><label data-page-node-id="aO6bNyNGEmarBU3DmdttD3"><!--pnid:AFHOSnYAhD3paETCLHbfBk-->有效期限（留空 = 永久）</label><input type="date" id="cf-expire" data-page-node-id="5FyiDHgFFFLVsF2SfwGZxa"></div><!--pnid:d1wL8CJgtWSwSAGncfUcH5-->
+                <div data-page-node-id="3VMltoBMIGBpnkLG8O6HbS"><!--pnid:AurhQ1UYQoWYBDrLNpSDTT-->
+                    <label data-page-node-id="ZR76NCQNiT1D244jieRUOh"><!--pnid:NF0fmmLmevkA2rigiT5xvx-->狀態</label><!--pnid:dKfNSblkmrDE3VO4xKBLXM-->
+                    <select id="cf-active" data-page-node-id="a4SeI4LQH2bouOVD0XzkN6"><option value="true" data-page-node-id="ndUwZVmz6CBZc57ojbpGNW"><!--pnid:oYd6B2qtfaVL1Ou7DGFyzp-->啟用</option><option value="false" data-page-node-id="9GceFmX2Iq50llbGXpHRnN"><!--pnid:qhkLqvB6y6laWdJILYwhs7-->停用</option></select><!--pnid:h0Gmfa8kYJ5qr8mlE1TrX6-->
+                </div><!--pnid:cpONRHGMAApfxt3Kehxhak-->
+            </div><!--pnid:Q9wFZHgAtHJQh4v4hnbUUl-->
+            <label data-page-node-id="WYAzvFNoCc3hgGokhBWu7X"><!--pnid:yFA9p4F5rtpKs9vLxBXixm-->備註（僅後台可見）</label><!--pnid:U3HiqJWeTap04cCwoEPRIM-->
+            <input type="text" id="cf-note" placeholder="例：春季活動、IG 導流專用" maxlength="60" data-page-node-id="1LUPDgDBEO8zd3tFkp8Cle"><!--pnid:fGgXCC5EQJx3FZI7b4FybK-->
+            <div class="add-modal-btns" data-page-node-id="D7CJLCUePQzzcbNZb5mHr2"><!--pnid:twotBcQwY5wdSNyTAPONa3-->
+                <button class="btn-cancel" onclick="closeCouponModal()" data-page-node-id="twhtxHu0ahZVCy7KCOLBMp"><!--pnid:K8kmqyfiAsd1N08vLFABrH-->取消</button><!--pnid:0IIVoNrZpkS6JBMaowqnzA-->
+                <button class="btn-save" onclick="saveCoupon()" data-page-node-id="Tj2wrn7lcHIFpZqU5IztWe"><!--pnid:6eCKLz6UHBsJOZN0TgfWGA-->儲存</button><!--pnid:9PslQtZbmmksTIWnfgcsPs-->
+            </div><!--pnid:BhofEHWRE9kSKzJczb9BR7-->
+        </div><!--pnid:N9AzzjabFasBUqWyBEUtg0-->
+    </div><!--pnid:JtOC4YWw5h14oQqhGl8fld-->
 
-    <!-- 訂單詳情彈層 --><!--pnid:Ew3w73WlHH6MyZBnSd0KM5-->
-    <div class="add-modal" id="orderDetailModal" data-page-node-id="Kpie6nr4uT6asTUiwJurtC"><!--pnid:us6RhIM0UYpJMKsmhVlg59-->
-        <div class="add-modal-content" style="max-width: 640px; max-height: 86vh; overflow-y: auto; text-align: left;" data-page-node-id="YpsauwvJkp7z4c49wpsAen"><!--pnid:3mTf7gRCfkrubD2T0K6Zsa-->
-            <h3 id="odTitle" data-page-node-id="R91uUheXDnn7sjoEKYcoY8"><!--pnid:KtAQwS1c6lVKkEQF0oxtuy-->訂單詳情</h3><!--pnid:4iEzIjMRbkxewNpkTB1gG5-->
-            <div id="odBody" data-page-node-id="Qd2WkFoOpZyNShoINFI2pj"></div><!--pnid:qNcqfcQZiEXXcXQZ36i3Vh-->
-            <div class="add-modal-btns" data-page-node-id="Pqa6tntsS8FAr8AnY0eDif"><!--pnid:Fpzg2VoQsE1sOhIKVLL2S4-->
-                <button class="btn-cancel" onclick="closeOrderDetail()" data-page-node-id="X8UtJ9iiDd1qM0jyLKz96u"><!--pnid:ce2YawiX4so6bfualopXzY-->關閉</button><!--pnid:ND8A3BbECNaDqxHCvTXdFD-->
-            </div><!--pnid:ACCQsAa9ymMv78f4E2mMYE-->
-        </div><!--pnid:MWuh84go1IbOR9FXrgmbZe-->
-    </div><!--pnid:7dNFlF2aTAcpounGp6hII9-->
+    <!-- 訂單詳情彈層 --><!--pnid:IbX9rg6OruFYVN6Jz9f4WD-->
+    <div class="add-modal" id="orderDetailModal" data-page-node-id="k23wos3LIVrOrwTVDGlmaC"><!--pnid:C3UAzn5EtYjCE4iHURagLh-->
+        <div class="add-modal-content" style="max-width: 640px; max-height: 86vh; overflow-y: auto; text-align: left;" data-page-node-id="RxCaEma7UR8Rd6Hi31PDOh"><!--pnid:dUq79FvvvR4jyVaHk7KNY5-->
+            <h3 id="odTitle" data-page-node-id="c3sy5EVeC1mKhhUoDUUgoZ"><!--pnid:vvSgw3Am9gIzAhaxHwjHuJ-->訂單詳情</h3><!--pnid:QWBkDRU0rdhFFA1enlWECF-->
+            <div id="odBody" data-page-node-id="0CXkZHigQ0tIBM6plQ0HqD"></div><!--pnid:lLrMwwRvlelakaLbCcg7WU-->
+            <div class="add-modal-btns" data-page-node-id="cOWTRWMmpoOjktrnOuXLSm"><!--pnid:c9mI3QGaQZ3zQLQlKwGIkB-->
+                <button class="btn-cancel" onclick="closeOrderDetail()" data-page-node-id="00ONIvExzafIrN6WwKlUj4"><!--pnid:M93tW1Ik7El1IuCIda2YGS-->關閉</button><!--pnid:bJ9jhfcZR2GaXTG1FpZHoI-->
+            </div><!--pnid:RG5iMTMwydwv6NTfaAeqe0-->
+        </div><!--pnid:4M0EbDL2e3e5H5IiPBzsBH-->
+    </div><!--pnid:YyjirSNnYMFOS2EKYFgLrB-->
 
-    <!-- 手動補單彈窗 --><!--pnid:XVGfZcQ8SNjY0TWaGb79fe-->
-    <div class="add-modal" id="addOrderModal" data-page-node-id="BDqOocr4uvV3j36IXJwAdB"><!--pnid:be9xdCQ4E1u9KE6xnubpkq-->
-        <div class="add-modal-content" data-page-node-id="c1USkG8IEBEwbTCibHdyzv"><!--pnid:bMy4AA9qWspzQIODEZjIym-->
-            <h3 data-page-node-id="YCwrln63OGomoqNF6oDT0n"><!--pnid:xXcpQYn9s3nMMlplJdma2T-->➕ 手動補登訂單</h3><!--pnid:6fFemVXsnYDk6cqy1OMOEN-->
-            <input type="text" id="addName" placeholder="收件人姓名" data-page-node-id="TZTwPl5DLe6Mev0vZ4qcB6"><!--pnid:dtcy9dedfuhER140htmDkl-->
-            <input type="tel" id="addPhone" placeholder="聯絡電話 (09...)" data-page-node-id="AQ03XsDrF06yDbbmKuxBQg"><!--pnid:Z6xgmMlhgzxquAdU5P5vqX-->
-            <input type="text" id="addAddress" placeholder="詳細收件地址" data-page-node-id="88xsYY1EK2C7vdjEH9sAMF"><!--pnid:jUp5OJa4u3oCEV6ibRl4En-->
-            <select id="addProduct" data-page-node-id="PcgpQINLrYFpAwVFoB8LKJ"></select><!--pnid:aXB2tDefGhCE3lk67aPEMW-->
-            <div class="add-modal-btns" data-page-node-id="HUH6DMg5wn0Sw0fgT85ape"><!--pnid:Q3Z4KO0s3lMUqHvYaclyoK-->
-                <button class="btn-cancel" onclick="document.getElementById('addOrderModal').classList.remove('active')" data-page-node-id="AIO8N5sBVwTpw925fNBqBn"><!--pnid:Een0Ep4wyjS6X9Ag6hE0aG-->取消</button><!--pnid:yIbqZMjzGQXrWiscQegC0c-->
-                <button class="btn-save" onclick="submitManualOrder()" data-page-node-id="2crtFIYUxbUB0k5WiJxDPo"><!--pnid:8CJL5yb9LikpBH3zVKK8lz-->確認新增</button><!--pnid:dGVPpjWvr3z2HVcWjUwTso-->
-            </div><!--pnid:tgOSmjg7W5RQ2L030xdSF0-->
-        </div><!--pnid:h0S7bwdKLx4uEt11orBAma-->
-    </div><!--pnid:x5RRDRJ2ECOUbU7GPR93R8-->
+    <!-- 手動補單彈窗 --><!--pnid:0H8t8LIEMuPmeaE6gnha3W-->
+    <div class="add-modal" id="addOrderModal" data-page-node-id="kjiI2DMAkI2aZjvQAPyFmX"><!--pnid:KGR2k8B6JaotNzThP5J735-->
+        <div class="add-modal-content" data-page-node-id="yYcfHnnOHvTLVOLAgrze7A"><!--pnid:f02xIh4OF9ijEdus1DHWQR-->
+            <h3 data-page-node-id="jEZMzd6YbArMnD6RHG4q9a"><!--pnid:c6t3RQnoJlgZzfp7QkhuyE-->➕ 手動補登訂單</h3><!--pnid:De7KccdRjm2ZJKdChwM1AS-->
+            <input type="text" id="addName" placeholder="收件人姓名" data-page-node-id="R3Rmlnisz850aFpByQDlDx"><!--pnid:SQjuE7gi0puzLJnL19dtdU-->
+            <input type="tel" id="addPhone" placeholder="聯絡電話 (09...)" data-page-node-id="W9kKolucV52UHbc5BRCprx"><!--pnid:MquOdWnFsQzypIwnlE0X4y-->
+            <input type="text" id="addAddress" placeholder="詳細收件地址" data-page-node-id="QxVECQyemB2PRLs5O5T0a1"><!--pnid:6c58d6zwN8uzcDNBiyXUB9-->
+            <select id="addProduct" data-page-node-id="KQCPfXxNyNV3MsautGIZKm"></select><!--pnid:5Dsb6krPzjsdB6T9XjkrS8-->
+            <div class="add-modal-btns" data-page-node-id="BCqmLKmFZbIO18oFKxPbqy"><!--pnid:dnV8Vbj0tl4Or7EMLi4CbX-->
+                <button class="btn-cancel" onclick="document.getElementById('addOrderModal').classList.remove('active')" data-page-node-id="RHhxCOYeLKNcEWOsBIr7J1"><!--pnid:Aynp5XoTdzKBdleaq8buHY-->取消</button><!--pnid:K0Xcu7tfyTVvUmKHkxRLGX-->
+                <button class="btn-save" onclick="submitManualOrder()" data-page-node-id="UnrerBISAxyPeCDuUkWsam"><!--pnid:W4aTGkMQXo2bQ381Fh3LL4-->確認新增</button><!--pnid:fDAKoN3tLX7pHUkhfJKF1o-->
+            </div><!--pnid:EEPcjyCUbG1cx76So66Apu-->
+        </div><!--pnid:An6juqJqmo9A0fTGiN8NZV-->
+    </div><!--pnid:CMoRIVQxKPLEDlT7TsjATW-->
 
-    <!-- 商品新增／編輯彈窗 --><!--pnid:gZ2lrVoFiqKoLysy4gKKqM-->
-    <div class="add-modal prod-modal" id="productModal" data-page-node-id="pr27NpbhXm9pQkklWg3Utn"><!--pnid:4BFmo7YgQ1bjG2JMNP6yeA-->
-        <div class="add-modal-content" data-page-node-id="DOyvb9UzdCJhyv90LD6p5U"><!--pnid:aCUboGhRYxmesXphu6JlGI-->
-            <h3 id="productModalTitle" data-page-node-id="AnVBRu0YZsMEgo6EjLhpJe"><!--pnid:y5BPDsTqOCbVCYEMIW5GJX-->➕ 新增商品</h3><!--pnid:F5aAqzWzOVRc4chlv4n3Yh-->
+    <!-- 商品新增／編輯彈窗 --><!--pnid:1AFHbacBSHLUVnB5AFi4IQ-->
+    <div class="add-modal prod-modal" id="productModal" data-page-node-id="ifjTzpba0OOx5XRIOP4DA4"><!--pnid:6Q8IisraFOfkxJ0qGdLN2Q-->
+        <div class="add-modal-content" data-page-node-id="imQDgZzpF1xdiIwwIZk7U5"><!--pnid:LyzQfCeVQN7Ckd0jdVxp52-->
+            <h3 id="productModalTitle" data-page-node-id="Ug8SelHnEgSauDAA9j1RpO"><!--pnid:DYBLz2TWLwHeBVxt2XqDHV-->➕ 新增商品</h3><!--pnid:QKYrYXIvjWhSG6XKhiqCc4-->
 
-            <label data-page-node-id="69GdagRPb9jBX9KLCqxHWR"><!--pnid:mABE550gMHitgLXvNdbE2z-->商品名稱 *</label><!--pnid:qoHSf5C1E6LwxlhduHwifq-->
-            <input type="text" id="pf-name" placeholder="例：41mm 經典黑面腕錶" data-page-node-id="mBIW3Hxz2ojp3pXxhMSZaA"><!--pnid:0kgXf4Paye75gI2AOin7W0-->
+            <label data-page-node-id="1NFdAzSbK4tQoNBz9Osu3w"><!--pnid:TUvwcHgp2HVNweVGliUGJG-->商品名稱 *</label><!--pnid:wRnngUTYVinZXr8v5tHDio-->
+            <input type="text" id="pf-name" placeholder="例：41mm 經典黑面腕錶" data-page-node-id="5hrQLJEWcOBVM4BVkadsLK"><!--pnid:SkHWiu20qqhpcqmEZ2q8m4-->
 
-            <label data-page-node-id="1vpZ4Etb5XI9ezqS998Rqi"><!--pnid:mgoDgxl2s9juZonq15DWdT-->簡短描述（前台卡片灰字）</label><!--pnid:a67FUqCJSxHZk3dNHNgrDT-->
-            <textarea id="pf-desc" placeholder="例：黑色面盤，鋼帶，三針日期。"></textarea><!--pnid:mGLm3wNkKsPprM3NMCnLLl-->
+            <label data-page-node-id="GCKnySNTuWOuPubmLbDOWA"><!--pnid:Hg3TCsmGQTi9lrsZ8P3CC4-->簡短描述（前台卡片灰字）</label><!--pnid:WgJri0teBonyKyB9cD4YQW-->
+            <textarea id="pf-desc" placeholder="例：黑色面盤，鋼帶，三針日期。"></textarea><!--pnid:r856yJkmQ3BGIAsYFHDRsf-->
 
-            <div class="row2" data-page-node-id="KTwc4uaAPeCCmnmvdRXNDD"><!--pnid:3AUN9Wn3Gx61KVy8E4G4Qa-->
-                <div data-page-node-id="3Tj4qxfBcu7p54KItAmou6"><!--pnid:YjVgufxYAZWuYRvczrF5lV-->
-                    <label data-page-node-id="B3oNWEfBtHVHRW9MqsXGTE"><!--pnid:jhUqKGA0Ul6zoE93GHtjrW-->分類</label><!--pnid:HV4J5QeCctvBFfIJKr5ZkH-->
-                    <select id="pf-category" data-page-node-id="ZJ1RfHE32yDDW1T3V0ltoO"><!--pnid:bd9QZTMXBXlPstHtAT4Onl-->
-                        <option value="經典款" data-page-node-id="hKTw4N6bcbcqMiaEhaMoTc"><!--pnid:lOmKBHveF7F3aQ71fRY6O0-->經典款</option><!--pnid:JjcLWmc10Q5gYutoFDxA9e-->
-                        <option value="運動款" data-page-node-id="ALHoDHBzy1qIlgEuwxOa9r"><!--pnid:ZeWpSvsVvSs6pR31YZzXta-->運動款</option><!--pnid:LBfCG7Uzt5Pjo1tHf0PrG2-->
-                        <option value="奢華款" data-page-node-id="Pu38BXMT3Cx1YQkdODInwB"><!--pnid:quzsKmC8Q9nVC5NDezSa3e-->奢華款</option><!--pnid:qO8bw4ijf2eajwFqZF2l2p-->
-                        <option value="潛水款" data-page-node-id="Cg0U6d5Ymy5L4ePoVGZD1q"><!--pnid:FzArH9A0tHud3dkILiI4Fh-->潛水款</option><!--pnid:ZMSqd0wZeA2ZuOA1nfEfjX-->
-                        <option value="計時款" data-page-node-id="dbsKAJTzhQqOtmshpFpjgd"><!--pnid:mqUDExyR9hfGPhO08c0t4o-->計時款</option><!--pnid:AkI4TNw0PPWYS1634a37vZ-->
-                    </select><!--pnid:7pkObBOGJuZq1GUjcbE1Aq-->
-                </div><!--pnid:BZhyP61Uc3TNmPTBzGqrsF-->
-                <div data-page-node-id="E9vy5EqXBPFREeV0eCJPgO"><!--pnid:j1tLJGkGI1qP1nUUP8qdg9-->
-                    <label data-page-node-id="iyifprGhAvxvSkgV78vYUX"><!--pnid:4BuIV1k6OIllq2svXPNFGk-->庫存（留空 = 不顯示庫存警示）</label><!--pnid:xoSSjA3jfluAswiXnEFFlA-->
-                    <input type="number" id="pf-stock" placeholder="留空表示不限" data-page-node-id="WLlQJlXrA494LUtdIMwhWD"><!--pnid:9WwYNohGCglZUYh41Dt7YP-->
-                </div><!--pnid:gfi9hbNEsv5p0pnJkiD4R2-->
-            </div><!--pnid:ltwG91SGqjjKqRMnJP91u2-->
-            <div class="row2" data-page-node-id="ju1P0CW0GDNNKwvP2wNtE7"><!--pnid:8acHQwrNcgi7PpzqknCKwE-->
-                <div data-page-node-id="E3IMAY0Tru13J5ccApyrIb"><label data-page-node-id="IeCQfaxMdODPctJcxNyPyA"><!--pnid:93NOUFc2CUAkl03FPPl5DF-->原始價（劃線價，可留空）</label><input type="number" id="pf-original" value="" placeholder="例：12800" data-page-node-id="VrI0LWNIAzE0n7c2CUFoek"></div><!--pnid:uTHXllZmVvKDTc6F0FaB7G-->
-                <div data-page-node-id="pC8ATgByTBxXb1MV3Y9HfB"><label data-page-node-id="keJ6Y5g9FqzJZmFwiEo6os"><!--pnid:LVh8mUE6a2l0ptwF5NVgOv-->優惠價 *（實收金額）</label><input type="number" id="pf-base" value="6000" data-page-node-id="fk3diXIKpB1c32DZlNy2ti"></div><!--pnid:mBoVvUiVGLPwIGRhbvIrIc-->
-            </div><!--pnid:l4LnfJSxCW97xGlW4oGa4V-->
-            <input type="hidden" id="pf-mid" value="" data-page-node-id="cmEFmM5saWtL2MPHq6XYUf"><!--pnid:PoKUEUEKcODU75FRvYqtGM-->
-            <input type="hidden" id="pf-custom" value="" data-page-node-id="muI45GuR7diCC95HW4r810"><!--pnid:wshVn12CjP1LdmduaXOAT0-->
+            <div class="row2" data-page-node-id="Y1QqlrGmKqqr9ToJnpzNl2"><!--pnid:WPAiQGK2V8o8vG7NMvul4b-->
+                <div data-page-node-id="SGInLoFPtjTArPPl6NyLLz"><!--pnid:Yesfqxh92aoLfP5LM8SIiC-->
+                    <label data-page-node-id="roX3NuNRITpHCNzBwYR908"><!--pnid:wpFKS5gcbhim1udw7NFu1g-->分類</label><!--pnid:aBLCNaDEmMvbRUh3pvyTib-->
+                    <select id="pf-category" data-page-node-id="qQa4oTACltsfRnfL0HdylZ"><!--pnid:1RnyVWTDa4owV0s6qlnec0-->
+                        <option value="經典款" data-page-node-id="vbgrrKT0CxcE4vWjpyySzb"><!--pnid:DTk4Sgx3licJ89Sh7EOU0z-->經典款</option><!--pnid:TQ8dcKEFL47kzddi187Td5-->
+                        <option value="運動款" data-page-node-id="p6oxcWkhhVjYBptbVW4UsL"><!--pnid:QzROAl2QNPpAHJIVHGNQ5V-->運動款</option><!--pnid:9iPs7cpZ5hiw6o8VhzuhZn-->
+                        <option value="奢華款" data-page-node-id="YG8wJeOwsg7P1sFu3HmR3E"><!--pnid:ETMtaQXsHYc3FGMac7VMgq-->奢華款</option><!--pnid:tIws7va4QFUtu0kqN5gUfg-->
+                        <option value="潛水款" data-page-node-id="wYYOXw83a3zoBZA86QyVjX"><!--pnid:aEAGwhiWHEwJ5bY7G55xLQ-->潛水款</option><!--pnid:fH3QgHQAg3ki1PFHD0XAm2-->
+                        <option value="計時款" data-page-node-id="dX9bAQ4lKIBFpHBLft6bVy"><!--pnid:Oj7EDM7JlKGY9IfLYTVas5-->計時款</option><!--pnid:fZyJE0ROngKtBqJDybWRNX-->
+                    </select><!--pnid:ZXtFMkAFXDALfBwEl65xCl-->
+                </div><!--pnid:QJDQXfTeb0n4rQW8vEB0nV-->
+                <div data-page-node-id="BENjVDi8ipIDE9WuPY0dDv"><!--pnid:NztJtR2Cz5gmx2oRPqWKSR-->
+                    <label data-page-node-id="zrGGgr8HG5wOoj1Sqc2Riy"><!--pnid:6Kn2LocKfyrCBIWRD6lSCr-->庫存（留空 = 不顯示庫存警示）</label><!--pnid:Zbp3wMcQwzCqOuhsP2w8al-->
+                    <input type="number" id="pf-stock" placeholder="留空表示不限" data-page-node-id="fwAKAIO5VIW3iFYm4vCLeu"><!--pnid:gFk4jCxDSCDxy1Elk6wGTj-->
+                </div><!--pnid:zixokCFQVnKRimmxjgbdXn-->
+            </div><!--pnid:qObLU2kwWxDS40fDKSHBez-->
+            <div class="row2" data-page-node-id="RpLrj9pydFK0dc0Amd3KfR"><!--pnid:kFd2mFQzcXFUjShK4esf8p-->
+                <div data-page-node-id="At11QXyFDSFa0yGGmfyKcS"><label data-page-node-id="R2ZKGGhrLcaiNoka4Mt69B"><!--pnid:hllR0rMIEL4JidAk20fTIR-->原始價（劃線價，可留空）</label><input type="number" id="pf-original" value="" placeholder="例：12800" data-page-node-id="yLZ0LfzrpOQjEiuCI2kmRF"></div><!--pnid:6nLga0bDXgSRsNB7CX092w-->
+                <div data-page-node-id="qE2ruJWKRfQmWugZTVBOLG"><label data-page-node-id="bnaAGF0CAc9lDapmjHxTMF"><!--pnid:8joglrGJIanFPwu0b56nit-->優惠價 *（實收金額）</label><input type="number" id="pf-base" value="6000" data-page-node-id="nLPKG9AXxJGasJ2Kj6okfX"></div><!--pnid:c8fvB1Jz6KgWV9advHQNa4-->
+            </div><!--pnid:HemyLazv4yheITLdfT4tPT-->
+            <input type="hidden" id="pf-mid" value="" data-page-node-id="MqP2DfRSWeFLQ0poxeVY74"><!--pnid:Wf0obRMDQTawOgY9ZcCJSP-->
+            <input type="hidden" id="pf-custom" value="" data-page-node-id="jPKIjHDcsLP096spRADEa9"><!--pnid:Bs9hFkZeOybCBCMkx1w0ui-->
 
-            <details style="margin-top:12px; border:1px solid #444; border-radius:6px; padding:8px;" data-page-node-id="rhsoqgEWB5oJ2TtlYe8jEq"><!--pnid:5oJQRZGK9M9LZgWTngtAmU-->
-                <summary style="cursor:pointer; color:#0052d9; font-size:13px;" data-page-node-id="d4UcKS8thvqNfeA93JkTNc"><!--pnid:r4QsAnWSmiRyDLzSlEI4yT-->🌐 商品名稱／描述多語翻譯（選填）</summary><!--pnid:PORQjPwFhP8epkoOvXwC0G-->
-                <div id="pf-i18n-box" style="margin-top:10px;" data-page-node-id="bBeBXKDFfYo2c6fvLX7FSk"></div><!--pnid:3HFzrN408J8AJgylKWWTAL-->
-            </details><!--pnid:c9nAidFRTgKlnAnnAI7Oga-->
+            <details style="margin-top:12px; border:1px solid #444; border-radius:6px; padding:8px;" data-page-node-id="VfcQE0a47ORGcjSOpylcm9"><!--pnid:RQn6AzrU615Ks0xCRh6Tbl-->
+                <summary style="cursor:pointer; color:#0052d9; font-size:13px;" data-page-node-id="qFfLNGLMqJZNepBUSeYLZm"><!--pnid:4WLTxldE8E2XMeMxKyP54l-->🌐 商品名稱／描述多語翻譯（選填）</summary><!--pnid:r83c369CAfkjVD436C1i4M-->
+                <div id="pf-i18n-box" style="margin-top:10px;" data-page-node-id="W5KcTrYAJmExN1pa33UmcC"></div><!--pnid:Y7egY84wzjjGETdyHpQJWB-->
+            </details><!--pnid:otVLa1CQeF3fRHls8VtLXr-->
 
 
 
-            <label data-page-node-id="yp0KIaXbS6JhDpRTNtrSFx"><!--pnid:uVrvhOwyQkWHRVuVO5JPZu-->商品圖片網址（一行一個，第一張是封面）</label><!--pnid:xlXy2HrCJsBkGWAG7bSlAf-->
-            <textarea id="pf-images" oninput="updateProdPreview()" placeholder="https://xxx.supabase.co/storage/v1/object/public/products/1.webp&#10;https://xxx.supabase.co/storage/v1/object/public/products/1-2.webp"></textarea><!--pnid:36nKSa09jTqkOPhFIityTT-->
-            <div style="display:flex; gap:8px; align-items:center; margin-top:8px;" data-page-node-id="aLjYI1bICZjZzBBEHOtYPi"><!--pnid:gF5FrYCkee01cBA0F0ncnp-->
-                <input type="file" id="pf-file" accept="image/*" multiple hidden onchange="uploadProductImages(this)" data-page-node-id="oYc1XyOUSZcbG2RXCB7t89"><!--pnid:VdfJ0PTcLnH1E17Ug4TAnY-->
-                <button type="button" class="btn-cancel" style="padding:8px 12px; font-size:12px; flex:none;" onclick="document.getElementById('pf-file').click()" data-page-node-id="EvQj8Vy3k4UeinJTiSvSRy"><!--pnid:nEGc94blaIuCZW60yQkawV-->📤 上傳圖片</button><!--pnid:Id55Uhl9qqcQANfYbrhYPJ-->
-                <span id="pf-upload-status" style="font-size:12px; color:#888;" data-page-node-id="o9mkGVGxjfBHfcTLo2G4Tj"></span><!--pnid:WJ89CbWiHE6ltCuk5G79oC-->
-            </div><!--pnid:hxFSKPFgfsZM3ysA987pSc-->
-            <div class="prod-img-preview" id="pf-preview" data-page-node-id="MygnIIMr91dWU4DaDsMuJE"></div><!--pnid:eF0MyKKjhOGlBP2G0KsUON-->
+            <label data-page-node-id="4khx8tQMy4DwDPDmqQcpec"><!--pnid:BMXeUXo9pkojRwwsMfC7Bn-->商品圖片網址（一行一個，第一張是封面）</label><!--pnid:ugLjQNEY8rUqHTMpinejfN-->
+            <textarea id="pf-images" oninput="updateProdPreview()" placeholder="https://xxx.supabase.co/storage/v1/object/public/products/1.webp&#10;https://xxx.supabase.co/storage/v1/object/public/products/1-2.webp"></textarea><!--pnid:S2eK7ssXyvhQ4WFg69gGa5-->
+            <div style="display:flex; gap:8px; align-items:center; margin-top:8px;" data-page-node-id="gc47ZF6qcm2GHlJQbJEG3H"><!--pnid:wSY7ASwyMwOIr7ReKmiinJ-->
+                <input type="file" id="pf-file" accept="image/*" multiple hidden onchange="uploadProductImages(this)" data-page-node-id="UwuLSD9mL3BmmLiayIdh9D"><!--pnid:rIriOcZsADTisFzfZhJyle-->
+                <button type="button" class="btn-cancel" style="padding:8px 12px; font-size:12px; flex:none;" onclick="document.getElementById('pf-file').click()" data-page-node-id="jcAuUXzJFzWWLGzdGfEW6G"><!--pnid:BKFfANMTwY90CUMc2eG6Ne-->📤 上傳圖片</button><!--pnid:HGDGEwbZsFEDX4fsopB8vw-->
+                <span id="pf-upload-status" style="font-size:12px; color:#888;" data-page-node-id="H82Fbwa1zpLBuVOCdPpfVr"></span><!--pnid:K50ETPWVvKypmIW6p2DPCa-->
+            </div><!--pnid:PhU58uFAFmD2qzBmzSAVTM-->
+            <div class="prod-img-preview" id="pf-preview" data-page-node-id="zgFOl4e9UceSfaHHHLcp1a"></div><!--pnid:tAeDNpOOe8dxNUoJgk5CtG-->
 
-            <div class="row2" style="margin-top:12px;" data-page-node-id="FjktfgbgxagecbDlyXgkmL"><!--pnid:bbZPrwXCKB5MkFAQNUPRhr-->
-                <div data-page-node-id="FnCHP330nXqvaLzHlDMDv6"><label data-page-node-id="jPNoR7fp0Iq0zZ0XB4vL09"><!--pnid:sVQd9zKLzw9qVs1sJ1B9bp-->排序（數字小的排前面）</label><input type="number" id="pf-sort" value="1" data-page-node-id="0oQYtrEJMWNraqHGVRVwcC"></div><!--pnid:6Y3Sy5s9wtFsFClSKho0Tb-->
-                <div data-page-node-id="2KbvfgHvmbEwk65BH0v1i7"><!--pnid:mwHVW7RMlxj1P1R1Nhb5Uo-->
-                    <label data-page-node-id="PpJRdgxcQt0TzJF19wogA3"><!--pnid:juKTHXCIiYraFiyFGLRl2P-->上架狀態</label><!--pnid:md07EEnwAGBZiVSJbb9jbo-->
-                    <select id="pf-active" data-page-node-id="LorUIQthICktTzKGHM7SlW"><!--pnid:ViPiYVz4tJOLE7o58YeQR9-->
-                        <option value="true" data-page-node-id="CrP53CscCwdk4q74sFbH1P"><!--pnid:25JMy49uTbpbqELVW0mDFB-->上架（前台顯示）</option><!--pnid:JMvkbIBoQIWFFgJ13PGIrP-->
-                        <option value="false" data-page-node-id="GhlVzkZBHhWyzSKwnwUwxl"><!--pnid:ocfCPRMjkfPJUPIcEoXx9p-->下架（前台隱藏）</option><!--pnid:GEGJFKtd4daTyuwq6bGEyY-->
-                    </select><!--pnid:Dx2B5SJkYp5J5bLrQAZam3-->
-                </div><!--pnid:M8QXYG28Q1GDCgx9ul1dTU-->
-            </div><!--pnid:XGSdPpj6CmXDK2tXnQoSPw-->
+            <div class="row2" style="margin-top:12px;" data-page-node-id="UFWG47CUNPDwhwuRwS28Y8"><!--pnid:GEX3a5t77kNbp9jOtbeHRg-->
+                <div data-page-node-id="Wi9z56lUrTIAvXxmMrreJ9"><label data-page-node-id="HbnS8Zrve69t3Ahv26Mbuh"><!--pnid:jcsKQM330Qkh64wZOsMERh-->排序（數字小的排前面）</label><input type="number" id="pf-sort" value="1" data-page-node-id="hHwPhG6jFfcQpQc2FkYFLo"></div><!--pnid:2E6HK10pcchduGFmEahhqz-->
+                <div data-page-node-id="j1vBKl8Zp9nRk7EFAY6lPd"><!--pnid:DjC1W5t3q2qtiuDdiHVgi5-->
+                    <label data-page-node-id="SBwLDaIAjOB0p98dBzTW6o"><!--pnid:UNs9knQoahcLBFZ7jW3v4C-->上架狀態</label><!--pnid:zYbN4ktX4QrCp0ErjAt5hm-->
+                    <select id="pf-active" data-page-node-id="wEgwGvtzxW5STh3d0OHk46"><!--pnid:Thr01pQEROxiadyGG3iBnw-->
+                        <option value="true" data-page-node-id="aOkCmfFWkcaX9k7B38ug7X"><!--pnid:q4mQ4NAfAiSO18CpphhsRV-->上架（前台顯示）</option><!--pnid:KaEyUS9VQOQ32MWEzHDQrz-->
+                        <option value="false" data-page-node-id="uTAF1tEFNz9lVGW4GJeKPO"><!--pnid:45VbGX061a4BNDpcpdyZoH-->下架（前台隱藏）</option><!--pnid:k9KWlstxj47O0ZFezVYX6P-->
+                    </select><!--pnid:uu1iMjaHMBtMhP4CWkwwqW-->
+                </div><!--pnid:qCDkujWoFT7N8fiF11FbvA-->
+            </div><!--pnid:lhI2VM5m0VlsZPeFX0jAoV-->
 
-            <div class="add-modal-btns" data-page-node-id="iWaw1k3yFCUTPfGjdOM5H7"><!--pnid:QHYzzqxXQBZNHXMdnPh6qm-->
-                <button class="btn-cancel" onclick="closeProductModal()" data-page-node-id="u3nKDU7fnO8S3rU5Lh62yF"><!--pnid:zCYd2BrclBFsDOaGAfVvoL-->取消</button><!--pnid:gHp8qoKW1wMxo9hhr0nfL0-->
-                <button class="btn-save" id="pf-save-btn" onclick="saveProduct()" data-page-node-id="RlPldxxQJm8CYLA302KzWm"><!--pnid:JkcSp4jakuy7raqVBFWhYa-->儲存</button><!--pnid:s6FrhQAyNNlthffnmZ9IlS-->
-            </div><!--pnid:anbbPdPknq7d16miujixN3-->
-        </div><!--pnid:3xTDS1RxkE9xrdSxIGnIkl-->
-    </div><!--pnid:BOqnQi43pQ0n0GlpsEc4gV-->
+            <div class="add-modal-btns" data-page-node-id="pNcO2R0P6hPlVF49DousoI"><!--pnid:FHuZeEy2om0CTFXcsxjNhG-->
+                <button class="btn-cancel" onclick="closeProductModal()" data-page-node-id="RZa9zT3s0IQNRUnuKoQxcs"><!--pnid:Jxy0KPCefF56yDRaXUr52V-->取消</button><!--pnid:MrHsUWBav789CoLB44mOTL-->
+                <button class="btn-save" id="pf-save-btn" onclick="saveProduct()" data-page-node-id="hdBtlF692Js9ZZFambZjFD"><!--pnid:LyJCFc4up9CIg61Wu9bARd-->儲存</button><!--pnid:ewbH2DBw5BuHEhjoDhzztj-->
+            </div><!--pnid:K8hE6tbuMAqylXEAuAVGr1-->
+        </div><!--pnid:4fJauervvMx759VZIodgGd-->
+    </div><!--pnid:GyjPurtM4mxVl1ritxnCeb-->
 
-    <div id="login-screen" data-page-node-id="9wYgjwr2CnUkjjUnxlS6je"><!--pnid:BoOyHcuFzt7Q1JAhlYK5SD-->
-        <h2 data-page-node-id="m9C64b51fLAQiKddlIQbk6"><!--pnid:zt2RF8BYFEzEpfhtNMBrB6-->👑 管理員登入</h2><!--pnid:4me1A5OsxmcXAE5e8G39f4-->
-        <input type="email" id="email-input" placeholder="請輸入管理員 Email" data-page-node-id="9Eg9lXhQ5sEUdhSsuc7Jci"><!--pnid:VCnyQidaHc0QVQDXUtkomC-->
-        <input type="password" id="password-input" placeholder="請輸入密碼" data-page-node-id="43rHmul1Mtq3pPVFAnY6Oi"><!--pnid:FjAUX8qg7pq9mxd3voab4C-->
-        <button id="login-btn" onclick="handleLogin()" data-page-node-id="fn9Zhufc7R3v5m0BdPalf8"><!--pnid:ZMkLyECZlQpSiXaRDkh5ar-->登入系統</button><!--pnid:DA0ZyREY98XtHOSbBnGCNg-->
-        <div class="error-msg" id="error-msg" data-page-node-id="u9hRfHdLuxdHlqWPwNJhSw"></div><!--pnid:grRTsBubhi2aoWMSGrA2mI-->
-        <div class="success-msg" id="success-msg" data-page-node-id="CqwV1q5KTrOSIItjR6TaeK"></div><!--pnid:eBaNFiTArWfPtiGtsfAAGQ-->
-    </div><!--pnid:vAmGYUEXiQFA5I2R25GBnU-->
+    <div id="login-screen" data-page-node-id="Jl2Hpk94JQaujDBLx7GqNL"><!--pnid:S5TM9VHFTLo5XvWCMk55Uh-->
+        <h2 data-page-node-id="3WRhXw4lttAfU7LPOt21Pn"><!--pnid:C2XhuC5vQIMSH2bFRWhOBu-->👑 管理員登入</h2><!--pnid:lO2GBw3HublmLAZFZmx3el-->
+        <input type="email" id="email-input" placeholder="請輸入管理員 Email" data-page-node-id="oQ0w7pQL759K0Paf1dnA39"><!--pnid:TTcfIALlI2DZd7Ez1MoO1Y-->
+        <input type="password" id="password-input" placeholder="請輸入密碼" data-page-node-id="lnk57zOVmH9FdDXzqjuK1g"><!--pnid:4htGBQEBaZ1yFasYkruFzV-->
+        <button id="login-btn" onclick="handleLogin()" data-page-node-id="kB3WfITMlC16JidyeyUNSd"><!--pnid:nEeeQckVvSOFGpr0vTAdWP-->登入系統</button><!--pnid:j4VNaF5yfzTCAdtxGmvSr5-->
+        <div class="error-msg" id="error-msg" data-page-node-id="WRghoWUZmf59THAWm8OPMF"></div><!--pnid:VluhcHP58b563tQr76ouKR-->
+        <div class="success-msg" id="success-msg" data-page-node-id="sX6Zd8Sv904N8WHaqnHpL5"></div><!--pnid:84Wf3NEE6F33fO3ovfU6sA-->
+    </div><!--pnid:pyGbcjfLeUBRO9PNnEIOkY-->
 
-    <div id="admin-panel" data-page-node-id="CZYUTxjZsrqeCciBJNKAoP"><!--pnid:JjoZqGHFwaz1nY3C0q3H00-->
-        <div class="dashboard" data-page-node-id="NzZvm0dGBFAVkJzJlzliIw"><!--pnid:Zw4OEwH6H0x8CrpH24DjCg-->
-            <div class="box" data-page-node-id="JTXLP1aRF8CzgyhznyZqHu"><!--pnid:NLNPEKD89yQJayqXPQomML-->
-                <h1 data-page-node-id="KITwcjA9gbZJK3emYT6EbY"><!--pnid:dmkcIb6BADCcmdfyXG6CWB-->📊 目前線上人數</h1><!--pnid:78EbSRNDox7nbt0vrjHgFS-->
-                <div class="number" id="online-count" data-page-node-id="JlakL8Z54sPOOT9rX1nqpq"><!--pnid:rirgp9CE1qfTaOVuWQO9ta-->--</div><!--pnid:zqYh6hNaDgZOmAkA1W1Dzv-->
-                <div class="status" id="status-text" data-page-node-id="xXpCiFOkWqTGKzDzNKygY8"><!--pnid:WWc0fiwjJGwPCzNdAeDKsM-->等待連線...</div><!--pnid:5S2De9UY2qxgf0TM9F6Yim-->
-            </div><!--pnid:Zjy51Q4hbrsmT7pB7T1Ei9-->
-            <div class="box" data-page-node-id="lCCOPtf7wqI4e4sJ2maxWX"><!--pnid:k5ngkR4qOavujuvv4qXhBl-->
-                <h1 data-page-node-id="Yo1kPA093rnbhWNr00P9y1"><!--pnid:lhK8fPREX9wDrHG07uETnr-->👁️ 累計總瀏覽量</h1><!--pnid:FULTQdwwmxgrUBc7OUUTju-->
-                <div class="number" id="view-count" style="color: #00bcd4;" data-page-node-id="EsDWTUYNpktxCOArNm6aBk"><!--pnid:37Io34zKfon8ZBAf68CVag-->--</div><!--pnid:ontapHIXFbxXwW0VMvDqeB-->
-                <div class="status" data-page-node-id="IhJSDhN0G5BOT0iVwyn4y3"><!--pnid:1fW0G0GbI2PhvINiXdntcx-->從開站至今的總點擊</div><!--pnid:OioQJeLHP0VV5ZgAgCkw43-->
-            </div><!--pnid:BZfZoFgcdCiP8zpRHCZDnx-->
-            <div class="box" data-page-node-id="LbOBBs7QQPX4XCfunGw4Er"><!--pnid:CYyhZ9AMPmfi3jqQ0cB6lz-->
-                <h1 data-page-node-id="kNfVZUMAIHtsE5MxYUI91v"><!--pnid:XgCeJARLcDin53WmXQAZyF-->💰 區間總營業額</h1><!--pnid:qC4yEdjzRq3f4g8ZKNflyX-->
-                <div class="number" id="revenue" style="color: #0052d9; font-size: 50px;" data-page-node-id="20hPNUom3UYHEm19PbwobK"><!--pnid:IPmTUodVEyw9nE20Tr7MOr-->--</div><!--pnid:Bbu4m1hlWRozHukgkvg7B4-->
-                <div class="status" id="order-count-text" data-page-node-id="xLTWXLDg9Uz62Kn4sM3a9m"><!--pnid:4kkufI8wUcL9wE3aItirQs-->目前顯示 0 筆訂單</div><!--pnid:8tqx8pmMXt6xr5ULOCSVJm-->
-            </div><!--pnid:rFUEBNINdFRxm1G4VF0FLc-->
-        </div><!--pnid:Ok6UMRtTjRiUScYfTzKYNb-->
+    <div id="admin-panel" data-page-node-id="46D4vEa0VQRywsjUx9aAUS"><!--pnid:iVwTgFWRiEL5BcPAt3kCi8-->
+        <div class="dashboard" data-page-node-id="zCmndyqcICf9BjzWdwxRdj"><!--pnid:7pyyAAhhMM3fc4HNhiA3yP-->
+            <div class="box" data-page-node-id="RTsbnYL6uP4JaWFkTjWcTW"><!--pnid:43xJdhttq9B5NGgISDKbMQ-->
+                <h1 data-page-node-id="EBUA7mGOYmh1qVfZGA9Qx8"><!--pnid:TTXqOYXCZgHFAol2eJUwh7-->📊 目前線上人數</h1><!--pnid:RQrKT9ajCuWL5rzoLqgJIV-->
+                <div class="number" id="online-count" data-page-node-id="flMRBpNwAJ0zAHrPsYheft"><!--pnid:mHjTeo9ZQL6NLr2EG5XZIB-->--</div><!--pnid:RVMj3Gvay3JmAuoybKNZ94-->
+                <div class="status" id="status-text" data-page-node-id="IhALyGsVUlt0363gWCBVHs"><!--pnid:FBPpcsN4oho1cffolG7neP-->等待連線...</div><!--pnid:e8hhJ67DhVuCKAhISWSXx4-->
+            </div><!--pnid:6GWZyELIPRCoUMZ7l4dFJC-->
+            <div class="box" data-page-node-id="ZgDx5f99GLiyV3otKENDRw"><!--pnid:ZFoQyalJDXL5M1VaYAngKE-->
+                <h1 data-page-node-id="hA2APuKEKQ1xwHJhKjBjGF"><!--pnid:U1DSMUIgPeUHDtA881uq06-->👁️ 累計總瀏覽量</h1><!--pnid:PaF83xDSSoueoXe58mXW4V-->
+                <div class="number" id="view-count" style="color: #00bcd4;" data-page-node-id="XAlyZyEQxqDtVmlQxvljjC"><!--pnid:7QxtLVehn9RY89VillDEJu-->--</div><!--pnid:Qjn4Wgp4a6Vg6LX2EuaghV-->
+                <div class="status" data-page-node-id="LwNoeoBrb79laSzTWTeAbJ"><!--pnid:nz2BKbkCeswX5zsMhhthhd-->從開站至今的總點擊</div><!--pnid:VDpYzwSVTnXMo7Vyos7yDn-->
+            </div><!--pnid:1XIxwSe9t2ScUFZEiplpOD-->
+            <div class="box" data-page-node-id="6mYsfQGs5apnZT6vB4O4Fv"><!--pnid:fp1UPbvfdzpnmluNcVLTsa-->
+                <h1 data-page-node-id="jAXAl9BLpARn3F7bxEB5l4"><!--pnid:PiEVx0HIhOFtHlRLhPc1Xz-->💰 區間總營業額</h1><!--pnid:pwyFwbL7C5O0vrWAsYY1bh-->
+                <div class="number" id="revenue" style="color: #0052d9; font-size: 50px;" data-page-node-id="awU72AiZcmfUyKRSe0cNT4"><!--pnid:doiwiuTKruJy6Dtk129jSC-->--</div><!--pnid:b2JyO5U0FWSdljcmpajzKo-->
+                <div class="status" id="order-count-text" data-page-node-id="r22rziMepDm5E3JnnKSiFy"><!--pnid:tk4t98oj2DEOJb2H2WnDBF-->目前顯示 0 筆訂單</div><!--pnid:dKQoQWQwpxAYjsrRxAcjY1-->
+            </div><!--pnid:ztT19AdAANccW6yYZIkEzA-->
+        </div><!--pnid:MPOjvhSo7xlsFFGUd43yQB-->
 
-        <div class="dashboard kpi-row" data-page-node-id="2HGHlAmlFBoKJgR5tw0Ifp"><!--pnid:U9bv2F84uecBAEts2kk5DE-->
-            <div class="box" data-page-node-id="MHhwFOdWYhF6URfjA2ZRFT"><!--pnid:Brp7E34nAv7fF2FLoQeIuA-->
-                <h1 data-page-node-id="OzpUIz4PAuoCVcnRRPGEmC"><!--pnid:B4SkGAQ9oIwaIFJJB6xbMn-->🧾 今日訂單</h1><!--pnid:vBdLwGy0rRwB1Dvxp6K7CF-->
-                <div class="number" id="kpi-today-orders" style="font-size:42px;" data-page-node-id="OGFAovXeXBGauj3uw7zRAu"><!--pnid:ogYoBiV1fEF1boT0FDAEeH-->--</div><!--pnid:QB3GWJL5AKCAhncDrUFWUh-->
-                <div class="status" data-page-node-id="DJfe9LzAW3hpGfmgIghVGQ"><!--pnid:XjO4SxfgweVxnVh6jSr6CM-->依訂單建立時間計算</div><!--pnid:TeN7lOgoFoEaOdNTVH5Hg4-->
-            </div><!--pnid:CCaDfz6puIWMraugO0VDd9-->
-            <div class="box" data-page-node-id="JLqQpEKc2uhqEHLwcZqPm7"><!--pnid:VLA4OXFV8YfnZZaKXxvH27-->
-                <h1 data-page-node-id="MgjcvvOFALEBE4WE5FhOv8"><!--pnid:KfIu0eOpE45H6LGn64DeH3-->💵 今日營業額</h1><!--pnid:U0a8OikQmzbGbXUBBAsUUL-->
-                <div class="number" id="kpi-today-revenue" style="color:#0052d9; font-size:42px;" data-page-node-id="DG4UGPtoFh8oPY8aVo1fFy"><!--pnid:GZbnwlIsg501eLzQxe0Dy1-->--</div><!--pnid:tRSIHeXwRM1OBgpM8Ms3Ke-->
-                <div class="status" data-page-node-id="k181b0MpC6ekVlFTrfIHXI"><!--pnid:mE6VZHRytxxOtkx2Gi9HtN-->今日訂單金額合計</div><!--pnid:B733v7Pp89sqFJOFC3T9aD-->
-            </div><!--pnid:HWIFgBH5eWv7QEqHq5kJ7F-->
-            <div class="box" data-page-node-id="12M018q2FrkH5EBIwrRGnj"><!--pnid:D2wOHH7S7zCElcB6BeevmL-->
-                <h1 data-page-node-id="wHL7KI3DlIDT5LjzfxRQSc"><!--pnid:8z1ja9oVWsOJCARPdmsBHG-->📅 近 7 天訂單</h1><!--pnid:MLx6MPSBPZtcmpGaxLO1ti-->
-                <div class="number" id="kpi-week-orders" style="color:#00bcd4; font-size:42px;" data-page-node-id="5EAQtJMnj5JrBE16GNTHZ2"><!--pnid:HCIgAYxHJ1NGw4ustUdTjs-->--</div><!--pnid:ic2wwIM8KNr1gDk33wg3ow-->
-                <div class="status" data-page-node-id="dcF1lxDBPIYd5noSSpIObD"><!--pnid:zigiuX8SPZDzexA8JyoZES-->最近 7 天新增訂單</div><!--pnid:G1U2dNMYo5dB6S2QlJ1g8q-->
-            </div><!--pnid:w1PPwcjQiQ7VC97uFfrQst-->
-            <div class="box" data-page-node-id="aQB1JVMQZq4F36GwVwq5Q6"><!--pnid:ZtBRsZAq9gwXXaMD1fdJIu-->
-                <h1 data-page-node-id="il3u2xVh0a02hmK3DM83m3"><!--pnid:Agle8hk4yGQNdUU84oyGxY-->📊 平均客單價</h1><!--pnid:d7GweOZcHHCErpLW8ts6XB-->
-                <div class="number" id="kpi-aov" style="color:#00a870; font-size:42px;" data-page-node-id="rlGmyf3j9rgirXX564Z8rw"><!--pnid:zoesSOHjpqDzv9R5qbekQf-->--</div><!--pnid:bvE9HEXNZNQY29BtFpYGTj-->
-                <div class="status" data-page-node-id="D0oWvUNlOsFJFEKUwpX50t"><!--pnid:kZOWtSGdckrnYbDfq9xTzK-->目前區間平均值</div><!--pnid:Ivlv9WZMy8vUfN3EWB2XMa-->
-            </div><!--pnid:yejMhLBwDrHGoosK2dpLje-->
-        </div><!--pnid:kAyyn8u0TCpME1GbL4CFCw-->
+        <div class="dashboard kpi-row" data-page-node-id="GGRpiKCPE9TTDQ4Ru6Up9k"><!--pnid:91wwvRDEGDQeeiTXzop8CD-->
+            <div class="box" data-page-node-id="7y541BwSEVVOXvC3uRu4Of"><!--pnid:CGe0EPdz2KfpFcwrCnJ2ZQ-->
+                <h1 data-page-node-id="NkHptUUMJrAaEtJAF6vhvj"><!--pnid:yMLGLw5AIKudBuiQSfHCU2-->🧾 今日訂單</h1><!--pnid:FFCgHBRBPmSg3sjYsrGyiC-->
+                <div class="number" id="kpi-today-orders" style="font-size:42px;" data-page-node-id="opBjUjobD22mb5mWGPI7q3"><!--pnid:QUprjEtIUpAGavjT2hBBnJ-->--</div><!--pnid:vEukEvnVb6eL3sVrErHx6f-->
+                <div class="status" data-page-node-id="GuUfBSX4eKOs6QCY73yG3X"><!--pnid:fwWdP3GG8gNny5DYGg2QF7-->依訂單建立時間計算</div><!--pnid:GkJb4fJJj70aGRMqY1138o-->
+            </div><!--pnid:qDXROp4YpgcbA77zwyaCwf-->
+            <div class="box" data-page-node-id="qsAAHXXdpMUERI7gSbcjjo"><!--pnid:AZb3cTv79lBqPgcgCz0ugX-->
+                <h1 data-page-node-id="8MBfKGa0t2RTzI8hmqsnHM"><!--pnid:g27ZMFnHHaynGv5N4g61DG-->💵 今日營業額</h1><!--pnid:SDTARNZ50Hw9wRF4j3rf9w-->
+                <div class="number" id="kpi-today-revenue" style="color:#0052d9; font-size:42px;" data-page-node-id="qfsQYvDYWD2L89aBwcQq00"><!--pnid:miWgJI0WUvgazcPhD5iJJq-->--</div><!--pnid:ZRhrAx8RP4eGpgJYuBquVx-->
+                <div class="status" data-page-node-id="Kna9cRDcuFORh2RXCutCMz"><!--pnid:f20i9XFNHagugSoVSILKTv-->今日訂單金額合計</div><!--pnid:G3PoxKPw1OQC8AKt2WXAti-->
+            </div><!--pnid:ZDzDckKl70tIerlctm1AHx-->
+            <div class="box" data-page-node-id="0zn2I6Y0wTXNGM39KOZv7w"><!--pnid:PSHEZKyMlQi2W6oFpDmsU2-->
+                <h1 data-page-node-id="IvV1OHLT8aSd0mV6ywmoAb"><!--pnid:E9ygHZ0Cr9guc5Y3QQMIl0-->📅 近 7 天訂單</h1><!--pnid:YkebHLGWhzUDB6bgRkHGP3-->
+                <div class="number" id="kpi-week-orders" style="color:#00bcd4; font-size:42px;" data-page-node-id="ljqdgzJHwXKl3qAh3ROStT"><!--pnid:f39O1M89YBXdR88jRhW8at-->--</div><!--pnid:kqMONduYmjakGUuRkdgOr5-->
+                <div class="status" data-page-node-id="bQWqGrYO2b7uwyPjEySJCr"><!--pnid:MFmYjgFWaNYGWKH6QVpFM2-->最近 7 天新增訂單</div><!--pnid:5vw3YvfBGqX9qwWMnaUqAD-->
+            </div><!--pnid:IzfdOMiP4krGuwxc9sY5vJ-->
+            <div class="box" data-page-node-id="W3JQra2eKV9PlHBsavBptP"><!--pnid:fUuOEL67U4vFUBVcLM50Jt-->
+                <h1 data-page-node-id="qaIXgWbjN9RZ45nEpfyTqH"><!--pnid:JwDXe2d1R12n6vEbVPgGgd-->📊 平均客單價</h1><!--pnid:4WD8qGzZ6wSLFyxGYS75UD-->
+                <div class="number" id="kpi-aov" style="color:#00a870; font-size:42px;" data-page-node-id="7vSnIWol9zivyJRBJdpI0I"><!--pnid:owuipZtDH0ZjjNoCHSgjrf-->--</div><!--pnid:IuwaETVEwLceGG41Wz0rm2-->
+                <div class="status" data-page-node-id="IzB0ctzMw3hQatQV5lHVG9"><!--pnid:fp4SLvUtboG7zf8qlCDeTt-->目前區間平均值</div><!--pnid:awDjb65HFaIAzTpIRV4FDM-->
+            </div><!--pnid:dwjFG3fNls7pOuIJFt9Fyk-->
+        </div><!--pnid:psekwXjRnkW9e8FxAzbDgH-->
 
-        <div class="panel-section" data-page-node-id="BFh6HHwrmwDvYEiFPdO7sS"><!--pnid:kZVIaDfvBhqy6XdIugMy5w-->
-            <h2 data-page-node-id="Fo6gIvrHwUdLw1ZAiQtj1F"><!--pnid:en6C6BeG5ePLylcnbncsMn-->📊 訂單來源渠道</h2><!--pnid:bCn0rFGxUABukEi52DQwt8-->
-            <div style="font-size:12.5px; color:#6b7280; margin:-6px 0 14px;" data-page-node-id="FsWRJSZESL9G45modXWlzs"><!--pnid:foLUbKAYDTAHlfIqntWFdG-->依訂單帶入的來源統計（LINE / IG / FB / 直接訪問）。分享連結時加上 <code style="background:#f2f3f5; padding:1px 5px; border-radius:4px;" data-page-node-id="YhLJXYO6sZ4UHMv0U4sehO"><!--pnid:6n2PYpOZAeyb6ZKv2BDAI4-->?utm_source=line</code><!--pnid:GRynYaHsltJWVubWDBpi92--> 即可精準追蹤。</div><!--pnid:yW7FYwQBEPJoFNsN48pfvZ-->
-            <div id="source-stats" style="display:flex; flex-direction:column; gap:10px;" data-page-node-id="FgARVqoULH74qdiqyNbCAh"><!--pnid:FZgDAYOG52k3xLGi8mzG3i-->
-                <div style="color:#9aa3ad; font-size:13px;" data-page-node-id="e3rdGYhl5ftFof3HilNW5h"><!--pnid:8Ng3zdAGdMcLh93DDaCPck-->尚無資料</div><!--pnid:WM6VZZCI7tCOy6HjYDoH4a-->
-            </div><!--pnid:aYXcnPmGjjbrUV98IdumCD-->
-        </div><!--pnid:2HbG4PyXkFIHVgPCyQl2Po-->
+        <div class="panel-section" data-page-node-id="lu5rPtGpZnd2XDOdOzzcjs"><!--pnid:5PZsvKL35LsZUmqSh2T2Py-->
+            <h2 data-page-node-id="pKJkyA2vabEAcjbCcmAJKq"><!--pnid:G04iGFEGyvrBKHDdGsUlqg-->📊 訂單來源渠道</h2><!--pnid:XWf7clBz7QEWqbBeaTfToD-->
+            <div style="font-size:12.5px; color:#6b7280; margin:-6px 0 14px;" data-page-node-id="ATid6jHxjpLutOgdhMKrSp"><!--pnid:j0UxB2KNI8vZj12Mcwsoul-->依訂單帶入的來源統計（LINE / IG / FB / 直接訪問）。分享連結時加上 <code style="background:#f2f3f5; padding:1px 5px; border-radius:4px;" data-page-node-id="x6ohAx1sRTBMet3Ntug2Mu"><!--pnid:U8TgdAYTf5tljDCGV5eNAp-->?utm_source=line</code><!--pnid:tHbwBeiRNcp8FBzGUI3Njt--> 即可精準追蹤。</div><!--pnid:Ew1PJGNdsugOMyUKVvr8Ey-->
+            <div id="source-stats" style="display:flex; flex-direction:column; gap:10px;" data-page-node-id="bIToRuC5ThEkjbwwU5VnFE"><!--pnid:Qm2zJMYwKluSJ4W2HW4UUw-->
+                <div style="color:#9aa3ad; font-size:13px;" data-page-node-id="eFlYrrpqttIoxlVIBA60Xm"><!--pnid:bEC7ywc0wLQkQYzSJ4iL91-->尚無資料</div><!--pnid:gDQgH6UAJm5TVi6irbKpFq-->
+            </div><!--pnid:CzporXaNClDxVGVrUuYMBS-->
+        </div><!--pnid:fzYcvMLhxvleapZGC84sYb-->
 
-        <div class="charts-container" data-page-node-id="mA9yu2toyFoXR3wBmrgDFX"><!--pnid:QdbktxH4iBxiOjxLPxClDS-->
-            <div class="chart-box" data-page-node-id="HtIkGUB6HVhEYht4hHDigd"><!--pnid:ne5ryZZEchkTBonBbW6ZQj-->
-                <h3 data-page-node-id="4Hrd2M31VppvKevCoqiSjN"><!--pnid:cirAZXuYEZRDcYwIt4PKzw-->🏆 熱門商品 TOP 5 (點擊數)</h3><!--pnid:MuPyIBFHCsxu1b4DWmjKZk-->
-                <div class="canvas-wrapper" data-page-node-id="uLQt7mSYOCWZJbTfajMXhh"><!--pnid:KtgbJnVGAMWCcl4pWbGU7X-->
-                    <canvas id="topProductsChart" data-page-node-id="OjC3CAn3oMsV1sVrrAGUKg"></canvas><!--pnid:vb9l3EwLktCLOmihVrKyrP-->
-                </div><!--pnid:5nQtbrYkHomWMEAnJtQX3t-->
-            </div><!--pnid:mgzb6oVvD9B1alxSJ61VFY-->
-            <div class="chart-box" data-page-node-id="cHXNhp3QAC2aICNZbRThB6"><!--pnid:8xU2tw8QWa1Z5SM6QKcP8m-->
-                <h3 data-page-node-id="ohamyrpIvHAa1aYkjyPUyk"><!--pnid:Nm2JzBcfjBkV945w2C9Dlu-->📊 各品牌預約佔比</h3><!--pnid:hpN6bSg5DCSc62JWFBF7qs-->
-                <div class="canvas-wrapper" data-page-node-id="ls09vAwyMxA9bH2v0341xt"><!--pnid:KAmfW12BYD8BQNkDEOYric-->
-                    <canvas id="brandPieChart" data-page-node-id="x2ivPCLrOVCaBj7L9q02ld"></canvas><!--pnid:lI2ozrzhpkreNPM8VLUHCY-->
-                </div><!--pnid:66xLz3DORrzIzB3ql8X5lm-->
-            </div><!--pnid:vMG7HJ3l6RoQH2UmRIPBle-->
-            <div class="chart-box" style="grid-column: 1 / -1;" data-page-node-id="YVUUuLMCkOlIAeCRIMH2kM"><!--pnid:cmUpKQ1TQejVwENG5JQ49z-->
-                <h3 data-page-node-id="x9KDpBIB83wzqQG0bX6QOi"><!--pnid:QHozD4Zonho6DY9h2QShKz-->📈 近 14 天銷售趨勢（營業額 / 訂單數）</h3><!--pnid:GMqPL8YuPBRhbPvd62KSYr-->
-                <div class="canvas-wrapper" style="height: 260px;" data-page-node-id="FLHdFEwVB34Du4Nld9rtwi"><!--pnid:wsj5WbSzwqsOvSo6GAHr0I-->
-                    <canvas id="salesTrendChart" data-page-node-id="JyAaaTt4FjkE1XtKpzGteB"></canvas><!--pnid:75MczbzMrD4jZD4nP1MZ3m-->
-                </div><!--pnid:5jHeMcqwHJxLR1bQ9JONDp-->
-            </div><!--pnid:GZzAM9zT9Pzv5MtZ4EsreM-->
-        </div><!--pnid:V8lpvnR9cbYCQPi5LVdStO-->
+        <div class="charts-container" data-page-node-id="Wr0JKbyj8e5KRikXahBY8F"><!--pnid:KMg42RIkuWyDHsIrob2EJv-->
+            <div class="chart-box" data-page-node-id="BbOiRvcOAKG6y9pazVVyhj"><!--pnid:XBUCpAr0w1ax84EMaqZXlk-->
+                <h3 data-page-node-id="7KQobRQKMde5Cx4S2h60va"><!--pnid:IGO7f8dP65e2At4dfzijBk-->🏆 熱門商品 TOP 5 (點擊數)</h3><!--pnid:DcFO3KJExlYBdVNhznagOA-->
+                <div class="canvas-wrapper" data-page-node-id="GlBq4rNF8kPahLtK4bhGEF"><!--pnid:iaZ6nHiZeEJNJ9eddzaDF2-->
+                    <canvas id="topProductsChart" data-page-node-id="j0t3lNjp0qxWXFpnDr01Va"></canvas><!--pnid:2ghrGgdRJgVCWoqoazjYi1-->
+                </div><!--pnid:IrccCTUoh60hBOD6Cuwqfv-->
+            </div><!--pnid:ZiRMG3UpVto9eABvO9vC5L-->
+            <div class="chart-box" data-page-node-id="HCYPIjndqHmmUBgEKzSIoW"><!--pnid:7GLh2LJyjHePrgLinNG44F-->
+                <h3 data-page-node-id="FN9YHPuOVEqnJunqC7JSak"><!--pnid:1gr8akW0aqRkIn2UzIU1dF-->📊 各品牌預約佔比</h3><!--pnid:XPh3o30zt1c0UkAvGgncVK-->
+                <div class="canvas-wrapper" data-page-node-id="2fZNAFdOdhBJuqTIRv9F1S"><!--pnid:NptU7kOQe5lMLRjZH7iG3g-->
+                    <canvas id="brandPieChart" data-page-node-id="lOER4eu1gcon8dT2cqRYfl"></canvas><!--pnid:xt3Yqn91Ak0cIuZhZ0lHyd-->
+                </div><!--pnid:prP2PjEPiy8TqVrI48BH3A-->
+            </div><!--pnid:AJHQ81DailbJglAERylEt1-->
+            <div class="chart-box" style="grid-column: 1 / -1;" data-page-node-id="nNviimiUL1SXWUeA2dOIou"><!--pnid:8l9oKhTattI0nUXfUb7dWQ-->
+                <h3 data-page-node-id="4sXOxXUTPwkvFjBHdrzkyZ"><!--pnid:8r5rjeuYthBBDJHVhH13ar-->📈 近 14 天銷售趨勢（營業額 / 訂單數）</h3><!--pnid:MRYKxWolRl6XqTwLpjaQ3P-->
+                <div class="canvas-wrapper" style="height: 260px;" data-page-node-id="TtXwAFGuteGpbVHfiBAiyY"><!--pnid:LnrXAwKVLOhHkc1wJQNYaX-->
+                    <canvas id="salesTrendChart" data-page-node-id="CKHK9FsFgg20WrJ6vaxTWK"></canvas><!--pnid:LvmGAdREEHyBCC6fHLu4QV-->
+                </div><!--pnid:fIOMBKPlGrYuUdlA2lFPXw-->
+            </div><!--pnid:W7AACPdwRsIVuhgiGXZD15-->
+        </div><!--pnid:TIdZfVs11jSKEXrFRCcq4G-->
 
-        <div class="panel-section" data-page-node-id="pUNHifMtendAag9mxQo5Ox"><!--pnid:DPZJ6nwSCthiFc47ctMPJt-->
-            <h2 data-page-node-id="HllR2sKGGBF70qNWgTbFgO"><!--pnid:yKx0Cgz8q4Wo2ZK2WnnnsU-->👥 客戶檔案（依手機號聚合）</h2><!--pnid:Ao0Ag6ZHTCYJ9rmq3rYfE5-->
-            <div style="font-size:12.5px; color:#6b7280; margin:-6px 0 14px;" data-page-node-id="anebhj5SisGjOB236xAJrh"><!--pnid:knviF1SXw5N6eztpRE0DTh-->累計消費越高排越前，方便識別 VIP 老客戶與回購客。已取消訂單不計入金額。</div><!--pnid:NPIjywK3EdNBRp9QvDxIj9-->
-            <div id="customer-stats" data-page-node-id="hDhzNklxJtJUoix4HdnBTO"><div style="color:#9aa3ad; font-size:13px;" data-page-node-id="4P5HeccsFDblXOOLGln3Bm"><!--pnid:OzQP80PNGX0PeoTC81yDnX-->尚無資料</div></div><!--pnid:3XsNG6WlSKH5aOBJ9D5Byj-->
-        </div><!--pnid:Q1AwhoxOh6hFvt0SAOxjGk-->
+        <div class="panel-section" data-page-node-id="B9uPHr5MS7R7kV2DObEyCo"><!--pnid:gZ4jAVVY4FOgCSBVZ5d5pW-->
+            <h2 data-page-node-id="6MMl9q8JMGIDUgRFHmY072"><!--pnid:a4VhOz9c9zFAnSIQ2x0HF0-->👥 客戶檔案（依手機號聚合）</h2><!--pnid:narCVMhonImuzMjelX4xPb-->
+            <div style="font-size:12.5px; color:#6b7280; margin:-6px 0 14px;" data-page-node-id="cdeNp6ogxaTlZo8ixVau0c"><!--pnid:F9U20iF5ldwwNWkMubz8oO-->累計消費越高排越前，方便識別 VIP 老客戶與回購客。已取消訂單不計入金額。</div><!--pnid:NxcTGghVTX7NL9iDfvbaIf-->
+            <div id="customer-stats" data-page-node-id="NWeSymiouSwpfHqmNCmWux"><div style="color:#9aa3ad; font-size:13px;" data-page-node-id="lMGsHD4MFPPvJsJMa2M5JE"><!--pnid:nTMUHJclGQWVgSGXIJvsnY-->尚無資料</div></div><!--pnid:eP9nvPVExD7VHFCEXg76Bd-->
+        </div><!--pnid:Oe6tB57nOmsKLwY7DCmp1e-->
 
-        <div class="panel-section" data-page-node-id="NHUGM3A5Xk03YZ4QrPo4Yf"><!--pnid:ZlyENUbAxUhXb3XsnvnvIF-->
-            <h2 data-page-node-id="7WDFpFMv63gy7qDKB6NuV5"><!--pnid:TO6E5MYMXggf4jHhtk5LOC-->📈 累計系統點擊佔比</h2><!--pnid:SOvfFDl1YAms2eMWTgMlVX-->
-            <div class="visitor-overview" data-page-node-id="ZSRJS3QYw0HWN4IDhHxpDv"><!--pnid:xmAcLmfogEuNrcPCjr4enF-->
-                <div class="overview-total" data-page-node-id="lYprZCQMAJLzOz85EPxkRk"><!--pnid:voXhOUTRkJYzHZABeTY5FW-->
-                    <div class="num" id="total-click-num" data-page-node-id="wwUzNxArX5Pu78WJt5AkZQ"><!--pnid:lgdRZPjNZ7UDnxGOfGDHl8-->0</div><!--pnid:k83S37wmCtaLBBr966Xu5n-->
-                    <div class="label" data-page-node-id="NuJ4fQpb6i5BSg2BJADLHU"><!--pnid:8AqFx6dfx8jgqRCsVVMbXn-->總累計點擊</div><!--pnid:vFAGcNxGJ6tqGaGEN6MjRp-->
-                </div><!--pnid:ReCBpHBzB3Q2JPdtj1LB46-->
-                <div class="overview-bars" data-page-node-id="FjFzBTcZk7M1qIvCSgNHAW"><!--pnid:7rjOxECisADtvixmrSFdgg-->
-                    <div class="bar-row" data-page-node-id="pV9YUac30mHTGBX7Z4dpMe"><!--pnid:qsGZXkk3lN3EqccEH8PzQf-->
-                        <div class="bar-label" data-page-node-id="k0xEEURJli4GJ0WRnyL6yb"><!--pnid:rYpYECBvmEsyjVFeWbTS3q-->💻 電腦版</div><!--pnid:2wxUpkEirKvtxlJzwkTlKh-->
-                        <div class="bar-track" data-page-node-id="B50l1qsRgfBdbm7DJ9hzgz"><div class="bar-fill pc" id="bar-pc" style="width: 0%;" data-page-node-id="qcecx2yYuBMDj0Gj19JKBN"></div></div><!--pnid:CxyHCV0XKFswjBsBx8ZVsx-->
-                        <div class="bar-count" id="v-pc" data-page-node-id="KJ73BXXIXGIVCDGCUKXA2U"><!--pnid:yI9E1DcSv5Bju9IIgYXmKc-->0</div><!--pnid:TobA1oz2b1wNLvpUBYfSMs-->
-                    </div><!--pnid:QH81KfPJohuGLyBkRovshB-->
-                    <div class="bar-row" data-page-node-id="DBlgdTTE5xJ4sbQnER0FVG"><!--pnid:F3L2XtX8qPw64BxsitLI1E-->
-                        <div class="bar-label" data-page-node-id="9kp7RdACcmA7GYwYHm1sNE"><!--pnid:KZ17NXTrGgmxUGLwkCyjwH-->🍎 蘋果 iOS</div><!--pnid:DhOrc2eDqxNJndccZiSdhi-->
-                        <div class="bar-track" data-page-node-id="o3QwcXRlKr2EPIjxZhGXan"><div class="bar-fill ios" id="bar-ios" style="width: 0%;" data-page-node-id="AVKilo2HP7nzwlN3KJwOl1"></div></div><!--pnid:FA0PBz4L0KDcGaz4QWuSIx-->
-                        <div class="bar-count" id="v-ios" data-page-node-id="gVjWNzEBg4cMDXGUVpBRxL"><!--pnid:H3Eh74jRCRiKeVFae0kbFE-->0</div><!--pnid:XXkFrpy4bUgdqAZezOMoQ8-->
-                    </div><!--pnid:1qAzJwCCkIy6wKvKjBzG4u-->
-                    <div class="bar-row" data-page-node-id="B9em5R1E5X7QUqr9SyzOij"><!--pnid:gN87Cvg5dZv4y2H9cNnlpn-->
-                        <div class="bar-label" data-page-node-id="bUjjFO4aq8kKSpFV5GQg1F"><!--pnid:yppEoPvV1ls6LHJQUF64Tb-->🤖 安卓 Android</div><!--pnid:J7GiQNizFESTfnYwPaPxYH-->
-                        <div class="bar-track" data-page-node-id="JiLipDhoYpLuWwmxvxnL8H"><div class="bar-fill android" id="bar-android" style="width: 0%;" data-page-node-id="4ap818gSAo7ySAQ9GGEuFg"></div></div><!--pnid:kSlH95SNqS7prnGddEHb99-->
-                        <div class="bar-count" id="v-android" data-page-node-id="twU2IWHjpJ3ZUlxxNcMSzG"><!--pnid:LKMCwAHjSHa5wniNUc2fxL-->0</div><!--pnid:7F4dlBKmrsJzR2GMlJ6UqE-->
-                    </div><!--pnid:dAEM6sCwToVEIungqAo5XS-->
-                    <div class="bar-row" data-page-node-id="kUPtuhCCUZFI8hZedWENmB"><!--pnid:keWcK8ZIfjmlup7SZwfoqk-->
-                        <div class="bar-label" data-page-node-id="VdVNTEDkp1pZZl8rSpjxOF"><!--pnid:P56QbY4zII4ujX1IGSWYHM-->🐧 Linux 系統</div><!--pnid:M1sFBZoeuSYToVETEWy9s2-->
-                        <div class="bar-track" data-page-node-id="QBpk74Od4k6qt9dChrY7EB"><div class="bar-fill linux" id="bar-linux" style="width: 0%;" data-page-node-id="Fq8hhrMynFHg8yGneTpvbP"></div></div><!--pnid:qczry8CFkGKtyaEbkWuH66-->
-                        <div class="bar-count" id="v-linux" data-page-node-id="N3suLtwDxCeg2pQtnmJyI4"><!--pnid:bx3SFoHSFzS0dPyn084SyB-->0</div><!--pnid:H0CVVTKMswX8AAAyPKVDvB-->
-                    </div><!--pnid:TwaFw7MFn9LjfQCCHBWIpD-->
-                    <div class="bar-row" data-page-node-id="JVFqwUHpQj1jPgtIaCtpLI"><!--pnid:D0NOVpvSc07gk3yFRDzG9Y-->
-                        <div class="bar-label" data-page-node-id="AlDVwfHLPAk8JNk9DZEZ0F"><!--pnid:FN2HiEjNAwyHEEIPMIraBq-->🌐 其他系統</div><!--pnid:xpDUSAO0siZQF4xxQfm0Np-->
-                        <div class="bar-track" data-page-node-id="AVqhzmeNRE60MyAN03E0Fj"><div class="bar-fill other" id="bar-other" style="width: 0%;" data-page-node-id="FBBomc1oUWerF9bdnPRAKh"></div></div><!--pnid:uILEXr2afnLNrpMCNcnJID-->
-                        <div class="bar-count" id="v-other" data-page-node-id="U3QC7vAxF8FJYIPtUWA0Lv"><!--pnid:YpttME6IFz7KEk491o7tFC-->0</div><!--pnid:pfFxW5ep8laR6HfgA1DM7z-->
-                    </div><!--pnid:3ntb3sglcZI321x874NsXQ-->
-                </div><!--pnid:K0TfyAGGdEkXL0FHcTsgMn-->
-            </div><!--pnid:6Yq9gorUVOWpq1cM4RzKDj-->
-        </div><!--pnid:30gNkV5XhAmioucz6APNFm-->
+        <div class="panel-section" data-page-node-id="T7zia0A0PiZYx5QYPvMFBg"><!--pnid:2PCr0n2liZAOaZvKbHdjJN-->
+            <h2 data-page-node-id="hvHzolacL2DmWWHTscfjRY"><!--pnid:N0e33sgxyGHbaBFQyplCwA-->📈 累計系統點擊佔比</h2><!--pnid:XVy1PPx4wwGhGktbxUpXCQ-->
+            <div class="visitor-overview" data-page-node-id="umGnBAZvczfRKb572aQOxO"><!--pnid:cDwWBBxU3lQ9tbCg4sZRiJ-->
+                <div class="overview-total" data-page-node-id="FmBio1dfWfNYRK9fuFKhcw"><!--pnid:49e5ERjkIUUhJDYOshDBtL-->
+                    <div class="num" id="total-click-num" data-page-node-id="IW7Rebs1jG2xpXhonJ9Qyb"><!--pnid:xAYrltLSaNoItSHLBvPmtf-->0</div><!--pnid:P0Gam654KrXjruyAdRGfYP-->
+                    <div class="label" data-page-node-id="D3QHgKaHNyHKeOTNPgRBvm"><!--pnid:PvjTZi0v0JkhEqlkr8G9TT-->總累計點擊</div><!--pnid:yvnW7p4guBvluOS3ijy5sO-->
+                </div><!--pnid:VZHMFOOHgEuK3GfsFgzwqa-->
+                <div class="overview-bars" data-page-node-id="EpXI3BtrUioISVPz5eQSLR"><!--pnid:qcEHGBDUxR3A53TEYtm5Ti-->
+                    <div class="bar-row" data-page-node-id="b9u4zK2VOXQ4FunhpMa1M8"><!--pnid:MFIiw4BOEqU9X0QoBKo5jc-->
+                        <div class="bar-label" data-page-node-id="WzZuu0Z8HAAhi3H7PcBOat"><!--pnid:sBRFlSj5LsF8vhvFUgnjZi-->💻 電腦版</div><!--pnid:HjYAUhtl161dj0RGTwB3MB-->
+                        <div class="bar-track" data-page-node-id="86KM7iyEOiIsCUKxF9HxdZ"><div class="bar-fill pc" id="bar-pc" style="width: 0%;" data-page-node-id="ltD1QH81IIa97v2xHHWohK"></div></div><!--pnid:q97wW2CgdLgIRzefwYI2lz-->
+                        <div class="bar-count" id="v-pc" data-page-node-id="yuAKiyqe34WzZbnaj2K0Px"><!--pnid:wUCeyg8plxup0bY6aOrJu8-->0</div><!--pnid:8umdiyw1RKz1QEcabPQRA0-->
+                    </div><!--pnid:QSXWUgGL3loTLE8ovPfuSH-->
+                    <div class="bar-row" data-page-node-id="75k4yoNWcZ2oaymrVSC00k"><!--pnid:VbACVXZKAmRymVJ7rmEtSG-->
+                        <div class="bar-label" data-page-node-id="Ihx0VxJDgFsyau7hEbNnsE"><!--pnid:UUS6H3pPWcjRIvvrjvd0vd-->🍎 蘋果 iOS</div><!--pnid:gntOXdesgsMSqk6MEisKN3-->
+                        <div class="bar-track" data-page-node-id="MPB7JwGDyx6JU1h1qEqz5G"><div class="bar-fill ios" id="bar-ios" style="width: 0%;" data-page-node-id="1OSnKci2VnfP3ikdCt9Af7"></div></div><!--pnid:Gy8NQFNvj6rGUnTwiI1jrP-->
+                        <div class="bar-count" id="v-ios" data-page-node-id="K9EuQQ7I9C76UG5EWzHkMK"><!--pnid:mzyl5OCROsdBQROXe87CUv-->0</div><!--pnid:ZPiPzi9eRaCa4xK2Tc5UnV-->
+                    </div><!--pnid:cNcQH1uDgqZHFMUw6i9f3l-->
+                    <div class="bar-row" data-page-node-id="Psu5bmyo6wpwi9AX9BJjdW"><!--pnid:Lnz5GbWb2eMkV8amE16M7Q-->
+                        <div class="bar-label" data-page-node-id="NwqRfSzFL31N2Rx41OMIi6"><!--pnid:15APwDbEPtVzGhlSDrVDlb-->🤖 安卓 Android</div><!--pnid:CwyKAd2tYtITs0u0MgFagK-->
+                        <div class="bar-track" data-page-node-id="2I8vBZQtKZRhvlLqSzJxAe"><div class="bar-fill android" id="bar-android" style="width: 0%;" data-page-node-id="3kfHLmJYh6OQHKlgrRhJSm"></div></div><!--pnid:FKULC4nWTz1j9UduL8iATg-->
+                        <div class="bar-count" id="v-android" data-page-node-id="gIJkMrxIsTN3NvrjL9YmkG"><!--pnid:SF9cJ6xhm2E7FFRufSuyFi-->0</div><!--pnid:rJHpWtGsGAVROhRpCrlihw-->
+                    </div><!--pnid:MNkjC9PC7HBKQFdN0ZKXG2-->
+                    <div class="bar-row" data-page-node-id="mOJ7v3g5oBEL5SsyuXV1Fq"><!--pnid:Sf0jQrh9wNQ4j43dlsSO0N-->
+                        <div class="bar-label" data-page-node-id="18ii379T6G3k9Ku7b1oRW7"><!--pnid:wf58HC0OrpCQOtYR7DKJIJ-->🐧 Linux 系統</div><!--pnid:WarnJ81H2KIgejTM5cqCDf-->
+                        <div class="bar-track" data-page-node-id="uAsBeOMk2DAkLJCOKdBbOp"><div class="bar-fill linux" id="bar-linux" style="width: 0%;" data-page-node-id="tSqUZXN9c0ooRbIl8yskTZ"></div></div><!--pnid:HwlWpHni5ZPi1mENcrZoCt-->
+                        <div class="bar-count" id="v-linux" data-page-node-id="XeyUZsQ08EePjL8ljiNpOu"><!--pnid:2h9oM3adyyTesD61lG2LJN-->0</div><!--pnid:fFYVyd0pdAErRCCXFJHL1A-->
+                    </div><!--pnid:vQQF4zESdRvN2vuHkwfiRd-->
+                    <div class="bar-row" data-page-node-id="cH1dp134cxNygLwkCUzNj9"><!--pnid:RID5qeByYEClIhyEYkG995-->
+                        <div class="bar-label" data-page-node-id="QxjZw0W0jH6DAQSlyGxH6V"><!--pnid:fcFELDqCWy2W6aGLrVb4Qy-->🌐 其他系統</div><!--pnid:bB3jdt1uCotTxj8VuCAS8H-->
+                        <div class="bar-track" data-page-node-id="KUI4X091lCfeWKU21XxB2b"><div class="bar-fill other" id="bar-other" style="width: 0%;" data-page-node-id="VQKr5a9F160pTqTogNFL9S"></div></div><!--pnid:SwHub7OqAJni8oM1pL3N7l-->
+                        <div class="bar-count" id="v-other" data-page-node-id="uy8QHc9NDATD9zTmvUFlvR"><!--pnid:2TUBBudlrw7B3nFt3JUu9h-->0</div><!--pnid:QPQVioMhggtluBpyJQhp4a-->
+                    </div><!--pnid:Ae5Vo8PzICSoYGHq9VoO4o-->
+                </div><!--pnid:O9zjxAs0aUeJd1LEQaNnqL-->
+            </div><!--pnid:dcqrH4vCIxwLZfDThiD5ud-->
+        </div><!--pnid:26j4jRImHIUZ7mb1uHrVdt-->
 
-        <div class="panel-section" data-page-node-id="WarQyHcOuLbdbGKT7aOOvm"><!--pnid:BsxVu0s5i2cAm8HnSHd4qp-->
-            <h2 data-page-node-id="9bsXNn4wQxZGpBhSAz7ulP"><!--pnid:UoYFQsENXJtU7YENatzYga-->👥 即時線上訪客</h2><!--pnid:d45i4LlHkBewFXNOeke3Vj-->
-            <ul class="visitor-list" id="visitor-list" data-page-node-id="EIeuMlxFT7oRebU8NikB03"><!--pnid:Whl9D2iIcEbBY1zApL1Prx-->
-                <li style="color:#666;" data-page-node-id="m1CxcS1FEdlXgCa9jP0WGj"><!--pnid:TXQnFsnqjlExbd0gHmFsQh-->等待訪客連線...</li><!--pnid:eZo1c9oyRZsIaLSfoeGus1-->
-            </ul><!--pnid:rO5k7aranGY5kvYokkEKYJ-->
-        </div><!--pnid:WcudzaexGu0DWQzALY0VgQ-->
+        <div class="panel-section" data-page-node-id="A0oEAEGCRMcXKeDvvWNqO8"><!--pnid:BWrXeY8ztwf3JWSuiWyEz7-->
+            <h2 data-page-node-id="2PeJ5S62boCMC3U3uXrQSd"><!--pnid:4BhCcikCwiaY2b5tHVaER9-->👥 即時線上訪客</h2><!--pnid:LOd3NpyGUhDBNQbb60iCpn-->
+            <ul class="visitor-list" id="visitor-list" data-page-node-id="7h903q7MjFXwAMQBhLqJ3v"><!--pnid:6JLduWqajshWf7ZSCDTuFJ-->
+                <li style="color:#666;" data-page-node-id="lJwDM4sKS4NaNCW5vm9cuF"><!--pnid:IN0UuCGvKdA7PtxDFNzJVz-->等待訪客連線...</li><!--pnid:R54BOZCFDI0U3vh2ObFw8J-->
+            </ul><!--pnid:yQsslr3ici6LVqavhFz59f-->
+        </div><!--pnid:Ad9k2j1OFJOnGkQT9xFVk0-->
 
-        <!-- ===== 後台獨立客服對話 ===== --><!--pnid:vTyr1ZoSWsSXu9vazsKzdJ-->
-        <div class="panel-section" data-page-node-id="8fm3H3EGdUaIKYk7Ng61TJ"><!--pnid:PEswmRKqSkLy48ojjLRmvM-->
-            <h2 data-page-node-id="IQA4PpXUE0Hhd5LMXmq9zf"><!--pnid:UzE3OUcavsqkufBkMagCeG-->
+        <!-- ===== 後台獨立客服對話 ===== --><!--pnid:bA9HNJNpeP7ztSGrZQhbPt-->
+        <div class="panel-section" data-page-node-id="ckl7PzIqKGGWJJIUjkX7cL"><!--pnid:u6YrgCOwM1ABooIqhtfD7X-->
+            <h2 data-page-node-id="vLRi1zuhW8rsI3ivjfhZ1S"><!--pnid:TQNy8oGUQuaqNVu3lr2LCi-->
                 💬 即時客服對話（每位訪客獨立）
-                <button onclick="refreshChatSessionList()" style="padding: 4px 10px; font-size: 12px; background: transparent; border: 1px solid #0052d9; color: #0052d9; border-radius: 4px; cursor: pointer; margin-left: 10px;" data-page-node-id="cN07Abnq4VSuq9E8vPzSUd"><!--pnid:QLCmHiESADXMjFyEPgIEBi-->🔄 重新整理</button><!--pnid:Mn67KO2QWDqDBnvaxGOQE7-->
-            </h2><!--pnid:DUKtXj8v0gqauFozNZaJzC-->
-            <div class="panel-hint" data-page-node-id="AGw0suYZUEOeREe1lTw796"><!--pnid:PSuK0P8OQGR80KXdgPqUFc-->
+                <button onclick="refreshChatSessionList()" style="padding: 4px 10px; font-size: 12px; background: transparent; border: 1px solid #0052d9; color: #0052d9; border-radius: 4px; cursor: pointer; margin-left: 10px;" data-page-node-id="KuXihmruovzMZdi1qEpvi6"><!--pnid:AHiDTTp7lLCBVYLbY8BFkW-->🔄 重新整理</button><!--pnid:CFUUrpEBVA5Ib8CXTqDyoh-->
+            </h2><!--pnid:8ahx7bO5n6VbJyRJCAddyq-->
+            <div class="panel-hint" data-page-node-id="6o5kaJwztlBwyhdxXeSz5k"><!--pnid:GDNe6lpiI1m8uq6G8TEBQK-->
                 ⚠️ 這裡的訊息只在客人「頁面開著」時才會即時送達；若客人已關頁，訊息會等他下次打開網站才看到。
-            </div><!--pnid:qGtbab2fLSQVAgLllPIiUh-->
-            <div class="admin-chat-container" data-page-node-id="7SuQiQ8oiWqNXExNUq0w1T"><!--pnid:szgiIdZNDT0Ph2L5j9dO8H-->
-                <ul class="admin-chat-list" id="admin-chat-list" data-page-node-id="hcHkEX93FO7Os2F3QBICbG"><!--pnid:0fWqyAHrB4En2WlDYeIOM9-->
-                    <li style="color: #666; text-align: center; cursor: default;" data-page-node-id="oMtOjF1pWFIc6WEBvCOJpy"><!--pnid:kq7OFjcU7Kmt2dfkzg9x32-->載入中...</li><!--pnid:WIbcjo5a1SDUGatUlU4RcG-->
-                </ul><!--pnid:aQoF7nxIdANKFIBOiaXU4j-->
-                <div class="admin-chat-window" data-page-node-id="qnbTBidrUDmUPZmOE4seyB"><!--pnid:a5iD1nMSjL0MMApiEiTeQy-->
-                    <div class="admin-chat-header" data-page-node-id="hK8A5EepUDQLKWSCmFTI5C"><!--pnid:kUdl1MnVcyowYhisxPUrv7-->
-                        <span id="admin-chat-header" data-page-node-id="JiJDD76ZX6oitwJFOcqHE9"><!--pnid:EhQuCwZ2mCLovXU98zZmiS-->請從左側選擇一位訪客</span><!--pnid:jpPqXh7hxOzfLnKLKJ05lf-->
-                        <span id="admin-chat-session-label" style="font-size:12px;" data-page-node-id="7OhwEPV0DdwPSBqJg8B7Aj"></span><!--pnid:jHZ2eyukKFSWKb3HoCEhVd-->
-                    </div><!--pnid:HlyFqIjShgwWg3taU6gOFt-->
-                    <div class="admin-chat-body" id="admin-chat-body" data-page-node-id="CFiehhe83UoGXC4HItGzCw"><!--pnid:yaceuyKZjz4mjSTtPGwsMa-->
-                        <div class="chat-empty" data-page-node-id="ZVh1ZoCjaF3ag2A80rahn1"><!--pnid:qNO4lV2gWoekX2h0uYXUEY-->尚未選擇對話</div><!--pnid:ekHSMV4KuAL9wkjzhdlyNC-->
-                    </div><!--pnid:V1VDyhg7h7ky7I2zGLOINg-->
-                    <div class="admin-chat-input-area" data-page-node-id="zDfWKRmOboELT8HxFOXVBn"><!--pnid:0HGtSonACJzd2zOQsUHLz0-->
-                        <input type="file" id="admin-chat-file" accept="image/*" hidden onchange="handleAdminChatImage(this)" data-page-node-id="SdLDWcktmelDCTRNNlnyvW"><!--pnid:6knyagCImIudhPJSZEZxtw-->
-                        <button class="admin-chat-img-btn" id="admin-chat-img-btn" onclick="document.getElementById('admin-chat-file').click()" disabled title="傳送圖片" data-page-node-id="0i6uxPYIkCwD8sqe2CTcwO"><!--pnid:6fcYe8CR0UgCpLI9cdIHK1-->📷</button><!--pnid:O5CPQpcpXdvg1xPk70D9XD-->
-                        <input type="text" id="admin-chat-input" placeholder="請先選擇左側訪客..." disabled onkeypress="if(event.key === 'Enter') sendAdminReply()" data-page-node-id="mCz0VK5kYuM0GowMMjnFu3"><!--pnid:G7oyJhNC9NNalvzL3Lzzou-->
-                        <button id="admin-chat-send-btn" onclick="sendAdminReply()" disabled data-page-node-id="1rGJ7gbdRnAAeLN5sB8DMv"><!--pnid:udj6TzJBNhGkFwWWcL2qkK-->送出</button><!--pnid:xO6tDIpMyFBEbhRJkSsyrz-->
-                    </div><!--pnid:XZkxecfAR25ZW4LXErx9wo-->
-                </div><!--pnid:ozcFZeLxC2aK6JWocxnB0q-->
-            </div><!--pnid:tLtphbsGAgDMYBfIj6UqFb-->
-        </div><!--pnid:IegFPs4Z5JcSTqdHAh93xs-->
+            </div><!--pnid:YKsXFD9VTYBvHqjXKnlmuW-->
+            <div class="admin-chat-container" data-page-node-id="GigcKDNXu1mPFgIukOx6mg"><!--pnid:lhSu0fksxgoF5H0sOwAPx6-->
+                <ul class="admin-chat-list" id="admin-chat-list" data-page-node-id="BRLCBb9BEsoAV9bL2Ay4Ks"><!--pnid:6Asa3nGen8E9D28X8d2uTH-->
+                    <li style="color: #666; text-align: center; cursor: default;" data-page-node-id="WY0HJDzaRrxik1xzkiLKXe"><!--pnid:zGTsVD3IrsNOZwtYnLC7dM-->載入中...</li><!--pnid:Fe0ZeF3vyYw5fKQGcT5SIn-->
+                </ul><!--pnid:fxf6uP3uRUYwl52IoQpXMR-->
+                <div class="admin-chat-window" data-page-node-id="KZpwguiWxRtBzHbAl3izqY"><!--pnid:kJuBrP9WrKpZSRnOGBdzzQ-->
+                    <div class="admin-chat-header" data-page-node-id="Ljyp23l7SdZIyghZ83KwOz"><!--pnid:MHZe2D370hCjEz4xa0bevY-->
+                        <span id="admin-chat-header" data-page-node-id="q7GNY33OTEqLkz3CAvNQvI"><!--pnid:sN0HZj9li0jfwD8uympjie-->請從左側選擇一位訪客</span><!--pnid:0rLXNk6RL0JUrPnRG7rP8V-->
+                        <span id="admin-chat-session-label" style="font-size:12px;" data-page-node-id="SJSnxBPs0zva4gzRQFGGtU"></span><!--pnid:dUTqD00qVduPW9Y3OKy5dQ-->
+                    </div><!--pnid:MyH59vVmb0itnCjrAEBaHR-->
+                    <div class="admin-chat-body" id="admin-chat-body" data-page-node-id="KKsaKn0vIhXgLhd1OSCfAE"><!--pnid:ZsqcjB9woS6KA5seNMYhME-->
+                        <div class="chat-empty" data-page-node-id="PmpiG3nzXrDExQuMQFFYqu"><!--pnid:xmIna1mG8obzlJN6ondg3P-->尚未選擇對話</div><!--pnid:WIqQdgwYnw8NFps7grfZET-->
+                    </div><!--pnid:SHZhNClGB8910wbTi49Rmy-->
+                    <div class="admin-chat-input-area" data-page-node-id="H2Rukxya8RsjIAvK9Djoun"><!--pnid:tSYWCODnDcUNEhweUqh3C2-->
+                        <input type="file" id="admin-chat-file" accept="image/*" hidden onchange="handleAdminChatImage(this)" data-page-node-id="DO5mVZbBqEAad2TYV1WKre"><!--pnid:IKZV6E8dN2QuTfy2rQgiA0-->
+                        <button class="admin-chat-img-btn" id="admin-chat-img-btn" onclick="document.getElementById('admin-chat-file').click()" disabled title="傳送圖片" data-page-node-id="oYVxpQ0v0Rho5FIjJicG30"><!--pnid:GhZcaueU0XTwe1EmylY8OO-->📷</button><!--pnid:C7aC1jGdiEuxmYWxVESfzP-->
+                        <input type="text" id="admin-chat-input" placeholder="請先選擇左側訪客..." disabled onkeypress="if(event.key === 'Enter') sendAdminReply()" data-page-node-id="YXarn6wMLAVqcDq42cd4gn"><!--pnid:zpIzxkePgpzGDaFEFZlAgS-->
+                        <button id="admin-chat-send-btn" onclick="sendAdminReply()" disabled data-page-node-id="dQpY8AyGRpptGzOYVkFcBK"><!--pnid:09OIWSNJoaTr4nLO3LDqPS-->送出</button><!--pnid:dG1MlaGqOQdrdAyu7kRQeB-->
+                    </div><!--pnid:6Kcu7uthEbErnBRsANY7S4-->
+                </div><!--pnid:wVJEBQMLiOlvDnbosSNK0b-->
+            </div><!--pnid:8r1uNy1GkvgMcyCuwK2GpV-->
+        </div><!--pnid:gPmFPFiFR535uQEG3ugZxX-->
 
-        <!-- ===== 站點設定：幣種 / 語言 / 翻譯 ===== --><!--pnid:ijvsSgMarPxhFsA2MLmOiA-->
-        <div class="panel-section" id="siteSettingsPanel" data-page-node-id="okWHvEiIoCEG01My7az2OM"><!--pnid:Fmxoq3oRisoAMSshi4cGHa-->
-            <h2 data-page-node-id="Lf9ciM95uXAvmbBr1l0gIL"><!--pnid:bpyNfEBDF1peq2FNT6azf0-->⚙️ 站點設定（幣種）
-                <span id="cfgSourceLabel" style="font-size:12px;color:#888;font-weight:normal;" data-page-node-id="K3vaCqdkJRl1wH8pnKnL2e"><!--pnid:P8TqheUAbpUmOTYIhD5Q1z-->讀取中...</span><!--pnid:S9ozIU4BiTKJVnKXPSgl6e-->
-            </h2><!--pnid:j1mw7lnXSALCCXj0WEgAtu-->
-            <div class="panel-hint" data-page-node-id="ETFiIHNheR9UsUd3pt4HxK"><!--pnid:n6F1ZOdH5F4b6HkJCcrAVp-->
+        <!-- ===== 站點設定：幣種 / 語言 / 翻譯 ===== --><!--pnid:yjY9scNDJJeCzNEQBUyrOc-->
+        <div class="panel-section" id="siteSettingsPanel" data-page-node-id="CLgfyv3iMRauGXmYEGyZYy"><!--pnid:Q0McyZWJcmDb6vIEtkAIQF-->
+            <h2 data-page-node-id="D79ASPuzQgapmwxUjOyVok"><!--pnid:gf5oc7wB663ubmNMu5qc9D-->⚙️ 站點設定（幣種）
+                <span id="cfgSourceLabel" style="font-size:12px;color:#888;font-weight:normal;" data-page-node-id="CAznICBegmCBKCpKkXgehz"><!--pnid:nHVwtSkG7rSKVU0uq8Yjda-->讀取中...</span><!--pnid:mDZxS89gvxs5EUKTYLMQWH-->
+            </h2><!--pnid:XjxypIBS4AYhrgLff3JhCp-->
+            <div class="panel-hint" data-page-node-id="JrBPH7v9HukHkBmAroppXy"><!--pnid:37BzryIAqXHptFyU7nDQr2-->
                 填好幣別與匯率後按「💾 儲存」，前台立即套用（同一瀏覽器）；執行隨附 SQL 後全站同步。
-            </div><!--pnid:3mR9VC2gvddt7sIShDbb0G-->
+            </div><!--pnid:9INTPHEv5F8rq3UO6N08oX-->
 
-            <h3 class="cfg-title" data-page-node-id="MBjsBp0JsByLWEtU9vdDii"><!--pnid:lfzoIYsQUfVGkpkfO1opG1-->💱 幣種設定</h3><!--pnid:vDKmtvIeYwLxyhV9LqZpsp-->
-            <div class="cfg-grid" data-page-node-id="Ifg2HWSIQOnFtqqMJdMLIy"><!--pnid:p7yJrUjYe2LU8uLAjFJYzu-->
-                <div data-page-node-id="cIyzMLNO4nPYZOYhG57FHd"><label data-page-node-id="ZedSmIVn0ftHCIHYAOzAAC"><!--pnid:fLTCx9mmByEXedhoTLkiSb-->幣別符號（可自訂）</label><input id="cfg-symbol" placeholder="$ / NT$ / ¥ / € / 元" data-page-node-id="R0OL1SGGojX51DlcwIdY6J"></div><!--pnid:AZe4n5Tfx5ZAcaXiFHxb63-->
-                <div data-page-node-id="WuTYW6cA9raKTGrWiKKCoF"><label data-page-node-id="pTYubTCIFFdcJmFAD93M0x"><!--pnid:jIuXS5UM5CiIBq5AUwhcae-->幣別代碼</label><input id="cfg-code" placeholder="TWD / CNY / USD" data-page-node-id="d83568vM8BrVoipo8BPTN6"></div><!--pnid:Ccv4Ljr7PpWV3eYw5WpmIe-->
-                <div data-page-node-id="gQRUhk6wYza49cyRU2YQ59"><label data-page-node-id="w53Cbl1gFJI4sI6HdgvReC"><!--pnid:9CABpHdJ0slULyKeJMX328-->幣別名稱</label><input id="cfg-label" placeholder="台幣" data-page-node-id="uhrSDsrlpbH4OmLLtRLciH"></div><!--pnid:FfPEHDlex4EV0Cx3oqYTJQ-->
-                <div data-page-node-id="fhQ5HbegakN7769OdEDYgo"><label data-page-node-id="sUCrCSLjlueJ8BGBFEPsRQ"><!--pnid:T5vGYCXT3SY2BdPrwvzChF-->匯率（顯示金額 = 資料庫金額 × 匯率）</label><input id="cfg-rate" type="number" step="0.0001" min="0" data-page-node-id="CwNcLYs7Q7ks0kuGr5rEg6"></div><!--pnid:u19jcksmAp1RqZCQg5t9bN-->
-                <div data-page-node-id="E6MNN56tTUyBppkF0LvWBB"><label data-page-node-id="fhN23Uu1JLIq8KJ1rn2WQO"><!--pnid:e7BidvnJSl9CjrT56C9kfj-->符號位置</label><select id="cfg-position" data-page-node-id="cR7ZMlpHFgMb10efEkM2Ok"><option value="before" data-page-node-id="liM1EKlbHKnbFzdciValxP"><!--pnid:DCVCp3Od7hfK294GW9jjWF-->金額前（$1,000）</option><option value="after" data-page-node-id="NNDQGEnAssU04NwgrPq01f"><!--pnid:6uzomwFoCmZ1FDSPLX97a0-->金額後（1,000元）</option></select></div><!--pnid:IDqhG0nNNFbP4Xm38IWLkQ-->
-                <div data-page-node-id="ZQfVtYvtXKHUA2FUy0kAWH"><label data-page-node-id="gRcr9wiBa8M70heR4vXUR2"><!--pnid:EjcqeTBU9xWHxGeYrZ5X5h-->小數位數</label><input id="cfg-decimals" type="number" min="0" max="4" data-page-node-id="z87H8mHpzswz0H3NPGf2kY"></div><!--pnid:hWolgDhtsxZNWHx5f05RYn-->
-                <div data-page-node-id="fc0BVDkyc3p2WwFxkbV9Qd"><label data-page-node-id="LA2ydPdC0jqriaZfqck9CR"><!--pnid:aZZRe3UNI0b2DsDlSh1X6S-->千分位</label><select id="cfg-thousands" data-page-node-id="En5FnIbaGmrEKHF0NHlNJI"><option value="true" data-page-node-id="EG5dx3hHTni6oeHATVJki9"><!--pnid:qhmnAVnzzFQUBwhNfQhFGB-->顯示（1,000）</option><option value="false" data-page-node-id="XFHsN0uGVFlGwSVAeJsd5M"><!--pnid:hjEA0HWEwoNcv8Ik1sn2V1-->不顯示（1000）</option></select></div><!--pnid:STFOFZYcMZiAfcXSE58oSQ-->
-            </div><!--pnid:6fDNDHuiyRZ2fAxm425qbb-->
-            <div style="margin-top:10px; font-size:13px; color:#999;" data-page-node-id="1zTBC8odtXc1HGC4F4JIcW"><!--pnid:KnHvCXhDQlmon6do9zMmlC-->預覽：<b id="cfg-preview" style="color:#00c800;" data-page-node-id="SXDeOrYickjeo5JPMxa2WH"></b></div><!--pnid:0CGpEBa0PCv3yldW86CE3J-->
-            <button class="btn-save" onclick="saveSiteSettings()" style="margin-top:10px;" data-page-node-id="St3k3ggRJgY2V2pGobMZfq"><!--pnid:VdTWmK0ZnzxavlWzDu9mv5-->💾 儲存幣種設定</button><!--pnid:sK9YqK2s6mG7d4TEhgu4G9-->
+            <h3 class="cfg-title" data-page-node-id="t0XafofBQPfUYc8kYDALhP"><!--pnid:bE7vBPOPPLcBso1HpyiB8M-->💱 幣種設定</h3><!--pnid:N2mXT9fQklHK11Nr29IIMO-->
+            <div class="cfg-grid" data-page-node-id="Czssi0HlTCCrIHVybjUFyA"><!--pnid:J5XnxjT938HppnXIIDWkEW-->
+                <div data-page-node-id="5JhBgQLbsyiud42iGOGtvq"><label data-page-node-id="9xubmU4BVyDGy7sdJIIzID"><!--pnid:Kz5TKpgwx7eVGQfttOW8bE-->幣別符號（可自訂）</label><input id="cfg-symbol" placeholder="$ / NT$ / ¥ / € / 元" data-page-node-id="SqdpsEVlVjsgcSEzPmiCwE"></div><!--pnid:IS9mnJ4HGWGJOJkUPJq3Nn-->
+                <div data-page-node-id="53JH6xUsiEBEMHvmSJfdVV"><label data-page-node-id="YNWTAfVDifV4zggTYMvd7l"><!--pnid:Y7D5Xe04LwbTGqyx96hYuc-->幣別代碼</label><input id="cfg-code" placeholder="TWD / CNY / USD" data-page-node-id="msjc05LFAAVvl5eHiM4sCz"></div><!--pnid:SuDFg5thxKgIi8klgL27MU-->
+                <div data-page-node-id="YvGiZz67QawYTiLdpWiySJ"><label data-page-node-id="Kp0LglU3CBySotN5wnzkVQ"><!--pnid:4VAqv2N45AtQCHCFvBGciB-->幣別名稱</label><input id="cfg-label" placeholder="台幣" data-page-node-id="jWbG7rzgJAcjAyapWK9vA0"></div><!--pnid:kSmfqmwlDII3IQz6aBOsDT-->
+                <div data-page-node-id="obFf3CFHgguGGwnEfwcLsH"><label data-page-node-id="z9CIgw2MHc0JqDVKulz7yS"><!--pnid:KAH1DXMNfy61cFsh3Au5Gq-->匯率（顯示金額 = 資料庫金額 × 匯率）</label><input id="cfg-rate" type="number" step="0.0001" min="0" data-page-node-id="RHbOJAGuhdonWnTVRuhDZT"></div><!--pnid:vS99VEEiu7gAyRiA0qGx2c-->
+                <div data-page-node-id="18a9E9evbgVykh5qXwjQ9x"><label data-page-node-id="xENxK2jlMWWEa6NwJupRnt"><!--pnid:aGRJm7u2OrSxUYh9Bb1DUj-->符號位置</label><select id="cfg-position" data-page-node-id="8l7lVnb3TP8mwrlNMJWxXi"><option value="before" data-page-node-id="nvic7EhULvY98D7Ak2Ezpx"><!--pnid:RkXhdNJ7Fer0KAlOuLEiuz-->金額前（$1,000）</option><option value="after" data-page-node-id="ux9zi3DxS0ANKeDobbOAD7"><!--pnid:ZGeHv3pUdB15J2JPalwO2O-->金額後（1,000元）</option></select></div><!--pnid:3iD3fp4lX8yrcYX97NMQE5-->
+                <div data-page-node-id="xf6s9krx9UlfqohXIaDVNq"><label data-page-node-id="fz3sHeBlZLYDmTmvFmFqRb"><!--pnid:jT8OWcTPDw806EjFZyqhQT-->小數位數</label><input id="cfg-decimals" type="number" min="0" max="4" data-page-node-id="aLMBt0iOE1Wy1lWYqaQHEA"></div><!--pnid:Pe3o1BXYfnjgPLIS2wLYhZ-->
+                <div data-page-node-id="8RHgPA766C1EQwh1a6crQF"><label data-page-node-id="YDOHQY9rQqaRuJ97lywZA0"><!--pnid:C5NmdsLKBBIKXenb7JxmBL-->千分位</label><select id="cfg-thousands" data-page-node-id="tCxlh0HBVEaTyTUQIWsQoF"><option value="true" data-page-node-id="GLg5caxsehI38OPeym0JjW"><!--pnid:URvgR2Ez9dvGm7ebj6PNyr-->顯示（1,000）</option><option value="false" data-page-node-id="RSqVQxl06qdoIltvOgEgnk"><!--pnid:K5COVJCKUEjY5tKM7vS9PH-->不顯示（1000）</option></select></div><!--pnid:y7XjaTzy8COKJ4pa6Y47YU-->
+            </div><!--pnid:dImr4niUpR5qarUhSxl1pl-->
+            <div style="margin-top:10px; font-size:13px; color:#999;" data-page-node-id="qVNTgYfzkf5CbiBZWWVDZ7"><!--pnid:muEyAYFKxqt4Py1pcY6ZFB-->預覽：<b id="cfg-preview" style="color:#00c800;" data-page-node-id="U9cL3NemIP2tP048YHcHpz"></b></div><!--pnid:zR0L2BHMCaplGovPUrNyrz-->
+            <button class="btn-save" onclick="saveSiteSettings()" style="margin-top:10px;" data-page-node-id="kiWLVt2eRPzU3rclyp95E2"><!--pnid:2Eah9oCKdIVmGPercEoTiE-->💾 儲存幣種設定</button><!--pnid:wzZSIjAe4HlCpe07NDcTzH-->
 
-            <details class="cfg-advanced" data-page-node-id="LyXxyItDwRH94bCUvyAS8L"><!--pnid:uKFSeyFzoV2kdAO0hgAxpc-->
-            <summary data-page-node-id="qt1t4WZi0su25XZCV2rjSh"><!--pnid:aEcNEyiHxsaY8TCVh16iBc-->進階設定：語言與介面文案（一般不用改）</summary><!--pnid:CiMxDlVNb8Fh16HnQDw7JO-->
-            <div class="cfg-adv-body" data-page-node-id="BoPETYlD9uwuHcNMPgDbaf"><!--pnid:2A0buZ0N7IlEPCkzrBCGJx-->
-            <h3 class="cfg-title" data-page-node-id="y1nLn57t0jcnFNm7z9BwHI"><!--pnid:0KLW7NhYjFMGAUEIEpeFN7-->🌐 語言管理（可自行新增語種）</h3><!--pnid:DmTzsI0gBOcOkVHROzH9Cw-->
-            <div style="overflow-x:auto;" data-page-node-id="dXzZeC7bd5kP7S3C4UNK1z"><!--pnid:KLJ1ouVrqVTqH3ZAeqQcGn-->
-                <table class="cfg-table" data-page-node-id="30tFyn5N3l0miPc6s8Agey"><!--pnid:2hBXngu2WgfDSErSGW5MiO-->
-                    <thead data-page-node-id="QjaA4icb5YBWugkdB0YCs3"><tr data-page-node-id="8x5afXAC1B4BmkfOBWVoyG"><th data-page-node-id="PLk15nrYInITufEAhduHK0"><!--pnid:AP1czL9hJ5g51Ergm6uC8H-->語言代碼</th><th data-page-node-id="bnkSejfoq1nC3AbU4mzyW5"><!--pnid:JHoJQromVUqMR1wTHdlXZw-->顯示名稱</th><th data-page-node-id="EPHtPAb82ON2e5QwFEYbDz"><!--pnid:4dvBMhV4gzSBIEZSUv7uMW-->啟用</th><th data-page-node-id="AG7jmEn4FKvZffA0g0BKgp"><!--pnid:ducCMQiGAGCsjqbivEWpKr-->操作</th></tr></thead><!--pnid:WeMGZfBU7a9CRbDmGsENB4-->
-                    <tbody id="cfg-lang-list" data-page-node-id="1jKzSZG8mTjWZw6wlYuqFr"></tbody><!--pnid:8y1BkuPuHXFCTe7xbxqFBA-->
-                </table><!--pnid:O7CqcjfBuD1Hpx6kfqyIRI-->
-            </div><!--pnid:b6MZyRaCedSimsEkpBHfPk-->
-            <div class="cfg-inline" data-page-node-id="F2UXk9P9UiYTkBsiG4vBxG"><!--pnid:OAHo7E065HNG1SfJxoO2qT-->
-                <input id="cfg-new-code" placeholder="代碼，例：ru / pt / ar / zh-HK" data-page-node-id="inJD3ykQYoXk8WDNsiJXtd"><!--pnid:fCfjQwWfvKc3BFkwgzxYGu-->
-                <input id="cfg-new-label" placeholder="顯示名稱，例：Русский" data-page-node-id="oUsDn7PAi7XCPPAow4zshe"><!--pnid:qbAGUXmx2Maekrpc3CosJv-->
-                <button onclick="addCustomLanguage()" data-page-node-id="JDqbKgCSmPNbiDGGls7l0r"><!--pnid:0DGgDQFjKoffvObdgHc3PW-->➕ 新增語言</button><!--pnid:WH6gqkYQJr8UMmJnjeLBEp-->
-            </div><!--pnid:UcqOcqudr7HrvDmIj4DIYd-->
+            <details class="cfg-advanced" data-page-node-id="CyYeMMlCiCWb4ajTfZ46Es"><!--pnid:WHltaW1VLpAvvnX3XIwrWN-->
+            <summary data-page-node-id="qnlWaRewXSftKBY3QoSE0W"><!--pnid:aW25qYkEMZgdLcAdWD2hxm-->進階設定：語言與介面文案（一般不用改）</summary><!--pnid:LTYPcFvRDkjSfFeu5H1gFd-->
+            <div class="cfg-adv-body" data-page-node-id="YuoG1bJrYxzL3YQ37beyML"><!--pnid:pbAfjHbL0NZ4TIvCdE9VVl-->
+            <h3 class="cfg-title" data-page-node-id="1Vl9rBENSSWCC8wnwoYvud"><!--pnid:xg5YHYhc73sD5YcQ5CHu1D-->🌐 語言管理（可自行新增語種）</h3><!--pnid:IhpvDlXZYztLnEd96c4udk-->
+            <div style="overflow-x:auto;" data-page-node-id="AZmoIvP6Mhij0nKiAHV3FG"><!--pnid:JvBmYaNKkxZvSCHnY6ISY9-->
+                <table class="cfg-table" data-page-node-id="f0FePXygeFXb2wfGhyYhNu"><!--pnid:qHqFtkheA1MXw4RtJK8D1e-->
+                    <thead data-page-node-id="MAEpLh9NEFClYECEM3LdQK"><tr data-page-node-id="zydaqx0CVLckXIGFCB6cbP"><th data-page-node-id="HJaMCkAkpqEYtDsfGk9v30"><!--pnid:BZPZMidaRAAPYZXcJ1D3Rk-->語言代碼</th><th data-page-node-id="uE27Gk5GjGRWizarQdFBSa"><!--pnid:RQ75fiXtDbIonTop4Cot0L-->顯示名稱</th><th data-page-node-id="YNHe7HeyQZFOhFQI5Z1NgN"><!--pnid:AurURNXvryMxgrHoI6oJcG-->啟用</th><th data-page-node-id="ydBQP3gvAFOLnODv9eEwVK"><!--pnid:KLgPnUMYD588evRyonqeTM-->操作</th></tr></thead><!--pnid:BG5HYzz44O3k9ebLmSBvUh-->
+                    <tbody id="cfg-lang-list" data-page-node-id="zHAEAfTVePkUndpeF8zt4b"></tbody><!--pnid:XMZFrYXRfqCmTdFBmhwQEK-->
+                </table><!--pnid:9aEKXy3l9JkAgBNu0xRq6U-->
+            </div><!--pnid:5pFAT0fAxjc8ckD77tbcrO-->
+            <div class="cfg-inline" data-page-node-id="iSV8CpG04vRwPq5CoFMRGY"><!--pnid:K9fwlO7E86yVGnmmU2IwlV-->
+                <input id="cfg-new-code" placeholder="代碼，例：ru / pt / ar / zh-HK" data-page-node-id="ayHl5QqjZZi8AfAWNvBRO9"><!--pnid:KGffp4Hj9mCL1p93n33UU5-->
+                <input id="cfg-new-label" placeholder="顯示名稱，例：Русский" data-page-node-id="PApD6Ge7X8L2DfFyewBdAL"><!--pnid:lRNuoEPOXZvYutC6BvNVUP-->
+                <button onclick="addCustomLanguage()" data-page-node-id="gKhW1tZ9GzyHXnotkJ4LB9"><!--pnid:J4ZGNkHUqjnOWvj0Nv91Ju-->➕ 新增語言</button><!--pnid:lPRIouluU4pp5WXBxYp9rK-->
+            </div><!--pnid:hFFEcUfA7cCdaaHKoSnGbp-->
 
-            <h3 class="cfg-title" data-page-node-id="Yg0eA13KkA8smPFBz6e4Tg"><!--pnid:tSqqKf5YhjpOeEIzwUf8s8-->📝 介面文案翻譯</h3><!--pnid:Tt1hrpBnPoOC9JDzA3Oj1R-->
-            <div class="cfg-inline" data-page-node-id="lgrPOV7VNEGCIWv5Sux77Y"><!--pnid:8Czj6FerghvEEGBETlDFk1-->
-                <select id="cfg-trans-lang" onchange="renderTranslationEditor()" data-page-node-id="u0hPBcTFu0qpdaQST6oGFr"></select><!--pnid:dFyXRaUd7n3ZSnFhmM4zbS-->
-                <span style="font-size:12px;color:#888;" data-page-node-id="7LJhzBTzysjcOEOO2UegAE"><!--pnid:BPwWsiXLqPHNkygr9p5BM2-->留空＝使用內建翻譯。可自行新增詞條，含「：」結尾的詞條會套用到動態金額文字。</span><!--pnid:3gg6wIdIFHvp8uYuEEZ3nb-->
-            </div><!--pnid:xdFdBAi7izPbwe642xmouj-->
-            <div id="cfg-trans-editor" style="margin-top:10px;" data-page-node-id="vKIpqR9a5rQoRd2gXvY2SP"></div><!--pnid:oFukC61ozVIHIg8Hl5aiEE-->
-            <div class="cfg-inline" data-page-node-id="FUQAAzR2nzCT03BwBOMruD"><!--pnid:UqRPx1zfoVHYQ7RKROw4nI-->
-                <input id="cfg-custom-key" placeholder="自訂原文詞條，例：優惠價：" data-page-node-id="PB4XvbFRKKDt2Z8iZ9cjWp"><!--pnid:6Phvs9tURvUb6nBDVuibEF-->
-                <button onclick="addCustomTextRow()" data-page-node-id="HMWXbKrFri7tmYrNtCkp1U"><!--pnid:OsqsIHwRLAr79a9HrV57D8-->➕ 新增詞條</button><!--pnid:rqS52xtllWLwBd9RILbJSj-->
-            </div><!--pnid:kaecdbMOYLxk80fyiWdJ6V-->
-            <button class="btn-save" onclick="saveTranslations()" style="margin-top:12px;" data-page-node-id="SFm1Bx12lZfRwSxJiirpuz"><!--pnid:a4AscB6rK7HQcyXnUXZGsH-->💾 儲存翻譯</button><!--pnid:1y6gvDYqGyRBY1O51OEjSN-->
-            </div><!--pnid:t24708JbvEioOiIHGAhwui-->
-            </details><!--pnid:0DJNIPAh5FdcXddILSXt2o-->
-            <div class="panel-hint" style="margin-top:14px;" data-page-node-id="Hys7QzzkrsABgl6L4xoTz9"><!--pnid:n4RVCZN2Sh6GEWeYadrZmv-->
+            <h3 class="cfg-title" data-page-node-id="KQ1QgFpSB01mumFxdSoiDj"><!--pnid:lNGapHXzACRhIhlAb60dpF-->📝 介面文案翻譯</h3><!--pnid:HEDsetawaBeO9IAptE77p7-->
+            <div class="cfg-inline" data-page-node-id="4FHdoKsBUrVjC8gTsDa9m4"><!--pnid:oApVHmcfVYe5PAedsz8mjV-->
+                <select id="cfg-trans-lang" onchange="renderTranslationEditor()" data-page-node-id="n1u1AvADHpyQIybfRYXFhw"></select><!--pnid:7hCu3X5a1PwEyAPCxZI8ZM-->
+                <span style="font-size:12px;color:#888;" data-page-node-id="V2H1PiHBsbREpP5KGfEi9i"><!--pnid:HsyUZTP8MB3ZiTuqYszHqU-->留空＝使用內建翻譯。可自行新增詞條，含「：」結尾的詞條會套用到動態金額文字。</span><!--pnid:OyDRncDwRB0pxhpgrl4Iyf-->
+            </div><!--pnid:hIpbikxObkchndM9qUkzGH-->
+            <div id="cfg-trans-editor" style="margin-top:10px;" data-page-node-id="AtKTSrFFCi7Ae9byNoVyNY"></div><!--pnid:mNj47LndEZf44jWZIZDaHT-->
+            <div class="cfg-inline" data-page-node-id="lFmHf2lESgjkPgiGpjSLS6"><!--pnid:YP6tzi6BWKawD7nSDNPhCf-->
+                <input id="cfg-custom-key" placeholder="自訂原文詞條，例：優惠價：" data-page-node-id="bQvpgik8bqVzs6PqTwUgXV"><!--pnid:DPxb7WdhPV316vP3dfigr9-->
+                <button onclick="addCustomTextRow()" data-page-node-id="OOxgMDa4urxVAE1udPTHyC"><!--pnid:uo37KeaeoIzbhpo3tPcbDZ-->➕ 新增詞條</button><!--pnid:wqdGvEvXfCYBCXGJn5p1U8-->
+            </div><!--pnid:ADM2uU32cb2CpLzN3qXuY7-->
+            <button class="btn-save" onclick="saveTranslations()" style="margin-top:12px;" data-page-node-id="qiCKMrEFNG8KlkrfHkW9WV"><!--pnid:cEOMBjGE93R1qNq61FK88X-->💾 儲存翻譯</button><!--pnid:WL2eFy2GvieXU8yHdoQBwp-->
+            </div><!--pnid:gmDhHKIwa0eHSsf79ljSAh-->
+            </details><!--pnid:USBDWBORJd4445hKIe9kGG-->
+            <div class="panel-hint" style="margin-top:14px;" data-page-node-id="6ZqYP3544RpxEnGXTexfoq"><!--pnid:SR2I2n7tsr9UUwd4S1JNoR-->
                 💡 聊天翻譯為「長按訊息 → 翻譯」，不需在此設定。此區僅調整前台選單語系與介面用字。
-            </div><!--pnid:cFGmaG6ZPR70juqCBgHkzV-->
-        </div><!--pnid:JHC7SOQkyP21qCeMuKI1VV-->
+            </div><!--pnid:NVQnUoZGXQj1CxvlDyfL3u-->
+        </div><!--pnid:GUnGLqmU3iEaO0F7XwwXlj-->
 
-        <!-- ===== 商品管理 ===== --><!--pnid:Ecf0Ds4B1iz48qyzemF533-->
-        <div class="panel-section" data-page-node-id="DFDP8316yPonG8D0A0lQAG"><!--pnid:CsHwY1nC2F0FH6ekdBvjrF-->
-            <h2 data-page-node-id="wwmTTiPXt3UqNHyFtJgw4c"><!--pnid:ABXhdVBct18AgOyuXHhaXh-->
+        <!-- ===== 商品管理 ===== --><!--pnid:JaeuBVmlm4pZ1nnCwTf6D8-->
+        <div class="panel-section" data-page-node-id="hSSRJiQCjlhL8OWLuFtVkW"><!--pnid:QpjaYulqzly3DwBDDVKyBT-->
+            <h2 data-page-node-id="OfYlCWKaVsi2Yj8f6L11tu"><!--pnid:usCnSxY7RkVP8C5EmdwzHF-->
                 🛍️ 商品管理
-                <span id="prod-count-label" style="font-size:12px; color:#888; font-weight:normal; margin-left:8px;" data-page-node-id="BagwXUOqfs6Ao6L5rTb4UG"><!--pnid:Yk281gnUIQ2lqLALCRkB1m-->共 0 筆</span><!--pnid:gerHPruxpgWBZCpUN6RHwz-->
-                <span class="panel-h2-actions" data-page-node-id="mi8AEtqELDAlKoYV5RYA7t"><!--pnid:xvlcBqS4wA5QCSMybicIpQ-->
-                    <button onclick="loadAdminProducts(adminPage)" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="V9GgF4XdsvijngyBPk2osf"><!--pnid:aB7SyOBRS8h62HRVPuv6hA-->🔄 重新整理</button><!--pnid:dChtUBnNKU1UnJBLVXEIEo-->
-                    <button onclick="openProductModal()" style="background:#00c800; color:#fff;" data-page-node-id="WALvNG4pC5nvkW0DTEX9on"><!--pnid:XaMvWBNurzx1WyJaBpsSxt-->➕ 新增商品</button><!--pnid:abAfacQ2lVlDy53PeHDBCJ-->
-                </span><!--pnid:oVQURe7O8mqmh1SUjesFFF-->
-            </h2><!--pnid:pBt9Ts4vJOFcEdcaFNKKzb-->
-            <div class="panel-hint" data-page-node-id="d7u4pnXYTHU6oGaDhJP078"><!--pnid:kZjWdvWHIBUKlxjUwGltcc-->
+                <span id="prod-count-label" style="font-size:12px; color:#888; font-weight:normal; margin-left:8px;" data-page-node-id="3nSbiyeFzAkGczTvQeRROJ"><!--pnid:Sle2BC9Io3F1orsbiGLVTa-->共 0 筆</span><!--pnid:FgpvfXnYjPsdLgFIDHECl8-->
+                <span class="panel-h2-actions" data-page-node-id="Lplt400ilTVdzHnavRscYt"><!--pnid:u7pFbLsZn7mc8r7jend3wh-->
+                    <button onclick="loadAdminProducts(adminPage)" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="TRmXBCtscHyXpZ099f14aD"><!--pnid:KgVoyFLQjzPkibXD1sKRvC-->🔄 重新整理</button><!--pnid:SSicW1cmOEqCBW1PKPWiBH-->
+                    <button onclick="openProductModal()" style="background:#00c800; color:#fff;" data-page-node-id="mfDkUFATzzWd3d0MGfYzJK"><!--pnid:g5o2Xb0N1VQc7nXBlyU5X6-->➕ 新增商品</button><!--pnid:BYarkHmudC7Bw3gEBesBmg-->
+                </span><!--pnid:ubeW9RAPydALNCkp1rpm6Z-->
+            </h2><!--pnid:fRxnnUScTZoh5uH3G7hfHD-->
+            <div class="panel-hint" data-page-node-id="20pRLTDRboNUd30e3uYSRB"><!--pnid:lqGXQPS8H6wGkyhaBQxtaX-->
                 這裡改的東西會直接生效在前台首頁；「上架」關掉＝前台立刻看不到。大量上架請用下方工具列的「📄 CSV 大量匯入」。
-            </div><!--pnid:OlxbHLP8EeXR02tDMaGF8p-->
-            <div style="overflow-x: auto;" id="prodTableBox" data-page-node-id="fT5WuOCVpUfmbPjkT6XTVm"><!--pnid:PtqTUdFMI4Um8VdInyfM9g-->
-                <table class="prod-table" data-page-node-id="DufetlebpwrA9DTUmyp0lv"><!--pnid:i2LPMRTYJGscHikD5Jc2g8-->
-                    <thead data-page-node-id="h3eOvnV4RFoGdzadk6bENx"><!--pnid:bZ9bTwAz6vDnE0w7d0SboD-->
-                        <tr data-page-node-id="KHZcbdgFap4r784RbKNK5o"><!--pnid:H7kclnCpl5fBm56c2lXbAE-->
-                            <th data-page-node-id="MGfsF8T18VXo8WxyM776TS"><!--pnid:2TuoEUCCsyuz7wozEwwxFD-->選</th><th data-page-node-id="JdrIcWRCA1XmnckFwcpCC8"><!--pnid:CZ09yec6EiysFtPU8HS8eG-->預覽</th><th data-page-node-id="HA7sEU8LrHmDAA9yeyYIWg"><!--pnid:0o70BnckfFe1JQNrRLidXs-->排序</th><th data-page-node-id="wzDwuQ5ifFDkjYML3tlwar"><!--pnid:AiGJFozPerZ45HhQKqeijR-->商品名稱</th><th data-page-node-id="idpMzfzHS7NZHqDPkoeAmR"><!--pnid:aAHt5P6O9NCsOZuJdhcWJf-->分類</th><th data-page-node-id="le8z5PxecAmJlD3gl6Ri3X"><!--pnid:MaZvrizCt2sIz6rBtDmBLF-->價格區間</th><th data-page-node-id="zr2fKsskPscYJg09P7oBAb"><!--pnid:SZ5H2nFnMD21ddCPvPRvEI-->庫存</th><th data-page-node-id="K4WPQkOeuuXEQvtmB8DESv"><!--pnid:vyvCq5HiPHMn7FZywfE5kj-->已售</th><th data-page-node-id="PrVyNulHWn92vBjsyRzhLn"><!--pnid:ITqk1eGfx8YoHvHZLZQwPV-->上架</th><th data-page-node-id="43meVMDWsQ1uNJuNM68vvG"><!--pnid:MulQCNJPN2AAKCZA6ZILha-->操作</th><!--pnid:S2E3Oc77MINWJ58QWyjJim-->
-                        </tr><!--pnid:yknXKT8QlHodJ58FjSmnWe-->
-                    </thead><!--pnid:V0DInhoA2H1pcF3PQXCCYp-->
-                    <tbody id="prod-list" data-page-node-id="HNIkuCM7wjQH0ctBVVFmTc"><!--pnid:EjuBAYGNRWMXUbmjYp0ECv-->
-                        <tr data-page-node-id="h9wOztdydHASMxGD1wMR2o"><td colspan="10" style="text-align:center; color:#666;" data-page-node-id="pdc1OKKhStVeNY0SHC0WHR"><!--pnid:lMImbjBJxHmeda3jr8Xe4z-->載入中...</td></tr><!--pnid:oGXFArEVHGJH1x0CWTyqfj-->
-                    </tbody><!--pnid:yF46TUnJFGqUldr9y4cbek-->
-                </table><!--pnid:mXAC4m6iCNxrIQVcfwSvF9-->
-            </div><!--pnid:sYfPbOMBIxCRBexP8yE8H8-->
-        </div><!--pnid:pZLnR9z0BLYDjhn47w3vXW-->
+            </div><!--pnid:7H1TCa49B8aGQ6ADi76kI4-->
+            <div style="overflow-x: auto;" id="prodTableBox" data-page-node-id="sw9SMq2vNwQ4TN2bxkeu6g"><!--pnid:NCR5thIX4FTLwPtgPqJkaY-->
+                <table class="prod-table" data-page-node-id="5SaRLfygUMpMm4Rfx9Q9VF"><!--pnid:PiJXiCu6WjJ0ua9uCCaOoU-->
+                    <thead data-page-node-id="LgQBWr8dHaEflCBPTHuoo4"><!--pnid:xFpmG2vNlB59pyrAY38LWl-->
+                        <tr data-page-node-id="sAUtAgF0ma2Iol6Hc134AJ"><!--pnid:SW7RhcsOf58eQf3MBlqkHl-->
+                            <th data-page-node-id="jXyzTrvW307w3fyVQCCtXj"><!--pnid:SLOWZ08xkayJbRHVmSqi0L-->選</th><th data-page-node-id="pS23WOGW8exbtbCUBq9INx"><!--pnid:PtCTmfZe71BmnZR13I4ORw-->預覽</th><th data-page-node-id="l8fb8x5x8SdBMaDA5JwJKX"><!--pnid:ymJAEzxazgV0bnhNjXMLvA-->排序</th><th data-page-node-id="woOsf6coX2SAbaCuC8MG0C"><!--pnid:ZP1ckFHp11vWapnwhM8dTa-->商品名稱</th><th data-page-node-id="6G6cWoF8xWxZFQR2RjTo30"><!--pnid:gDi0GGFpG0ygP8dDDjv562-->分類</th><th data-page-node-id="oFWx5fLLXcGkREjKgoqDjT"><!--pnid:fMcmx4Ks4Mr6Kgu52j6AqS-->價格區間</th><th data-page-node-id="PlJ6oEEFFVgBWoR5sHJCwV"><!--pnid:v1RVfrB8DDbYEH6SkmupoA-->庫存</th><th data-page-node-id="S8ynzOAHRDuxeh0BGipMQp"><!--pnid:Hk4L9sSiv9OAlRp23jwsvP-->已售</th><th data-page-node-id="cW63gvlDmfIqdoh2ynIHwN"><!--pnid:ojC31QRZSAWv6EtZkpdVx0-->上架</th><th data-page-node-id="n6CdjjzDeO4wJ4h1LZhG9c"><!--pnid:Da9tXXJOvWJlVGggFgt5Hz-->操作</th><!--pnid:xSHTv42UUicykqxBYBWzDQ-->
+                        </tr><!--pnid:x6FBTBlHuCmxOYvdWuYlVe-->
+                    </thead><!--pnid:tKE7YgnGOIJzkgDpLwrB6k-->
+                    <tbody id="prod-list" data-page-node-id="QuIAqm2HXKSpTHbU08KCmI"><!--pnid:bj8Wq6HQY6lTdcIB8dg0Hv-->
+                        <tr data-page-node-id="wAB1ZNqnDTqJLI8PgH8YVs"><td colspan="10" style="text-align:center; color:#666;" data-page-node-id="KSl02imSvoNWF32aTKxzXa"><!--pnid:8zyXupZfdqGy7KH49xIiR8-->載入中...</td></tr><!--pnid:LFFJIsx8TEZG9WdnDNvTHu-->
+                    </tbody><!--pnid:yRmJI9GQgomOeSXgpFkcq7-->
+                </table><!--pnid:P08iWVbJC0mlgVi1xHeyAQ-->
+            </div><!--pnid:j8sjBi2aHOZRAu7ncHAWRz-->
+        </div><!--pnid:6cPpwQOGkEfW2ShNwGbfS3-->
 
-        <div class="panel-section" data-page-node-id="o5QZ3cioI6hGh8shH7AFnf"><!--pnid:Wv5DzTFpxlUzJ2yVErVm8w-->
-            <h2 data-page-node-id="GLxYF62vrOGH1eAmJ1EONP"><!--pnid:dF9UhvXAynQOjWDzYDnLay-->🎟 優惠券管理
-                <span id="coupon-count-label" style="font-size:12px;color:#888;font-weight:normal;" data-page-node-id="BKVu7v2zNvX4K1ECxy9lFf"></span><!--pnid:eeIwqOqdkzCYlw4lhcgGcx-->
-            </h2><!--pnid:MxBrdp3BJfUAF5PzfpMlKI-->
-            <div class="panel-hint" data-page-node-id="bZ5KbxyYunVu0Wv1KDP1wr"><!--pnid:BRFJi5PIFv3Gtkf5Fd3Pr7-->
-                💡 優惠碼<b style="color:#0052d9;" data-page-node-id="cUudN0Ng0HhB8IneiygOT2"><!--pnid:gYHLsJ3I5qiKictJLGJjRI-->不公開展示</b><!--pnid:VZUXhZ65R91wotfrT1axuh-->：建立後只有你在後台看得到，前台結帳頁不會列出任何碼。請點列表的 <b data-page-node-id="32iiieqiL37WNj57IsXyUR"><!--pnid:bfy5WI7kxjQhGZnMc1LVzH-->📋</b><!--pnid:3QPckBWpq5QEU9lHgoEh8w--> 複製，再私訊發給指定客人，客人手動輸入才生效。可設折抵金額／折扣百分比、最低消費、有效期、使用次數上限。
-            </div><!--pnid:G8XfP0a6bzj2rrZEKZUdsz-->
-            <div id="coupon-mode-tip" class="coupon-mode-tip" style="display:none;" data-page-node-id="qYg0KBk15vKHfrnP2kjTXB"><!--pnid:3x0cG0wpsRQm1833LQPDi0-->
-                <b data-page-node-id="lgDLtpbESJ2ZnxsCGC8Ymc"><!--pnid:62hNXdxbegJLCNuXAhh4BF-->尚未建立 coupons 資料表</b><!--pnid:Ed8SyIgZ1g3qM4cOEArUc5-->：目前新增的優惠碼只存在這台電腦的瀏覽器（換裝置就看不到，前台也讀不到）。
+        <div class="panel-section" data-page-node-id="zO3zVSUeoSqht24lGyOxC2"><!--pnid:M7AmhceleFC2JtECV2y6xu-->
+            <h2 data-page-node-id="GlNstNUylQIk7aaLh7gktc"><!--pnid:2NwrZciklS4CIyo3PAVQlf-->🎟 優惠券管理
+                <span id="coupon-count-label" style="font-size:12px;color:#888;font-weight:normal;" data-page-node-id="XrzWzTTWDzeNUvvwByEXFJ"></span><!--pnid:3F5KOJxhK1hrFCb8QeGHhb-->
+            </h2><!--pnid:ilKeicXSujPpHTWq99n9O7-->
+            <div class="panel-hint" data-page-node-id="wuxKR718lszjD6nhii9ENJ"><!--pnid:HGEV3ptVFkvC0xAE2RFEMf-->
+                💡 優惠碼<b style="color:#0052d9;" data-page-node-id="avtzL78mpJfPNcK6ScRluv"><!--pnid:gIEXptYDNPkPiYAkt2HVVn-->不公開展示</b><!--pnid:Wex83RlcVHQ4T8Lb8G1HSY-->：建立後只有你在後台看得到，前台結帳頁不會列出任何碼。請點列表的 <b data-page-node-id="pD9Jrmi4GsZDHhiInqjtRH"><!--pnid:ZTh5Tr7i2AQV7Q0103r3En-->📋</b><!--pnid:0Fvf8p5hfKw4rktjf3jRrQ--> 複製，再私訊發給指定客人，客人手動輸入才生效。可設折抵金額／折扣百分比、最低消費、有效期、使用次數上限。
+            </div><!--pnid:GLghIoG5jHqtpprWKToZjp-->
+            <div id="coupon-mode-tip" class="coupon-mode-tip" style="display:none;" data-page-node-id="mIHTfGkq13UcGBRBNbT5Jz"><!--pnid:8hnIVdQyYJURhyI1IBEdd8-->
+                <b data-page-node-id="XqHxnWwY4jt3Ygml7SAvlf"><!--pnid:W64UXH9DQIvgrmxZAJ3EKp-->尚未建立 coupons 資料表</b><!--pnid:l5s4UIntZjuI6OiUGmhk4W-->：目前新增的優惠碼只存在這台電腦的瀏覽器（換裝置就看不到，前台也讀不到）。
                 請複製下方 SQL 到 Supabase → SQL Editor 執行一次，之後即可全站同步。
-                <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;" data-page-node-id="vKQwS0PHK9YBA8YFWI1Eki"><!--pnid:XRQ9DIrnlxYxPLDlcB6RWT-->
-                    <button onclick="copyCouponSql()" style="background:#0052d9;" data-page-node-id="zAyxrnGg2pfaPMuUjOZz3u"><!--pnid:6Ot8GYHxCMzrbK7JwigMlt-->📋 複製建表 SQL</button><!--pnid:HdXDcMNUcIvCBxf7UEpvTh-->
-                </div><!--pnid:jTiKF8FDhB5FETr5oGFbOo-->
-            </div><!--pnid:tKXFGVjxT1gaBLMRDUqA3C-->
-            <div class="toolbar" style="margin-bottom:12px;" data-page-node-id="YwZptPrKo4QFYyniQAQ3ck"><!--pnid:FLt3MiaArWrJQKSEbClFKn-->
-                <button onclick="openCouponModal(null)" style="background:#0052d9;" data-page-node-id="RbSAnG8yR9W6t1ZaX7ECn8"><!--pnid:aX0NbtUkEOswBfjtv0x7AS-->➕ 新增優惠碼</button><!--pnid:IzUHf8DRZin7Ixhuft6wsQ-->
-                <button onclick="loadCouponList()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="qI3iBkGGbnkr1YOGiOigiY"><!--pnid:TFnqwUzz6WD8ECMHSkDA2C-->🔄 重新整理</button><!--pnid:psBkJ1xPzMWDNFjqOHJe2U-->
-                <span style="font-size:12.5px; color:#8a8f99;" data-page-node-id="3xm8GVA9oUJiWfpBMjvK3j"><!--pnid:08bEtE4sBGpMPpKhrJr3Ci-->🔒 私密發放：優惠碼不會出現在前台，請複製後私訊客人</span><!--pnid:RQHicGKEYBDGlSDDnTRs8P-->
-            </div><!--pnid:Sm1YaUJgglMC628YP2wd8b-->
-            <div style="overflow-x:auto;" data-page-node-id="6j9IJtzMNTTwl7iimnhWh2"><!--pnid:4mzpKtKVFBmTqcpxQUJlvf-->
-                <table class="cfg-table" data-page-node-id="WzES38rJ0xWEtZ2haEzkpd"><!--pnid:IJPCbX1RLOvI0AH3U7av62-->
-                    <thead data-page-node-id="hdGrFEXy0ksKADtIhLqO2x"><!--pnid:4iAWxJ9JOGgzmslHz6yGUI-->
-                        <tr data-page-node-id="CSFuMQl8TS0JpDjfyyts5h"><!--pnid:oPleYwYd7B34UzrXMKKf0A-->
-                            <th data-page-node-id="698Del1xrC7j7lgfO5oCLY"><!--pnid:AG0qtt83Ewk0VQJSIj3sqN-->優惠碼</th><th data-page-node-id="KGaDXP7cCPO9s8R7WTi1pY"><!--pnid:anjZX4DLGVSAfOXI1TSlW2-->折抵方式</th><th data-page-node-id="DDtFNE8mK9UD1CPybqAr0R"><!--pnid:EZMyFI7RVVPxuoJEsnQa9e-->最低消費</th><th data-page-node-id="GGv4OE3VhgIZTe2C9tLOaT"><!--pnid:2tjRjgdVyieCTUC6R1n2M6-->已用 / 上限</th><th data-page-node-id="56SDYoOKb0ybPMDoy3PA6J"><!--pnid:odswChOl6WjFVGEgfhUxB6-->有效期</th><th data-page-node-id="Udm9c5SGytWwIKWwMlwgkT"><!--pnid:rhCmUtHNKrTTgCA1KUWhQY-->狀態</th><th data-page-node-id="pHuRsQ1HaZQdr0IlV9bG79"><!--pnid:kIEEGFNh6RkETZuAEFwi8h-->備註</th><th data-page-node-id="U1mPAMt0nuAEaPsGmoVK2g"><!--pnid:3jN8gv3clibDS09PUaXGFA-->操作</th><!--pnid:zKP9yIwtDdnWULSTfjwIOL-->
-                        </tr><!--pnid:uFi7ISOFLaKQKTtfApQxUw-->
-                    </thead><!--pnid:JRnSyPSPpgJjiExEbuSETz-->
-                    <tbody id="coupon-list" data-page-node-id="dXG99Sr40jAZCT4WvKdXat"><!--pnid:1EGbmFc414evqecsblGIFC-->
-                        <tr data-page-node-id="KnYjCFq1pkLITjHldz0S0V"><td colspan="8" style="text-align:center; color:#666;" data-page-node-id="qBbDiOvDbocQ0psItTTTps"><!--pnid:ebhVH0DCtY1Trn35SUXhEt-->載入中...</td></tr><!--pnid:Y2kDIuwdS4q9Tzp64Dpb3O-->
-                    </tbody><!--pnid:6aVR5IlXpd4HIwbhBnk7Nc-->
-                </table><!--pnid:YwU5XTn5AvVOEVOgXeBX69-->
-            </div><!--pnid:tq7V6lYJO8Rnro5dvyTBXV-->
-        </div><!--pnid:5TI4WooY4vAJkJCPL5kfDv-->
+                <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;" data-page-node-id="r2fqJis2N54Q5jopzDmI9z"><!--pnid:JtQQ5ooCHUTB8ItiJulluB-->
+                    <button onclick="copyCouponSql()" style="background:#0052d9;" data-page-node-id="qUonl3q8pMUdkxsNYalKXd"><!--pnid:8RNhh4E5hY89N2f8gxiKUF-->📋 複製建表 SQL</button><!--pnid:ftnaRDF6iWwIolCDYRd4DH-->
+                </div><!--pnid:hIHqOOoi3aTzN2LktxpqQn-->
+            </div><!--pnid:0u7zxxJ8T1HTwmuizVWwsz-->
+            <div class="toolbar" style="margin-bottom:12px;" data-page-node-id="X6nM8eESmQLTeGYQbOIyjY"><!--pnid:Tqqw8F4oJff73GHTImfS2q-->
+                <button onclick="openCouponModal(null)" style="background:#0052d9;" data-page-node-id="DH4x3KEKpHkJgu1dC58mqQ"><!--pnid:xcG7HjGFOu1mnelEzNFhbE-->➕ 新增優惠碼</button><!--pnid:xttx967GMJV6nJxuxkcACi-->
+                <button onclick="loadCouponList()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="IFcy7ofg29PRVS3z2jznqv"><!--pnid:r3CLFOSNTRft4JgSEzDcij-->🔄 重新整理</button><!--pnid:4BcQprRGfZKSCaJmucAsk6-->
+                <span style="font-size:12.5px; color:#8a8f99;" data-page-node-id="AkQbwjo0TYEiRE6exJwrNU"><!--pnid:2BSPTcCGM01e7xufzeWhLO-->🔒 私密發放：優惠碼不會出現在前台，請複製後私訊客人</span><!--pnid:9lY85aazr0nK3INILWKmNn-->
+            </div><!--pnid:4lGDW90xx6bR4iLdky5oKy-->
+            <div style="overflow-x:auto;" data-page-node-id="gIBcbfKYRHfE7Jml9FScSm"><!--pnid:JRqSqud8T8ZsjCPHcaGnrT-->
+                <table class="cfg-table" data-page-node-id="IOzt9mh0bhQsQimEIT2KyS"><!--pnid:cA7gpQV2dRzWAJEBD3Jy1I-->
+                    <thead data-page-node-id="jCyEx56klCEI41pUZoGein"><!--pnid:GitRmTIokSJRFCepH2NWAy-->
+                        <tr data-page-node-id="6rcBVWYaOD2OS29uqjskkF"><!--pnid:KsBa6UyAbxucR0D1tEoVsW-->
+                            <th data-page-node-id="D7LAu2po8eIgkeHRPwMJn7"><!--pnid:MUdm8825rywMHGObw09jpi-->優惠碼</th><th data-page-node-id="bFw5LGB5Qu5PpfzFdHI23s"><!--pnid:n3HPRQ9mYDHOVuskQZ6i9B-->折抵方式</th><th data-page-node-id="2whg32RwgIRtyWn0PFNZq0"><!--pnid:DrE99phh2aJxFJlCLvXKNl-->最低消費</th><th data-page-node-id="lpHGw5ialh41vgKXAhxz0e"><!--pnid:JsUJbAfvMVYoOCuruTMKNI-->已用 / 上限</th><th data-page-node-id="7FNDiBXEtGlBSvwZ8BpiPM"><!--pnid:kKdCieQQpCK2NYouU5cYE7-->有效期</th><th data-page-node-id="fg5xPBnwxpkHDsZrs6GmL8"><!--pnid:BHYZaLL9giZub5dP6LQ2ip-->狀態</th><th data-page-node-id="ihGixtsDHADgtY8tdfkBpK"><!--pnid:wVlGCctSOT88tvLpVgEco6-->備註</th><th data-page-node-id="U7895BByKP94fVpMRnr99w"><!--pnid:rAIIVVCOZ0x3FmIcGf8pM1-->操作</th><!--pnid:yzPr3nchl3tChUiwcBXqst-->
+                        </tr><!--pnid:L24ZtcHtDbSuHSQKE83WlH-->
+                    </thead><!--pnid:iKwA9grHivIYTGvBD4A0Jv-->
+                    <tbody id="coupon-list" data-page-node-id="bCtSvFTHD1uFALw1CCodsn"><!--pnid:jdcWapTiyonmYj9DUB6Qmf-->
+                        <tr data-page-node-id="rvxD9n7pmhU1BFBADhTlnm"><td colspan="8" style="text-align:center; color:#666;" data-page-node-id="AnmcEeWaZVrTE6MigXL8ro"><!--pnid:ZxpRAmFuSvug8GXRYMfTjM-->載入中...</td></tr><!--pnid:g63hhm88oBAhgqDYaegOft-->
+                    </tbody><!--pnid:njaNQ9a29T1CUyPEencgW0-->
+                </table><!--pnid:RSIDimlrcSnY5gzSR5T7NO-->
+            </div><!--pnid:T7ovmM2sfcQPrDnDdBGgMj-->
+        </div><!--pnid:hH5u2HzXDON6WiFXmT3igb-->
 
-        <div class="panel-section" data-page-node-id="F1KF3R4CWr6zfcG6dPjZ4p"><!--pnid:sqD9iveBCjjasP3OCjqpb9-->
-            <h2 data-page-node-id="uUTpRmfa2bjLgtmi4VTOT0"><!--pnid:V5U62wZunnzUboeVbCnTce-->🤖 AI 客服 <span id="ai-status-label" style="font-size:12px;color:#888;font-weight:normal;" data-page-node-id="Tdu2B9BYZ7u8bwzgxX30TS"></span></h2><!--pnid:n73tTZ1htSxoQIUUtk6NEN-->
-            <div class="panel-hint" data-page-node-id="0bsQquBy8BGKcEt4FosPZZ"><!--pnid:MrCbEjqC5IcarywD4iEPW2-->
-                💡 客人發消息時自動回覆：<b style="color:#0052d9;" data-page-node-id="hJgySh5TDdfIf5HP5PHVgS"><!--pnid:X0kRRBW95JkFDQPrco567a-->先匹配知識庫</b><!--pnid:YKveGkpzPBZe561tARRI2K-->（免費、0 延遲），答不了再交給 AI（DeepSeek）。
-                <b style="color:#e6a700;" data-page-node-id="aFuntTGuTSR3kwBg3bF4uK"><!--pnid:n3sTZFCP0FRrFKNw4pX8MN-->您在後台回覆了某位客人＝接管該會話，AI 自動回覆即關閉；您 2 分鐘沒有再回覆，AI 自動恢復接手。</b><!--pnid:y89vYyAYOVZ9vT64iTNZw2-->
+        <div class="panel-section" data-page-node-id="edzXoPNyplyKz1Nlg4EgvL"><!--pnid:WkIJljLj7As4XVTbVYNqFJ-->
+            <h2 data-page-node-id="QCrRNlFNF39BZbYTAY7RSC"><!--pnid:GxWMERefW8MqbdLSm3VNHA-->🤖 AI 客服 <span id="ai-status-label" style="font-size:12px;color:#888;font-weight:normal;" data-page-node-id="UfQrMFwnonWiE0Iw0l7B3N"></span></h2><!--pnid:X2szVF8vrNFSAQzntMghRB-->
+            <div class="panel-hint" data-page-node-id="dNGScqouChKwzr24GY8Diy"><!--pnid:eehLCHScJUQ8bIJG2etK7D-->
+                💡 客人發消息時自動回覆：<b style="color:#0052d9;" data-page-node-id="HwookxMYBYKX3F8EJPHYGu"><!--pnid:iQuE7TY3CuZNMPX8ZVAnUl-->先匹配知識庫</b><!--pnid:RJrK4z1KtHp5XUZQKDVbvF-->（免費、0 延遲），答不了再交給 AI（DeepSeek）。
+                <b style="color:#e6a700;" data-page-node-id="73d3ltqEWXKNNTEZNCj9qg"><!--pnid:2oExTNkWjthR1s1Cofkju0-->您在後台回覆了某位客人＝接管該會話，AI 自動回覆即關閉；您 2 分鐘沒有再回覆，AI 自動恢復接手。</b><!--pnid:gxYFu6cgbwFopKqaEaKOWD-->
                 客人輸入「人工」也會停止 AI 並等待真人。API Key 存在雲端函數裡，前台拿不到、不外洩。
-            </div><!--pnid:Fp5CaDX08cR5j98ivoYpvx-->
-            <div class="toolbar" style="margin-bottom:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;" data-page-node-id="Rv4oPpJx1OItZH5gPqiMVL"><!--pnid:cKMbtODTSStvr0BoRo4Wjp-->
-                <label style="display:flex; align-items:center; gap:6px; font-size:14px; cursor:pointer;" data-page-node-id="dl1eeWZ8TlJnJi2R4521Nk"><!--pnid:R6Mgma5TD57yYSyBeFqChG-->
-                    <input type="checkbox" id="ai-enabled" data-page-node-id="wWvruBnvsfs5ffB9uVn4BG"><!--pnid:rZbB1QQ6suxem2m99ihvCQ--> <b data-page-node-id="RHKGL94FrPQB3qEa0dF0vH"><!--pnid:yxe9fQ0ttoM1VGoiDMs1fh-->啟用 AI 自動回覆</b><!--pnid:MeinwoboPfXmdhaJAuoRse-->
-                </label><!--pnid:0IbnMkzd2UaIc3iFGMAr9l-->
-                <select id="ai-mode" style="padding:6px 10px; border:1px solid #d5dbe3; border-radius:6px; font-size:13px;" data-page-node-id="gyYfWl6Ah2QFkTH7Y3B3jL"><!--pnid:EkbJaiMMAfCtFt2wrk31e6-->
-                    <option value="kb_first" data-page-node-id="6B5DYYcmsMu7jb97urrhoy"><!--pnid:miAlFui0FMgWTFwB77DsmF-->知識庫優先，答不了再問 AI（推薦）</option><!--pnid:DN9kzLVEGPymiOPfyhYzy7-->
-                    <option value="kb_only" data-page-node-id="ke3FWVIAwEwg99oKWAQu0O"><!--pnid:d9aWiVLOQFWKFJCaHWnxzV-->只用知識庫（不調用 AI）</option><!--pnid:LSA9snsWBZr0TxFdXWNYGP-->
-                    <option value="ai_only" data-page-node-id="bR0Rs3FDxWLOJYAnLdLaMG"><!--pnid:qQ4LgKundRFtEua50kV7bd-->每條都問 AI（較聰明、耗費額度）</option><!--pnid:tqSfV9ufOrbCE8ES53PV25-->
-                </select><!--pnid:2Aj7OuoSRzMH8vhP5ZVCJx-->
-                <button onclick="saveAiChat()" style="background:#0052d9;" data-page-node-id="ymtR8bx8H5ih3JZuZHrVig"><!--pnid:BCIwb7fck0VcOZQZeNYnfF-->💾 儲存 AI 設定</button><!--pnid:PDsyq4MfnmiLIe7wjmdvOn-->
-                <button onclick="testAiChat()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="huHwpM1zH3LJUY48XHSlFe"><!--pnid:JK7uPzgwNZznAQ0m5wDunJ-->🧪 測試回覆</button><!--pnid:3yEtuHO6g2ABiMeoh5bF00-->
-                <button onclick="openAiDeployHelp()" style="background:transparent; border:1px solid #d5dbe3; color:#5e5e5e;" data-page-node-id="gIEFrF1gCq0VR4ODMIudEj"><!--pnid:gCQ2FGD46ArsX9IiEZge74-->📖 AI 部署教程</button><!--pnid:VgUEfl2MyHt15J901lnVrF-->
-            </div><!--pnid:NZtYhEWwqDjvhQKTItuiBz-->
-            <div id="ai-test-out" style="display:none; background:#f6f9ff; border:1px solid #c9dcff; border-radius:8px; padding:10px 14px; font-size:13px; line-height:1.7; margin-bottom:12px;" data-page-node-id="XAbmD6xLQGwbfeDWvDVGSV"></div><!--pnid:lTq4PdyEocNhyoLBDwQnhB-->
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-page-node-id="Vsv7DpRpqt3iPNyMXTSuDT"><!--pnid:VUgRpLBSboy97yWQcW2VvG-->
-                <div data-page-node-id="kmB1e2uG9jgitoSom5EB3T"><!--pnid:VgVMyTKOtaHRIC2qvWUdSH-->
-                    <div style="font-size:13px; color:#5e5e5e; margin-bottom:6px;" data-page-node-id="4ObY94UmO4xBoNN2BAI3pB"><!--pnid:dCxXBtO2K9oB75L0weZZIx-->📚 知識庫（每行一條：<b data-page-node-id="XjhY8DfD7QxrEhlCbJYhdK"><!--pnid:EsJ3JUDNq7gO3JRuMGK7mx-->關鍵詞1,關鍵詞2 =&gt; 自動回覆的答案</b><!--pnid:IHoyhnSxO0B3LUfuQL628J-->，命中即免費回覆）</div><!--pnid:Hpu63IdHmTlnOI4w0VCktw-->
-                    <textarea id="ai-kb" rows="9" style="width:100%; box-sizing:border-box; padding:10px; border:1px solid #d5dbe3; border-radius:8px; font-size:13px; line-height:1.6; font-family:inherit; resize:vertical;" placeholder="發貨,出貨,多久到 =&gt; 現貨 48 小時內出貨，超商 2-3 天送達…"></textarea><!--pnid:KggtlCMZJqWp7DduKC1I6z-->
-                </div><!--pnid:z4YXILjDEcH5ejHOYEGUoz-->
-                <div data-page-node-id="EFLM259oleHY6vdteL7XBQ"><!--pnid:o7ywQjg1QdOHYv1ioIgwvM-->
-                    <div style="font-size:13px; color:#5e5e5e; margin-bottom:6px;" data-page-node-id="3cauuVAj0EGOZDgcC4wL4g"><!--pnid:g4E0yxvxImuN2MPLpuF9Ll-->🧠 AI 人設與店鋪政策（告訴 AI 怎麼回答；留空用默認）</div><!--pnid:Z6KpAHvYf1KzFheLqJlWKx-->
-                    <textarea id="ai-persona" rows="9" style="width:100%; box-sizing:border-box; padding:10px; border:1px solid #d5dbe3; border-radius:8px; font-size:13px; line-height:1.6; font-family:inherit; resize:vertical;"></textarea><!--pnid:AtonRHH17HkaahpS5EN3xA-->
-                </div><!--pnid:6MA3YHt1Y6xR9AWo4eUtnQ-->
-            </div><!--pnid:NZ0wFmqkYFC1F8HSSMIwaZ-->
-            <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:13px; color:#5e5e5e;" data-page-node-id="T2mYvvKJz6iOiQUF3jiQAh"><!--pnid:o0WgmpRWLqfA7bNHr8JJDJ-->
-                <span data-page-node-id="0KKkb1c5fTMfMrJzyKudc7"><!--pnid:Wywhb32Iw8GmHoqEtpMaEz-->雲端函數地址（留空自動用 <code data-page-node-id="0wgWQPkSHmUgCh1TpMjGuv"><!--pnid:wBUiKmgBPWMO3sdzHS6HE9-->SUPABASE_URL/functions/v1/ai-chat</code><!--pnid:x9ClRr31KBNEhDYqAAB0IC-->）：</span><!--pnid:UVne6L25mSMgIL051M0eUP-->
-                <input type="text" id="ai-edge-url" placeholder="https://xxxx.supabase.co/functions/v1/ai-chat" style="flex:1; min-width:260px; padding:7px 10px; border:1px solid #d5dbe3; border-radius:6px; font-size:13px;" data-page-node-id="9ROKlsRNUPIq5fcsNQl2VM"><!--pnid:BmPZ9WLBGbhHAQuHv5RMAo-->
-            </div><!--pnid:2hcgtznx7LKAUD7bFrU2ro-->
-        </div><!--pnid:i60lY4KG75L0z7Xnu4lVC6-->
+            </div><!--pnid:jj4nFYhRv0wprS2qxHr45D-->
+            <div class="toolbar" style="margin-bottom:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;" data-page-node-id="W1WyjGzfZUom8GHqaZAdr9"><!--pnid:nNiSM0lE6spZSAFkWMG0zx-->
+                <label style="display:flex; align-items:center; gap:6px; font-size:14px; cursor:pointer;" data-page-node-id="dAVbtx6QFEH8JGH2plJnYW"><!--pnid:cAT9qUMyCtdDyUwhskBgAm-->
+                    <input type="checkbox" id="ai-enabled" data-page-node-id="wZFwYHmWWos7aAVOpII2t8"><!--pnid:7BeNJMN9DOB7csqxXIXaFz--> <b data-page-node-id="UCzfrCNp1eB1adGAh8TMHZ"><!--pnid:2GJOFhEBXZUvj3TfcDMphr-->啟用 AI 自動回覆</b><!--pnid:kkxvF5HLugAAOSzDsQcK1w-->
+                </label><!--pnid:yL5xzv4DDU6Jk0SWFeFZD2-->
+                <select id="ai-mode" style="padding:6px 10px; border:1px solid #d5dbe3; border-radius:6px; font-size:13px;" data-page-node-id="ujQOfZbrKKp6gM4AxhW6b3"><!--pnid:95OqvJKikdMkGCmu4YBTSn-->
+                    <option value="kb_first" data-page-node-id="ldLVwRUaPBVXIUDgoHlWLf"><!--pnid:B1m3edRU0GFD8M5Pyz6MW6-->知識庫優先，答不了再問 AI（推薦）</option><!--pnid:kx9nP64Rxy5XJcIfregvex-->
+                    <option value="kb_only" data-page-node-id="Eso6Gz15JqiREIEtt3JaZi"><!--pnid:VoKF7CVyEB4Hh7gnFfFIYV-->只用知識庫（不調用 AI）</option><!--pnid:RtbWsez9VAk1VTEAlkxFo2-->
+                    <option value="ai_only" data-page-node-id="iBx5gbB348tFP18GyLXGzF"><!--pnid:nl8RSeaFfAxJoC3US5ECEx-->每條都問 AI（較聰明、耗費額度）</option><!--pnid:4jlhBL1IUvtFBElRY7Y6k9-->
+                </select><!--pnid:hNEq9mVKkkC6qQVJgv0w65-->
+                <button onclick="saveAiChat()" style="background:#0052d9;" data-page-node-id="SEDPbXpy1eQIH9KESyvZkH"><!--pnid:1qOFdyanEGKqzZnSpMOyj8-->💾 儲存 AI 設定</button><!--pnid:cgC3zhuB0x709qPGxDJN5p-->
+                <button onclick="testAiChat()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="arozXwZOGwR1Gnr1NNP3eS"><!--pnid:wpN6x567aQF6Vv9kc8s2fM-->🧪 測試回覆</button><!--pnid:LEdnXMLGPuJUlQdxzYXzcz-->
+                <button onclick="openAiDeployHelp()" style="background:transparent; border:1px solid #d5dbe3; color:#5e5e5e;" data-page-node-id="bm8PDtZBCHzc7eqwJ9WEtA"><!--pnid:by0rYH3byooZG7gpiMvU5e-->📖 AI 部署教程</button><!--pnid:sWuOkk6R2jtdijFdJKh3pg-->
+            </div><!--pnid:0FuwwrssEkZztEEAfoKnnA-->
+            <div id="ai-test-out" style="display:none; background:#f6f9ff; border:1px solid #c9dcff; border-radius:8px; padding:10px 14px; font-size:13px; line-height:1.7; margin-bottom:12px;" data-page-node-id="y06UaEXZ0ilu0CrbAQ8fg3"></div><!--pnid:NGUAptHvedxR1fANYEUyFf-->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-page-node-id="S5eufZST3MHZsoK1ezWaZC"><!--pnid:klusO8Tk2kfssN9hKQ9TJ8-->
+                <div data-page-node-id="XOWpxk5UNbDPRKwV2GdCnJ"><!--pnid:RTAQ0APCCkgc4QtBkqL79k-->
+                    <div style="font-size:13px; color:#5e5e5e; margin-bottom:6px;" data-page-node-id="yS32moi9pc1C5u1dyNCrPa"><!--pnid:FHvOcuQ7lSRCdU0F3uwZzS-->📚 知識庫（每行一條：<b data-page-node-id="q4ML0jFi34PBPegMoCY0Sk"><!--pnid:Z9Nwp44jKxziRXnDmd21sb-->關鍵詞1,關鍵詞2 =&gt; 自動回覆的答案</b><!--pnid:kYcPOJTf8dHyKAYFAw9FBm-->，命中即免費回覆）</div><!--pnid:FUyBg0lahhZvHMPJ1Lj9AO-->
+                    <textarea id="ai-kb" rows="9" style="width:100%; box-sizing:border-box; padding:10px; border:1px solid #d5dbe3; border-radius:8px; font-size:13px; line-height:1.6; font-family:inherit; resize:vertical;" placeholder="發貨,出貨,多久到 =&gt; 現貨 48 小時內出貨，超商 2-3 天送達…"></textarea><!--pnid:54tHpBABDGfEXTSLw8rsxS-->
+                </div><!--pnid:Jb4FslFTfjAVlqsQmyxLff-->
+                <div data-page-node-id="GWQWkru4jDX8V6jaYDEsWu"><!--pnid:st9gMqdNFqLavKEunqKrfk-->
+                    <div style="font-size:13px; color:#5e5e5e; margin-bottom:6px;" data-page-node-id="r3NQenykiloyPUDEJH9pHV"><!--pnid:Eje8iR4lPVx5xGPAosBxtK-->🧠 AI 人設與店鋪政策（告訴 AI 怎麼回答；留空用默認）</div><!--pnid:50L3O8vDpVhdbgm6daIriL-->
+                    <textarea id="ai-persona" rows="9" style="width:100%; box-sizing:border-box; padding:10px; border:1px solid #d5dbe3; border-radius:8px; font-size:13px; line-height:1.6; font-family:inherit; resize:vertical;"></textarea><!--pnid:KFGq9QCBtDdmf1NmZe9Rl1-->
+                </div><!--pnid:OeGTktZwGTkBaCy7jqIU3d-->
+            </div><!--pnid:zc0F6yBbDJ23HtS1thRd5B-->
+            <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:13px; color:#5e5e5e;" data-page-node-id="K7yv9TDaYNoVes1ZxnAtvW"><!--pnid:4GPtYaAqGaCMXysVoSOyYI-->
+                <span data-page-node-id="oMoBVsoSsce4PpEunHxHQM"><!--pnid:ClBTmvqr7Xs6tIHBSgAWkd-->雲端函數地址（留空自動用 <code data-page-node-id="m7ETIFdUMZhHT8MtEz38Fy"><!--pnid:7QzFSArBQVZvMzs0WQCUeo-->SUPABASE_URL/functions/v1/ai-chat</code><!--pnid:ynyeDCct6FdKopZXUAp4vh-->）：</span><!--pnid:NTdMzeQ9yHvIGwbC57CyvV-->
+                <input type="text" id="ai-edge-url" placeholder="https://xxxx.supabase.co/functions/v1/ai-chat" style="flex:1; min-width:260px; padding:7px 10px; border:1px solid #d5dbe3; border-radius:6px; font-size:13px;" data-page-node-id="SvA5YJxak5d1fVZrK2SGPF"><!--pnid:6R4rONc0APhfvfiJDdROWZ-->
+            </div><!--pnid:A75ycgtZauwisWgADTjDYq-->
+        </div><!--pnid:b2Nv2wqx1QlJli35W3FXjS-->
 
-        <div class="panel-section" data-page-node-id="R23xK3Da4kUTqrX8KHUJeF"><!--pnid:PaUVyDmwrNIP3s5tJNsTno-->
-            <h2 data-page-node-id="9D7KIOGmdtXzGbiCMY2GB6"><!--pnid:oaGCkhxDLZva9bDDkDRQg6-->📋 訂單管理</h2><!--pnid:WNBwdA7XAZZvucH2K61RGz-->
-            <div class="panel-hint" data-page-node-id="z0eEbodpl8SNdFU5ZK4vkl"><!--pnid:qSAFxwxmiSIYiyRGHse3zh-->
-                💡 客人關閉網頁後收不到站內訊息通知：重要事項請用 <b style="color:#ff9800;" data-page-node-id="fly9OIOrVQYBq5sPhyxqCt"><!--pnid:CuJN8oRfkaDSG9pJmFBF0C-->📞</b><!--pnid:AMkKVS7hLyaCULziEiXHgy--> 直接撥號，或請客人加 LINE。
-            </div><!--pnid:W9PLlnHW1UrRbGwTBHWZ3D-->
-            <div class="toolbar" data-page-node-id="XIlwS8cyjrZQuRygbUWQgF"><!--pnid:F1Um2KOSXmBk5IqLUao5dV-->
-                <input type="text" id="search-input" placeholder="🔍 搜尋姓名或電話..." data-page-node-id="GDNZoZrNuqLRHvRKLENF5U"><!--pnid:01paOGTRRMNF1nOx4l8tsS-->
-                <input type="date" id="start-date" data-page-node-id="CXpxkPYWIX7zTzgxxA1214"><!--pnid:8H0SLiO1WYdGWWRsUYT8BJ-->
-                <span style="color:#888;" data-page-node-id="hvjMB4IaXmalAfPVUSz5I3"><!--pnid:YSrAQMbJF6I5vLalnIVOnP-->至</span><!--pnid:TF9Sei78UCt9JgLTfsqVQy-->
-                <input type="date" id="end-date" data-page-node-id="C9LZRyUDEMBzbO98w8OzLx"><!--pnid:SEX62AUtOQrIseo6Qds5ku-->
-                <button onclick="loadOrders()" data-page-node-id="BmD3HFTeGRAIPc6rnlv1Ty"><!--pnid:qibkGWfGh8e6FLrvIKIyEa-->查詢</button><!--pnid:lQUbnCbLnmXEqy2DIPdzFs-->
-                <button onclick="resetFilter()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="tGzXEFoB3KuKOTJ6K5Efee"><!--pnid:JpdalM5weSIV5NxVgnQf9k-->重置</button><!--pnid:MaL647FnEBjPBAMpGy7QwS-->
-                <button onclick="exportOrdersCsv()" style="background:#00a870;" data-page-node-id="NFZtChNCHvc4x6AkgVDgHu"><!--pnid:lNmB7egLWVMD4J54koDjxk-->⬇️ 匯出 CSV</button><!--pnid:bHgiNmTjBxeexWR4YIT4pg-->
-                <select id="bulk-status" style="padding:8px 10px; border-radius:5px; border:1px solid #0052d9; background:#fff; color:#0052d9; font-family:inherit; font-weight:600;" data-page-node-id="Hx3igghBpSVOrIhMFJZ3ev"><!--pnid:HZRVrHiy0MTz39ZnGqGyZE-->
-                    <option value="" data-page-node-id="7EP8f7hD9Ys0cRGTk3aohd"><!--pnid:z5NIa5J6h4b4mkvMzxMOvy-->批量改狀態...</option><!--pnid:UZZfbrnZb0nh0xwSQKiQh8-->
-                    <option value="pending" data-page-node-id="SKoCj0xpzrfqnVjF6m9CjJ"><!--pnid:hr6oHp8Reez99rYDN0EGf3-->待發貨</option><!--pnid:rYqCWsncl6Dxotl2riF8JN-->
-                    <option value="shipped" data-page-node-id="yg3sqkil7GrEWWZbrca284"><!--pnid:JHMEZhXp7bLZRgbPO8NMF7-->已出貨（待收貨）</option><!--pnid:0ZMKpejXTdsbHKLz9tkfu8-->
-                    <option value="delivered" data-page-node-id="259dJdxxfGwAnUrOBYRV4a"><!--pnid:jDCDd5gtBAxOkLs3ggFSOv-->已送達（待評價）</option><!--pnid:CLXibRfuspAJrZD7wCnni2-->
-                    <option value="reviewed" data-page-node-id="7tdkR213dxc9UtfCqHoymd"><!--pnid:RuGGF92gTFJDGn5kAo8rPX-->已評價</option><!--pnid:yCKPYhLfCrb0rRp3dhefPx-->
-                    <option value="aftersale" data-page-node-id="duz1gahCB1uBxzriHH2oYF"><!--pnid:DbzmAqAx0kQGB8OHQc6LCE-->售後處理中</option><!--pnid:XTvr2dFUg8oIkn5Dg7q496-->
-                    <option value="cancelled" data-page-node-id="sppz89oLefaUB5A3HQHcBD"><!--pnid:AdED0aRDoyvGznSYdJhTr7-->已取消</option><!--pnid:9jpBO2BbXS1FmydvKxmmfn-->
-                </select><!--pnid:hbchqxx7H1tB8nFHVOJSTF-->
-                <button onclick="bulkSetStatus()" style="background:#0052d9;" data-page-node-id="nuiwvR1MIVjwlSdZlhCboc"><!--pnid:Zc7U40WZoopSPZrsPBRtBz-->✅ 套用</button><!--pnid:ZzMJbxQzyFAGdN0V1Y8vTk-->
-                <select id="status-filter" onchange="applyStatusFilter()" style="padding:8px 10px; border-radius:5px; border:1px solid #d9dde3; background:#fff; color:#1a1a1a; font-family:inherit;" data-page-node-id="GD9KkSuMVURyQvplIir4BT"><!--pnid:Zy1ZQ7FujA4HxPaDxHRiQy-->
-                    <option value="" data-page-node-id="qrik6U3LJ0pLr6tQQ7lbmH"><!--pnid:nA3rJAW4WxzXafLzriwzcF-->全部狀態</option><!--pnid:g7Ly9hYPCvGVWMcOWDMWuo-->
-                    <option value="pending" data-page-node-id="xqicWAyLWCpYouzEM1QNoC"><!--pnid:wSEsMBENiNlql8qnyc04zg-->待發貨</option><!--pnid:bobvBtEBG72JByRELyTlAZ-->
-                    <option value="shipped" data-page-node-id="02ZoFzTtkKJNJCU8sIGo0z"><!--pnid:FafiixJt525FGPHFtKGJEm-->已出貨（待收貨）</option><!--pnid:5nLgQvXP2m6PGIiLk9t38T-->
-                    <option value="delivered" data-page-node-id="Q68nSGyFUppMUt8V8tTTIw"><!--pnid:199fwOJqSGHQkTxjYqmh5S-->已送達（待評價）</option><!--pnid:3i2qBndiyrjh1VMGH1jcje-->
-                    <option value="reviewed" data-page-node-id="KJjd1AnunPyiu1n9mS3oq3"><!--pnid:AffzYvn7vMylP5c1Y5NRAn-->已評價</option><!--pnid:8SAo2jRPrP2RAt812bkbwG-->
-                    <option value="aftersale" data-page-node-id="zy4qpo2fzUaHGO3oUGwO4x"><!--pnid:H4OiKNxHG6K2eoToH7ILVG-->售後處理中</option><!--pnid:ALZ8C1GFltOJQHwAuBSShs-->
-                    <option value="cancelled" data-page-node-id="uLozu1dikTVmLRU3MXTVBR"><!--pnid:6amNQFs9xyiGmdDfCn47AH-->已取消</option><!--pnid:ZqYg8MQy4WH7FicBrZNERv-->
-                </select><!--pnid:oVJkRgA9S4bTcR5jYLvF8E-->
+        <div class="panel-section" data-page-node-id="pGztGS5EDSsHL2GH8HN2Xf"><!--pnid:ZHYZZRFtKgOVlVDmTBZMjm-->
+            <h2 data-page-node-id="Mz8jnU6y66AUMCI7iVryPW"><!--pnid:amqZf85XHpxogN88ZCkNZn-->🌍 地區攔截 <span id="geo-status-label" style="font-size:12px;color:#888;font-weight:normal;" data-page-node-id="fk537G2oOsMza0OYpas5IG"></span></h2><!--pnid:2jOHCo15yRaTGT7BC59eCv-->
+            <div class="panel-hint" data-page-node-id="6Vj7wZwEg8wL53EleCUJJR"><!--pnid:fe8poCjLV3QN5BbRSr9FE0-->
+                💡 啟用後，系統依訪客 <b style="color:#0052d9;" data-page-node-id="XfytVjSseFNhpWLa7QcYT3"><!--pnid:cAGYBfVvrQDVl2K4NvDrML-->IP 歸屬國家／地區</b><!--pnid:Uhiy2OKF8HQoIDNUuap5lo--> 判定，命中黑名單的訪客只會看到攔截頁，無法瀏覽商品。
+                ⚠️ 提醒：IP 庫偶有誤差，訪客使用 VPN／代理會改變歸屬地；如需 100% 精準封鎖，建議在 Cloudflare 等 CDN 的防火牆再加一層國家規則。
+            </div><!--pnid:S92bCAxV8xRnMVM6Z3Rlsy-->
+            <div class="toolbar" style="margin-bottom:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;" data-page-node-id="e2TwJbB1LZxjPmh2diYm21"><!--pnid:aFntuu9qbKRn4ysgTHcHnH-->
+                <label style="display:flex; align-items:center; gap:6px; font-size:14px; cursor:pointer;" data-page-node-id="zmH5l540YpPUT5wa4fprMw"><!--pnid:zn3uLtyBNGYxdBfs8tgRJX-->
+                    <input type="checkbox" id="geo-enabled" data-page-node-id="g7GGsfgtOMLMGGJBrOiqz2"><!--pnid:PZBRGwtH3oFPKfcQNXkLDa--> <b data-page-node-id="D83DZOh6lH4A6ZcG6NHHPR"><!--pnid:nT5qQ3rHnYlARANpmHtePj-->啟用地區攔截</b><!--pnid:6uIQs3zvh30lDACjBtHEJU-->
+                </label><!--pnid:GchdpIeXFUPLHCltZWE3A7-->
+                <button onclick="saveGeoBlock()" style="background:#0052d9;" data-page-node-id="r4JaH481WlkHO8W7h5Y8XU"><!--pnid:lIbkvAesDCMOeMRTEXIQjY-->💾 儲存攔截設定</button><!--pnid:3xEoH6cDQP3qBbxf0HtWVM-->
+                <button onclick="testMyGeo()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="EyGR0WlUV7WSVyoRzf5jrA"><!--pnid:THx1ttHaTjiYF9qDPdmbjZ-->🧪 檢測我的歸屬地</button><!--pnid:AozIQTXTixEINHoFnvkqyl-->
+            </div><!--pnid:23KAiGLUny72hDJVFjlDcu-->
+            <div style="margin-bottom:10px;" data-page-node-id="8vse85VKm0F0dlhlTYbc6u"><!--pnid:Xe9wq60KoACfd4GqOyfhuC-->
+                <div style="font-size:13px; color:#5e5e5e; margin-bottom:6px;" data-page-node-id="CyJGx6qfBfxzkxCsUDvSI3"><!--pnid:cGKXc7t0Z4xrVaBje7DvO0-->🚫 攔截的國家／地區代碼（ISO 兩碼，逗號分隔；留空＝不攔截任何地區）</div><!--pnid:VPOGUbq5n6jkCPjCVvp9qS-->
+                <input id="geo-countries" style="width:100%; box-sizing:border-box; padding:9px 10px; border:1px solid #d5dbe3; border-radius:8px; font-size:14px;" placeholder="例：CN, KP" data-page-node-id="bd1D76KJLWs9S1gdo81biB"><!--pnid:jGGwjibz4AwYmXH5ZCmnTA-->
+                <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; font-size:12px;" data-page-node-id="zT58geld8rvNhSHU3VhXyh"><!--pnid:pWEDykNq5wrhPUIRnDOf88-->
+                    <button onclick="geoAdd('CN')" data-page-node-id="LdpKPNpwBIGR9RWS0XIELV"><!--pnid:LAugSjhDrGsZENGsBFzCyX-->＋ 中國大陸</button><!--pnid:YViHDC7dzGK9FxV6EGg86p-->
+                    <button onclick="geoAdd('US')" data-page-node-id="PLWUnpFuhAyebOIefsDA72"><!--pnid:2X6p0HIZHGltf1wGhhUkfO-->＋ 美國</button><!--pnid:wddQUFVVAixRKfGnuANVCn-->
+                    <button onclick="geoAdd('JP')" data-page-node-id="GB0cAhaRjN6ZaDUuKLtKO2"><!--pnid:EifrQ9OIzit868TukVqAvY-->＋ 日本</button><!--pnid:OoEBf4wbiEjIZlbSPrCyXm-->
+                    <button onclick="geoAdd('KR')" data-page-node-id="JS7G1SoRHh7HlbkACSje5r"><!--pnid:8R3ddO59sHKGRswAwPF4Bw-->＋ 韓國</button><!--pnid:wQkRZjQ2zP2w3OneY7jcYL-->
+                    <button onclick="geoAdd('SG')" data-page-node-id="zFzShnZ8ZKjuwKNvu1IDcm"><!--pnid:K0lC4eW7zTUvxNE5LfbdDD-->＋ 新加坡</button><!--pnid:DF1sNiXZgz243ExazhIzXl-->
+                    <button onclick="geoAdd('MY')" data-page-node-id="TESOmSOYg8otori27gKnbw"><!--pnid:so0lKkKwlslDBHcJjLKq9X-->＋ 馬來西亞</button><!--pnid:Fo5k4sJhco442n480ABqij-->
+                </div><!--pnid:AGCZyeNgrOFhgAs9sYtpLX-->
+            </div><!--pnid:RQdi5x9EVpGHHQyBGlFcnT-->
+            <div style="margin-bottom:10px;" data-page-node-id="versEXprmqooExBvxogaCD"><!--pnid:HxMPqFXab1uXVyQcWO91RD-->
+                <div style="font-size:13px; color:#5e5e5e; margin-bottom:6px;" data-page-node-id="5oyJC83KNAoQkmADsx4PME"><!--pnid:1HY8velMuYeTUTWs2Yr8eT-->📄 攔截頁顯示文字</div><!--pnid:eocUtDErWsYDGuQPQd9953-->
+                <input id="geo-message" style="width:100%; box-sizing:border-box; padding:9px 10px; border:1px solid #d5dbe3; border-radius:8px; font-size:14px;" placeholder="很抱歉，本店目前尚未開放您所在地區的瀏覽與購買服務。" data-page-node-id="iKIvHWAJmDAV9eDBtR6mOJ"><!--pnid:sVZlV3aGaWXWQ4t15KLLCw-->
+            </div><!--pnid:4txDeLAss4HCgrIuzPA4ky-->
+            <div id="geo-test-out" style="display:none; padding:10px 12px; border-radius:8px; background:#f3f6fb; font-size:13px; color:#1a1a1a; margin-top:4px;" data-page-node-id="BX9PyNmKouXiAxHRtAIf6x"></div><!--pnid:3m89Z9Hin2k82eNpOvkaC2-->
+        </div><!--pnid:CL07Pp4Sp1Vsk1PzsK6s2U-->
+        <div class="panel-section" data-page-node-id="zuAojGlfanbC6hMTG1yuMT"><!--pnid:pzRWMMKhDLJ2zKDZiZt6YT-->
+            <h2 data-page-node-id="mNqgq0lDwvUkOeeiCrEv2G"><!--pnid:tJGG9Wmg5GBGj3PmbVtFBN-->📋 訂單管理</h2><!--pnid:6wonXt9Puh03Be1JCo4MCq-->
+            <div class="panel-hint" data-page-node-id="D0Huacw023pfCfhjtmSOW0"><!--pnid:pSUD5OW38bHHcRkd6a4Mit-->
+                💡 客人關閉網頁後收不到站內訊息通知：重要事項請用 <b style="color:#ff9800;" data-page-node-id="11WwDU8F2aLXTvqKAoY5dG"><!--pnid:WMoeciLvQ2BP4rFGwHgCGp-->📞</b><!--pnid:L9ZRVX0BCfw5mki9uRzFT0--> 直接撥號，或請客人加 LINE。
+            </div><!--pnid:E6jKIRTXhPmrdiRUOFgCk4-->
+            <div class="toolbar" data-page-node-id="zCpFV7PSRZWtsBjw3FrGDd"><!--pnid:hYwUAiAaZAubfHJ7TFlXbI-->
+                <input type="text" id="search-input" placeholder="🔍 搜尋姓名或電話..." data-page-node-id="J5jAkVA5H5Rg2RPSjGhoog"><!--pnid:pR0BKAnEqD0hi89samlTzB-->
+                <input type="date" id="start-date" data-page-node-id="nZJkHiiwI3SoHOAGzWMfwr"><!--pnid:ZQEmdX832JIztqsiDoTHSy-->
+                <span style="color:#888;" data-page-node-id="w8jM35IYs8Hr0tidKEPv7Q"><!--pnid:0sMeiPpOFYLbGjmDgfZu3b-->至</span><!--pnid:se8OuS8MQnDimRBfcmBaiS-->
+                <input type="date" id="end-date" data-page-node-id="sx5dRlhin6FHlUjAe48xK9"><!--pnid:TtDk7hXsFBUDWlLsShEMNI-->
+                <button onclick="loadOrders()" data-page-node-id="nTDNXq3PBLTw26P3K8ZNrv"><!--pnid:PhXfzezUF9H2XKSZRy6VDC-->查詢</button><!--pnid:GaQeG2eRzj710Nw45toFGp-->
+                <button onclick="resetFilter()" style="background:transparent; border:1px solid #0052d9; color:#0052d9;" data-page-node-id="3xnoTolTE13v8lWv5ONYbN"><!--pnid:PtGU9MYj0JC6Aw6twGvTue-->重置</button><!--pnid:DiTatMqQvYxKjdXDSUwetW-->
+                <button onclick="exportOrdersCsv()" style="background:#00a870;" data-page-node-id="djI0970PO73jFNBYvFOLLt"><!--pnid:cpXeUDIlksks3Es0djn9iM-->⬇️ 匯出 CSV</button><!--pnid:a7R87UpDfxyuM8E8P5k2YB-->
+                <select id="bulk-status" style="padding:8px 10px; border-radius:5px; border:1px solid #0052d9; background:#fff; color:#0052d9; font-family:inherit; font-weight:600;" data-page-node-id="APRL5QCIx1lzoMyVefefUu"><!--pnid:sFbnPgwubPkijoFxrIDvGG-->
+                    <option value="" data-page-node-id="T7ZAPOilG482x2bD0znlT2"><!--pnid:HfOrF5qXfvfdAscoa4WUGi-->批量改狀態...</option><!--pnid:DkzcxP1MpFErkvNAfrObZ3-->
+                    <option value="pending" data-page-node-id="p1RI7gg46fNPjZpGkSiEOt"><!--pnid:orALlJ8QPlNfuNAUo7kGfa-->待發貨</option><!--pnid:hEqFlcjOLmFLd5QhR5njXl-->
+                    <option value="shipped" data-page-node-id="sGbz8rEtTBg0JnAl5Vrmg4"><!--pnid:2xhkamsIi7If8bM7UU7N2D-->已出貨（待收貨）</option><!--pnid:Z7BoGyXLU0D1t7a7BX8qej-->
+                    <option value="delivered" data-page-node-id="HpvEbsKUpLQt4oOQLncoTS"><!--pnid:esfvCPuCA4kuhDaEqnW7z6-->已送達（待評價）</option><!--pnid:f0J6J3636nRToYqJoJKlYB-->
+                    <option value="reviewed" data-page-node-id="1keAjU3SC62R7yKfZFvGzt"><!--pnid:lPwSQNbtmADHqGcNVXEn5O-->已評價</option><!--pnid:iGeC1sAAIr3Z1V03QCjBR9-->
+                    <option value="aftersale" data-page-node-id="H72vxRFgNTjYKMDIO3S8yA"><!--pnid:aZF6EKhYxOfyLlI0oEtgUq-->售後處理中</option><!--pnid:E9kPgHy67CzCKsAQwRNOCk-->
+                    <option value="cancelled" data-page-node-id="q6EnYFS1VSQKurTOgIuf6I"><!--pnid:UQkmLNZWK0LJth7nIAS703-->已取消</option><!--pnid:dNzsTx1GOQvCa848doOWwv-->
+                </select><!--pnid:CTQ4on0g3mVDaKfz89MNEY-->
+                <button onclick="bulkSetStatus()" style="background:#0052d9;" data-page-node-id="YDoW6ZDG8CROevxnn4cOqT"><!--pnid:UJ4OOp9Worx4jdNJNyIq24-->✅ 套用</button><!--pnid:1Mkmsrf6AR7jkTuIWXNirS-->
+                <select id="status-filter" onchange="applyStatusFilter()" style="padding:8px 10px; border-radius:5px; border:1px solid #d9dde3; background:#fff; color:#1a1a1a; font-family:inherit;" data-page-node-id="PVCkmp3nZREJAXcnk1rjpF"><!--pnid:UEemE8Le4pTG6cRuRsiV3N-->
+                    <option value="" data-page-node-id="VqQmpUDivBHPIpMuKkDYvr"><!--pnid:uPmASpstDmWEvk0pTJgerB-->全部狀態</option><!--pnid:wpxxMIjn0vqpngXuMGFxYT-->
+                    <option value="pending" data-page-node-id="dl6hH2O6WcmaTCiJ9ml8eC"><!--pnid:skZdN8IXmee7XKbzDoXN91-->待發貨</option><!--pnid:dbWP5Eccr0EhGS9teIyaD8-->
+                    <option value="shipped" data-page-node-id="065hRWKL8yEyNfUDsvcghP"><!--pnid:ezp9QqppftZ6kpYBCc0Y3K-->已出貨（待收貨）</option><!--pnid:weueKcQPfdLMc5AKzK5D9q-->
+                    <option value="delivered" data-page-node-id="cwSOAZvfaqe6nomxyu8aPD"><!--pnid:gyKG2o5vT6C57JVKNXohUp-->已送達（待評價）</option><!--pnid:YBMZQtmUfkK0cMEqIXfkoS-->
+                    <option value="reviewed" data-page-node-id="YCRZO6SKXHvCddzLXWHuu8"><!--pnid:FNuZRq82eLwaNyCsGNEsC4-->已評價</option><!--pnid:6JDyXm2CSJjpSH52kK797n-->
+                    <option value="aftersale" data-page-node-id="uJHRzo0ckFQd74VKoHVCOr"><!--pnid:ySWt9zCqBCWIFCuIsH2EU1-->售後處理中</option><!--pnid:Fn3HoJSFa6AY7wpIIFR0D6-->
+                    <option value="cancelled" data-page-node-id="td1LFQ4zr4avpAQRyHtA9G"><!--pnid:CLPF4cFxhqxkcLrFx7UB7n-->已取消</option><!--pnid:2GgoFVgJ6vsUDA4Nyit3U8-->
+                </select><!--pnid:neCpiVMGAUX5onatGLG05J-->
 
-                <div style="margin-left: auto; display: flex; gap: 10px;" data-page-node-id="OD1gdISh4ALeGjfQ8A4DFD"><!--pnid:lpfj1MaHdLoP43IX6nxlUD-->
-                    <button style="background: #00c800; color: #fff;" onclick="exportCSV()" data-page-node-id="andnMA9NDRGOSz9VntZHjf"><!--pnid:7AC3TSNIHbqBeMWLnPXLLm-->📥 匯出報表</button><!--pnid:ZBPOxx9m9uear8r0LkdLSP-->
-                    <button style="background: #9c27b0; color: #fff;" onclick="document.getElementById('addOrderModal').classList.add('active')" data-page-node-id="YEGYgFU6QMEcxi088MIGOU"><!--pnid:ZiXxNXHhT396KF0mxMaXG7-->➕ 手動補單</button><!--pnid:vRpB9oMyjSvy5SJVZaOkX6-->
-                </div><!--pnid:SeTXixA2MqonCqAFj8lApj-->
-            </div><!--pnid:SWKwbLBCCxVAcKpJd6AWzG-->
+                <div style="margin-left: auto; display: flex; gap: 10px;" data-page-node-id="GqC3xLVnxFzuKLyBiVrFER"><!--pnid:wkZbhShMFeZuCVPyXVmebJ-->
+                    <button style="background: #00c800; color: #fff;" onclick="exportCSV()" data-page-node-id="uFMdBjURVxICDtBssiiuNG"><!--pnid:qRBV9Bsf9NoYK0JpRII2Ko-->📥 匯出報表</button><!--pnid:cwIeJaDgEDhkqwL1yQFiBL-->
+                    <button style="background: #9c27b0; color: #fff;" onclick="document.getElementById('addOrderModal').classList.add('active')" data-page-node-id="rV1iXIXVjC07p7905AeZ9o"><!--pnid:z6AV9e6UcOwXtAIytl8vlQ-->➕ 手動補單</button><!--pnid:BjZfatznDV2gQAzEJRN9xC-->
+                </div><!--pnid:ESDzajwbivSAVJS8Yta7mw-->
+            </div><!--pnid:kC3fFvUkRMvDZubhYJBVzL-->
 
-            <div style="overflow-x: auto;" data-page-node-id="EtWh5lVfb770zGU2dKWTb1"><!--pnid:zZruduPSUAUPAbqdX9s7Ek-->
-                <table class="order-table" id="order-table" data-page-node-id="L4oQL8cLQ2PXG5mY0SqSoP"><!--pnid:rCrjlAzc4T5nc6AcpYYEE2-->
-                    <thead data-page-node-id="jzhpvmL9kgD4OdGboBc8A8"><!--pnid:olLpf90gVuEzJ2ZPtY8eGE-->
-                        <tr data-page-node-id="7oxTBnhH724no3YdAlU10R"><!--pnid:rG1ZMYKsi68fSDKKsXjluE-->
-                            <th style="width:34px;" data-page-node-id="qfRFi4PEZG64fvzxYRktVP"><input type="checkbox" class="order-check-all" onclick="toggleAllOrders(this)" title="全選 / 取消全選" data-page-node-id="2wdrxeqGnYbCQPQi8oAGuS"></th><!--pnid:Tu3CBfiHrjpzmEqeMFPQTO-->
-                            <th data-page-node-id="0rEfsIWkdrAizqC72TzUi4"><!--pnid:Bmr7hmz7FetWD2GElBqax7-->時間</th><!--pnid:Z9EpxQNMCCJqhpMTiJfzHQ-->
-                            <th data-page-node-id="Gg7CjYRcV4A8ouZyBzHyiI"><!--pnid:RGvcdjYbWiFOVa8exkVBnJ-->商品</th><!--pnid:qDa0HkzJ03ybIws4Xl7RPs-->
-                            <th data-page-node-id="QYE8Jbrh8gsIuiNfqbeFo2"><!--pnid:IhXDTnv73YZOkp64J8dwy7-->姓名</th><!--pnid:HGaRfKg7m6c5E9Voe05oqp-->
-                            <th data-page-node-id="50MxAY3iB8SYzvgg8Bw5JB"><!--pnid:Scglmnr0ex0KPvchmvX8e7-->電話</th><!--pnid:nxyKgjTGWWulFVzb61Nt7l-->
-                            <th data-page-node-id="vE32AEs5lm81itepD16aak"><!--pnid:ATZ56CpPPbBXlSXMbUZbDt-->地址</th><!--pnid:MgsjAqZw7kajaZiZCAmxA8-->
-                            <th data-page-node-id="8G2b9Y3wOI7GBW7nvrKJ75"><!--pnid:NqtsoZyH9Nz2NwNJbjoZM8-->操作</th><!--pnid:RQSsQYRV9EqJZwXu5t66X7-->
-                        </tr><!--pnid:F97pFaewwhpH72VCzn3nJ7-->
-                    </thead><!--pnid:IESPF23e7EZw0Kn9wsHGGh-->
-                    <tbody id="order-list" data-page-node-id="IPwqlEPo8G7yf55DslEczP"><!--pnid:beBdnRwDUHRducLRKdRg41-->
-                        <tr data-page-node-id="ZuJXRsL9lBorcoBB7Lc3aQ"><td colspan="7" style="text-align:center; color:#666;" data-page-node-id="qi1tUDRwcIAP3tgCqDcqq7"><!--pnid:I6L0mUtfvem7sKNr0icbaO-->載入中...</td></tr><!--pnid:0khcxJFrUj59GKnaw4Bk6R-->
-                    </tbody><!--pnid:RRm7fvJC2HQKcDX1mKH193-->
-                </table><!--pnid:LLhBt4Y8EkhrI1zHJI8NZe-->
-            </div><!--pnid:8XsVRG4dCuZzFKqULwGo4V-->
-        </div><!--pnid:OFvicofgucj2noXblxpN5V-->
+            <div style="overflow-x: auto;" data-page-node-id="Ro4eOjJB5Rl9ByZGfCfaqF"><!--pnid:clsz0T4sJrJB3rEnKSJK9z-->
+                <table class="order-table" id="order-table" data-page-node-id="H4CaYsaxeNyMlDQPipIF72"><!--pnid:qvl8VllOHFwopAX5jX2tbQ-->
+                    <thead data-page-node-id="IvgC2eeg808M8HepVlGzBP"><!--pnid:csNx4H39Pik2SIM7odvDwb-->
+                        <tr data-page-node-id="WEDTCsR7Mimk7RZvG5kVJQ"><!--pnid:0RlsBYDP9Xf6OP79OQxdUk-->
+                            <th style="width:34px;" data-page-node-id="aweEYMKSgP5wQBQtsUC3uR"><input type="checkbox" class="order-check-all" onclick="toggleAllOrders(this)" title="全選 / 取消全選" data-page-node-id="JDgo7CzHCleHlmHN3TNaHq"></th><!--pnid:uG1jghvRzVYLyG3lqkYSu1-->
+                            <th data-page-node-id="ErUL7LX4wsQsl8a1VnCeeZ"><!--pnid:aoe4Wo8dIKN0zFMgdnlznI-->時間</th><!--pnid:3QxtMxBDUk3V2ph2tyfsZX-->
+                            <th data-page-node-id="OElFiyC9LnXn7yiEcllYkF"><!--pnid:qqP2kaukkloQXNQD7mzsjL-->商品</th><!--pnid:zhpxi7SBSHXjKuY44CqFhd-->
+                            <th data-page-node-id="nCf6yuBVAuaLFDNHW2VHwK"><!--pnid:oNswbyFZDfjHglGYkEjTJY-->姓名</th><!--pnid:u0HAnm7zIMHOBF8jRvWQxJ-->
+                            <th data-page-node-id="ohKc04iUG0sOWGV1AT3g2c"><!--pnid:TVtnIZ4wC2kHwXRbbpY0np-->電話</th><!--pnid:SMzZT0POQETgAUjdAPGGFE-->
+                            <th data-page-node-id="EadwD5cWea9rWJTuJjtKam"><!--pnid:8zpAbeEYS04LlOkdXynvP9-->地址</th><!--pnid:bBbIeeR0l4T0oFz8sX0ilV-->
+                            <th data-page-node-id="JByO8riHSvODQAfynEHIP4"><!--pnid:A6W7TPnIdanbasIFXof43w-->操作</th><!--pnid:PcML1CbnGvwVJqQpNir83B-->
+                        </tr><!--pnid:FOogyoAvIImdzRI2ok3G7m-->
+                    </thead><!--pnid:7hssleKcVxof9Wve7Qtf5M-->
+                    <tbody id="order-list" data-page-node-id="rV8xXHnqLo3dnq1OiBSZUl"><!--pnid:gH2P1eSmxzjtkXT5fifBBo-->
+                        <tr data-page-node-id="AkttAnsu43WJI4tux1nG6t"><td colspan="7" style="text-align:center; color:#666;" data-page-node-id="0rjE0qs3BSzevYvI2C23QT"><!--pnid:mqkdz6mSIKbosjBPtF8PN7-->載入中...</td></tr><!--pnid:KKWb4F88K8pxvozT9xjHLR-->
+                    </tbody><!--pnid:8lYHwZde6Yghgr4V99JP1M-->
+                </table><!--pnid:pGN89slIysstJcZF9bb2ce-->
+            </div><!--pnid:MtxRpLD11GFTFdxh2qBUtE-->
+        </div><!--pnid:HAcGV2azEOH7BiVssv1ZXw-->
 
-        <div style="text-align: center;" data-page-node-id="qy2XlHr4i2kNYFMfevF8H8"><!--pnid:fUOfOil0WBbb05EFfEK3EZ-->
-            <button class="logout-btn" onclick="logout()" data-page-node-id="V8KQqfJuQundi9HRWHsBse"><!--pnid:45uJXJ9AYF2GpN61KuNXB8-->登出系統</button><!--pnid:YaAxWuuS15C0gcvdYsan26-->
-        </div><!--pnid:59CAHmF2ObJ85F7BOqCy7H-->
-    </div><!--pnid:nTBXoL9BbGxCZpb8CGeB3j-->
+        <div style="text-align: center;" data-page-node-id="FwpT3KlKQVtzhsm689X1Ww"><!--pnid:V9ABTqbjxIYznYlOkB0xFw-->
+            <button class="logout-btn" onclick="logout()" data-page-node-id="Llr8teoNUCgBI5ACgYFgyq"><!--pnid:9u7kw3UKnwJAf28FkT64Ve-->登出系統</button><!--pnid:PmMiRk3HvwW83XaEnSYoyL-->
+        </div><!--pnid:7xOc3yMK3UAtVCxRMbFBkR-->
+    </div><!--pnid:DcC8DL4rCygFSY2iB0hgNC-->
 
-    <!-- 圖片放大檢視器 --><!--pnid:iFoMgPk0MO5UwSKzhFdg7M-->
-    <div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()" data-page-node-id="gcq6aKT0DaLpgxgwzSG2FT"><!--pnid:OvfGho9FJ4rhIgMTMcHNZn-->
-        <span class="close-icon" onclick="closeImageLightbox()" data-page-node-id="3Ey4SjwJCTlhliQCLAFcZS"><!--pnid:7zGFLP7sjtMwmBpgdqmHGF-->&times;</span><!--pnid:n5zZ8U3bSHTEx2TGzbrGJG-->
-        <img src="" id="lightboxImg" onclick="event.stopPropagation()" data-page-node-id="206gZnWiLGCtRbu0B4g7No"><!--pnid:HBR8F2zhh20yBOF9M3bmFE-->
-    </div><!--pnid:JpeCdcLTOmYKByq4UOEgpK-->
+    <!-- 圖片放大檢視器 --><!--pnid:9U1M8dX9BEBmEdU7S1f7BS-->
+    <div class="image-lightbox" id="imageLightbox" onclick="closeImageLightbox()" data-page-node-id="gr5Hboaf5dZzZ6iZZAVxIv"><!--pnid:htc9FRP4Y2fwE1VMkuUgkO-->
+        <span class="close-icon" onclick="closeImageLightbox()" data-page-node-id="hkeAI5rLUKDyYkwwEk7uDi"><!--pnid:dbxrfH0FUyhM3VBfXheWEo-->&times;</span><!--pnid:x8oN9lO4DOABuWrialu0Ek-->
+        <img src="" id="lightboxImg" onclick="event.stopPropagation()" data-page-node-id="BjL6IVJ5ywOkrmt3Q3RVQr"><!--pnid:uKU4xi4S8jlSpTmJNcrGbT-->
+    </div><!--pnid:HLqTMxQJZG6KEKRFHLiGiu-->
 
     <script>
         const SUPABASE_URL = 'https://ncebylvmcnrrayqbwtog.supabase.co';
@@ -1314,6 +1344,11 @@ ready();setTimeout(ready,150);setTimeout(ready,500);
                         { k: '尺寸,錶徑,大小,手圍', a: '各款尺寸以商品頁規格為準。您可以告訴我手圍或偏好，我幫您推薦合適的款式。' },
                         { k: '正品,真偽,保固,保修', a: '本店商品均為正品，提供一年保固；非人為損壞可免費維修。' }
                     ]
+                },
+                geoBlock: {
+                    enabled: false,
+                    countries: '',
+                    message: '很抱歉，本店目前尚未開放您所在地區的瀏覽與購買服務。'
                 }
             };
             let cfg = loadLocal();
@@ -1556,6 +1591,7 @@ ready();setTimeout(ready,150);setTimeout(ready,500);
             SiteConfig.init().then(function (changed) {
                 renderSiteSettings();
                 readAiChat();
+                readGeoBlock();
                 if (changed && typeof loadAdminProducts === 'function') loadAdminProducts(0);
             });
             loadOrders();
@@ -2250,6 +2286,57 @@ ready();setTimeout(ready,150);setTimeout(ready,500);
             const ok = await c.save();
             renderAiStatus();
             showToast(ok ? '✅ AI 設定已儲存並全站同步（前台刷新生效）' : '⚠️ 已存於本機瀏覽器（資料庫未連線）');
+        }
+        function renderGeoStatus() {
+            const g = (window.SiteConfig.get().geoBlock) || {};
+            const el = document.getElementById('geo-status-label');
+            if (el) el.textContent = g.enabled ? '（已啟用）' : '（未啟用）';
+        }
+        function readGeoBlock() {
+            const g = (window.SiteConfig.get().geoBlock) || {};
+            const en = document.getElementById('geo-enabled');
+            if (!en) return;
+            en.checked = !!g.enabled;
+            document.getElementById('geo-countries').value = g.countries || '';
+            document.getElementById('geo-message').value = g.message || '很抱歉，本店目前尚未開放您所在地區的瀏覽與購買服務。';
+            renderGeoStatus();
+        }
+        async function saveGeoBlock() {
+            const c = window.SiteConfig;
+            c.get().geoBlock = {
+                enabled: !!(document.getElementById('geo-enabled') || {}).checked,
+                countries: String((document.getElementById('geo-countries') || {}).value || '').toUpperCase().replace(/\s+/g, ''),
+                message: String((document.getElementById('geo-message') || {}).value || '').trim() || '很抱歉，本店目前尚未開放您所在地區的瀏覽與購買服務。'
+            };
+            const ok = await c.save();
+            renderGeoStatus();
+            showToast(ok ? '✅ 地區攔截已儲存並全站同步（前台刷新生效）' : '⚠️ 已存於本機瀏覽器（資料庫未連線）');
+        }
+        function geoAdd(code) {
+            const el = document.getElementById('geo-countries');
+            if (!el) return;
+            const arr = String(el.value || '').toUpperCase().replace(/\s+/g, '').split(',').filter(Boolean);
+            if (arr.indexOf(code) < 0) arr.push(code);
+            el.value = arr.join(',');
+        }
+        async function testMyGeo() {
+            const out = document.getElementById('geo-test-out');
+            if (!out) return;
+            out.style.display = 'block';
+            out.textContent = '⏳ 正在檢測您的 IP 歸屬地…';
+            try {
+                const r = await fetch('https://ipwho.is/', { cache: 'no-store' });
+                const j = await r.json();
+                const cc = j && j.country_code ? String(j.country_code).toUpperCase() : '';
+                if (!cc) { out.textContent = '⚠️ 檢測服務無回應（實際訪客遇到同樣情況時會被放行）'; return; }
+                const list = String((document.getElementById('geo-countries') || {}).value || '').toUpperCase().replace(/\s+/g, '').split(',').filter(Boolean);
+                const hit = list.indexOf(cc) >= 0;
+                out.innerHTML = '當前歸屬地：<b>' + cc + '</b>' + (hit
+                    ? ' — <b style="color:#e34d59;">在黑名單中，會被攔截</b>'
+                    : ' — <b style="color:#00a870;">不在黑名單，正常瀏覽</b>');
+            } catch (e) {
+                out.textContent = '⚠️ 檢測失敗：' + e.message;
+            }
         }
         async function testAiChat() {
             const out = document.getElementById('ai-test-out');
@@ -3696,9 +3783,9 @@ ready();setTimeout(ready,150);setTimeout(ready,500);
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
         }
-    </script><!--pnid:fDauJHwglsKlTQteiCWpTE-->
+    </script><!--pnid:iEZowXk8ouLGv0X00G2sJm-->
 
-    <!-- ===== 長按訊息 → 翻譯（通訊軟體式） ===== --><!--pnid:kzIFZqAO9miSUZyVGif95b-->
+    <!-- ===== 長按訊息 → 翻譯（通訊軟體式） ===== --><!--pnid:sBe5c6VZIkAaCuewqOw7Mu-->
     <script>
     (function () {
         'use strict';
@@ -3965,7 +4052,7 @@ ready();setTimeout(ready,150);setTimeout(ready,500);
         /* 供外部调用（例如气泡内按钮） */
         window.translateChatBubble = doTranslate;
     })();
-    </script><!--pnid:rvVBuB2xfQzFVBVRbee7wj-->
+    </script><!--pnid:CPwI7QxqMjvYAsRKFexP2w-->
 
-</body><!--pnid:c6PEcqpeknZwlzZl1pIeht-->
+</body><!--pnid:HzWBkyFdZPzOaV0ELrhx2O-->
 </html>
